@@ -5,7 +5,7 @@ import subprocess
 
 from bpy_extras.io_utils import ExportHelper
 from vox_exporter.translations import get_translation
-from vox_exporter.utils import getvoxdir
+from vox_exporter.utils import get_addon_root_dir
 
 
 class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
@@ -89,14 +89,14 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
 
     def execute(self, context):
 
-        voxdir = getvoxdir()
-        temp_dir = os.path.join(voxdir, "temp")
+        addon_root = get_addon_root_dir()
+        temp_dir = os.path.join(addon_root, "temp")
         obj_name = 'temp.obj'
 
         palette_file = self.palette_file if self.palette_file else "palette-nippon.png"
         self.check_filepath()
 
-        matching_files = glob.glob(os.path.join(voxdir, "*vox*.exe"))
+        matching_files = glob.glob(os.path.join(addon_root, "*vox*.exe"))
 
         assert len(matching_files) != 0, get_translation('error_no_converter_exe')
 
@@ -104,7 +104,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
 
         #Usage: https://vengi-voxel.github.io/vengi/voxconvert/Usage/
         command = [
-            os.path.join(voxdir, exe),
+            os.path.join(addon_root, exe),
             "-set", f"palette {palette_file}",
             "--export-palette" if self.export_palette else " ",
             "--surface_only" if self.surface_only else " ",

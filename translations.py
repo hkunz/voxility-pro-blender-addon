@@ -2,15 +2,14 @@ import json
 import os
 
 from vox_exporter import bl_info
-from vox_exporter.utils import getvoxdir
+from vox_exporter.utils import get_addon_root_dir
 
 LANG = 'en'
 loaded_translations = None
 
 def load_translations(language):
     addon_name = bl_info["name"]
-    voxdir = getvoxdir()
-    translations_folder = os.path.join(voxdir, "languages")
+    translations_folder = os.path.join(get_addon_root_dir(), "languages")
     translations_file = os.path.join(translations_folder, f"{language}.json")
     
     with open(translations_file, 'r', encoding='utf-8') as file:
