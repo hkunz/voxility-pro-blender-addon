@@ -4,7 +4,7 @@ import os
 from vox_exporter import bl_info
 from vox_exporter.utils import getvoxdir
 
-LANG = 'de'
+LANG = 'en'
 loaded_translations = None
 
 def load_translations(language):

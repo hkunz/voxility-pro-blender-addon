@@ -1,6 +1,7 @@
 {
   "info_generated_files": "Erstellte .obj & .mat Dateien:",
   "info_execute_command": "Befehl ausführen:",
+  "info_vox_file_created": "VOX-Datei erstellt: ",
   "error_no_addon_dir_found": "Kein Addon-Verzeichnis gefunden für:",
   "error_no_converter_exe": "Keine Vox-Konverter-Ausführungsdatei gefunden!"
 }

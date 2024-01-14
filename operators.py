@@ -114,8 +114,8 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         ]
 
         self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ', '.join(command))
-
         subprocess.run(command, shell=True)
+        self.report({'INFO'}, get_translation('info_vox_file_created') + self.filepath)
 
         return {'FINISHED'}
 
