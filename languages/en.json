@@ -1,0 +1,6 @@
+{
+  "info_generated_files": "Generated .obj & .mat files:",
+  "info_execute_command": "Execute command:",
+  "error_no_addon_dir_found": "No addon directory found for:",
+  "error_no_converter_exe": "No vox converter executable found!"
+}
