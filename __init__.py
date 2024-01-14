@@ -30,14 +30,10 @@ bl_info = {
 }
 
 import bpy
-import sys
-
-print("========== ", sys.path)
 
 from vox_exporter.operators import EXPORT_OT_magica_voxel
 from vox_exporter.translations import register_translations, unregister_translations
 
-print("START ==============================")
 
 def menu_func_export(self, context):
     self.layout.operator_context = 'INVOKE_DEFAULT'
