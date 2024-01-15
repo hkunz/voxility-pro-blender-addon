@@ -31,20 +31,18 @@ bl_info = {
 
 import bpy
 
-from vox_exporter.operators import EXPORT_OT_magica_voxel
+from vox_exporter.operators.operator_vox_exporter import register_vox_exporter, unregister_vox_exporter
+from vox_exporter.operators.operator_modal_timer import register_modal_timer, unregister_modal_timer
 from vox_exporter.translations import register_translations, unregister_translations
 
 
-def menu_func_export(self, context):
-    self.layout.operator_context = 'INVOKE_DEFAULT'
-    self.layout.operator(EXPORT_OT_magica_voxel.bl_idname, text="MagicaVoxel (.vox)")
-
 def register():
     register_translations()
-    bpy.utils.register_class(EXPORT_OT_magica_voxel)
-    bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
+    #register_modal_timer()
+    register_vox_exporter()
 
 def unregister():
     unregister_translations()
-    bpy.utils.unregister_class(EXPORT_OT_magica_voxel)
-    bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
+    #unregister_modal_timer()
+    unregister_vox_exporter()
+

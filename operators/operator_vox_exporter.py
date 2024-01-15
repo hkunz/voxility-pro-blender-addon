@@ -112,6 +112,8 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
 
     def execute(self, context):
 
+        #bpy.ops.wm.modal_timer_operator()
+
         addon_root = get_addon_root_dir()
         temp_dir = os.path.join(addon_root, "temp")
         obj_name = 'temp.obj'
@@ -147,3 +149,42 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         wm.fileselect_add(self)
         self.check_filepath()
         return {'RUNNING_MODAL'}
+
+
+def on_file_export_vox_click(self, context):
+    self.layout.operator_context = 'INVOKE_DEFAULT'
+    self.layout.operator(EXPORT_OT_magica_voxel.bl_idname, text="MagicaVoxel (.vox)")
+
+def register_vox_exporter():
+    bpy.utils.register_class(EXPORT_OT_magica_voxel)
+    bpy.types.TOPBAR_MT_file_export.append(on_file_export_vox_click)
+
+def unregister_vox_exporter():
+    bpy.utils.unregister_class(EXPORT_OT_magica_voxel)
+    bpy.types.TOPBAR_MT_file_export.remove(on_file_export_vox_click)
+
+
+'''
+import threading
+
+def export_in_thread():
+    # This function will be called in a separate thread
+    bpy.ops.export.magica_voxel('INVOKE_DEFAULT')
+
+def on_file_export_vox_click(self, context):
+    self.layout.operator_context = 'INVOKE_DEFAULT'
+
+    # Create a new thread for the export operation
+    export_thread = threading.Thread(target=export_in_thread)
+
+    # Start the thread
+    export_thread.start()
+
+def register_vox_exporter():
+    bpy.utils.register_class(EXPORT_OT_magica_voxel)
+    bpy.types.TOPBAR_MT_file_export.append(on_file_export_vox_click)
+
+def unregister_vox_exporter():
+    bpy.utils.unregister_class(EXPORT_OT_magica_voxel)
+    bpy.types.TOPBAR_MT_file_export.remove(on_file_export_vox_click)
+'''
