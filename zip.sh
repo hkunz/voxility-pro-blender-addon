@@ -1,11 +1,18 @@
 #!/bin/bash
 
 parent_folder=$(basename "$(pwd)")
+current_branch=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)
+output=$(echo "${parent_folder}-${current_branch}.zip" | tr '_' '-') 
+
 cd ..
 
-rm -f "$parent_folder.zip"
+find . -type f -name "*.zip" -exec rm -f {} +
 
-zip -r "$parent_folder.zip" "$parent_folder"/* \
+echo "|$parent_folder|"
+echo "|$current_branch|"
+echo "|$output|"
+
+zip -r "${output}" "${parent_folder}"/* \
   --exclude "$parent_folder/.vscode/*" \
   --exclude "$parent_folder/.git/*" \
   --exclude "$parent_folder/temp/*" \
