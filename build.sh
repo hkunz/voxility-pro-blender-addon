@@ -38,3 +38,5 @@ for path in ${executables_to_exclude}; do
 done
 
 "${zip_cmd[@]}"
+
+echo "Created zip file: $(pwd)/${output}"
