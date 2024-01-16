@@ -2,6 +2,7 @@ import bpy
 import os
 import glob
 import subprocess
+import platform
 
 from bpy_extras.io_utils import ExportHelper
 from vox_exporter.translations import get_translation
@@ -121,7 +122,11 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         palette_file = self.palette_file if self.palette_file else "palette-nippon.png"
         self.check_filepath()
 
-        matching_files = glob.glob(os.path.join(addon_root, "*vox*.exe"))
+        system = platform.system().lower()
+        voxconvert_version = ""
+        exe_base_dir = "executable"
+        exe_base_name = "voxconvert"
+        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
 
         assert len(matching_files) != 0, get_translation('error_no_converter_exe')
 
@@ -139,7 +144,14 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         ]
 
         self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ', '.join(command))
-        subprocess.run(command, shell=True)
+        #subprocess.run(command, shell=True)
+        process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+
+        output, error = process.communicate()
+
+        if process.returncode != 0:
+            print(f"Error: {error.decode('utf-8')}")
+
         self.report({'INFO'}, get_translation('info_vox_file_created') + self.filepath)
 
         return {'FINISHED'}

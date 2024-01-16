@@ -1,5 +1,10 @@
 #!/bin/bash
 
+vox_exporter_version=$(grep -oP '"version": \(([^)]+)\),' __init__.py | sed 's/[^0-9]//g' | tr -d '\n' | sed 's/\(.\)/\1./g' | sed 's/\.$//')
+voxconvert_version="0.0.27"
+
+echo "Vox Exporter version: ${vox_exporter_version}"
+
 parent_folder=$(basename "$(pwd)")
 current_branch=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)
 output=$(echo "${parent_folder}-${current_branch}.zip" | tr '_' '-') 
@@ -8,13 +13,28 @@ cd ..
 
 find . -type f -name "*.zip" -exec rm -f {} +
 
-echo "|$parent_folder|"
-echo "|$current_branch|"
-echo "|$output|"
+echo "Parent: $parent_folder"
+echo "Branch: $current_branch"
+echo "Output: $output"
 
-zip -r "${output}" "${parent_folder}"/* \
+vox_exe_dir="${parent_folder}/voxconvert-executable/${voxconvert_version}"
+
+if [ ! -d "$vox_exe_dir" ]; then
+  echo "Error: No vox executable dir ${vox_exe_dir} found."
+  exit 1
+fi
+
+zip_cmd=(zip -r "${output}" "${parent_folder}"/* \
   --exclude "$parent_folder/.vscode/*" \
   --exclude "$parent_folder/.git/*" \
   --exclude "$parent_folder/temp/*" \
   --exclude "$parent_folder/__pycache__/*" \
-  --exclude "$parent_folder/$(basename "$0")"
+  --exclude "$parent_folder/$(basename "$0")")
+
+executables_to_exclude=$(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
+
+for path in ${executables_to_exclude}; do
+  zip_cmd+=("--exclude" "${path}/*")
+done
+
+"${zip_cmd[@]}"
