@@ -18,14 +18,16 @@
 
 bl_info = {
     "name": "MagicaVoxel Vox Exporter",
-    "author" : "Harry McKenzie",
-    "version": (0, 1, 0),
-    "blender": (2, 93, 0),
     "description": "Vox Exporter addon that exports any mesh into vox format for MagicaVoxel and VoxEdit",
+    "author" : "Harry McKenzie",
+    "version": (0, 0, 1),
+    "blender": (2, 93, 0),
     "location": "File > Export > MagicaVoxel (.vox)",
-	"warning": "",
-	"wiki_url": "",
-	"tracker_url": "",
+    "warning": "",
+    "doc_url": "",
+    "wiki_url": "",
+    "tracker_url": "",
+    "support": "COMMUNITY",
     "category": "Import-Export",
 }
 
