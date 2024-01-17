@@ -1,10 +1,12 @@
 import bpy
 import os
 import subprocess
+import tempfile
+import shutil
 
 from bpy_extras.io_utils import ExportHelper
 from vox_exporter.translations import get_translation
-from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath, get_temp_obj_filepath
+from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
 
@@ -62,7 +64,9 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         #bpy.ops.wm.modal_timer_operator()
 
         self.filepath = check_filepath(self.filepath)
-        obj_file = get_temp_obj_filepath()
+
+        temp_dir = tempfile.mkdtemp()
+        obj_file = os.path.join(temp_dir, 'temp.obj')
 
         self.export_obj(obj_file)
 
@@ -80,6 +84,8 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
             print(f"Error: {error.decode('utf-8')}")
 
         self.report({'INFO'}, get_translation('info_vox_file_created') + self.filepath)
+
+        shutil.rmtree(temp_dir)
 
         return {'FINISHED'}
 

@@ -12,17 +12,6 @@ def check_filepath(path):
         path = os.path.join(bpy.path.abspath("//"), "untitled.vox")
     return path
 
-def get_temp_dir():
-    addon_root = get_addon_root_dir()
-    temp_dir = os.path.join(addon_root, "temp")
-    os.makedirs(temp_dir, exist_ok=True)
-    return temp_dir
-
-def get_temp_obj_filepath():
-    temp_dir = get_temp_dir()
-    obj_name = 'temp.obj'
-    return os.path.join(temp_dir, obj_name)
-
 def export_obj(filepath):
 
     bpy.ops.wm.obj_export(
