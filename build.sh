@@ -29,6 +29,7 @@ zip_cmd=(zip -r "${output}" "${parent_folder}"/* \
   --exclude "$parent_folder/.git/*" \
   --exclude "$parent_folder/temp/*" \
   --exclude "$parent_folder/__pycache__/*" \
+  --exclude "$parent_folder/*.sh" \
   --exclude "$parent_folder/$(basename "$0")")
 
 executables_to_exclude=$(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
