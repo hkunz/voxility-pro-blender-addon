@@ -7,17 +7,23 @@ from vox_exporter.utils import get_addon_root_dir
 from vox_exporter.translations import get_translation
 
 class VoxConvertCommandBuilder:
-    def __init__(self, filepath, obj_path, palette_file=None, export_palette=False, surface_only=False):
+    def __init__(self,
+            filepath,
+            obj_path,
+            palette_file=None,
+            export_palette=False,
+            surface_only=False,
+            voxformat_voxelizemode=0
+        ):
         self.filepath = filepath
         self.obj_path = obj_path
-        self.palette_file = palette_file
+        self.palette_file = palette_file if palette_file else "palette-nippon.png"
         self.export_palette = export_palette
         self.surface_only = surface_only
+        self.voxformat_voxelizemode = voxformat_voxelizemode
 
     def build_command(self):
         addon_root = get_addon_root_dir()
-
-        palette_file = self.palette_file if self.palette_file else "palette-nippon.png"
 
         system = platform.system().lower()
         voxconvert_version = ""
@@ -29,13 +35,24 @@ class VoxConvertCommandBuilder:
 
         exe = matching_files[0]
 
-        command = [
-            os.path.join(addon_root, exe),
-            "-set", f"palette {palette_file}",
-            "--export-palette" if self.export_palette else " ",
-            "--surface_only" if self.surface_only else " ",
-            "--input", self.obj_path,
-            "--output", self.filepath,
-            "--force"
-        ]
+        # Documentation https://vengi-voxel.github.io/vengi/Configuration/
+
+        command = [os.path.join(addon_root, exe)]
+        command.append("-set")
+        command.append(f"palette {self.palette_file}")
+        command.append("-set")
+        command.append(f"voxformat_voxelizemode {self.voxformat_voxelizemode}")
+
+        if self.export_palette:
+            command.append("--export-palette")
+
+        if self.surface_only:
+            command.append("--surface_only")
+
+        command.append("--input")
+        command.append(self.obj_path)
+        command.append("--output")
+        command.append(self.filepath)
+        command.append("--force")
+
         return command

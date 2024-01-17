@@ -44,11 +44,18 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         default=False,
     )
 
+    voxformat_voxelizemode: bpy.props.BoolProperty(
+        name="Voxformat Voxelize Mode",
+        description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
+        default=False,
+    )
+
     def draw(self, context):
         layout = self.layout
         layout.prop(self, "palette_file")
         layout.prop(self, "export_palette")
         layout.prop(self, "surface_only")
+        layout.prop(self, "voxformat_voxelizemode")
 
     def export_obj(self, obj_file):
         start_time = time.time()
@@ -72,18 +79,25 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
 
         self.export_obj(obj_file)
 
-        command_builder = VoxConvertCommandBuilder(self.filepath, obj_file, self.palette_file, self.export_palette, self.surface_only)
+        command_builder = VoxConvertCommandBuilder(
+            self.filepath,
+            obj_file,
+            self.palette_file,
+            self.export_palette,
+            self.surface_only,
+            int(self.voxformat_voxelizemode)
+        )
         command = command_builder.build_command()
 
-        self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ', '.join(command))
+        self.report({'INFO'}, get_translation('info_execute_command')  + ' '.join(command))
 
-        #subprocess.run(command, shell=True)
-        process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+        subprocess.run(command, shell=True)
+        #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
 
-        output, error = process.communicate()
+        #output, error = process.communicate()
 
-        if process.returncode != 0:
-            print(f"Error: {error.decode('utf-8')}")
+        #if process.returncode != 0:
+        #    print(f"Error: {error.decode('utf-8')}")
 
         duration = format_duration(time.time() - start_time)
         self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
