@@ -25,6 +25,7 @@ if [ "${answer,,}" != "y" ]; then
     exit 0
 fi
 
+git pull --rebase
 git tag -a "$tag_name" -m "Release version $1"
 git push origin "$tag_name"
 
@@ -33,4 +34,5 @@ echo "Tag $tag_name created and pushed successfully."
 sed -i "s/\"version\": ([0-9]\+, [0-9]\+, [0-9]\+)/\"version\": ($v_major, $v_minor, $v_patch)/g" __init__.py
 git add __init__.py
 git commit -m "Update version in __init__.py to $1"
+git push
 echo "Version change to __init__.py committed successfully."
