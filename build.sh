@@ -40,8 +40,6 @@ for path in "${exclude_paths[@]}"; do
   zip_cmd+=" --exclude \"$path/*\""
 done
 
-set -x
 eval "$zip_cmd"
-set +x
 
 echo "Created zip file: $(pwd)/${output}"
