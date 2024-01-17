@@ -20,7 +20,7 @@ bl_info = {
     "name": "MagicaVoxel Vox Exporter",
     "description": "Vox Exporter addon that exports any mesh into vox format for MagicaVoxel and VoxEdit",
     "author" : "Harry McKenzie",
-    "version": (0, 0, 3),
+    "version": (0, 0, 4),
     "blender": (2, 93, 0),
     "location": "File > Export > MagicaVoxel (.vox)",
     "warning": "",
