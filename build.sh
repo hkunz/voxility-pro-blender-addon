@@ -24,20 +24,24 @@ if [ ! -d "$vox_exe_dir" ]; then
   exit 1
 fi
 
-zip_cmd=(zip -r "${output}" "${parent_folder}"/* \
+zip_cmd="zip -r '${output}' '${parent_folder}'/* \
   --exclude "$parent_folder/.vscode/*" \
   --exclude "$parent_folder/.git/*" \
   --exclude "$parent_folder/temp/*" \
-  --exclude "$parent_folder/__pycache__/*" \
   --exclude "$parent_folder/*.sh" \
-  --exclude "$parent_folder/$(basename "$0")")
+  --exclude "$parent_folder/$(basename "$0")" \
+"
 
-executables_to_exclude=$(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
+mapfile -t exclude_pycache < <(find "${parent_folder}" -type d -name "__pycache__")
+mapfile -t exclude_executables < <(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
+exclude_paths=("${exclude_executables[@]}" "${exclude_pycache[@]}")
 
-for path in ${executables_to_exclude}; do
-  zip_cmd+=("--exclude" "${path}/*")
+for path in "${exclude_paths[@]}"; do
+  zip_cmd+=" --exclude \"$path/*\""
 done
 
-"${zip_cmd[@]}"
+set -x
+eval "$zip_cmd"
+set +x
 
 echo "Created zip file: $(pwd)/${output}"
