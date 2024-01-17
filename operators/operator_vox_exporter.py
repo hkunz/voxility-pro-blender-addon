@@ -25,6 +25,14 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         maxlen=255,
     )
 
+    voxformat_scale: bpy.props.FloatProperty(
+        name="Voxformat Scale",
+        description="Scale the vertices on all axes by the given factor",
+        default=1.0,
+        min=0.0,
+        max=100.0,
+    )
+
     palette_file: bpy.props.StringProperty(
         name="Palette File",
         description="Path to the palette file",
@@ -52,6 +60,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
 
     def draw(self, context):
         layout = self.layout
+        layout.prop(self, "voxformat_scale")
         layout.prop(self, "palette_file")
         layout.prop(self, "export_palette")
         layout.prop(self, "surface_only")
@@ -82,6 +91,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         command_builder = VoxConvertCommandBuilder(
             self.filepath,
             obj_file,
+            self.voxformat_scale,
             self.palette_file,
             self.export_palette,
             self.surface_only,
@@ -110,6 +120,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         wm = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath)
+        self.voxformat_scale = 1.0
         return {'RUNNING_MODAL'}
 
 

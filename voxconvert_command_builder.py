@@ -10,6 +10,7 @@ class VoxConvertCommandBuilder:
     def __init__(self,
             filepath,
             obj_path,
+            voxformat_scale=1.0,
             palette_file=None,
             export_palette=False,
             surface_only=False,
@@ -17,6 +18,7 @@ class VoxConvertCommandBuilder:
         ):
         self.filepath = filepath
         self.obj_path = obj_path
+        self.voxformat_scale = round(voxformat_scale, 2)
         self.palette_file = palette_file if palette_file else "palette-nippon.png"
         self.export_palette = export_palette
         self.surface_only = surface_only
@@ -38,6 +40,8 @@ class VoxConvertCommandBuilder:
         # Documentation https://vengi-voxel.github.io/vengi/Configuration/
 
         command = [os.path.join(addon_root, exe)]
+        command.append("-set")
+        command.append(f"voxformat_scale {self.voxformat_scale}")
         command.append("-set")
         command.append(f"palette {self.palette_file}")
         command.append("-set")
