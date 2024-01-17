@@ -1,7 +1,7 @@
 #!/bin/bash
 
 vox_exporter_version=$(grep -oP '"version": \(([^)]+)\),' __init__.py | sed 's/[^0-9]//g' | tr -d '\n' | sed 's/\(.\)/\1./g' | sed 's/\.$//')
-voxconvert_version="0.0.27"
+voxconvert_version="0.0.28"
 
 echo "Vox Exporter version: ${vox_exporter_version}"
 
