@@ -12,6 +12,13 @@ if ! [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     exit 1
 fi
 
+# Check if the version tag already exists
+if git rev-parse -q --verify "v$1" >/dev/null; then
+    echo "Tag v$1 already exists in Git. Aborting."
+    exit 1
+fi
+
+
 IFS='.' read -r v_major v_minor v_patch <<< "$1"
 
 tag_name="v$1"
@@ -25,14 +32,18 @@ if [ "${answer,,}" != "y" ]; then
     exit 0
 fi
 
-git pull --rebase
-git tag -a "$tag_name" -m "Release version $1"
-git push origin "$tag_name"
-
-echo "Tag $tag_name created and pushed successfully."
+if ! git pull --rebase; then
+    echo "Error: Failed to pull changes. Aborting."
+    exit 1
+fi
 
 sed -i "s/\"version\": ([0-9]\+, [0-9]\+, [0-9]\+)/\"version\": ($v_major, $v_minor, $v_patch)/g" __init__.py
 git add __init__.py
 git commit -m "Update version in __init__.py to $1"
 git push
 echo "Version change to __init__.py committed successfully."
+
+git tag -a "$tag_name" -m "Release version $1"
+git push origin "$tag_name"
+
+echo "Tag $tag_name created and pushed successfully."
