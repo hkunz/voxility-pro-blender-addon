@@ -3,10 +3,11 @@ import os
 import subprocess
 import tempfile
 import shutil
+import time
 
 from bpy_extras.io_utils import ExportHelper
 from vox_exporter.translations import get_translation
-from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath
+from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath, format_duration
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
 
@@ -50,19 +51,20 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         layout.prop(self, "surface_only")
 
     def export_obj(self, obj_file):
-
+        start_time = time.time()
         try:
             export_obj__deprecated(obj_file)
         except Exception as e:
             export_obj(obj_file)
 
-        self.report({'INFO'}, get_translation('info_generated_files') + ' ' + obj_file)
+        duration = format_duration(time.time() - start_time)
+        self.report({'INFO'}, get_translation('info_generated_files') + f" {obj_file} in {duration}")
         return obj_file
 
     def execute(self, context):
 
         #bpy.ops.wm.modal_timer_operator()
-
+        start_time = time.time()
         self.filepath = check_filepath(self.filepath)
 
         temp_dir = tempfile.mkdtemp()
@@ -83,7 +85,8 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         if process.returncode != 0:
             print(f"Error: {error.decode('utf-8')}")
 
-        self.report({'INFO'}, get_translation('info_vox_file_created') + self.filepath)
+        duration = format_duration(time.time() - start_time)
+        self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
 
         shutil.rmtree(temp_dir)
 
