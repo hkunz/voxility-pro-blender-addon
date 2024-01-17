@@ -38,9 +38,9 @@ else
         exit 1
     fi
 
-    # Validate the version format (X.X.X)
+    # Validate the version format (X.Y.Z)
     if ! [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        echo "Invalid version format. Please use X.X.X (e.g., 1.0.0)"
+        echo "Invalid version format. Please use X.Y.Z (e.g., 1.0.0)"
         exit 1
     fi
 
@@ -55,8 +55,6 @@ else
 fi
 
 echo "Attempting to update __init__.py to reflect the new version."
-exit
-
 read -p "Do you want to commit this change? [y/n]: " answer
 
 if [ "${answer,,}" != "y" ]; then
