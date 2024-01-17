@@ -18,18 +18,22 @@ done
 
 # If increment is specified, increment the patch version
 if [ "$increment" = true ]; then
-    latest_tag=$(git tag -l --sort=-v:refname | head -n 1 | sed 's/^v//')
-    if [ -z "$latest_tag" ]; then
-        version="0.0.1"
+
+    version=$(git tag -l --sort=-v:refname | head -n 1)
+    if [ -z "$version" ]; then
+        v_major=0
+        v_minor=0
+        v_patch=1
+        version="$v_major.$v_minor.$v_patch"
         tag_name="v$version"
-        echo "No tags yet. Starting with version $tag_name"
+        echo "No tags yet. Starting with version $version"
     else
-        echo "Latest tag version: $latest_tag"
-        IFS='.' read -r v_major v_minor v_patch <<< "$latest_tag"
+        echo "Latest tag version: $version"
+        IFS='.' read -r v_major v_minor v_patch <<< "$version"
         ((v_patch++))
         version="$v_major.$v_minor.$v_patch"
         tag_name="v$version"
-        echo "New tag version: $tag_name"
+        echo "New tag version: $version"
     fi
 else
     # Check if the correct number of arguments is provided
