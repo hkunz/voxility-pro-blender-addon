@@ -1,12 +1,11 @@
 import bpy
 import os
-import glob
 import subprocess
-import platform
 
 from bpy_extras.io_utils import ExportHelper
 from vox_exporter.translations import get_translation
-from vox_exporter.utils import get_addon_root_dir, export_obj, export_obj__deprecated
+from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath, get_temp_obj_filepath
+from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
 
 class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
@@ -48,10 +47,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         layout.prop(self, "export_palette")
         layout.prop(self, "surface_only")
 
-    def export_obj(self, directory, obj_name):
-
-        os.makedirs(directory, exist_ok=True)
-        obj_file = os.path.join(directory, obj_name)
+    def export_obj(self, obj_file):
 
         try:
             export_obj__deprecated(obj_file)
@@ -61,46 +57,20 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         self.report({'INFO'}, get_translation('info_generated_files') + ' ' + obj_file)
         return obj_file
 
-    def check_filepath(self):
-        if os.path.isdir(self.filepath):
-            self.filepath = os.path.join(self.filepath, "untitled.vox")
-        elif not self.filepath or os.path.isdir(self.filepath):
-            self.filepath = os.path.join(bpy.path.abspath("//"), "untitled.vox")
-
-
     def execute(self, context):
 
         #bpy.ops.wm.modal_timer_operator()
 
-        addon_root = get_addon_root_dir()
-        temp_dir = os.path.join(addon_root, "temp")
-        obj_name = 'temp.obj'
+        self.filepath = check_filepath(self.filepath)
+        obj_file = get_temp_obj_filepath()
 
-        palette_file = self.palette_file if self.palette_file else "palette-nippon.png"
-        self.check_filepath()
+        self.export_obj(obj_file)
 
-        system = platform.system().lower()
-        voxconvert_version = ""
-        exe_base_dir = "executable"
-        exe_base_name = "voxconvert"
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
-
-        assert len(matching_files) != 0, get_translation('error_no_converter_exe')
-
-        exe = matching_files[0]
-
-        #Usage: https://vengi-voxel.github.io/vengi/voxconvert/Usage/
-        command = [
-            os.path.join(addon_root, exe),
-            "-set", f"palette {palette_file}",
-            "--export-palette" if self.export_palette else " ",
-            "--surface_only" if self.surface_only else " ",
-            "--input", self.export_obj(temp_dir, obj_name),
-            "--output", self.filepath,
-            "--force"
-        ]
+        command_builder = VoxConvertCommandBuilder(self.filepath, obj_file, self.palette_file, self.export_palette, self.surface_only)
+        command = command_builder.build_command()
 
         self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ', '.join(command))
+
         #subprocess.run(command, shell=True)
         process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
 
@@ -116,7 +86,7 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
     def invoke(self, context, event):
         wm = context.window_manager
         wm.fileselect_add(self)
-        self.check_filepath()
+        self.filepath = check_filepath(self.filepath)
         return {'RUNNING_MODAL'}
 
 

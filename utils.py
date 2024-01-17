@@ -2,13 +2,31 @@ import bpy
 import os
 
 def get_addon_root_dir():
-    # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\3.6\scripts\addons\vox_exporter\utils.py
+    # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\vox_exporter\utils.py
     return os.path.dirname(__file__)
 
-def export_obj(obj_file):
+def check_filepath(path):
+    if os.path.isdir(path):
+        path = os.path.join(path, "untitled.vox")
+    elif not path or os.path.isdir(path):
+        path = os.path.join(bpy.path.abspath("//"), "untitled.vox")
+    return path
+
+def get_temp_dir():
+    addon_root = get_addon_root_dir()
+    temp_dir = os.path.join(addon_root, "temp")
+    os.makedirs(temp_dir, exist_ok=True)
+    return temp_dir
+
+def get_temp_obj_filepath():
+    temp_dir = get_temp_dir()
+    obj_name = 'temp.obj'
+    return os.path.join(temp_dir, obj_name)
+
+def export_obj(filepath):
 
     bpy.ops.wm.obj_export(
-        filepath=obj_file,
+        filepath=filepath,
         check_existing=True,
         filter_blender=False,
         filter_backup=False,
@@ -55,13 +73,13 @@ def export_obj(obj_file):
         filter_glob='*.obj;*.mtl'
     )
 
-    return obj_file
+    return filepath
 
 # bpy.ops.export_scene.obj only works until blender version 3.6
-def export_obj__deprecated(obj_file):
+def export_obj__deprecated(filepath):
 
     bpy.ops.export_scene.obj(
-        filepath=obj_file,
+        filepath=filepath,
         check_existing=True,
         axis_forward='-Z',
         axis_up='Y',
@@ -86,4 +104,4 @@ def export_obj__deprecated(obj_file):
         path_mode='AUTO'
     )
 
-    return obj_file
+    return filepath
