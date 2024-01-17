@@ -19,7 +19,7 @@ done
 # If increment is specified, increment the patch version
 if [ "$increment" = true ]; then
 
-    version=$(git tag -l --sort=-v:refname | head -n 1)
+    version=$(git tag -l --sort=-v:refname | head -n 1 | sed 's/^v//')
     if [ -z "$version" ]; then
         v_major=0
         v_minor=0
