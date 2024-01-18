@@ -22,6 +22,7 @@ bl_info = {
     "author" : "Harry McKenzie",
     "version": (0, 0, 4),
     "blender": (2, 93, 0),
+    "voxconvert_version": (0, 0, 28),
     "location": "File > Export > MagicaVoxel (.vox)",
     "warning": "",
     "doc_url": "",

@@ -3,7 +3,7 @@ import os
 import platform
 import glob
 
-from vox_exporter.utils import get_addon_root_dir
+from vox_exporter.utils import get_addon_root_dir, get_voxconvert_version
 from vox_exporter.translations import get_translation
 
 class VoxConvertCommandBuilder:
@@ -28,7 +28,7 @@ class VoxConvertCommandBuilder:
         addon_root = get_addon_root_dir()
 
         system = platform.system().lower()
-        voxconvert_version = ""
+        voxconvert_version = get_voxconvert_version()
         exe_base_dir = "executable"
         exe_base_name = "voxconvert"
         matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
