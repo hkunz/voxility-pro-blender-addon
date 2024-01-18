@@ -35,11 +35,11 @@ class VoxConvertCommandBuilder:
 
         assert len(matching_files) != 0, get_translation('error_no_converter_exe')
 
-        exe = matching_files[0]
+        exe = "vengi-voxconvert" if system=="linux" else os.path.join(addon_root, matching_files[0])
 
         # Documentation https://vengi-voxel.github.io/vengi/Configuration/
 
-        command = [os.path.join(addon_root, exe)]
+        command = [exe]
         command.append("-set")
         command.append("voxformat_scale")
         command.append(str(self.voxformat_scale))

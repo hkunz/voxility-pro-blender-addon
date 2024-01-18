@@ -6,6 +6,7 @@ import shutil
 import time
 
 from bpy_extras.io_utils import ExportHelper
+from vox_exporter.exceptions.command_execution_error import CommandExecutionError
 from vox_exporter.translations import get_translation
 from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath, format_duration
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
@@ -99,20 +100,20 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
         )
         command = command_builder.build_command()
 
-        self.report({'INFO'}, get_translation('info_execute_command')  + ' '.join(command))
+        self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ' '.join(command))
 
-        subprocess.run(command, shell=True)
-        #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-
-        #output, error = process.communicate()
-
-        #if process.returncode != 0:
-        #    print(f"Error: {error.decode('utf-8')}")
-
-        duration = format_duration(time.time() - start_time)
-        self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
-
-        shutil.rmtree(temp_dir)
+        try:
+            #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
+            result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
+            duration = format_duration(time.time() - start_time)
+            self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
+        except subprocess.CalledProcessError as e:
+            print(f"Error: Command exited with return code {e.returncode}")
+            print("Standard Output:\n", e.stdout)
+            print("Standard Error:\n", e.stderr)
+            raise CommandExecutionError(e.returncode, e.stdout, e.stderr)
+        finally:
+            shutil.rmtree(temp_dir)
 
         return {'FINISHED'}
 
