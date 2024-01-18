@@ -41,11 +41,16 @@ class VoxConvertCommandBuilder:
 
         command = [os.path.join(addon_root, exe)]
         command.append("-set")
-        command.append(f"voxformat_scale {self.voxformat_scale}")
+        command.append("voxformat_scale")
+        command.append(str(self.voxformat_scale))
         command.append("-set")
-        command.append(f"palette {self.palette_file}")
+        command.append("palette")
+        command.append(self.palette_file)
         command.append("-set")
-        command.append(f"voxformat_voxelizemode {self.voxformat_voxelizemode}")
+        command.append("voxformat_voxelizemode")
+        command.append(str(self.voxformat_voxelizemode))
+
+
 
         if self.export_palette:
             command.append("--export-palette")
