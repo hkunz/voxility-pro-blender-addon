@@ -41,19 +41,27 @@ class VoxConvertCommandBuilder:
         voxconvert_version = get_voxconvert_version()
         exe_base_dir = "executable"
         exe_base_name = "voxconvert"
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
-
-        #assert len(matching_files) != 0, get_translation('error_no_converter_exe')
 
         command = []
+
         if system == "darwin":
-            command.append("open")
-            command.append(os.path.join(addon_root, matching_files[0]))
-            command.append("--args")
+            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
+            exe = os.path.join(addon_root, matching_files[0])
+            command.append('open')
+            command.append('-a')
+            command.append('Terminal')
+            command.append(f'--args "{exe}"')
+
         elif system == "windows":
-            command.append(os.path.join(addon_root, matching_files[0]))
+            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
+            exe = os.path.join(addon_root, matching_files[0])
+            command.append('powershell')
+            command.append('-Command')
+            command.append(f'& "{exe}"')
+
         else:
-            command.append("vengi-voxconvert")
+            exe = "vengi-voxconvert"
+            command.append(exe)
 
         command.append("-set")
         command.append("voxformat_scale")
@@ -72,9 +80,9 @@ class VoxConvertCommandBuilder:
             command.append("--surface_only")
 
         command.append("--input")
-        command.append(self.obj_path)
+        command.append(f'"{self.obj_path}"')
         command.append("--output")
-        command.append(self.filepath)
+        command.append(f'"{self.filepath}"')
         command.append("--force")
 
         return command
