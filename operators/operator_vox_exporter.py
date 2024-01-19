@@ -1,6 +1,7 @@
 import bpy
 import os
 import subprocess
+import platform
 import tempfile
 import shutil
 import time
@@ -99,12 +100,13 @@ class EXPORT_OT_magica_voxel(bpy.types.Operator, ExportHelper):
             int(self.voxformat_voxelizemode)
         )
         command = command_builder.build_command()
-
-        self.report({'INFO'}, get_translation('info_execute_command') + ' ' + ' '.join(command))
+        command_str = ' '.join(command)
+        self.report({'INFO'}, get_translation('info_execute_command') + ' ' + command_str)
 
         try:
+            cmd = command if platform.system().lower() == "windows" else command_str
             #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-            result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
+            result = subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
             duration = format_duration(time.time() - start_time)
             self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
         except subprocess.CalledProcessError as e:
