@@ -45,12 +45,12 @@ class VoxConvertCommandBuilder:
         command = []
 
         if system == "darwin":
-            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
+            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
             exe = os.path.join(addon_root, matching_files[0])
             command.append('open')
             command.append('-a')
-            command.append(f'"{exe}"')
-            command.append('--args')
+            command.append('Terminal')
+            command.append(f'--args "{exe}"')
 
         elif system == "windows":
             matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
