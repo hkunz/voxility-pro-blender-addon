@@ -1,7 +1,7 @@
 {
   "info_generated_files": "Generated .obj & .mat files:",
   "info_execute_command": "Execute command:",
-  "info_vox_file_created": "VOX File Created: ",
+  "info_vox_file_created": "File Created: ",
   "desc_export_selected_obj_to_vox": "Export selected objects to MagicaVoxel format (.vox)",
   "error_no_addon_dir_found": "No addon directory found for:",
   "error_no_converter_exe": "No vox converter executable found!"

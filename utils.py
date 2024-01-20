@@ -14,11 +14,11 @@ def get_addon_root_dir():
     # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\vox_exporter\utils.py
     return os.path.dirname(__file__)
 
-def check_filepath(path):
+def check_filepath(path, ext):
     if os.path.isdir(path):
-        path = os.path.join(path, "untitled.vox")
+        path = os.path.join(path, f"untitled{ext}")
     elif not path or os.path.isdir(path):
-        path = os.path.join(bpy.path.abspath("//"), "untitled.vox")
+        path = os.path.join(bpy.path.abspath("//"), f"untitled{ext}")
     return path
 
 import time

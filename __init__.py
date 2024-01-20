@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "MagicaVoxel Vox Exporter",
-    "description": "Vox Exporter via voxconvert-0.0.28 exports any mesh into vox format for MagicaVoxel and VoxEdit", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Vox Exporter via voxconvert-0.0.28 exports any mesh into MagicaVoxel / VoxEdit (.vox) or Cubicle (.qr) format", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 5),
     "blender": (2, 93, 0),
@@ -38,7 +38,8 @@ bl_info = {
 
 import bpy
 
-from vox_exporter.operators.operator_vox_exporter import register_vox_exporter, unregister_vox_exporter
+from vox_exporter.operators.operator_vox_exporter import register as register_op_vox, unregister as unregister_op_vox
+from vox_exporter.operators.operator_qb_exporter import register as register_op_qr, unregister as unregister_op_qr
 from vox_exporter.operators.operator_modal_timer import register_modal_timer, unregister_modal_timer
 from vox_exporter.translations import register_translations, unregister_translations
 
@@ -46,10 +47,11 @@ from vox_exporter.translations import register_translations, unregister_translat
 def register():
     register_translations()
     #register_modal_timer()
-    register_vox_exporter()
+    register_op_vox()
+    register_op_qr()
 
 def unregister():
     unregister_translations()
     #unregister_modal_timer()
-    unregister_vox_exporter()
-
+    unregister_op_vox()
+    unregister_op_qr()
