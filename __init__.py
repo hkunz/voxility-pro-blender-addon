@@ -25,7 +25,7 @@ bl_info = {
     "name": "MagicaVoxel Vox Exporter",
     "description": "Vox Exporter via voxconvert-0.0.28 exports any mesh into MagicaVoxel / VoxEdit (.vox) or Cubicle (.qr) format", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
-    "version": (1, 0, 5),
+    "version": (1, 0, 6),
     "blender": (2, 93, 0),
     "location": "File > Export > MagicaVoxel (.vox)",
     "warning": "",
