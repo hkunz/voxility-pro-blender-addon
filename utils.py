@@ -1,10 +1,14 @@
 import bpy
 import os
+import re
 
 from vox_exporter import bl_info
 
 def get_voxconvert_version():
-    return ".".join(map(str, bl_info["voxconvert_version"]))
+    pattern = r' voxconvert-(\d+\.\d+\.\d+) '
+    match = re.search(pattern, bl_info["description"])
+    version = match.group(1)
+    return version
 
 def get_addon_root_dir():
     # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\vox_exporter\utils.py
