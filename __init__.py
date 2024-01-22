@@ -38,20 +38,18 @@ bl_info = {
 
 import bpy
 
-from vox_exporter.operators.operator_vox_exporter import register as register_op_vox, unregister as unregister_op_vox
-from vox_exporter.operators.operator_qb_exporter import register as register_op_qb, unregister as unregister_op_qb
-from vox_exporter.operators.operator_modal_timer import register_modal_timer, unregister_modal_timer
+from vox_exporter.menus.voxel_formats_menu import register as register_voxel_formats_menu, unregister as unregister_voxel_formats_menu
+from vox_exporter.operators.operator_vox_exporter import register as register_vox, unregister as unregister_vox
 from vox_exporter.translations import register_translations, unregister_translations
 
 
 def register():
     register_translations()
-    #register_modal_timer()
-    register_op_vox()
-    register_op_qb()
+    register_vox()
+    register_voxel_formats_menu()
 
 def unregister():
     unregister_translations()
-    #unregister_modal_timer()
-    unregister_op_vox()
-    unregister_op_qb()
+    unregister_vox()
+    unregister_voxel_formats_menu()
+

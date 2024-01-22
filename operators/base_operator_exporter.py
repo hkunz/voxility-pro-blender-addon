@@ -7,6 +7,7 @@ import shutil
 import time
 
 from bpy_extras.io_utils import ExportHelper
+
 from vox_exporter.exceptions.command_execution_error import CommandExecutionError
 from vox_exporter.translations import get_translation
 from vox_exporter.utils import export_obj, export_obj__deprecated, check_filepath, format_duration
