@@ -39,7 +39,7 @@ bl_info = {
 import bpy
 
 from vox_exporter.operators.operator_vox_exporter import register as register_op_vox, unregister as unregister_op_vox
-from vox_exporter.operators.operator_qb_exporter import register as register_op_qr, unregister as unregister_op_qr
+from vox_exporter.operators.operator_qb_exporter import register as register_op_qb, unregister as unregister_op_qb
 from vox_exporter.operators.operator_modal_timer import register_modal_timer, unregister_modal_timer
 from vox_exporter.translations import register_translations, unregister_translations
 
@@ -48,10 +48,10 @@ def register():
     register_translations()
     #register_modal_timer()
     register_op_vox()
-    register_op_qr()
+    register_op_qb()
 
 def unregister():
     unregister_translations()
     #unregister_modal_timer()
     unregister_op_vox()
-    unregister_op_qr()
+    unregister_op_qb()
