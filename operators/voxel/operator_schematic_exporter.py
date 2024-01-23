@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_minecraft_schematic(BaseOperatorExporter):
+    bl_idname = "export.minecraft_schematic"
+    bl_label = "Minecraft Schematic (.schematic)"
+    bl_description = "Export selected objects to Minecraft Schematic format (.schematic)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".schematic"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.schematic",
         options={'HIDDEN'},
         maxlen=255,
     )

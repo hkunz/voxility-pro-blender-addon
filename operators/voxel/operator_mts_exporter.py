@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_minetest_template(BaseOperatorExporter):
+    bl_idname = "export.minetest_template"
+    bl_label = "Minetest Template (.mts)"
+    bl_description = "Export selected objects to Minetest Template format (.mts)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".mts"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.mts",
         options={'HIDDEN'},
         maxlen=255,
     )

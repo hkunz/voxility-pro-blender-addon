@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_voxel3d(BaseOperatorExporter):
+    bl_idname = "export.voxel3d"
+    bl_label = "Voxel3D (.v3a)"
+    bl_description = "Export selected objects to Voxel3D format (.v3a)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".v3a"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.v3a",
         options={'HIDDEN'},
         maxlen=255,
     )

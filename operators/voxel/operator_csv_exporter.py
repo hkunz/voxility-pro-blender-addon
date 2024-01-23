@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_sproxel_csv(BaseOperatorExporter):
+    bl_idname = "export.sproxel_csv"
+    bl_label = "Sproxel csv (.csv)"
+    bl_description = "Export selected objects to Sproxel csv format (.csv)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".csv"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.csv",
         options={'HIDDEN'},
         maxlen=255,
     )

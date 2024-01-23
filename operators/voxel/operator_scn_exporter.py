@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_animatoon_3d_scene(BaseOperatorExporter):
+    bl_idname = "export.animatoon_3d_scene"
+    bl_label = "Animatoon 3D Scene (.scn)"
+    bl_description = "Export selected objects to Animatoon 3D Scene format (.scn)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".scn"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.scn",
         options={'HIDDEN'},
         maxlen=255,
     )

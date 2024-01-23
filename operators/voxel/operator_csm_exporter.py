@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_cubic_mesh(BaseOperatorExporter):
+    bl_idname = "export.cubic_mesh"
+    bl_label = "CuBic Mesh (.csm)"
+    bl_description = "Export selected objects to CuBic Mesh format (.csm)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".csm"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.csm",
         options={'HIDDEN'},
         maxlen=255,
     )

@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_minecraft_anvil_region(BaseOperatorExporter):
+    bl_idname = "export.minecraft_anvil_region"
+    bl_label = "Minecraft Anvil Region (.mca)"
+    bl_description = "Export selected objects to Minecraft Anvil Region format (.mca)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".mca"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.mca",
         options={'HIDDEN'},
         maxlen=255,
     )

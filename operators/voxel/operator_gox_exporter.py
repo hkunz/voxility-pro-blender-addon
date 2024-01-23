@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_goxel(BaseOperatorExporter):
+    bl_idname = "export.goxel"
+    bl_label = "Goxel (.gox)"
+    bl_description = "Export selected objects to Goxel format (.gox)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".gox"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.gox",
         options={'HIDDEN'},
         maxlen=255,
     )

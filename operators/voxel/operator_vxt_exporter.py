@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_sandbox_voxedit_tilemap(BaseOperatorExporter):
+    bl_idname = "export.sandbox_voxedit_tilemap"
+    bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
+    bl_description = "Export selected objects to Sandbox VoxEdit Tilemap format (.vxt)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".vxt"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.vxt",
         options={'HIDDEN'},
         maxlen=255,
     )

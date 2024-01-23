@@ -3,16 +3,16 @@ import bpy
 
 from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
-    bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
+class EXPORT_OT_binvox_command_line_voxelizer(BaseOperatorExporter):
+    bl_idname = "export.binvox_command_line_voxelizer"
+    bl_label = "Binvox command line voxelizer (.binvox)"
+    bl_description = "Export selected objects to Binvox command line voxelizer format (.binvox)"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filename_ext = ".qb"
+    filename_ext = ".binvox"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.qb",
+        default="*.binvox",
         options={'HIDDEN'},
         maxlen=255,
     )
