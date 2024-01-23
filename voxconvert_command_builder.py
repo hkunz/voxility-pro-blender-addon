@@ -67,6 +67,9 @@ class VoxConvertCommandBuilder:
             command.append(exe)
 
         command.append("-set")
+        command.append("metric_flavor")
+        command.append("json")
+        command.append("-set")
         command.append("voxformat_scale")
         command.append(str(self.voxformat_scale))
         command.append("-set")
