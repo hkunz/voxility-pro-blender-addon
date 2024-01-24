@@ -9,5 +9,8 @@ vox-operators:
 create-next-tag:
 	./create-tag.sh -i
 
+zip:
+	./build.sh
+
 clean:
 	find . -type d -name '__pycache__' -exec rm -r {} +

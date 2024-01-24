@@ -30,6 +30,7 @@ zip_cmd="zip -r '${output_zip}' '${parent_folder}'/* \
   --exclude "$parent_folder/.git/*" \
   --exclude "$parent_folder/temp/*" \
   --exclude "$parent_folder/*.sh" \
+  --exclude "$parent_folder/*.template.*" \
   --exclude "$parent_folder/$(basename "$0")" \
 "
 
