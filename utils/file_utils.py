@@ -41,3 +41,18 @@ def check_filepath(path, ext):
     elif not path or os.path.isdir(path):
         path = os.path.join(bpy.path.abspath("//"), f"untitled{ext}")
     return path
+
+def get_file_size(file_path):
+    try:
+        size_in_bytes = os.path.getsize(file_path)
+        if size_in_bytes < 1024:
+            size = f"{size_in_bytes} bytes"
+        elif size_in_bytes < 1024 * 1024:
+            size = f"{size_in_bytes / 1024:.2f} KB"
+        elif size_in_bytes < 1024 * 1024 * 1024:
+            size = f"{size_in_bytes / (1024 * 1024):.2f} MB"
+        else:
+            size = f"{size_in_bytes / (1024 * 1024 * 1024):.2f} GB"
+        return size
+    except FileNotFoundError:
+        return None

@@ -11,7 +11,7 @@ from bpy_extras.io_utils import ExportHelper
 from vox_exporter.exceptions.command_execution_error import CommandExecutionError
 from vox_exporter.translations import get_translation
 from vox_exporter.utils.utils import export_obj, export_obj__deprecated
-from vox_exporter.utils.file_utils import check_filepath
+from vox_exporter.utils.file_utils import check_filepath, get_file_size
 from vox_exporter.utils.time_utils import format_duration
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
@@ -77,7 +77,8 @@ class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
             export_obj(obj_file)
 
         duration = format_duration(time.time() - start_time)
-        self.report({'INFO'}, get_translation('info_generated_files') + f" {obj_file} in {duration}")
+        size = get_file_size(obj_file)
+        self.report({'INFO'}, get_translation('info_generated_files') + f" {obj_file} ({size}) in {duration}")
         return obj_file
 
     def execute(self, context):
@@ -108,8 +109,9 @@ class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
             cmd = command if platform.system().lower() == "windows" else command_str
             #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
             result = subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
+            size = get_file_size(self.filepath)
             duration = format_duration(time.time() - start_time)
-            self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} in {duration}")
+            self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} ({size}) in {duration}")
         except subprocess.CalledProcessError as e:
             print(f"Error: Command exited with return code {e.returncode}")
             print("Standard Output:\n", e.stdout)

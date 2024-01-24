@@ -39,7 +39,7 @@ bl_info = {
 import stat
 from pathlib import Path
 
-from vox_exporter.utils.file_utils import get_voxconvert_filepath
+from vox_exporter.utils.file_utils import get_voxconvert_filepath, get_file_size
 from vox_exporter.menus.voxel_formats_menu import register as register_voxel_formats_menu, unregister as unregister_voxel_formats_menu
 from vox_exporter.operators.voxel.operator_vox_exporter import register as register_vox, unregister as unregister_vox
 from vox_exporter.translations import register_translations, unregister_translations
@@ -47,7 +47,7 @@ from vox_exporter.translations import register_translations, unregister_translat
 
 def add_executable_permission(exe):
     app = Path(__file__).parent / f"{exe}"
-    print("Using voxconvert: ", app)
+    print("Using voxconvert: ", app, f"({get_file_size(app)})")
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
 
 def register():
