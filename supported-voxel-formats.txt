@@ -1,0 +1,35 @@
+=====================================================================================================
+Name                            | Extension   | Loading | Saving | Thumbnails | Palette | Animations
+--------------------------------|-------------|---------|--------|------------|---------|------------
+MagicaVoxel                     | vox         | X       | X      |            |         |
+Qubicle Binary Exchange         | qb          | X       | X      |            |         |
+Qubicle Binary Tree Exchange    | qbt         | X       | X      |            |         |
+Qubicle Exchange Format ASCII   | qef         | X       | X      |            |         |
+Qubicle Project                 | qbcl        | X       | X      | X          | X       |
+Binvox command line voxelizer   | binvox      | X       | X      |            |         |
+CubeWorld CubeMap               | cub         | X       | X      |            |         |
+Minecraft Schematic             | schematic   | X       |        |            |         |
+Minecraft level dat             | dat         | X       |        |            |         |
+Minecraft Anvil Region          | mca         | X       |        | X          |         |
+Minetest Template               | mts         | X       |        | X          |         |
+Sandbox VoxEdit Collection      | vxc         | X       |        |            |         |
+Sandbox VoxEdit Hierarchy       | vxr         | X       | X      |            |         | X
+Sandbox VoxEdit Tilemap         | vxt         | X       |        |            |         |
+Sandbox VoxEdit Model           | vxm         | X       | X      |            |         |
+MagicaVoxel XRAW                | xraw        | X       | X      |            |         |
+Tiberian Sun                    | vxl         | X       | X      |            | X       |
+Voxlap Voxel Engine             | kv6         | X       | X      |            |         |
+Voxlap Voxel model format       | kvx         | X       | X      |            |         |
+Animatoon 3D Scene              | scn         | X       |        |            | X       |
+Sproxel csv                     | csv         | X       | X      | X          |         |
+StarMade                        | sment       | X       |        | X          |         |
+Goxel                           | gox         | X       | X      | X          | X       |
+Voxel Max                       | vmax        | X       | X      | X          |         |
+Voxel Builder                   | vbx         | X       |        |            |         |
+Voxel3D                         | v3a         | X       | X      |            |         |
+Vengi                           | vengi       | X       | X      | X          | X       |
+Nicks Voxel Model               | nvm         | X       |        |            |         |
+Particubes                      | pcubes      | X       | X      | X          |         |
+CuBic Mesh                      | csm         | X       |        |            |         |
+Cubzh                           | 3zh         | X       | X      | X          | X       |
+Cubzh World                     | b64         | X       |        |            |         |

@@ -3,6 +3,8 @@
 all:
 
 vox-operators:
+	@echo "Generating supported-formats json file..."
+	./generate-supported-formats-json.sh
 	@echo "Generating operators..."
 	./generate-op-exporter.sh --all
 

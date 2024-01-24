@@ -8,23 +8,25 @@ VOX_OPERATOR_TEMPLATE="operator_{type}_exporter.template.txt"
 FORMATS_FILE="supported-voxel-formats.txt"
 TAB="    "
 
-declare -A formats
+if ! command -v jq &> /dev/null; then
+    echo "jq is not installed. Please install it before running the script."
+    exit 1
+fi
 
-process_voxel_format() {
-    line=$1
-    type=$(echo "$line" | awk -F ': ' '{print $1}')
-    name=$(echo "$line" | awk -F ': ' '{$1=""; print $0}' | sed 's/^[[:space:]]*//')
-    formats["$type"]=$name
+JSON=$(cat "supported-voxel-formats.json")
+
+get_voxel_format_name() {
+    local extension="$1"
+    local file_content="$2"
+    local name=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .name')
+    echo $name
 }
 
-read_and_process_voxel_formats() {
-    while IFS= read -r line; do
-        line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-        if [ -z "$line" ]; then
-            break
-        fi
-        process_voxel_format "$line"
-    done < "${VOX_OPERATORS_DIR}${FORMATS_FILE}"
+get_voxel_format_saving_state() {
+    local extension="$1"
+    local file_content="$2"
+    local saving_state=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .saving')
+    echo $([ -n "$saving_state" ] && [ "$saving_state" -ne 0 ] && echo "1" || echo "")
 }
 
 get_usage_text() {
@@ -66,15 +68,20 @@ generate_voxel_formats_menu_py_file() {
 
     cp "$template_file" "$output_file"
 
-    for type in "${!formats[@]}"; do
+    extensions=$(echo "$JSON" | jq -r '.[].extension')
+
+    for type in $extensions; do
         if [ "$type" == "vox" ]; then
             continue
         fi
-        name="${formats[$type]}"
+        name=$(get_voxel_format_name "$type" "$JSON")
         code_name=$(get_code_name "$name")
 
         imports_content+="from vox_exporter.operators.voxel.operator_${type}_exporter import EXPORT_OT_${code_name}\n"
-        classes_content+="${TAB}EXPORT_OT_${code_name},\n"
+        save=$(get_voxel_format_saving_state "$type" "$JSON")
+        if [ -n "$save" ] && [ "$save" -ne 0 ]; then
+            classes_content+="${TAB}EXPORT_OT_${code_name},\n"
+        fi
     done
 
     sed -i " \
@@ -88,25 +95,24 @@ generate_voxel_formats_menu_py_file() {
 
 
 if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
-    read_and_process_voxel_formats
-    for type in "${!formats[@]}"; do
-        name="${formats[$type]}"
+    extensions=$(echo "$JSON" | jq -r '.[].extension')
+    for type in $extensions; do
         if [ "$type" == "vox" ]; then
             continue
         fi
+        name=$(get_voxel_format_name "$type" "$JSON")
         copy_and_modify_template $type "$name"
     done
     generate_voxel_formats_menu_py_file
 
 elif [ "$#" -eq 1 ]; then
-    read_and_process_voxel_formats
     type="$1"
-    if [[ ! -v formats["$type"] ]]; then
+    name=$(get_voxel_format_name "$type" "$JSON")
+    if [ -z "$name" ]; then
         echo "There is no support for voxel format '$type'."
         exit 1
     fi
     echo "Processing type: $type"
-    name="${formats[$type]}"
     copy_and_modify_template $type "$name"
 else
     echo "$(get_usage_text)"
