@@ -1,7 +1,7 @@
 import json
 import os
 
-from vox_exporter.utils import get_addon_root_dir
+from vox_exporter.utils.utils import get_addon_root_dir
 
 LANG = 'en'
 loaded_translations = None
