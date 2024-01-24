@@ -1,10 +1,6 @@
-import bpy
-import os
 import platform
-import glob
 
-from vox_exporter.utils import get_addon_root_dir, get_voxconvert_version
-from vox_exporter.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
+from vox_exporter.utils import get_voxconvert_filepath
 
 class VoxConvertCommandBuilder:
     def __init__(self,
@@ -24,10 +20,6 @@ class VoxConvertCommandBuilder:
         self.surface_only = surface_only
         self.voxformat_voxelizemode = voxformat_voxelizemode
 
-    def check_exe_match(self, matches, voxconvert_version):
-        if len(matches) == 0:
-            raise VoxConvertExeMissingError(voxconvert_version)
-
     # ====================================================================
     # Documentation https://vengi-voxel.github.io/vengi/Configuration/
     #
@@ -39,31 +31,15 @@ class VoxConvertCommandBuilder:
     # ====================================================================
 
     def build_command(self):
-        addon_root = get_addon_root_dir()
-
-        system = platform.system().lower()
-        voxconvert_version = get_voxconvert_version()
-        exe_base_dir = "executable"
-        exe_base_name = "voxconvert"
-
         command = []
+        system = platform.system().lower()
+        exe = get_voxconvert_filepath()
 
-        if system == "darwin":
-            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
-            self.check_exe_match(matching_files, voxconvert_version)
-            exe = os.path.join(addon_root, matching_files[0]).replace(" ", "\ ")
-            command.append(exe)
-
-        elif system == "windows":
-            matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
-            self.check_exe_match(matching_files, voxconvert_version)
-            exe = os.path.join(addon_root, matching_files[0])
+        if system == "windows":
             command.append('powershell')
             command.append('-Command')
             command.append(f'& "{exe}"')
-
         else:
-            exe = "vengi-voxconvert"
             command.append(exe)
 
         command.append("-set")
