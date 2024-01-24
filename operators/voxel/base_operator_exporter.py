@@ -10,7 +10,9 @@ from bpy_extras.io_utils import ExportHelper
 
 from vox_exporter.exceptions.command_execution_error import CommandExecutionError
 from vox_exporter.translations import get_translation
-from vox_exporter.utils.utils import export_obj, export_obj__deprecated, check_filepath, format_duration
+from vox_exporter.utils.utils import export_obj, export_obj__deprecated
+from vox_exporter.utils.file_utils import check_filepath
+from vox_exporter.utils.time_utils import format_duration
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
 

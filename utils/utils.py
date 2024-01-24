@@ -1,44 +1,13 @@
 import bpy
-import glob
-import os
-import platform
 import re
 
 from vox_exporter import bl_info
-from vox_exporter.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
 
 def get_voxconvert_version():
     pattern = r' voxconvert-(\d+\.\d+\.\d+) '
     match = re.search(pattern, bl_info["description"])
     version = match.group(1)
     return version
-
-def get_addon_root_dir():
-    # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\vox_exporter\utils.py
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-    addon_directory = os.path.dirname(script_directory)
-    return addon_directory
-
-def check_filepath(path, ext):
-    if os.path.isdir(path):
-        path = os.path.join(path, f"untitled{ext}")
-    elif not path or os.path.isdir(path):
-        path = os.path.join(bpy.path.abspath("//"), f"untitled{ext}")
-    return path
-
-def format_duration(seconds):
-    hours, remainder = divmod(seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-
-    result = []
-    if hours:
-        result.append(f"{int(hours)} hours")
-    if minutes:
-        result.append(f"{int(minutes)} minutes")
-    if seconds:
-        result.append(f"{int(seconds)} seconds")
-
-    return ' '.join(result)
 
 def export_obj(filepath):
 
@@ -122,26 +91,3 @@ def export_obj__deprecated(filepath):
     )
 
     return filepath
-
-def check_exe_match(matches, voxconvert_version):
-    if len(matches) == 0:
-        raise VoxConvertExeMissingError(voxconvert_version)
-
-def get_voxconvert_filepath():
-    addon_root = get_addon_root_dir()
-    system = platform.system().lower()
-    voxconvert_version = get_voxconvert_version()
-    exe_base_dir = "executable"
-    exe_base_name = "voxconvert"
-
-    if system == "darwin":
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
-        check_exe_match(matching_files, voxconvert_version)
-        return os.path.join(addon_root, matching_files[0]).replace(" ", "\ ")
-
-    if system == "windows":
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
-        check_exe_match(matching_files, voxconvert_version)
-        return os.path.join(addon_root, matching_files[0])
-
-    return "vengi-voxconvert"
