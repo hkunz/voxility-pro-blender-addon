@@ -36,12 +36,16 @@ bl_info = {
     "category": "Import-Export",
 }
 
-import bpy
+import stat
+from pathlib import Path
 
 from vox_exporter.menus.voxel_formats_menu import register as register_voxel_formats_menu, unregister as unregister_voxel_formats_menu
 from vox_exporter.operators.voxel.operator_vox_exporter import register as register_vox, unregister as unregister_vox
 from vox_exporter.translations import register_translations, unregister_translations
 
+def add_executable_permission():
+    app = Path(__file__).parent / "file.exe" #TODO
+    app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
 
 def register():
     register_translations()
