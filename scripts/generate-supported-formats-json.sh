@@ -27,8 +27,9 @@ tail -n +3 "$input_file" | while IFS= read -r line; do
     thumbnails=$(echo "${columns[4]}" | grep -q "X" && echo 1 || echo 0)
     palette=$(echo "${columns[5]}" | grep -q "X" && echo 1 || echo 0)
     animations=$(echo "${columns[6]}" | grep -q "X" && echo 1 || echo 0)
+    bugged=$(echo "${columns[7]}" | grep -q "X" && echo 1 || echo 0)
 
-    json="{\"name\":\"$name\",\"extension\":\"$extension\",\"loading\":$loading,\"saving\":$saving,\"thumbnails\":$thumbnails,\"palette\":$palette,\"animations\":$animations},"
+    json="{\"name\":\"$name\",\"extension\":\"$extension\",\"loading\":$loading,\"saving\":$saving,\"thumbnails\":$thumbnails,\"palette\":$palette,\"animations\":$animations,\"bugged\":$bugged},"
 
     echo "$json" >> "$json_output_file"
 done

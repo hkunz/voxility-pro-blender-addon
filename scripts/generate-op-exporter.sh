@@ -29,6 +29,13 @@ get_voxel_format_saving_state() {
     echo $([ -n "$saving_state" ] && [ "$saving_state" -ne 0 ] && echo "1" || echo "")
 }
 
+get_voxel_format_bugged_state() {
+    local extension="$1"
+    local file_content="$2"
+    local bugged_state=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .bugged')
+    echo $([ -n "$bugged_state" ] && [ "$bugged_state" -ne 0 ] && echo "1" || echo "")
+}
+
 get_usage_text() {
     echo "Usage: $0 [-a|--all] | <type> <name>"
 }
@@ -79,7 +86,8 @@ generate_voxel_formats_menu_py_file() {
 
         imports_content+="from vox_exporter.operators.voxel.operator_${type}_exporter import EXPORT_OT_${code_name}\n"
         save=$(get_voxel_format_saving_state "$type" "$JSON")
-        if [ -n "$save" ] && [ "$save" -ne 0 ]; then
+        bugged=$(get_voxel_format_bugged_state "$type" "$JSON")
+        if [ -n "$save" ] && [ "$save" -ne 0 ] && [ "$bugged" != '1' ]; then
             classes_content+="${TAB}EXPORT_OT_${code_name},\n"
         fi
     done

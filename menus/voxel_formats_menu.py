@@ -48,12 +48,10 @@ EXPORTER_CLASSES = [
     EXPORT_OT_tiberian_sun,
     EXPORT_OT_voxlap_voxel_engine,
     EXPORT_OT_voxlap_voxel_model_format,
-    EXPORT_OT_sproxel_csv,
     EXPORT_OT_goxel,
     EXPORT_OT_voxel_max,
     EXPORT_OT_voxel3d,
     EXPORT_OT_vengi,
-    EXPORT_OT_particubes,
     EXPORT_OT_cubzh,
 ]
 
