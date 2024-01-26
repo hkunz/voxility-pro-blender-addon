@@ -3,8 +3,6 @@
 MENUS_DIR="menus/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
 VOX_OP_BASE_DIR="operators/voxel/"
-VOX_OP_EXPORTERS_DIR="${VOX_OP_BASE_DIR}exporters/"
-VOX_OP_TEMPLATE="operator_{type}_exporter.template.txt"
 FORMATS_FILE="supported-voxel-formats.txt"
 TAB="    "
 
@@ -15,25 +13,10 @@ fi
 
 JSON=$(cat "supported-voxel-formats.json")
 
-get_voxel_format_name() {
+get_vox_column_value() {
     local extension="$1"
     local file_content="$2"
-    local name=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .name')
-    echo $name
-}
-
-get_voxel_format_saving_state() {
-    local extension="$1"
-    local file_content="$2"
-    local saving_state=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .saving')
-    echo $([ -n "$saving_state" ] && [ "$saving_state" -ne 0 ] && echo "1" || echo "")
-}
-
-get_voxel_format_bugged_state() {
-    local extension="$1"
-    local file_content="$2"
-    local bugged_state=$(echo "$file_content" | jq -r --arg ext "$extension" '.[] | select(.extension == $ext) | .bugged')
-    echo $([ -n "$bugged_state" ] && [ "$bugged_state" -ne 0 ] && echo "1" || echo "")
+    echo "$file_content" | jq -r --arg ext "$extension" --arg column "$3" '.[] | select(.extension == $ext) | .[$column]'
 }
 
 get_usage_text() {
@@ -53,22 +36,20 @@ copy_and_modify_template() {
     local name="$2"
 
     code_name=$(get_code_name "$name")
-    source_file="${VOX_OP_BASE_DIR}${VOX_OP_TEMPLATE}"
-    destination_file="${VOX_OP_EXPORTERS_DIR}operator_${type}_exporter.py"
+    source_file="${VOX_OP_BASE_DIR}operator_{type}_${3}er.template.txt"
+    destination_file="${VOX_OP_BASE_DIR}${3}ers/operator_${type}_${3}er.py"
 
     cp "$source_file" "$destination_file"
 
     sed -i "1i # $(get_autogenerate_notice)" "$destination_file"
     sed -i "s/{{type}}/$type/g; s/{{name}}/$name/g; s/{{code_name}}/$code_name/g" "$destination_file"
 
-    #echo "${TAB}bpy.utils.register_class(EXPORT_OT_$code_name)"
-    #echo "from vox_exporter.operators.voxel.operator_${type}_exporter import EXPORT_OT_$code_name"
-    echo "Generated operator .$type exporter file: $destination_file"
+    echo "Generated operator .$type ${3}er file: $destination_file"
 }
 
 generate_voxel_formats_menu_py_file() {
     template_file="${MENUS_DIR}${VOX_FORMATS_MENU_TEMPLATE}"
-    output_file="${MENUS_DIR}voxel_formats_${2}_menu.py"
+    output_file="${MENUS_DIR}voxel_formats_${1}_menu.py"
 
     imports_content=""
     classes_content=""
@@ -81,16 +62,20 @@ generate_voxel_formats_menu_py_file() {
         if [ "$type" == "vox" ]; then
             continue
         fi
-        name=$(get_voxel_format_name "$type" "$JSON")
+        name=$(get_vox_column_value "$type" "$JSON" "name")
         code_name=$(get_code_name "$name")
 
-        import_path="vox_exporter.$(echo $VOX_OP_EXPORTERS_DIR | sed 's/\//./g')operator_${type}_${2}er"
-        class_prefix="$(echo "$2" | tr '[:lower:]' '[:upper:]')_OT_"
+        import_path="vox_exporter.$(echo ${VOX_OP_BASE_DIR}${1}ers/ | sed 's/\//./g')operator_${type}_${1}er"
+        class_prefix="$(echo "$1" | tr '[:lower:]' '[:upper:]')_OT_"
         module="${class_prefix}${code_name}"
         imports_content+="from ${import_path} import ${module}\n"
-        save=$(get_voxel_format_saving_state "$type" "$JSON")
-        bugged=$(get_voxel_format_bugged_state "$type" "$JSON")
-        if [ -n "$save" ] && [ "$save" -ne 0 ] && [ "$bugged" != '1' ]; then
+        load=$(get_vox_column_value "$type" "$JSON" "loading")
+        save=$(get_vox_column_value "$type" "$JSON" "saving")
+        bugged=$(get_vox_column_value "$type" "$JSON" "bugged")
+        if [ "$bugged" == '1' ]; then
+            continue
+        fi
+        if ([ "$1" == 'export' ] && [ "$save" == '1' ]) || ([ "$1" == 'import' ] && [ "$load" == '1' ]); then
             classes_content+="${TAB}${class_prefix}${code_name},\n"
         fi
     done
@@ -99,28 +84,31 @@ generate_voxel_formats_menu_py_file() {
         s/{{imports}}/$imports_content/; \
         s/{{classes}}/$classes_content/" \
     "$output_file"
-    sed -i "s/{{menu_class}}/VoxelFormats${2^}Menu/g" "$output_file"
-    sed -i "s/{{import-export}}/${2}/g" "$output_file"
+    sed -i "s/{{menu_class}}/VoxelFormats${1^}Menu/g" "$output_file"
+    sed -i "s/{{import-export}}/${1}/g" "$output_file"
     sed -i "1i # $(get_autogenerate_notice)" "$output_file"
     echo "Generated file: $output_file"
 }
 
-
-if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+generate_op_files() {
     extensions=$(echo "$JSON" | jq -r '.[].extension')
     for type in $extensions; do
         if [ "$type" == "vox" ]; then
             continue
         fi
-        name=$(get_voxel_format_name "$type" "$JSON")
-        copy_and_modify_template $type "$name"
+        name=$(get_vox_column_value "$type" "$JSON" "name")
+        copy_and_modify_template $type "$name" "$1"
     done
-    generate_voxel_formats_menu_py_file "$VOX_FORMATS_EXPORT_MENU_FILE" "export"
-    generate_voxel_formats_menu_py_file "$VOX_FORMATS_IMPORT_MENU_FILE" "import"
+    generate_voxel_formats_menu_py_file "$1"
+}
+
+if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+    generate_op_files "import"
+    generate_op_files "export"
 
 elif [ "$#" -eq 1 ]; then
     type="$1"
-    name=$(get_voxel_format_name "$type" "$JSON")
+    name=$(get_vox_column_value "$type" "$JSON" "name")
     if [ -z "$name" ]; then
         echo "There is no support for voxel format '$type'."
         exit 1

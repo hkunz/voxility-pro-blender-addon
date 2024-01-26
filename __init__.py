@@ -41,6 +41,7 @@ from pathlib import Path
 
 from vox_exporter.utils.file_utils import get_voxconvert_filepath, get_file_size
 from vox_exporter.menus.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
+from vox_exporter.menus.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
 from vox_exporter.operators.voxel.exporters.operator_vox_exporter import register as register_vox, unregister as unregister_vox
 from vox_exporter.translations import register_translations, unregister_translations
 
@@ -55,8 +56,10 @@ def register():
     register_translations()
     register_vox()
     register_vox_export_menu()
+    register_vox_import_menu()
 
 def unregister():
     unregister_translations()
     unregister_vox()
     unregister_vox_export_menu()
+    unregister_vox_import_menu()
