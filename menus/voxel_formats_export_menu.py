@@ -55,8 +55,8 @@ EXPORTER_CLASSES = [
     EXPORT_OT_cubzh,
 ]
 
-class VoxelFormatsMenu(bpy.types.Menu):
-    bl_idname = "TOPBAR_MT_select_submenu"
+class VoxelFormatsExportMenu(bpy.types.Menu):
+    bl_idname = "TOPBAR_MT_select_export_submenu"
     bl_label = "Select"
 
     def draw(self, context):
@@ -65,16 +65,16 @@ class VoxelFormatsMenu(bpy.types.Menu):
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
 def menu_func_voxel_formats_menu(self, context):
-    self.layout.menu(VoxelFormatsMenu.bl_idname, text="More Voxel Formats")
+    self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="More Voxel Formats")
 
 def register():
     for cls in EXPORTER_CLASSES:
         bpy.utils.register_class(cls)
-    bpy.utils.register_class(VoxelFormatsMenu)
+    bpy.utils.register_class(VoxelFormatsExportMenu)
     bpy.types.TOPBAR_MT_file_export.append(menu_func_voxel_formats_menu)
 
 def unregister():
     for cls in EXPORTER_CLASSES:
         bpy.utils.unregister_class(cls)
-    bpy.utils.unregister_class(VoxelFormatsMenu)
+    bpy.utils.unregister_class(VoxelFormatsExportMenu)
     bpy.types.TOPBAR_MT_file_export.remove(menu_func_voxel_formats_menu)
