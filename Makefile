@@ -1,12 +1,22 @@
 .PHONY: all clean operators
 
-all:
+all: \
+	vox-support-formats \
+	vox-operators \
+	vox-menus
 
-vox-operators:
+vox-support-formats:
 	@echo "Generating supported-formats json file..."
 	./scripts/generate-supported-formats-json.sh
+
+vox-operators:
 	@echo "Generating operators..."
 	./scripts/generate-op-exporter.sh --all
+
+vox-menus:
+	@echo "Generating voxel submenu files..."
+	./scripts/generate-vox-menu-py-file.sh import
+	./scripts/generate-vox-menu-py-file.sh export
 
 create-next-tag:
 	./scripts/create-tag.sh -i
