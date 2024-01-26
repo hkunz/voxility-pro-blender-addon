@@ -21,10 +21,10 @@ def register():
     for cls in CLASSES:
         bpy.utils.register_class(cls)
     bpy.utils.register_class({{menu_class}})
-    bpy.types.TOPBAR_MT_file_export.append(menu_{{menu_class}}_func_callback)
+    bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_{{menu_class}}_func_callback)
 
 def unregister():
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class({{menu_class}})
-    bpy.types.TOPBAR_MT_file_export.remove(menu_{{menu_class}}_func_callback)
+    bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_{{menu_class}}_func_callback)

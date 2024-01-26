@@ -2,9 +2,9 @@
 
 MENUS_DIR="menus/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
-VOX_FORMATS_MENU_FILE="voxel_formats_export_menu.py"
-VOX_OPERATORS_DIR="operators/voxel/exporters/"
-VOX_OPERATOR_TEMPLATE="operator_{type}_exporter.template.txt"
+VOX_OP_BASE_DIR="operators/voxel/"
+VOX_OP_EXPORTERS_DIR="${VOX_OP_BASE_DIR}exporters/"
+VOX_OP_TEMPLATE="operator_{type}_exporter.template.txt"
 FORMATS_FILE="supported-voxel-formats.txt"
 TAB="    "
 
@@ -53,8 +53,8 @@ copy_and_modify_template() {
     local name="$2"
 
     code_name=$(get_code_name "$name")
-    source_file="${VOX_OPERATORS_DIR}${VOX_OPERATOR_TEMPLATE}"
-    destination_file="${VOX_OPERATORS_DIR}operator_${type}_exporter.py"
+    source_file="${VOX_OP_BASE_DIR}${VOX_OP_TEMPLATE}"
+    destination_file="${VOX_OP_EXPORTERS_DIR}operator_${type}_exporter.py"
 
     cp "$source_file" "$destination_file"
 
@@ -68,7 +68,7 @@ copy_and_modify_template() {
 
 generate_voxel_formats_menu_py_file() {
     template_file="${MENUS_DIR}${VOX_FORMATS_MENU_TEMPLATE}"
-    output_file="${MENUS_DIR}${VOX_FORMATS_MENU_FILE}"
+    output_file="${MENUS_DIR}voxel_formats_${2}_menu.py"
 
     imports_content=""
     classes_content=""
@@ -84,11 +84,14 @@ generate_voxel_formats_menu_py_file() {
         name=$(get_voxel_format_name "$type" "$JSON")
         code_name=$(get_code_name "$name")
 
-        imports_content+="from vox_exporter.operators.voxel.operator_${type}_exporter import EXPORT_OT_${code_name}\n"
+        import_path="vox_exporter.$(echo $VOX_OP_EXPORTERS_DIR | sed 's/\//./g')operator_${type}_${2}er"
+        class_prefix="$(echo "$2" | tr '[:lower:]' '[:upper:]')_OT_"
+        module="${class_prefix}${code_name}"
+        imports_content+="from ${import_path} import ${module}\n"
         save=$(get_voxel_format_saving_state "$type" "$JSON")
         bugged=$(get_voxel_format_bugged_state "$type" "$JSON")
         if [ -n "$save" ] && [ "$save" -ne 0 ] && [ "$bugged" != '1' ]; then
-            classes_content+="${TAB}EXPORT_OT_${code_name},\n"
+            classes_content+="${TAB}${class_prefix}${code_name},\n"
         fi
     done
 
@@ -96,7 +99,8 @@ generate_voxel_formats_menu_py_file() {
         s/{{imports}}/$imports_content/; \
         s/{{classes}}/$classes_content/" \
     "$output_file"
-    sed -i "s/{{menu_class}}/VoxelFormatsExportMenu/g" "$output_file"
+    sed -i "s/{{menu_class}}/VoxelFormats${2^}Menu/g" "$output_file"
+    sed -i "s/{{import-export}}/${2}/g" "$output_file"
     sed -i "1i # $(get_autogenerate_notice)" "$output_file"
     echo "Generated file: $output_file"
 }
@@ -111,7 +115,8 @@ if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
         name=$(get_voxel_format_name "$type" "$JSON")
         copy_and_modify_template $type "$name"
     done
-    generate_voxel_formats_menu_py_file
+    generate_voxel_formats_menu_py_file "$VOX_FORMATS_EXPORT_MENU_FILE" "export"
+    generate_voxel_formats_menu_py_file "$VOX_FORMATS_IMPORT_MENU_FILE" "import"
 
 elif [ "$#" -eq 1 ]; then
     type="$1"
