@@ -1,32 +1,30 @@
 import bpy
 
-#from vox_exporter.operators.voxel.operator_{{type}}_exporter import EXPORT_OT_{{code_name}}
 {{imports}}
 
-EXPORTER_CLASSES = [
-    #EXPORT_OT_{{code_name}},
+CLASSES = [
 {{classes}}]
 
-class VoxelFormatsExportMenu(bpy.types.Menu):
-    bl_idname = "TOPBAR_MT_select_export_submenu"
+class {{menu_class}}(bpy.types.Menu):
+    bl_idname = "TOPBAR_MT_select_{{menu_class}}_submenu"
     bl_label = "Select"
 
     def draw(self, context):
         layout = self.layout
-        for cls in EXPORTER_CLASSES:
+        for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_func_voxel_formats_menu(self, context):
-    self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="More Voxel Formats")
+def menu_{{menu_class}}_func_callback(self, context):
+    self.layout.menu({{menu_class}}.bl_idname, text="More Voxel Formats")
 
 def register():
-    for cls in EXPORTER_CLASSES:
+    for cls in CLASSES:
         bpy.utils.register_class(cls)
-    bpy.utils.register_class(VoxelFormatsExportMenu)
-    bpy.types.TOPBAR_MT_file_export.append(menu_func_voxel_formats_menu)
+    bpy.utils.register_class({{menu_class}})
+    bpy.types.TOPBAR_MT_file_export.append(menu_{{menu_class}}_func_callback)
 
 def unregister():
-    for cls in EXPORTER_CLASSES:
+    for cls in CLASSES:
         bpy.utils.unregister_class(cls)
-    bpy.utils.unregister_class(VoxelFormatsExportMenu)
-    bpy.types.TOPBAR_MT_file_export.remove(menu_func_voxel_formats_menu)
+    bpy.utils.unregister_class({{menu_class}})
+    bpy.types.TOPBAR_MT_file_export.remove(menu_{{menu_class}}_func_callback)
