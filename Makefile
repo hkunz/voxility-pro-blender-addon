@@ -24,5 +24,8 @@ create-next-tag:
 zip:
 	./scripts/build.sh
 
+fix-py-permissions:
+	find . -type f -name '*.py' -exec chmod 755 {} +
+
 clean:
 	find . -type d -name '__pycache__' -exec rm -r {} +
