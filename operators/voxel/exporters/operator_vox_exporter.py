@@ -7,7 +7,6 @@ class EXPORT_OT_magica_voxel(BaseOperatorExporter):
     bl_idname = "export.magica_voxel"
     bl_label = "MagicaVoxel (.vox)"
     bl_description = "Export selected objects to MagicaVoxel format (.vox)"
-    bl_options = {'REGISTER', 'UNDO'}
 
     filename_ext = ".vox"
 

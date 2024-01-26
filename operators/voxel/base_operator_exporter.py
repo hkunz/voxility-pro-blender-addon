@@ -6,8 +6,7 @@ import tempfile
 import shutil
 import time
 
-from bpy_extras.io_utils import ExportHelper
-
+from vox_exporter.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from vox_exporter.exceptions.command_execution_error import CommandExecutionError
 from vox_exporter.translations import get_translation
 from vox_exporter.utils.utils import export_obj, export_obj__deprecated
@@ -16,17 +15,8 @@ from vox_exporter.utils.time_utils import format_duration
 from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
 
 
-class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
-    bl_description = "Base Exporter"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    filename_ext = ""  # You need to set this in your specific file format subclasses
-
-    filter_glob: bpy.props.StringProperty(
-        default="*.*",
-        options={'HIDDEN'},
-        maxlen=255,
-    )
+class BaseOperatorExporter(BaseVoxelOperator):
+    bl_description = "Base Voxel Operator Exporter"
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",
@@ -62,12 +52,12 @@ class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
     )
 
     def draw(self, context):
-        layout = self.layout
-        layout.prop(self, "voxformat_scale")
-        layout.prop(self, "palette_file")
-        layout.prop(self, "export_palette")
-        layout.prop(self, "surface_only")
-        layout.prop(self, "voxformat_voxelizemode")
+        super().draw(context)
+        self.layout.prop(self, "voxformat_scale")
+        self.layout.prop(self, "palette_file")
+        self.layout.prop(self, "export_palette")
+        self.layout.prop(self, "surface_only")
+        self.layout.prop(self, "voxformat_voxelizemode")
 
     def export_obj(self, obj_file):
         start_time = time.time()
@@ -82,8 +72,6 @@ class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
         return obj_file
 
     def execute(self, context):
-
-        #bpy.ops.wm.modal_timer_operator()
         start_time = time.time()
         self.filepath = check_filepath(self.filepath, self.filename_ext)
 
@@ -123,8 +111,5 @@ class BaseOperatorExporter(bpy.types.Operator, ExportHelper):
         return {'FINISHED'}
 
     def invoke(self, context, event):
-        wm = context.window_manager
-        wm.fileselect_add(self)
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
         self.voxformat_scale = 1.0
-        return {'RUNNING_MODAL'}
+        return super().invoke(context, event)

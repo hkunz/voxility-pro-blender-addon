@@ -91,3 +91,8 @@ def export_obj__deprecated(filepath):
     )
 
     return filepath
+
+def abstract_method(func):
+    def wrapper(*args, **kwargs):
+        raise NotImplementedError(f"{func.__name__} must be overridden in subclass.")
+    return wrapper

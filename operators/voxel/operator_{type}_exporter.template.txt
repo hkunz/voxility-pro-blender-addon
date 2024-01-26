@@ -6,7 +6,6 @@ class EXPORT_OT_{{code_name}}(BaseOperatorExporter):
     bl_idname = "export.{{code_name}}"
     bl_label = "{{name}} (.{{type}})"
     bl_description = "Export selected objects to {{name}} format (.{{type}})"
-    bl_options = {'REGISTER', 'UNDO'}
 
     filename_ext = ".{{type}}"
 

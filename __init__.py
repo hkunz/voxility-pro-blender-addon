@@ -55,8 +55,8 @@ def add_executable_permission(exe):
 def register():
     add_executable_permission(get_voxconvert_filepath())
     register_translations()
-    register_vox_exporter()
     register_vox_importer()
+    register_vox_exporter()
     register_vox_export_menu()
     register_vox_import_menu()
 

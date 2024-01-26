@@ -46,7 +46,7 @@ generate_voxel_formats_menu_py_file() {
     "$output_file"
     sed -i "s/{{menu_class}}/VoxelFormats${1^}Menu/g" "$output_file"
     sed -i "s/{{import-export}}/${1}/g" "$output_file"
-    sed -i "1i # $(get_autogenerate_notice)" "$output_file"
+    sed -i "1i $(get_autogenerate_notice)" "$output_file"
     echo "Generated file: $output_file"
 }
 

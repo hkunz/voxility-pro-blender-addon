@@ -6,7 +6,6 @@ class IMPORT_OT_{{code_name}}(BaseOperatorImporter):
     bl_idname = "import.{{code_name}}"
     bl_label = "{{name}} (.{{type}})"
     bl_description = "Import {{name}} format (.{{type}})"
-    bl_options = {'REGISTER', 'UNDO'}
 
     filename_ext = ".{{type}}"
 
@@ -15,7 +14,3 @@ class IMPORT_OT_{{code_name}}(BaseOperatorImporter):
         options={'HIDDEN'},
         maxlen=255,
     )
-
-    def execute(self, context):
-        # Your import logic goes here
-        return {'FINISHED'}
