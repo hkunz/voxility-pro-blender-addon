@@ -3,7 +3,7 @@
 MENUS_DIR="menus/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
 VOX_FORMATS_MENU_FILE="voxel_formats_export_menu.py"
-VOX_OPERATORS_DIR="operators/voxel/"
+VOX_OPERATORS_DIR="operators/voxel/exporters/"
 VOX_OPERATOR_TEMPLATE="operator_{type}_exporter.template.txt"
 FORMATS_FILE="supported-voxel-formats.txt"
 TAB="    "
