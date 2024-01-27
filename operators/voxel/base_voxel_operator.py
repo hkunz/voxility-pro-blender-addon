@@ -45,7 +45,8 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
             print(f"Error: Command exited with return code {e.returncode}")
             print("Standard Output:\n", e.stdout)
             print("Standard Error:\n", e.stderr)
-            raise CommandExecutionError(e.returncode, e.stdout, e.stderr)
+            self.report({'ERROR'}, f"voxconvert error: {e.stderr}{self.filepath}")
+            #raise CommandExecutionError(e.returncode, e.stdout, e.stderr)
         finally:
             if self.voxility_type == "exporter":
                 shutil.rmtree(temp_dir)

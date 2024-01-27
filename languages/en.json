@@ -6,5 +6,6 @@
   "info_vox_data_imported": "Voxel file data imported:",
   "desc_export_selected_obj_to_vox": "Export selected objects to MagicaVoxel format (.vox)",
   "error_no_addon_dir_found": "No addon directory found for:",
-  "error_no_converter_exe": "No vox converter executable found!"
+  "error_no_converter_exe": "No vox converter executable found!",
+  "error_file_nonexistent": "File does not exist!"
 }

@@ -38,8 +38,12 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.report({'INFO'}, get_translation('info_imported_file') + f" {obj_file} ({size}) in {duration}")
 
     def execute(self, context):
+
+        if not os.path.exists(self.filepath):
+            self.report({'ERROR'}, get_translation('error_file_nonexistent') + f" {self.filepath}")
+            return {'CANCELLED'}
+
         start_time = time.time()
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
         temp_dir = tempfile.mkdtemp()
         output_obj_filepath = os.path.join(temp_dir, 'temp.obj')
 
@@ -53,7 +57,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.import_obj(output_obj_filepath)
         self.report({'INFO'}, get_translation('info_vox_data_imported') + f" {self.filepath}")
 
-        shutil.rmtree(temp_dir)
+        #FIXME: we need to delete the temporary directory but we can't because importing works asynchronously
+        #shutil.rmtree(temp_dir)
 
         return {'FINISHED'}
 
