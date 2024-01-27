@@ -51,7 +51,7 @@ def add_executable_permission(exe):
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
 
 def register():
-    add_executable_permission(get_voxconvert_filepath())
+    add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
     register_translations()
     register_vox_export_menu()
     register_vox_import_menu()

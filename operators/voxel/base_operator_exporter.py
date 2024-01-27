@@ -42,19 +42,12 @@ class BaseOperatorExporter(BaseVoxelOperator):
         default=False,
     )
 
-    voxformat_voxelizemode: bpy.props.BoolProperty(
-        name="Voxformat Voxelize Mode",
-        description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
-        default=False,
-    )
-
     def draw(self, context):
         super().draw(context)
         self.layout.prop(self, "voxformat_scale")
         self.layout.prop(self, "palette_file")
         self.layout.prop(self, "export_palette")
         self.layout.prop(self, "surface_only")
-        self.layout.prop(self, "voxformat_voxelizemode")
 
     def export_obj(self, obj_file):
         start_time = time.time()
@@ -80,11 +73,11 @@ class BaseOperatorExporter(BaseVoxelOperator):
         command_builder = VoxConvertCommandBuilder(
             obj_file,
             self.filepath,
+            int(self.voxformat_voxelizemode),
             self.voxformat_scale,
             self.palette_file if self.palette_file else "palette-nippon.png",
             self.export_palette,
-            self.surface_only,
-            int(self.voxformat_voxelizemode)
+            self.surface_only
         )
         command = command_builder.build_command()
         self.execute_voxconvert(command, self.filepath, start_time, get_translation('info_vox_file_created'), temp_dir)

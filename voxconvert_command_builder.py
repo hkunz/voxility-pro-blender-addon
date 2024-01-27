@@ -6,11 +6,11 @@ class VoxConvertCommandBuilder:
     def __init__(self,
             input_filepath,
             output_filepath,
+            voxformat_voxelizemode=0,
             voxformat_scale=1.0,
             palette_file=None,
             export_palette=False,
-            surface_only=False,
-            voxformat_voxelizemode=0
+            surface_only=False
         ):
         self.input_filepath = input_filepath
         self.output_filepath = output_filepath

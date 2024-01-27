@@ -49,9 +49,11 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         command_builder = VoxConvertCommandBuilder(
             self.filepath,
-            output_obj_filepath
+            output_obj_filepath,
+            int(self.voxformat_voxelizemode)
         )
         command = command_builder.build_command()
+
 
         self.execute_voxconvert(command, output_obj_filepath, start_time, get_translation('info_generated_files'), temp_dir)
         self.import_obj(output_obj_filepath)

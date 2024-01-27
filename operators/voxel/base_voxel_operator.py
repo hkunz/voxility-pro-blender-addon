@@ -28,6 +28,12 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         maxlen=255,
     )
 
+    voxformat_voxelizemode: bpy.props.BoolProperty(
+        name="Voxformat Voxelize Mode",
+        description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
+        default=False,
+    )
+
     def execute_voxconvert(self, command, output, start_time, complete_msg, temp_dir):
         command_str = ' '.join(command)
         self.report({'INFO'}, get_translation('info_execute_command') + ' ' + command_str)
@@ -52,7 +58,7 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
                 shutil.rmtree(temp_dir)
 
     def draw(self, context):
-        layout = self.layout
+        self.layout.prop(self, "voxformat_voxelizemode")
 
     @abstract_method
     def execute(self, context):
