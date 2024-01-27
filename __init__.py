@@ -1,9 +1,9 @@
-# "Voxility Voxel Exporter"
+# "Voxility Pro: Voxel File Format Toolkit"
 # Author: Harry McKenzie
 #
 # ##### BEGIN LICENSE BLOCK #####
 #
-# Voxility Voxel Exporter
+# Voxility Pro: Voxel File Format Toolkit
 # Copyright (c) 2024 Harry McKenzie
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,12 +22,12 @@
 # ##### END LICENSE BLOCK #####
 
 bl_info = {
-    "name": "Voxility Voxel Exporter",
-    "description": "Vox Exporter via voxconvert-0.0.28 imports & exports many voxel file formats", # voxconvert-X.X.X is parsed out in utils.py
+    "name": "Voxility Pro: Voxel File Format Toolkit",
+    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 8),
     "blender": (2, 93, 0),
-    "location": "File > Export > MagicaVoxel (.vox)",
+    "location": "File > Import-Export > Voxel Formats",
     "warning": "",
     "doc_url": "",
     "wiki_url": "",

@@ -4,7 +4,7 @@ import re
 from vox_exporter import bl_info
 
 def get_voxconvert_version():
-    pattern = r' voxconvert-(\d+\.\d+\.\d+) '
+    pattern = r' voxconvert-(\d+\.\d+\.\d+)$'
     match = re.search(pattern, bl_info["description"])
     version = match.group(1)
     return version
