@@ -6,13 +6,13 @@ import tempfile
 import shutil
 import time
 
-from vox_exporter.operators.voxel.base_voxel_operator import BaseVoxelOperator
-from vox_exporter.exceptions.command_execution_error import CommandExecutionError
-from vox_exporter.translations import get_translation
-from vox_exporter.utils.utils import export_obj, export_obj__deprecated
-from vox_exporter.utils.file_utils import check_filepath, get_file_size
-from vox_exporter.utils.time_utils import format_duration
-from vox_exporter.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
+from voxility_pro.exceptions.command_execution_error import CommandExecutionError
+from voxility_pro.translations import get_translation
+from voxility_pro.utils.utils import export_obj, export_obj__deprecated
+from voxility_pro.utils.file_utils import check_filepath, get_file_size
+from voxility_pro.utils.time_utils import format_duration
+from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
 
 class BaseOperatorExporter(BaseVoxelOperator):

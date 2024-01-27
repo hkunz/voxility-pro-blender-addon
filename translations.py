@@ -1,7 +1,7 @@
 import json
 import os
 
-from vox_exporter.utils.file_utils import get_addon_root_dir
+from voxility_pro.utils.file_utils import get_addon_root_dir
 
 LANG = 'en'
 loaded_translations = None

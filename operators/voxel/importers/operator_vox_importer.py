@@ -6,7 +6,7 @@
 
 import bpy
 
-from vox_exporter.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_magicavoxel(BaseOperatorImporter):
     bl_idname = "import.magicavoxel"

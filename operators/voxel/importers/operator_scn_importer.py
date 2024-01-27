@@ -6,7 +6,7 @@
 
 import bpy
 
-from vox_exporter.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_animatoon_3d_scene(BaseOperatorImporter):
     bl_idname = "import.animatoon_3d_scene"

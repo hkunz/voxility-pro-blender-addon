@@ -3,11 +3,11 @@ import glob
 import os
 import platform
 
-from vox_exporter.utils.utils import get_voxconvert_version
-from vox_exporter.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
+from voxility_pro.utils.utils import get_voxconvert_version
+from voxility_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
 
 def get_addon_root_dir():
-    # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\vox_exporter\utils.py
+    # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\voxility_pro\utils.py
     script_directory = os.path.dirname(os.path.abspath(__file__))
     addon_directory = os.path.dirname(script_directory)
     return addon_directory

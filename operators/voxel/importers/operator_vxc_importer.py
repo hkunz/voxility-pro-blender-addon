@@ -6,7 +6,7 @@
 
 import bpy
 
-from vox_exporter.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_sandbox_voxedit_collection(BaseOperatorImporter):
     bl_idname = "import.sandbox_voxedit_collection"

@@ -6,7 +6,7 @@
 
 import bpy
 
-from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_magicavoxel_xraw(BaseOperatorExporter):
     bl_idname = "export.magicavoxel_xraw"

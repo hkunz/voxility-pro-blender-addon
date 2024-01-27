@@ -1,6 +1,6 @@
 import platform
 
-from vox_exporter.utils.file_utils import get_voxconvert_filepath
+from voxility_pro.utils.file_utils import get_voxconvert_filepath
 
 class VoxConvertCommandBuilder:
     def __init__(self,

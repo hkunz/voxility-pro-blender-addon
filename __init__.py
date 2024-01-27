@@ -39,10 +39,10 @@ bl_info = {
 import stat
 from pathlib import Path
 
-from vox_exporter.utils.file_utils import get_voxconvert_filepath, get_file_size
-from vox_exporter.menus.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
-from vox_exporter.menus.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
-from vox_exporter.translations import register_translations, unregister_translations
+from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
+from voxility_pro.menus.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
+from voxility_pro.menus.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
+from voxility_pro.translations import register_translations, unregister_translations
 
 
 def add_executable_permission(exe):

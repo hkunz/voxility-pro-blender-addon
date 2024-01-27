@@ -6,7 +6,7 @@
 
 import bpy
 
-from vox_exporter.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_nicks_voxel_model(BaseOperatorExporter):
     bl_idname = "export.nicks_voxel_model"

@@ -1,8 +1,8 @@
 import bpy
 from bpy_extras.io_utils import ExportHelper
 
-from vox_exporter.utils.file_utils import check_filepath
-from vox_exporter.utils.utils import abstract_method
+from voxility_pro.utils.file_utils import check_filepath
+from voxility_pro.utils.utils import abstract_method
 
 
 class BaseVoxelOperator(bpy.types.Operator, ExportHelper):

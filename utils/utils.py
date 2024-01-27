@@ -1,7 +1,7 @@
 import bpy
 import re
 
-from vox_exporter import bl_info
+from voxility_pro import bl_info
 
 def get_voxconvert_version():
     pattern = r' voxconvert-(\d+\.\d+\.\d+)$'
