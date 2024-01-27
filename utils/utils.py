@@ -10,7 +10,7 @@ def get_voxconvert_version():
     return version
 
 def import_obj(filepath):
-    bpy.ops.wm.obj_export(filepath=filepath)
+    bpy.ops.wm.obj_import(filepath=filepath)
 
 def export_obj(filepath):
 
