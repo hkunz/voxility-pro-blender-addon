@@ -84,7 +84,7 @@ def menu_vox_import_func_callback(self, context):
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
 
 def menu_VoxelFormatsImportMenu_func_callback(self, context):
-    self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxel Formats")
+    self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
 
 def register():
     for cls in CLASSES:

@@ -27,7 +27,7 @@ bl_info = {
     "author" : "Harry McKenzie",
     "version": (1, 0, 8),
     "blender": (2, 93, 0),
-    "location": "File > Import-Export > Voxel Formats",
+    "location": "File > Import-Export > Voxility Voxel Formats",
     "warning": "",
     "doc_url": "",
     "wiki_url": "",
