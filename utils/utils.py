@@ -9,6 +9,9 @@ def get_voxconvert_version():
     version = match.group(1)
     return version
 
+def import_obj(filepath):
+    bpy.ops.wm.obj_export(filepath=filepath)
+
 def export_obj(filepath):
 
     bpy.ops.wm.obj_export(
@@ -60,6 +63,10 @@ def export_obj(filepath):
     )
 
     return filepath
+
+# bpy.ops.import_scene.obj only works until blender version 3.6
+def import_obj__deprecated(filepath):
+    bpy.ops.import_scene.obj(filepath=filepath)
 
 # bpy.ops.export_scene.obj only works until blender version 3.6
 def export_obj__deprecated(filepath):

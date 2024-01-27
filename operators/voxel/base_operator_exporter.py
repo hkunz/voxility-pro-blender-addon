@@ -1,13 +1,9 @@
 import bpy
 import os
-import subprocess
-import platform
 import tempfile
-import shutil
 import time
 
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
-from voxility_pro.exceptions.command_execution_error import CommandExecutionError
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.utils import export_obj, export_obj__deprecated
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
@@ -17,6 +13,7 @@ from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
 class BaseOperatorExporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Exporter"
+    voxility_type = "exporter"
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",
@@ -81,32 +78,16 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.export_obj(obj_file)
 
         command_builder = VoxConvertCommandBuilder(
-            self.filepath,
             obj_file,
+            self.filepath,
             self.voxformat_scale,
-            self.palette_file,
+            self.palette_file if self.palette_file else "palette-nippon.png",
             self.export_palette,
             self.surface_only,
             int(self.voxformat_voxelizemode)
         )
         command = command_builder.build_command()
-        command_str = ' '.join(command)
-        self.report({'INFO'}, get_translation('info_execute_command') + ' ' + command_str)
-
-        try:
-            cmd = command if platform.system().lower() == "windows" else command_str
-            #process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
-            result = subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
-            size = get_file_size(self.filepath)
-            duration = format_duration(time.time() - start_time)
-            self.report({'INFO'}, get_translation('info_vox_file_created') + f"{self.filepath} ({size}) in {duration}")
-        except subprocess.CalledProcessError as e:
-            print(f"Error: Command exited with return code {e.returncode}")
-            print("Standard Output:\n", e.stdout)
-            print("Standard Error:\n", e.stderr)
-            raise CommandExecutionError(e.returncode, e.stdout, e.stderr)
-        finally:
-            shutil.rmtree(temp_dir)
+        self.execute_voxconvert(command, self.filepath, start_time, get_translation('info_vox_file_created'), temp_dir)
 
         return {'FINISHED'}
 
