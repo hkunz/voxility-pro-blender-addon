@@ -35,9 +35,6 @@ copy_and_modify_template() {
 generate_op_files() {
     extensions=$(echo "$JSON" | jq -r '.[].extension')
     for type in $extensions; do
-        if [ "$type" == "vox" ]; then
-            continue
-        fi
         name=$(get_vox_column_value "$type" "$JSON" "name")
         copy_and_modify_template $type "$name" "$1"
     done

@@ -6,6 +6,7 @@
 
 import bpy
 
+from vox_exporter.operators.voxel.exporters.operator_vox_exporter import EXPORT_OT_magicavoxel
 from vox_exporter.operators.voxel.exporters.operator_qb_exporter import EXPORT_OT_qubicle_binary_exchange
 from vox_exporter.operators.voxel.exporters.operator_qbt_exporter import EXPORT_OT_qubicle_binary_tree_exchange
 from vox_exporter.operators.voxel.exporters.operator_qef_exporter import EXPORT_OT_qubicle_exchange_format_ascii
@@ -39,6 +40,7 @@ from vox_exporter.operators.voxel.exporters.operator_3zh_exporter import EXPORT_
 
 
 CLASSES = [
+    EXPORT_OT_magicavoxel,
     EXPORT_OT_qubicle_binary_exchange,
     EXPORT_OT_qubicle_binary_tree_exchange,
     EXPORT_OT_qubicle_exchange_format_ascii,
@@ -67,6 +69,9 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
+def menu_vox_export_func_callback(self, context):
+    self.layout.operator(EXPORT_OT_magicavoxel.bl_idname)
+
 def menu_VoxelFormatsExportMenu_func_callback(self, context):
     self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="More Voxel Formats")
 
@@ -74,10 +79,12 @@ def register():
     for cls in CLASSES:
         bpy.utils.register_class(cls)
     bpy.utils.register_class(VoxelFormatsExportMenu)
+    bpy.types.TOPBAR_MT_file_export.append(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.append(menu_VoxelFormatsExportMenu_func_callback)
 
 def unregister():
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class(VoxelFormatsExportMenu)
+    bpy.types.TOPBAR_MT_file_export.remove(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.remove(menu_VoxelFormatsExportMenu_func_callback)
