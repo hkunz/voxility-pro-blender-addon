@@ -1,24 +1,30 @@
 .PHONY: all clean operators
 
 all: \
+	clean \
 	vox-support-formats \
 	vox-operators \
 	vox-menus
 
 vox-support-formats:
-	@echo "Generating supported-formats json file..."
+	@echo "=====================================================================================>"
+	@echo "Generating supported-formats json file ..."
 	./scripts/generate-supported-formats-json.sh
 
 vox-operators:
-	@echo "Generating operators..."
+	@echo "=====================================================================================>"
+	@echo "Generating operators ..."
 	./scripts/generate-op-exporter.sh --all
 
 vox-menus:
-	@echo "Generating voxel submenu files..."
+	@echo "=====================================================================================>"
+	@echo "Generating voxel submenu files ..."
 	./scripts/generate-vox-menu-py-file.sh import
 	./scripts/generate-vox-menu-py-file.sh export
 
 create-next-tag:
+	@echo "=====================================================================================>"
+	@echo "Create new tag ..."
 	./scripts/create-tag.sh -i
 
 zip:
@@ -28,4 +34,6 @@ fix-py-permissions:
 	find . -type f -name '*.py' -exec chmod 755 {} +
 
 clean:
+	@echo "=====================================================================================>"
+	@echo "Cleaning ..."
 	find . -type d -name '__pycache__' -exec rm -r {} +

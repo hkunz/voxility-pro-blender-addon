@@ -73,7 +73,7 @@ def menu_vox_export_func_callback(self, context):
     self.layout.operator(EXPORT_OT_magicavoxel.bl_idname)
 
 def menu_VoxelFormatsExportMenu_func_callback(self, context):
-    self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="More Voxel Formats")
+    self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="Voxel Formats")
 
 def register():
     for cls in CLASSES:

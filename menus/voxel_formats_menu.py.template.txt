@@ -18,7 +18,7 @@ def menu_vox_{{import-export}}_func_callback(self, context):
     self.layout.operator({{vox-class}}.bl_idname)
 
 def menu_{{menu_class}}_func_callback(self, context):
-    self.layout.menu({{menu_class}}.bl_idname, text="More Voxel Formats")
+    self.layout.menu({{menu_class}}.bl_idname, text="Voxel Formats")
 
 def register():
     for cls in CLASSES:

@@ -1,9 +1,9 @@
-# "MagicaVoxel Vox Exporter"
+# "Voxility Voxel Exporter"
 # Author: Harry McKenzie
 #
 # ##### BEGIN LICENSE BLOCK #####
 #
-# MagicaVoxel Vox Exporter
+# Voxility Voxel Exporter
 # Copyright (c) 2024 Harry McKenzie
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 # ##### END LICENSE BLOCK #####
 
 bl_info = {
-    "name": "MagicaVoxel Vox Exporter",
-    "description": "Vox Exporter via voxconvert-0.0.28 exports any mesh into MagicaVoxel / VoxEdit (.vox) or Qubicle (.qb) format", # voxconvert-X.X.X is parsed out in utils.py
+    "name": "Voxility Voxel Exporter",
+    "description": "Vox Exporter via voxconvert-0.0.28 imports & exports many voxel file formats", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 8),
     "blender": (2, 93, 0),
