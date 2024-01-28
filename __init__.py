@@ -1,9 +1,9 @@
-# "Voxility Pro: Voxel File Format Toolkit"
+# "Voxility Pro: Voxel File Format Exchange"
 # Author: Harry McKenzie
 #
 # ##### BEGIN LICENSE BLOCK #####
 #
-# Voxility Pro: Voxel File Format Toolkit
+# Voxility Pro: Voxel File Format Exchange
 # Copyright (c) 2024 Harry McKenzie
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 # ##### END LICENSE BLOCK #####
 
 bl_info = {
-    "name": "Voxility Pro: Voxel File Format Toolkit",
+    "name": "Voxility Pro: Voxel File Format Exchange",
     "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 8),

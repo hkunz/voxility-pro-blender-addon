@@ -3,23 +3,19 @@ from bpy_extras.io_utils import ExportHelper
 
 import bpy
 import time
-import shutil
 import subprocess
 import platform
 
 from voxility_pro.translations import get_translation
-from voxility_pro.utils.file_utils import check_filepath, get_file_size
-from voxility_pro.utils.time_utils import format_duration
+from voxility_pro.utils.file_utils import check_filepath
 from voxility_pro.utils.utils import abstract_method
-
 
 class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
     bl_description = "Base Voxel Operator"
     bl_options = {'REGISTER', 'UNDO'}
+    filename_ext = ""  # this is set in the specific file format subclasses
     voxility_type = ""
     voxconvert_duration = 0
-
-    filename_ext = ""  # You need to set this in your specific file format subclasses
     command_builder = None
 
     filter_glob: bpy.props.StringProperty(
@@ -34,23 +30,19 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         default=False,
     )
 
-    def execute_voxconvert(self, command, temp_dir):
+    def execute_voxconvert(self, command):
         start_time = time.time()
         success = True
         command_str = ' '.join(command)
+        cmd = command if platform.system().lower() == "windows" else command_str
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
-            cmd = command if platform.system().lower() == "windows" else command_str
             subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
             success = False
             print(f"Error: Command exited with return code {e.returncode}")
-            print("Standard Error:\n", e.stderr)
+            print(f"Standard Error: {e.stderr}")
             self.report({'ERROR'}, f"Error processing file: {self.filepath}")
-        finally:
-            if self.voxility_type == "exporter":
-                shutil.rmtree(temp_dir)
-
         self.voxconvert_duration = time.time() - start_time
         return success
 

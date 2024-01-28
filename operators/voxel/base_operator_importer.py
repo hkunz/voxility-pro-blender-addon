@@ -12,7 +12,7 @@ from voxility_pro.utils.string_utils import randomize_string
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
-IMPORTED_OBJ_BASE_NAME = "voxility"
+IMPORTED_OBJ_BASE_NAME = "Voxility"
 
 class BaseOperatorImporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Importer"
@@ -72,7 +72,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
             int(self.voxformat_voxelizemode)
         )
         command = command_builder.build_command()
-        success = self.execute_voxconvert(command, temp_dir)
+        success = self.execute_voxconvert(command)
         if (success):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
         else:
@@ -82,7 +82,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
         start_time = time.time()
         self.import_obj(out_filepath)
 
-        #FIXME: we need to delete the temporary directory but we can't because importing works asynchronously
+        #FIXME: we need to delete the temporary directory but we can't because the color palette is used as texture in the imported object
         #shutil.rmtree(temp_dir)
         duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")

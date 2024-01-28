@@ -1,6 +1,7 @@
 import bpy
 import os
 import tempfile
+import shutil
 import time
 
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
@@ -76,8 +77,9 @@ class BaseOperatorExporter(BaseVoxelOperator):
             self.surface_only
         )
         command = command_builder.build_command()
-        self.execute_voxconvert(command, temp_dir)
+        self.execute_voxconvert(command)
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(self.voxconvert_duration)}")
+        shutil.rmtree(temp_dir)
         return {'FINISHED'}
 
     def invoke(self, context, event):
