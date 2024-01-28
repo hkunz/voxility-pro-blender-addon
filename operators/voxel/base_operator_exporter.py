@@ -5,11 +5,10 @@ import time
 
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
-from voxility_pro.utils.utils import export_obj, export_obj__deprecated
+from voxility_pro.utils.object_utils import export_obj, export_obj__deprecated
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
-
 
 class BaseOperatorExporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Exporter"
@@ -51,23 +50,17 @@ class BaseOperatorExporter(BaseVoxelOperator):
 
     def export_obj(self, obj_file):
         start_time = time.time()
-        try:
-            export_obj__deprecated(obj_file)
-        except Exception as e:
-            export_obj(obj_file)
-
+        export_obj(obj_file)
         duration = format_duration(time.time() - start_time)
         size = get_file_size(obj_file)
-        self.report({'INFO'}, get_translation('info_generated_files') + f" {obj_file} ({size}) in {duration}")
+        self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
     def execute(self, context):
         start_time = time.time()
         self.filepath = check_filepath(self.filepath, self.filename_ext)
-
-        temp_dir = tempfile.mkdtemp()
+        temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
         obj_file = os.path.join(temp_dir, 'temp.obj')
-
         self.export_obj(obj_file)
 
         command_builder = VoxConvertCommandBuilder(
@@ -81,7 +74,6 @@ class BaseOperatorExporter(BaseVoxelOperator):
         )
         command = command_builder.build_command()
         self.execute_voxconvert(command, self.filepath, start_time, get_translation('info_vox_file_created'), temp_dir)
-
         return {'FINISHED'}
 
     def invoke(self, context, event):

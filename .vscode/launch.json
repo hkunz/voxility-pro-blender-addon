@@ -2,29 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Python: Current File (Integrated Terminal)",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": true,
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            },
-            "preLaunchTask": "echoWorkspaceFolder"
+            "cwd": "${workspaceRoot}",
+            "env": {"PYTHONPATH": "${workspaceRoot};${workspaceFolder}"}
         }
-    ],
-    "tasks": [
-        {
-          "label": "echoWorkspaceFolder",
-          "type": "shell",
-          "command": "echo",
-          "args": ["${workspaceFolder}"],
-          "group": {
-            "kind": "build",
-            "isDefault": true
-          }
-        }
-      ]
+    ]
 }
-

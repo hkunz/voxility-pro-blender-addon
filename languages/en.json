@@ -7,5 +7,6 @@
   "desc_export_selected_obj_to_vox": "Export selected objects to MagicaVoxel format (.vox)",
   "error_no_addon_dir_found": "No addon directory found for:",
   "error_no_converter_exe": "No vox converter executable found!",
-  "error_file_nonexistent": "File does not exist!"
+  "error_file_nonexistent": "File does not exist!",
+  "error_nothing_to_import": "No mesh objects found to import!"
 }
