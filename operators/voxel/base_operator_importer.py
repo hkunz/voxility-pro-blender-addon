@@ -7,7 +7,7 @@ import os
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
-from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, auto_merge_vertices
+from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, auto_merge_vertices, check_mesh_exists
 from voxility_pro.utils.string_utils import randomize_string
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
@@ -34,12 +34,6 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.layout.prop(self, "option_auto_merge_vertices")
         super().draw(context)
 
-    def check_mesh_exists(self):
-        for o in bpy.context.selected_objects:
-            if o.type == 'MESH':
-                return True
-        return False
-
     def init_imported_objects(self):
         for o in bpy.context.selected_objects:
             if o.type != 'MESH':
@@ -53,19 +47,14 @@ class BaseOperatorImporter(BaseVoxelOperator):
             bpy.context.object.data.use_auto_smooth = False
 
     def import_obj(self, obj_file):
-        start_time = time.time()
         deselect_all_objects()
         import_obj(obj_file)
 
-        if not self.check_mesh_exists():
+        if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_nothing_to_import')} {self.filepath}")
             return False
 
         self.init_imported_objects()
-        duration = format_duration(time.time() - start_time)
-        size = get_file_size(obj_file)
-        self.report({'INFO'}, f"{get_translation('info_imported_file')} {obj_file} ({size}) in {duration}")
-        self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath}")
         return True
 
     def execute(self, context):
@@ -74,23 +63,29 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.report({'ERROR'}, f"{get_translation('error_file_nonexistent')} {self.filepath}")
             return {'CANCELLED'}
 
-        start_time = time.time()
         temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
-        output_obj_filepath = os.path.join(temp_dir, 'temp.obj')
+        out_filepath = os.path.join(temp_dir, 'temp.obj')
 
         command_builder = VoxConvertCommandBuilder(
             self.filepath,
-            output_obj_filepath,
+            out_filepath,
             int(self.voxformat_voxelizemode)
         )
         command = command_builder.build_command()
-        success = self.execute_voxconvert(command, output_obj_filepath, start_time, get_translation('info_generated_files'), temp_dir)
-        if success:
-            self.import_obj(output_obj_filepath)
+        success = self.execute_voxconvert(command, temp_dir)
+        if (success):
+            self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
+        else:
+            shutil.rmtree(temp_dir)
+            return {'CANCELLED'}
+
+        start_time = time.time()
+        self.import_obj(out_filepath)
 
         #FIXME: we need to delete the temporary directory but we can't because importing works asynchronously
-        shutil
         #shutil.rmtree(temp_dir)
+        duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
+        self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
         return {'FINISHED'}
 

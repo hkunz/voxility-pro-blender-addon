@@ -1,5 +1,11 @@
 import bpy
 
+def check_mesh_exists():
+    for o in bpy.context.selected_objects:
+        if o.type == 'MESH':
+            return True
+    return False
+
 def deselect_all_objects():
     bpy.ops.object.select_all(action='DESELECT')
 
