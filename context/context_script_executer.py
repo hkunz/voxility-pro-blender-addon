@@ -1,13 +1,14 @@
 import bpy
 
-from voxility_pro.utils.utils import abstract_method
+from abc import ABC, abstractmethod
 
-class ContextScriptExecuter:
+class ContextScriptExecuter(ABC):
 
     def __init__(self, area_type, ui_type=None):
         self.area_type = area_type
-        self.ui_type = ui_type # example for Shader Node Editor: bpy.context.area.ui_type = 'ShaderNodeTree'
+        self.ui_type = ui_type
         self.error_message = None
+        self.success = False
 
     @staticmethod
     def use_temp_override():
@@ -16,9 +17,9 @@ class ContextScriptExecuter:
         minor = version[1]
         return not (major < 3 or (major == 3 and minor < 2))
 
-    @abstract_method
+    @abstractmethod
     def execute_script_content(_oneself, _override_context=None):
-        pass # example: bpy.ops.view3d.background_image_add(override_context)
+        pass
 
     def report_execute_error(self, message):
         self.error_message = f"Error processing script executor in {self.__class__.__name__}. {message}"
@@ -39,23 +40,23 @@ class ContextScriptExecuter:
         if ContextScriptExecuter.use_temp_override():
             try:
                 with bpy.context.temp_override(window=window, area=area, region=region, screen=screen):
-                    self.execute_script_content()
+                    self.success = self.execute_script_content()
             except Exception as e:
                 self.report_execute_error(str(e))
             finally:
                 area.ui_type = self.prev_ui_type
 
-        else: # execute using legacy override
+        else:
             override_context = bpy.context.copy()
             override_context['window'] = window
             override_context['screen'] = screen
             override_context['area'] = area
             override_context['region'] = region
             try:
-                self.execute_script_content(override_context)
+                self.success = self.execute_script_content(override_context)
             except Exception as e:
                 self.report_execute_error(str(e))
             finally:
                 area.ui_type = self.prev_ui_type
 
-        return True
+        return self.success

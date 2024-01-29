@@ -4,6 +4,8 @@ import tempfile
 import shutil
 import os
 
+from abc import ABC, abstractmethod
+
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.context.add_vertex_colors_script_executer import AddVertexColorsScriptExecuter
 from voxility_pro.translations import get_translation
@@ -53,7 +55,9 @@ class BaseOperatorImporter(BaseVoxelOperator):
             if merge:
                 auto_merge_vertices(o)
             if vertex_colors:
-                AddVertexColorsScriptExecuter(o).execute_script()
+                a = AddVertexColorsScriptExecuter(o)
+                success = a.execute_script()
+                print(f"{AddVertexColorsScriptExecuter.__name__} complete: {success or a.error_message}")
             bpy.ops.object.shade_flat()
             bpy.context.object.data.use_auto_smooth = False
 
@@ -93,7 +97,9 @@ class BaseOperatorImporter(BaseVoxelOperator):
         start_time = time.time()
         self.import_obj(out_filepath)
 
-        #FIXME: we need to delete the temporary directory but we can't because the color palette is used as texture in the imported object
+        if self.voxformat_withcolor:
+            shutil.rmtree(temp_dir)
+        #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
         #shutil.rmtree(temp_dir)
         duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")

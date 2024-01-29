@@ -4,6 +4,8 @@ import tempfile
 import shutil
 import time
 
+from abc import ABC, abstractmethod
+
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists

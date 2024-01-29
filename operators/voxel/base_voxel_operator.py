@@ -6,9 +6,10 @@ import time
 import subprocess
 import platform
 
+from abc import ABC, abstractmethod
+
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.file_utils import check_filepath
-from voxility_pro.utils.utils import abstract_method
 
 class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
     bl_description = "Base Voxel Operator"
@@ -50,7 +51,7 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
     def draw(self, _context):
         self.layout.prop(self, "voxformat_voxelizemode")
 
-    @abstract_method
+    @abstractmethod
     def execute(_self, _context):
         pass
 
