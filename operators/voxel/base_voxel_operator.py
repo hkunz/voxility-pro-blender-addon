@@ -52,7 +52,7 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
 
     @abstract_method
     def execute(_self, _context):
-        return {'FINISHED'}
+        pass
 
     def invoke(self, context, _event):
         wm = context.window_manager
