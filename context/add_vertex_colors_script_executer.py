@@ -6,12 +6,7 @@ class AddVertexColorsScriptExecuter(ContextActiveObjectScriptExecuter):
     def __init__(self, object):
         super().__init__(object, 'NODE_EDITOR', 'ShaderNodeTree')
 
-    def report_execute_error(self, message):
-        super().report_execute_error(message)
-        self.report({'ERROR'}, f"Could not add vertex colors to shader editor")
-
     def execute_script_content(self, override_context=None):
-        super().execute_script_content(self, override_context)
         bpy.context.object.active_material_index = 0
         vc_type = 'ShaderNodeVertexColor'
         if override_context:

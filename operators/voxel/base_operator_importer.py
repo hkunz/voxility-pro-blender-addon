@@ -39,7 +39,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
     def draw(self, context):
         self.layout.prop(self, "option_auto_merge_vertices")
-        #self.layout.prop(self, "voxformat_withcolor") FIXME
+        self.layout.prop(self, "voxformat_withcolor")
         super().draw(context)
 
     @staticmethod
