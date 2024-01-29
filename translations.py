@@ -16,11 +16,11 @@ def load_translations(language):
 def get_translation(key):
     return loaded_translations.get(key, key)
 
-def register_translations():
+def register():
     global loaded_translations
     loaded_translations = load_translations(LANG)
 
-def unregister_translations():
+def unregister():
     global loaded_translations
     loaded_translations = None
 

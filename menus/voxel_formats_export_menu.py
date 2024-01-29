@@ -37,6 +37,7 @@ from voxility_pro.operators.voxel.exporters.operator_nvm_exporter import EXPORT_
 from voxility_pro.operators.voxel.exporters.operator_pcubes_exporter import EXPORT_OT_particubes
 from voxility_pro.operators.voxel.exporters.operator_csm_exporter import EXPORT_OT_cubic_mesh
 from voxility_pro.operators.voxel.exporters.operator_3zh_exporter import EXPORT_OT_cubzh
+from voxility_pro.operators.voxel.exporters.operator_b64_exporter import EXPORT_OT_cubzh_world
 
 
 CLASSES = [
@@ -64,15 +65,15 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_VoxelFormatsExportMenu_submenu"
     bl_label = "Select"
 
-    def draw(self, context):
+    def draw(self, _context):
         layout = self.layout
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_vox_export_func_callback(self, context):
+def menu_vox_export_func_callback(self, _context):
     self.layout.operator(EXPORT_OT_magicavoxel.bl_idname)
 
-def menu_VoxelFormatsExportMenu_func_callback(self, context):
+def menu_VoxelFormatsExportMenu_func_callback(self, _context):
     self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="Voxility Voxel Formats")
 
 def register():

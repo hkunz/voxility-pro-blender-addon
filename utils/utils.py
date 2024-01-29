@@ -9,6 +9,7 @@ def get_voxconvert_version():
     return version
 
 def abstract_method(func):
+    #@wraps(func)
     def wrapper(*args, **kwargs):
         raise NotImplementedError(f"{func.__name__} must be overridden in subclass.")
     return wrapper

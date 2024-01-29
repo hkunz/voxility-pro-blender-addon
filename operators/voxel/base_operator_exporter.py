@@ -57,7 +57,7 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
-    def execute(self, context):
+    def execute(self, _context):
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}

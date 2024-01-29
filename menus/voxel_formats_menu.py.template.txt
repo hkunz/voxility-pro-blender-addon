@@ -9,15 +9,15 @@ class {{menu_class}}(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_{{menu_class}}_submenu"
     bl_label = "Select"
 
-    def draw(self, context):
+    def draw(self, _context):
         layout = self.layout
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_vox_{{import-export}}_func_callback(self, context):
+def menu_vox_{{import-export}}_func_callback(self, _context):
     self.layout.operator({{vox-class}}.bl_idname)
 
-def menu_{{menu_class}}_func_callback(self, context):
+def menu_{{menu_class}}_func_callback(self, _context):
     self.layout.menu({{menu_class}}.bl_idname, text="Voxility Voxel Formats")
 
 def register():

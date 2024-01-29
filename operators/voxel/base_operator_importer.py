@@ -34,14 +34,15 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.layout.prop(self, "option_auto_merge_vertices")
         super().draw(context)
 
-    def init_imported_objects(self):
+    @staticmethod
+    def init_imported_objects(merge=True):
         for o in bpy.context.selected_objects:
             if o.type != 'MESH':
                 continue
             suffix = randomize_string()
             o.name = f"{IMPORTED_OBJ_BASE_NAME}_{suffix}"
             o.data.name = f"{IMPORTED_OBJ_BASE_NAME}_{suffix}"
-            if self.option_auto_merge_vertices:
+            if merge:
                 auto_merge_vertices(o)
             bpy.ops.object.shade_flat()
             bpy.context.object.data.use_auto_smooth = False
@@ -54,10 +55,10 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.report({'ERROR'}, f"{get_translation('error_nothing_to_import')} {self.filepath}")
             return False
 
-        self.init_imported_objects()
+        self.init_imported_objects(self.option_auto_merge_vertices)
         return True
 
-    def execute(self, context):
+    def execute(self, _context):
 
         if not os.path.exists(self.filepath):
             self.report({'ERROR'}, f"{get_translation('error_file_nonexistent')} {self.filepath}")
@@ -89,7 +90,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         return {'FINISHED'}
 
-    def invoke(self, context, event):
+    def invoke(self, context, _event):
         wm = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)

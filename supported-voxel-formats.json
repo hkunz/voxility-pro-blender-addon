@@ -29,5 +29,6 @@
 {"name":"Nicks Voxel Model","extension":"nvm","loading":1,"saving":0,"thumbnails":0,"palette":0,"animations":0,"bugged":0},
 {"name":"Particubes","extension":"pcubes","loading":1,"saving":1,"thumbnails":1,"palette":0,"animations":0,"bugged":1},
 {"name":"CuBic Mesh","extension":"csm","loading":1,"saving":0,"thumbnails":0,"palette":0,"animations":0,"bugged":0},
-{"name":"Cubzh","extension":"3zh","loading":1,"saving":1,"thumbnails":1,"palette":1,"animations":0,"bugged":0}
+{"name":"Cubzh","extension":"3zh","loading":1,"saving":1,"thumbnails":1,"palette":1,"animations":0,"bugged":0},
+{"name":"Cubzh World","extension":"b64","loading":1,"saving":0,"thumbnails":0,"palette":0,"animations":0,"bugged":0}
 ]

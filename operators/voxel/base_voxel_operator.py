@@ -35,6 +35,7 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         success = True
         command_str = ' '.join(command)
         cmd = command if platform.system().lower() == "windows" else command_str
+        print("Execute voxconvert ", command_str)
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
             subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
@@ -46,14 +47,14 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         self.voxconvert_duration = time.time() - start_time
         return success
 
-    def draw(self, context):
+    def draw(self, _context):
         self.layout.prop(self, "voxformat_voxelizemode")
 
     @abstract_method
-    def execute(self, context):
+    def execute(_self, _context):
         return {'FINISHED'}
 
-    def invoke(self, context, event):
+    def invoke(self, context, _event):
         wm = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)
