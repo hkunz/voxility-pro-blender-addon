@@ -52,7 +52,7 @@ class ContextScriptExecuter:
         areas  = ContextScriptExecuter.get_areas(self.area_type, self.ui_type)
         area = areas[0]
         region = ContextScriptExecuter.get_regions(areas)[0]
-        self.init_context_area(area)
+        self.prepare_context_area(area)
 
         if ContextScriptExecuter.use_temp_override():
             try:

@@ -8,7 +8,7 @@ class ContextActiveObjectScriptExecuter(ContextScriptExecuter):
         self.object = object
 
     def prepare_context_area(self, area):
-        super().init_context_area(area)
+        super().prepare_context_area(area)
         bpy.context.object.active_material_index = 0
         mat = bpy.context.active_object.active_material
         area.spaces.active.node_tree = mat.node_tree
