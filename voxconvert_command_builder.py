@@ -7,6 +7,7 @@ class VoxConvertCommandBuilder:
             input_filepath,
             output_filepath,
             voxformat_voxelizemode=0,
+            voxformat_withcolor=0,
             voxformat_scale=1.0,
             palette_file=None,
             export_palette=False,
@@ -14,11 +15,12 @@ class VoxConvertCommandBuilder:
         ):
         self.input_filepath = input_filepath
         self.output_filepath = output_filepath
+        self.voxformat_voxelizemode = voxformat_voxelizemode
+        self.voxformat_withcolor = voxformat_withcolor
         self.voxformat_scale = round(voxformat_scale, 2)
         self.palette_file = palette_file
         self.export_palette = export_palette
         self.surface_only = surface_only
-        self.voxformat_voxelizemode = voxformat_voxelizemode
 
     # ====================================================================
     # Documentation https://vengi-voxel.github.io/vengi/Configuration/
@@ -51,6 +53,11 @@ class VoxConvertCommandBuilder:
         command.append("-set")
         command.append("voxformat_voxelizemode")
         command.append(str(self.voxformat_voxelizemode))
+
+        if self.voxformat_withcolor:
+            command.append("-set")
+            command.append("voxformat_withcolor")
+            command.append(str(1))
 
         if self.palette_file:
             command.append("-set")

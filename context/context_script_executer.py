@@ -39,22 +39,27 @@ class ContextScriptExecuter:
     def return_to_prev_area(prev_ui_type):
         bpy.context.area.ui_type = prev_ui_type
 
-    def report_execute_error(self):
-        self.report({'ERROR'}, f"Error processing script executor: {self.__class__.__name__}")
+    def report_execute_error(self, message):
+        self.report({'ERROR'}, f"Error processing script executor in {self.__class__.__name__}. {message}")
+
+    def prepare_context_area(self, _area):
+        pass
 
     def execute_script(self):
         window = bpy.context.window
         screen = window.screen
         self.switch_context_area()
         areas  = ContextScriptExecuter.get_areas(self.area_type, self.ui_type)
+        area = areas[0]
         region = ContextScriptExecuter.get_regions(areas)[0]
+        self.init_context_area(area)
 
         if ContextScriptExecuter.use_temp_override():
             try:
                 with bpy.context.temp_override(window=window, area=areas[0], region=region, screen=screen):
                     self.execute_script_content()
-            except:
-                self.report_execute_error()
+            except Exception as e:
+                self.report_execute_error(str(e))
             finally:
                 ContextScriptExecuter.return_to_prev_area(self.prev_ui_type)
 
@@ -62,12 +67,12 @@ class ContextScriptExecuter:
             override_context = bpy.context.copy()
             override_context['window'] = window
             override_context['screen'] = screen
-            override_context['area'] = areas[0]
+            override_context['area'] = area
             override_context['region'] = region
             try:
                 self.execute_script_content(override_context)
-            except:
-                self.report_execute_error()
+            except Exception as e:
+                self.report_execute_error(str(e))
             finally:
                 ContextScriptExecuter.return_to_prev_area(self.prev_ui_type)
 

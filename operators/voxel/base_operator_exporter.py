@@ -71,6 +71,7 @@ class BaseOperatorExporter(BaseVoxelOperator):
             obj_file,
             self.filepath,
             int(self.voxformat_voxelizemode),
+            0,
             self.voxformat_scale,
             self.palette_file if self.palette_file else "palette-nippon.png",
             self.export_palette,

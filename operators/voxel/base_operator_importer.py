@@ -5,6 +5,7 @@ import shutil
 import os
 
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
+from voxility_pro.context.add_vertex_colors_script_executer import AddVertexColorsScriptExecuter
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, auto_merge_vertices, check_mesh_exists
@@ -30,12 +31,19 @@ class BaseOperatorImporter(BaseVoxelOperator):
         default=True,
     )
 
+    voxformat_withcolor: bpy.props.BoolProperty(
+        name="Use Vertex Colors",
+        description="Use vertex colors in model instead of image texture",
+        default=False,
+    )
+
     def draw(self, context):
         self.layout.prop(self, "option_auto_merge_vertices")
+        #self.layout.prop(self, "voxformat_withcolor") FIXME
         super().draw(context)
 
     @staticmethod
-    def init_imported_objects(merge=True):
+    def init_imported_objects(merge=True, vertex_colors=False):
         for o in bpy.context.selected_objects:
             if o.type != 'MESH':
                 continue
@@ -44,6 +52,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
             o.data.name = f"{IMPORTED_OBJ_BASE_NAME}_{suffix}"
             if merge:
                 auto_merge_vertices(o)
+            if vertex_colors:
+                AddVertexColorsScriptExecuter(o).execute_script()
             bpy.ops.object.shade_flat()
             bpy.context.object.data.use_auto_smooth = False
 
@@ -55,7 +65,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.report({'ERROR'}, f"{get_translation('error_nothing_to_import')} {self.filepath}")
             return False
 
-        self.init_imported_objects(self.option_auto_merge_vertices)
+        self.init_imported_objects(self.option_auto_merge_vertices, self.voxformat_withcolor)
         return True
 
     def execute(self, _context):
