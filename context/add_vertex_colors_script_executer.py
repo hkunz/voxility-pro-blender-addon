@@ -1,12 +1,20 @@
 import bpy
 
-from voxility_pro.context.context_active_object_script_executer import ContextActiveObjectScriptExecuter
+from voxility_pro.context.context_script_executer import ContextScriptExecuter
 
-class AddVertexColorsScriptExecuter(ContextActiveObjectScriptExecuter):
+AREA_TYPE='NODE_EDITOR'
+AREA_UI_TYPE='ShaderNodeTree'
+
+class AddVertexColorsScriptExecuter(ContextScriptExecuter):
     def __init__(self, object):
-        super().__init__(object, 'NODE_EDITOR', 'ShaderNodeTree')
+        super().__init__(AREA_TYPE, AREA_UI_TYPE)
+        self.object = object
 
-    def execute_script_content(self, override_context=None):
+    def prepare_context_area(self, area):
+        super().prepare_context_area(area)
+        ContextScriptExecuter.set_active_node_tree(area, self.object)
+
+    def script_content(self, override_context=None):
         vc_type = 'ShaderNodeVertexColor'
         if override_context:
             bpy.ops.node.add_node(override_context, use_transform=True, type=vc_type)
