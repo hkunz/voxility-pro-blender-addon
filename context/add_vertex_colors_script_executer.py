@@ -10,14 +10,19 @@ class AddVertexColorsScriptExecuter(ContextScriptExecuter):
         super().__init__(AREA_TYPE, AREA_UI_TYPE)
         self.object = object
 
-    def prepare_context_area(self, area):
-        super().prepare_context_area(area)
-        ContextScriptExecuter.set_active_node_tree(area, self.object)
+    @staticmethod
+    def set_active_node_tree(area, object, material_index = 0):
+        C = bpy.context
+        C.view_layer.objects.active = object
+        C.object.active_material_index = material_index
+        mat = C.active_object.active_material
+        area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229
 
-    def script_content(self, override_context=None):
+    def script_content(self, context, legacy):
+        AddVertexColorsScriptExecuter.set_active_node_tree(self.area, self.object)
         vc_type = 'ShaderNodeVertexColor'
-        if override_context:
-            bpy.ops.node.add_node(override_context, use_transform=True, type=vc_type)
+        if legacy:
+            bpy.ops.node.add_node(context, use_transform=True, type=vc_type)
         else:
             bpy.ops.node.add_node(use_transform=True, type=vc_type)
 
