@@ -9,15 +9,14 @@ class ObjectImportAddVertexColorsHandler(IHandler):
     def __init__(self):
         pass
 
-    @staticmethod
-    def set_active_node_tree(area, material_index = 0):
+    def set_active_node_tree(self, area, material_index = 0):
         C = bpy.context
         C.object.active_material_index = material_index
         mat = C.active_object.active_material
         area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229
 
-    def script_content(self, context, legacy, executer_instance=None):
-        ObjectImportAddVertexColorsHandler.set_active_node_tree(executer_instance.area)
+    def add_vertex_colors_context_callback(self, context, legacy, executer_instance=None):
+        self.set_active_node_tree(executer_instance.area)
         vc_type = 'ShaderNodeVertexColor'
         if legacy:
             bpy.ops.node.add_node(context, use_transform=True, type=vc_type)
@@ -29,7 +28,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
             area_type=AreaType.NODE_EDITOR.name,
             ui_type=AreaUiType.ShaderNodeTree.name
         )
-        exec_instance.script=lambda context, legacy, executer_instance: self.script_content(context, legacy, exec_instance)
+        exec_instance.script=lambda context, legacy, executer_instance: self.add_vertex_colors_context_callback(context, legacy, exec_instance)
         exec_instance.execute_script()
 
         mat = bpy.context.active_object.active_material
