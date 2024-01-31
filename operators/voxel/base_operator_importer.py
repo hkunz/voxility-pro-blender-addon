@@ -80,16 +80,15 @@ class BaseOperatorImporter(BaseVoxelOperator):
             shutil.rmtree(temp_dir)
             return {'CANCELLED'}
 
+        start_time = time.time()
+        self.import_obj(out_filepath)
+        duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
+        self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
+
         if self.voxformat_withcolor:
             shutil.rmtree(temp_dir)
         #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
         #shutil.rmtree(temp_dir)
-
-        start_time = time.time()
-        self.import_obj(out_filepath)
-        self.on_import_complete()
-        duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
-        self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
         return {'FINISHED'}
 

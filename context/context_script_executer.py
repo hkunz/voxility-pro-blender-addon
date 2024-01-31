@@ -54,7 +54,7 @@ ContextScriptExecuter(
 ).execute_script()
 '''
 
-#Sample usage assuming you have selected an object with material
+#Sample usage to call global function assuming you have selected an object with material
 '''
 def my_context_script(context, legacy):
     legacy = not hasattr(context, "area")
