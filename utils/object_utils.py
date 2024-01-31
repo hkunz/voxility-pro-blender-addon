@@ -1,4 +1,6 @@
 import bpy
+import sys
+import traceback
 
 def check_mesh_exists():
     for o in bpy.context.selected_objects:
@@ -29,14 +31,16 @@ def auto_merge_vertices(obj):
 
 def import_obj(filepath):
     try:
-        import_obj__deprecated(filepath=filepath)
-    except Exception as e:
         bpy.ops.wm.obj_import(filepath=filepath)
+    except Exception as e:
+        import_obj__deprecated(filepath=filepath)
+    finally:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        if exc_type is not None:
+            traceback.print_exception(exc_type, exc_value, exc_traceback)
 
 def export_obj(filepath):
     try:
-        export_obj__deprecated(filepath=filepath)
-    except:
         bpy.ops.wm.obj_export(
             filepath=filepath,
             check_existing=True,
@@ -84,6 +88,12 @@ def export_obj(filepath):
             smooth_group_bitflags=False,
             filter_glob='*.obj;*.mtl'
         )
+    except Exception as e:
+        export_obj__deprecated(filepath=filepath)
+    finally:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        if exc_type is not None:
+            traceback.print_exception(exc_type, exc_value, exc_traceback)
     return filepath
 
 # bpy.ops.import_scene.obj only works until blender version 3.6

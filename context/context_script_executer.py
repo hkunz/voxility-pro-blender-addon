@@ -13,6 +13,7 @@ class ContextScriptExecuter(ABC):
         self.success = False
         self.error_message = None
 
+    #@abstractmethod
     def script_content(self, context, legacy):
         self.script(context, legacy)
 

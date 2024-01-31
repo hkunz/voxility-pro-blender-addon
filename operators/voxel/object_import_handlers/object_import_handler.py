@@ -1,0 +1,32 @@
+import bpy
+
+from voxility_pro.operators.voxel.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler
+from voxility_pro.operators.voxel.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler
+from voxility_pro.utils.string_utils import randomize_string
+
+class ObjectImportHandler:
+    IMPORTED_OBJ_BASE_NAME = "Voxility"
+
+    def __init__(self, objects, merge_vertices, with_vertex_colors):
+        self.objects = objects
+        self.merge_vertices = merge_vertices
+        self.with_vertex_colors = with_vertex_colors
+
+    def handle_object(self, obj):
+        bpy.ops.object.shade_flat()
+        bpy.context.object.data.use_auto_smooth = False
+        suffix = randomize_string()
+        obj.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
+        obj.data.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
+        bpy.context.view_layer.objects.active = obj
+
+        if self.with_vertex_colors:
+            ObjectImportAddVertexColorsHandler().execute_handler()
+        if self.merge_vertices:
+            ObjectImportMergeVerticesHandler(obj).execute_handler()
+
+    def on_object_import(self):
+        for obj in self.objects:
+            if obj.type != 'MESH':
+                continue
+            self.handle_object(obj)

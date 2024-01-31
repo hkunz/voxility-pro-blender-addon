@@ -6,16 +6,13 @@ import os
 
 from abc import ABC, abstractmethod
 
+from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
-from voxility_pro.context.add_vertex_colors_script_executer import AddVertexColorsScriptExecuter
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
-from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, auto_merge_vertices, check_mesh_exists
-from voxility_pro.utils.string_utils import randomize_string
+from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
-
-IMPORTED_OBJ_BASE_NAME = "Voxility"
 
 class BaseOperatorImporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Importer"
@@ -44,23 +41,6 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.layout.prop(self, "voxformat_withcolor")
         super().draw(context)
 
-    @staticmethod
-    def init_imported_objects(merge=True, vertex_colors=False):
-        for o in bpy.context.selected_objects:
-            if o.type != 'MESH':
-                continue
-            suffix = randomize_string()
-            o.name = f"{IMPORTED_OBJ_BASE_NAME}_{suffix}"
-            o.data.name = f"{IMPORTED_OBJ_BASE_NAME}_{suffix}"
-            if merge:
-                auto_merge_vertices(o)
-            if vertex_colors:
-                a = AddVertexColorsScriptExecuter(o)
-                success = a.execute_script()
-                print(f"{AddVertexColorsScriptExecuter.__name__} complete: {success or a.error_message}")
-            bpy.ops.object.shade_flat()
-            bpy.context.object.data.use_auto_smooth = False
-
     def import_obj(self, obj_file):
         deselect_all_objects()
         import_obj(obj_file)
@@ -69,7 +49,12 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.report({'ERROR'}, f"{get_translation('error_nothing_to_import')} {self.filepath}")
             return False
 
-        self.init_imported_objects(self.option_auto_merge_vertices, self.voxformat_withcolor)
+        ObjectImportHandler(
+            objects = bpy.context.selected_objects,
+            merge_vertices = self.option_auto_merge_vertices,
+            with_vertex_colors = self.voxformat_withcolor
+        ).on_object_import()
+
         return True
 
     def execute(self, _context):
@@ -84,7 +69,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
         command_builder = VoxConvertCommandBuilder(
             self.filepath,
             out_filepath,
-            int(self.voxformat_voxelizemode)
+            int(self.voxformat_voxelizemode),
+            int(self.voxformat_withcolor)
         )
         command = command_builder.build_command()
         success = self.execute_voxconvert(command)
@@ -94,13 +80,14 @@ class BaseOperatorImporter(BaseVoxelOperator):
             shutil.rmtree(temp_dir)
             return {'CANCELLED'}
 
-        start_time = time.time()
-        self.import_obj(out_filepath)
-
         if self.voxformat_withcolor:
             shutil.rmtree(temp_dir)
         #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
         #shutil.rmtree(temp_dir)
+
+        start_time = time.time()
+        self.import_obj(out_filepath)
+        self.on_import_complete()
         duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
