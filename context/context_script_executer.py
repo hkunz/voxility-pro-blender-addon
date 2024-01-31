@@ -14,8 +14,8 @@ class ContextScriptExecuter(ABC):
         self.error_message = None
 
     #@abstractmethod
-    def script_content(self, context, legacy):
-        self.script(context, legacy)
+    def script_content(self, context, legacy, executer_instance=None):
+        self.script(context, legacy, executer_instance)
 
     def report_execute_error(self, message):
         self.error_message = f"Error processing script {self.__class__.__name__}. {message}"

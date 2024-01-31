@@ -16,8 +16,8 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         mat = C.active_object.active_material
         area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229
 
-    def script_content(instance_of_script_executer, context, legacy):
-        ObjectImportAddVertexColorsHandler.set_active_node_tree(instance_of_script_executer.area)
+    def script_content(self, context, legacy, executer_instance=None):
+        ObjectImportAddVertexColorsHandler.set_active_node_tree(executer_instance.area)
         vc_type = 'ShaderNodeVertexColor'
         if legacy:
             bpy.ops.node.add_node(context, use_transform=True, type=vc_type)
@@ -25,12 +25,12 @@ class ObjectImportAddVertexColorsHandler(IHandler):
             bpy.ops.node.add_node(use_transform=True, type=vc_type)
 
     def add_vertex_colors(self):
-        instance = ContextScriptExecuter(
-            area_type = AreaType.NODE_EDITOR.name,
-            ui_type = AreaUiType.ShaderNodeTree.name,
-            script = lambda context, legacy: self.script_content(instance, context, legacy)
+        exec_instance = ContextScriptExecuter(
+            area_type=AreaType.NODE_EDITOR.name,
+            ui_type=AreaUiType.ShaderNodeTree.name
         )
-        instance.execute_script()
+        exec_instance.script=lambda context, legacy, executer_instance: self.script_content(context, legacy, exec_instance)
+        exec_instance.execute_script()
 
         mat = bpy.context.active_object.active_material
         node_tree = mat.node_tree
@@ -38,7 +38,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         vc_node = node_tree.nodes.get("Color Attribute") or node_tree.nodes.get("Vertex Color")
 
         if not bsdf or not vc_node:
-            self.report_execute_error(f"Could not find BSDF node ({bsdf}) or vertex color node ({vc_node})")
+            print(f"Could not find BSDF node ({bsdf}) or vertex color node ({vc_node})")
             return False
 
         node_tree.links.new(vc_node.outputs["Color"], bsdf.inputs["Base Color"])
@@ -47,7 +47,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
     def color_attribute_convert(self):
         ContextScriptExecuter(
             area_type = AreaType.VIEW_3D.name,
-            script = lambda override, legacy: (
+            script = lambda override, legacy, executer_instance: (
                 bpy.ops.geometry.color_attribute_convert(override, domain='CORNER', data_type='FLOAT_COLOR')
                 if legacy
                 else bpy.ops.geometry.color_attribute_convert(domain='CORNER', data_type='FLOAT_COLOR')
