@@ -2,14 +2,16 @@ import bpy
 
 from voxility_pro.operators.voxel.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler
 from voxility_pro.operators.voxel.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler
+from voxility_pro.operators.voxel.object_import_handlers.object_import_limited_dissolve_handler import ObjectImportLimitedDissolveHandler
 from voxility_pro.utils.string_utils import randomize_string
 
 class ObjectImportHandler:
     IMPORTED_OBJ_BASE_NAME = "Voxility"
 
-    def __init__(self, objects, merge_vertices, with_vertex_colors):
+    def __init__(self, objects, merge_vertices, dissolve_limited, with_vertex_colors):
         self.objects = objects
         self.merge_vertices = merge_vertices
+        self.dissolve_limited = dissolve_limited
         self.with_vertex_colors = with_vertex_colors
 
     def handle_object(self, obj):
@@ -24,6 +26,9 @@ class ObjectImportHandler:
             ObjectImportAddVertexColorsHandler().execute_handler()
         if self.merge_vertices:
             ObjectImportMergeVerticesHandler(obj).execute_handler()
+        if self.dissolve_limited:
+            ObjectImportLimitedDissolveHandler(obj).execute_handler()
+
 
     def on_object_import(self):
         for obj in self.objects:

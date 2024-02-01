@@ -29,6 +29,13 @@ def auto_merge_vertices(obj):
     s.use_mesh_automerge = merge
     s.use_mesh_automerge_and_split = split
 
+def validate_mesh(object=None):
+    if object:
+        object.data.validate()
+    else:
+        for m in bpy.data.meshes:
+            m.validate()
+
 def import_obj(filepath):
     try:
         bpy.ops.wm.obj_import(filepath=filepath)

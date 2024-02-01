@@ -1,5 +1,9 @@
 {
     "version": "0.2.0",
+    "python.analysis.extraPaths": [
+        "${workspaceRoot}",
+        "${workspaceFolder}"
+    ],
     "configurations": [
         {
             "name": "Python: Current File (Integrated Terminal)",
