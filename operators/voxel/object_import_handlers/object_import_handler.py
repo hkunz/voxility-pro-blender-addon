@@ -25,7 +25,7 @@ class ObjectImportHandler:
         if self.with_vertex_colors:
             ObjectImportAddVertexColorsHandler().execute_handler()
         if self.merge_vertices:
-            ObjectImportMergeVerticesHandler(obj).execute_handler()
+            ObjectImportMergeVerticesHandler(obj, self.with_vertex_colors).execute_handler()
         if self.dissolve_limited:
             ObjectImportLimitedDissolveHandler(obj).execute_handler()
 

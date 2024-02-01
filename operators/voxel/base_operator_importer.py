@@ -39,7 +39,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
     voxformat_withcolor: bpy.props.BoolProperty(
         name="Use Vertex Colors",
         description="Use vertex colors in model instead of image texture",
-        default=False,
+        default=True,
     )
 
     def draw(self, context):
