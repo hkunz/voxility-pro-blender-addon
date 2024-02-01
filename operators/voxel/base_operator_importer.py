@@ -14,9 +14,15 @@ from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, ch
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
+VERTEX_COLORS_SUPPORT_BLENDER_VERSION = (3,3,0)
+
+def get_blender_support_text():
+    return f"Importing objects with vertex colors is only supported for Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above"
+
 class BaseOperatorImporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Importer"
     voxility_type = "importer"
+    vertex_color_support = False
 
     filter_glob: bpy.props.StringProperty(
         default="*.*",
@@ -38,14 +44,17 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
     voxformat_withcolor: bpy.props.BoolProperty(
         name="Use Vertex Colors",
-        description="Use vertex colors in model instead of image texture",
+        description=("Use vertex colors in model instead of image texture" if bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION else get_blender_support_text()),
         default=True,
     )
 
     def draw(self, context):
         self.layout.prop(self, "option_auto_merge_vertices")
         #self.layout.prop(self, "option_dissolve_limited") #FIXME https://blender.stackexchange.com/questions/310984/how-can-i-preserve-face-corner-colors-when-doing-a-limited-dissolve
-        self.layout.prop(self, "voxformat_withcolor")
+        col = self.layout.column()
+        sub = col.row()
+        sub.enabled = self.vertex_color_support
+        sub.prop(self, "voxformat_withcolor")
         super().draw(context)
 
     def import_obj(self, obj_file):
@@ -104,4 +113,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
         wm = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
+        if not self.vertex_color_support:
+            self.voxformat_withcolor = False
+            print(get_blender_support_text())
         return {'RUNNING_MODAL'}

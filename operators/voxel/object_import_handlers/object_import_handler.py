@@ -15,12 +15,12 @@ class ObjectImportHandler:
         self.with_vertex_colors = with_vertex_colors
 
     def handle_object(self, obj):
-        bpy.ops.object.shade_flat()
+        bpy.context.view_layer.objects.active = obj
         bpy.context.object.data.use_auto_smooth = False
+        bpy.ops.object.shade_flat()
         suffix = randomize_string()
         obj.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
         obj.data.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
-        bpy.context.view_layer.objects.active = obj
 
         if self.with_vertex_colors:
             ObjectImportAddVertexColorsHandler().execute_handler()

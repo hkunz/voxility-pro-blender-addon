@@ -12,7 +12,7 @@ class ObjectImportMergeVerticesHandler(IHandler):
         v = bpy.app.version
         V = (3, 5, 0)
         if v < V and self.with_vertex_colors:
-            print(f"Merging vertices is only compatible with Vertex colors in blender version {V} and above")
+            print(f"Merging vertices is compatible with vertex colors only in Blender version {V} and above")
             return
         auto_merge_vertices(self.object)
         validate_mesh(self.object)
