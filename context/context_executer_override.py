@@ -1,8 +1,7 @@
 import bpy
 
 class ContextExecuterOverride:
-    def __init__(self, executer, window, screen, area, region):
-        self.executer = executer
+    def __init__(self, window, screen, area, region):
         self.window, self.screen, self.area, self.region = window, screen, area, region
         self.legacy = not hasattr(bpy.context, "temp_override")
         if self.legacy:

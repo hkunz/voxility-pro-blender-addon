@@ -30,7 +30,7 @@ class ContextScriptExecuter(ABC):
         regions = [region for region in area.regions if region.type == 'WINDOW']
         region = regions[0] if len(regions) else None
         try:
-            with ContextExecuterOverride(executer=self, window=window, screen=screen, area=area, region=region) as override:
+            with ContextExecuterOverride(window=window, screen=screen, area=area, region=region) as override:
                 self.success = self.script_content(override)
         except Exception as e:
             self.report_execute_error(str(e))
@@ -50,37 +50,25 @@ ContextScriptExecuter(
 ).execute_script()
 '''
 
-#Sample usage to call global function assuming you have selected an object with material
+#Sample usage with a defined class method passed by function name to the script parameter.
 '''
-def my_context_script(override):
-    override.area.spaces.active.node_tree = bpy.context.active_object.active_material.node_tree
-    if override.legacy:
-        bpy.ops.node.add_node(override.context, use_transform=True, type='ShaderNodeVertexColor')
-        node_tree = bpy.context.active_object.active_material.node_tree
-        active_node = node_tree.nodes[-1]
-    else:
-        bpy.ops.node.add_node(use_transform=True, type='ShaderNodeVertexColor')
-        active_node = bpy.context.active_node
-    active_node.location = (0, 0)
-
-ContextScriptExecuter(
-    area_type='NODE_EDITOR',
-    ui_type='ShaderNodeTree',
-    script=my_context_script
-).execute_script()
-'''
-
-class Dummy:
-    def __init__(self):
-        self.value = 55
-        pass
-    def my_context_class_method(self, override):
+class MyClass:
+    def my_context_script(self, override):
+        override.area.spaces.active.node_tree = bpy.context.active_object.active_material.node_tree
         if override.legacy:
-            bpy.ops.view3d.view_axis(override.context, type='TOP')
+            bpy.ops.node.add_node(override.context, use_transform=True, type='ShaderNodeVertexColor')
+            node_tree = bpy.context.active_object.active_material.node_tree
+            active_node = node_tree.nodes[-1]
         else:
-            bpy.ops.view3d.view_axis(type='TOP')
-    def test_callback(self):
+            bpy.ops.node.add_node(use_transform=True, type='ShaderNodeVertexColor')
+            active_node = bpy.context.active_node
+        active_node.location = (0, 0)
+    def exec(self):
         ContextScriptExecuter(
-            area_type='VIEW_3D',
-            script=self.my_context_class_method
+            area_type='NODE_EDITOR',
+            ui_type='ShaderNodeTree',
+            script=self.my_context_script
         ).execute_script()
+
+MyClass().exec()
+'''
