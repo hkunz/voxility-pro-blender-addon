@@ -15,21 +15,20 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         mat = C.active_object.active_material
         area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229
 
-    def add_vertex_colors_context_callback(self, context, legacy, executer_instance=None):
-        self.set_active_node_tree(executer_instance.area)
+    def add_vertex_colors_context_callback(self, override):
+        self.set_active_node_tree(override.area)
         vc_type = 'ShaderNodeVertexColor'
-        if legacy:
-            bpy.ops.node.add_node(context, use_transform=True, type=vc_type)
+        if override.legacy:
+            bpy.ops.node.add_node(override.context, use_transform=True, type=vc_type)
         else:
             bpy.ops.node.add_node(use_transform=True, type=vc_type)
 
     def add_vertex_colors(self):
-        exec_instance = ContextScriptExecuter(
+        ContextScriptExecuter(
             area_type=AreaType.NODE_EDITOR.name,
-            ui_type=AreaUiType.ShaderNodeTree.name
-        )
-        exec_instance.script=lambda context, legacy, executer_instance: self.add_vertex_colors_context_callback(context, legacy, exec_instance)
-        exec_instance.execute_script()
+            ui_type=AreaUiType.ShaderNodeTree.name,
+            script=self.add_vertex_colors_context_callback
+        ).execute_script()
 
         mat = bpy.context.active_object.active_material
         node_tree = mat.node_tree
@@ -46,9 +45,9 @@ class ObjectImportAddVertexColorsHandler(IHandler):
     def color_attribute_convert(self):
         ContextScriptExecuter(
             area_type = AreaType.VIEW_3D.name,
-            script = lambda override, legacy, executer_instance: (
+            script = lambda override: (
                 bpy.ops.geometry.color_attribute_convert(override, domain='CORNER', data_type='FLOAT_COLOR')
-                if legacy
+                if override.legacy
                 else bpy.ops.geometry.color_attribute_convert(domain='CORNER', data_type='FLOAT_COLOR')
             )
         ).execute_script()
