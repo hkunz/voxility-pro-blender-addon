@@ -1,5 +1,11 @@
 import bpy
 
+from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
+    WM_OT_MeshVoxelConvertOperator,
+    register as register_mesh_voxel_operator,
+    unregister as unregister_mesh_voxel_operator
+)
+
 from voxility_pro.utils.utils import get_addon_version
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = (3,3,0) #fixme it's duplicated in base_operator_importer.py
@@ -75,39 +81,16 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         #layout.prop(context.scene.voxility_pro_properties, "palette_file")
         #layout.prop(context.scene.voxility_pro_properties, "export_palette")
         layout.prop(context.scene.voxility_pro_properties, "surface_only")
-        layout.operator("wm.voxility_pro_operator", text="Voxility Pro")
-
-class WM_OT_VoxilityProOperator(bpy.types.Operator):
-    bl_idname = "wm.voxility_pro_operator"
-    bl_label = "Voxility Pro Operator"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    @classmethod
-    def poll(cls, context):
-        active_object = context.active_object
-        return active_object is not None and active_object.type == 'MESH' and context.mode == 'OBJECT'
-
-    def execute(self, context):
-        print("Voxility Pro button pressed")
-        properties = context.scene.voxility_pro_properties
-        print("Apply Limited Dissolve:", properties.option_dissolve_limited)
-        print("Use Vertex Colors:", properties.voxformat_withcolor)
-        print("Merge Vertices:", properties.merge_vertices)
-        print("Voxformat Voxelize Mode:", properties.voxformat_voxelizemode)
-        print("Voxformat Scale:", properties.voxformat_scale)
-        print("Palette File:", properties.palette_file)
-        print("Export Palette:", properties.export_palette)
-        print("Surface Only:", properties.surface_only)
-        return {'FINISHED'}
+        layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxility Pro")
 
 def register():
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
-    bpy.utils.register_class(WM_OT_VoxilityProOperator)
+    register_mesh_voxel_operator()
 
 def unregister():
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
-    bpy.utils.unregister_class(WM_OT_VoxilityProOperator)
+    unregister_mesh_voxel_operator()
