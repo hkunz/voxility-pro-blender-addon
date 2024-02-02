@@ -25,6 +25,12 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         maxlen=255,
     )
 
+    merge_vertices: bpy.props.BoolProperty(
+        name="Merge Vertices",
+        description="Automatically merge vertices and split edges",
+        default=True,
+    )
+
     voxformat_voxelizemode: bpy.props.BoolProperty(
         name="Voxformat Voxelize Mode",
         description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",

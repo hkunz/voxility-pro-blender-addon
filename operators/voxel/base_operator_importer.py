@@ -30,12 +30,6 @@ class BaseOperatorImporter(BaseVoxelOperator):
         maxlen=255,
     )
 
-    option_auto_merge_vertices: bpy.props.BoolProperty(
-        name="Auto Merge Vertices",
-        description="Automatically merge vertices and split edges",
-        default=True,
-    )
-
     option_dissolve_limited: bpy.props.BoolProperty(
         name="Apply Limited Dissolve",
         description="Simplify mesh by dissolving vertices and edges separating flat regions.",
@@ -49,7 +43,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
     )
 
     def draw(self, context):
-        self.layout.prop(self, "option_auto_merge_vertices")
+        self.layout.prop(self, "merge_vertices")
         #self.layout.prop(self, "option_dissolve_limited") #FIXME https://blender.stackexchange.com/questions/310984/how-can-i-preserve-face-corner-colors-when-doing-a-limited-dissolve
         col = self.layout.column()
         sub = col.row()
@@ -67,7 +61,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         ObjectImportHandler(
             objects = bpy.context.selected_objects,
-            merge_vertices = self.option_auto_merge_vertices,
+            merge_vertices = self.merge_vertices,
             dissolve_limited = self.option_dissolve_limited,
             with_vertex_colors = self.voxformat_withcolor
         ).on_object_import()
@@ -87,6 +81,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.filepath,
             out_filepath,
             int(self.voxformat_voxelizemode),
+            False, #no --merge param but still merges vertices using python. self.merge_vertices,
             int(self.voxformat_withcolor)
         )
         command = command_builder.build_command()

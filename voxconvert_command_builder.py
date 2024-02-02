@@ -7,6 +7,7 @@ class VoxConvertCommandBuilder:
             input_filepath,
             output_filepath,
             voxformat_voxelizemode=0,
+            merge_vertices=0,
             voxformat_withcolor=0,
             voxformat_scale=1.0,
             palette_file=None,
@@ -16,6 +17,7 @@ class VoxConvertCommandBuilder:
         self.input_filepath = input_filepath
         self.output_filepath = output_filepath
         self.voxformat_voxelizemode = voxformat_voxelizemode
+        self.merge_vertices = merge_vertices
         self.voxformat_withcolor = voxformat_withcolor
         self.voxformat_scale = round(voxformat_scale, 2)
         self.palette_file = palette_file
@@ -69,6 +71,9 @@ class VoxConvertCommandBuilder:
 
         if self.surface_only:
             command.append("--surface_only")
+
+        if self.merge_vertices:
+            command.append("--merge")
 
         command.append("--input")
         command.append(f'"{self.input_filepath}"')

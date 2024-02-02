@@ -73,6 +73,7 @@ class BaseOperatorExporter(BaseVoxelOperator):
             obj_file,
             self.filepath,
             int(self.voxformat_voxelizemode),
+            self.merge_vertices,
             0,
             self.voxformat_scale,
             self.palette_file if self.palette_file else "palette-nippon.png",

@@ -54,6 +54,11 @@ from voxility_pro.menus.voxel_formats_import_menu import (
     unregister as unregister_vox_import_menu
 )
 
+from voxility_pro.menus.voxel_converter_sidebar_menu import (
+    register as register_sidebar_menu,
+    unregister as unregister_sidebar_menu
+)
+
 from voxility_pro.translations import (
     register as register_translations,
     unregister as unregister_translations
@@ -69,8 +74,10 @@ def register():
     register_translations()
     register_vox_export_menu()
     register_vox_import_menu()
+    register_sidebar_menu()
 
 def unregister():
     unregister_translations()
     unregister_vox_export_menu()
     unregister_vox_import_menu()
+    unregister_sidebar_menu()
