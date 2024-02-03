@@ -59,6 +59,15 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
+    def setup_command(self, input, output):
+        c = super().setup_command(input, output)
+        c.vc_voxformat_withcolor = 0
+        c.vc_voxformat_scale = float(self.voxformat_scale)
+        c.vc_palette_file = str(self.palette_file)
+        c.vc_export_palette = str(self.export_palette)
+        c.vc_surface_only = int(self.surface_only)
+        return c
+
     def execute(self, _context):
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
@@ -68,20 +77,8 @@ class BaseOperatorExporter(BaseVoxelOperator):
         temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
         obj_file = os.path.join(temp_dir, 'temp.obj')
         self.export_obj(obj_file)
-
-        command_builder = VoxConvertCommandBuilder(
-            obj_file,
-            self.filepath,
-            int(self.voxformat_voxelizemode),
-            self.merge_vertices,
-            0,
-            self.voxformat_scale,
-            self.palette_file if self.palette_file else "palette-nippon.png",
-            self.export_palette,
-            self.surface_only
-        )
-        command = command_builder.build_command()
-        self.execute_voxconvert(command)
+        self.setup_command(obj_file, self.filepath)
+        self.execute_voxconvert()
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(self.voxconvert_duration)}")
         shutil.rmtree(temp_dir)
         return {'FINISHED'}

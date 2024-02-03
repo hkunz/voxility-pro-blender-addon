@@ -68,6 +68,11 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         return True
 
+    def setup_command(self, input, output):
+        c = super().setup_command(input, output)
+        c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
+        c.voxformat_withcolor = int(self.voxformat_withcolor)
+
     def execute(self, _context):
 
         if not os.path.exists(self.filepath):
@@ -77,15 +82,9 @@ class BaseOperatorImporter(BaseVoxelOperator):
         temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
         out_filepath = os.path.join(temp_dir, 'temp.obj')
 
-        command_builder = VoxConvertCommandBuilder(
-            self.filepath,
-            out_filepath,
-            int(self.voxformat_voxelizemode),
-            False, #no --merge param but still merges vertices using python. self.merge_vertices,
-            int(self.voxformat_withcolor)
-        )
-        command = command_builder.build_command()
-        success = self.execute_voxconvert(command)
+        self.setup_command(self.filepath, out_filepath)
+        success = self.execute_voxconvert()
+
         if (success):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
         else:

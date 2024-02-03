@@ -2,22 +2,12 @@ import bpy
 from bpy_extras.io_utils import ExportHelper
 
 import bpy
-import time
-import subprocess
-import platform
 
-from abc import ABC, abstractmethod
-
-from voxility_pro.translations import get_translation
+from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 from voxility_pro.utils.file_utils import check_filepath
 
-class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
+class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
     bl_description = "Base Voxel Operator"
-    bl_options = {'REGISTER', 'UNDO'}
-    filename_ext = ""  # this is set in the specific file format subclasses
-    voxility_type = ""
-    voxconvert_duration = 0
-    command_builder = None
 
     filter_glob: bpy.props.StringProperty(
         default="*.*",
@@ -37,29 +27,16 @@ class BaseVoxelOperator(bpy.types.Operator, ExportHelper):
         default=False,
     )
 
-    def execute_voxconvert(self, command):
-        start_time = time.time()
-        success = True
-        command_str = ' '.join(command)
-        cmd = command if platform.system().lower() == "windows" else command_str
-        print("Execute voxconvert ", command_str)
-        self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
-        try:
-            subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
-        except subprocess.CalledProcessError as e:
-            success = False
-            print(f"Error: Command exited with return code {e.returncode}")
-            print(f"Standard Error: {e.stderr}")
-            self.report({'ERROR'}, f"Error processing file: {self.filepath}")
-        self.voxconvert_duration = time.time() - start_time
-        return success
+    def setup_command(self, input, output):
+        c = super().setup_command(input, output)
+        c.vc_input_path = input
+        c.vc_output_path = output
+        c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
+        c.vc_merge_vertices = int(self.merge_vertices)
+        return c
 
     def draw(self, _context):
         self.layout.prop(self, "voxformat_voxelizemode")
-
-    @abstractmethod
-    def execute(_self, _context):
-        pass
 
     def invoke(self, context, _event):
         wm = context.window_manager

@@ -37,6 +37,7 @@ def validate_mesh(object=None):
             m.validate()
 
 def import_obj(filepath):
+    print("\nImport:")
     try:
         bpy.ops.wm.obj_import(filepath=filepath)
     except Exception as e:
@@ -47,6 +48,7 @@ def import_obj(filepath):
             traceback.print_exception(exc_type, exc_value, exc_traceback)
 
 def export_obj(filepath):
+    print("\nExport:")
     try:
         bpy.ops.wm.obj_export(
             filepath=filepath,

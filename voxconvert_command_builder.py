@@ -1,28 +1,23 @@
 import platform
+import re
 
 from voxility_pro.utils.file_utils import get_voxconvert_filepath
 
 class VoxConvertCommandBuilder:
-    def __init__(self,
-            input_filepath,
-            output_filepath,
-            voxformat_voxelizemode=0,
-            merge_vertices=0,
-            voxformat_withcolor=0,
-            voxformat_scale=1.0,
-            palette_file=None,
-            export_palette=False,
-            surface_only=False
-        ):
-        self.input_filepath = input_filepath
-        self.output_filepath = output_filepath
-        self.voxformat_voxelizemode = voxformat_voxelizemode
-        self.merge_vertices = merge_vertices
-        self.voxformat_withcolor = voxformat_withcolor
-        self.voxformat_scale = round(voxformat_scale, 2)
-        self.palette_file = palette_file
-        self.export_palette = export_palette
-        self.surface_only = surface_only
+    def __init__(self):
+
+        self.vc_input_path = None
+        self.vc_output_path = None
+        self.vc_voxformat_voxelizemode = 0
+        self.vc_merge_vertices = 0
+        self.vc_voxformat_withcolor = 0
+        self.vc_voxformat_scale = 1.0
+        self.vc_palette_file = None
+        self.vc_export_palette = "palette-nippon.png"
+        self.vc_surface_only = 0
+        self.vc_voxformat_ambientocclusion = 0
+
+        self.vc_command = None
 
     # ====================================================================
     # Documentation https://vengi-voxel.github.io/vengi/Configuration/
@@ -35,7 +30,7 @@ class VoxConvertCommandBuilder:
     # ====================================================================
 
     def build_command(self):
-        command = []
+        command = self.vc_command = []
         system = platform.system().lower()
         exe = get_voxconvert_filepath()
 
@@ -51,39 +46,50 @@ class VoxConvertCommandBuilder:
         command.append("json")
         command.append("-set")
         command.append("voxformat_scale")
-        command.append(str(self.voxformat_scale))
+        command.append(str(round(self.vc_voxformat_scale, 2)))
         command.append("-set")
         command.append("voxformat_voxelizemode")
-        command.append(str(self.voxformat_voxelizemode))
+        command.append(str(self.vc_voxformat_voxelizemode))
+        command.append("-set")
+        command.append("voxformat_ambientocclusion")
+        command.append(str(self.vc_voxformat_ambientocclusion))
+        command.append("-set")
+        command.append("voxformat_withcolor")
+        command.append(str(self.vc_voxformat_withcolor))
 
-        if True:
-            command.append("-set")
-            command.append("voxformat_ambientocclusion")
-            command.append(str(0))
-
-        if self.voxformat_withcolor:
-            command.append("-set")
-            command.append("voxformat_withcolor")
-            command.append(str(1))
-
-        if self.palette_file:
+        if self.vc_palette_file:
             command.append("-set")
             command.append("palette")
             command.append(self.palette_file)
 
-        if self.export_palette:
+        if self.vc_export_palette:
             command.append("--export-palette")
 
-        if self.surface_only:
+        if self.vc_surface_only:
             command.append("--surface_only")
 
-        if self.merge_vertices:
+        if self.vc_merge_vertices:
             command.append("--merge")
 
         command.append("--input")
-        command.append(f'"{self.input_filepath}"')
+        command.append(f'"{self.vc_input_path}"')
         command.append("--output")
-        command.append(f'"{self.output_filepath}"')
+        command.append(f'"{self.vc_output_path}"')
         command.append("--force")
 
         return command
+
+    def get_command(self):
+        return self.vc_command
+
+    def get_command_str(self):
+        return ' '.join(self.vc_command)
+
+    def get_input_filepath(self):
+        return self.vc_input_path
+
+    def get_formatted_args(self):
+        command_str = self.get_command_str()
+        vox_index = command_str.find("vox")
+        split_args = re.split(r' (?=-|--)', command_str[vox_index:])
+        return "\nArguments:\n" + '\n'.join(split_args[1:])
