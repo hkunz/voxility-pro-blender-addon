@@ -56,6 +56,11 @@ class VoxConvertCommandBuilder:
         command.append("voxformat_voxelizemode")
         command.append(str(self.voxformat_voxelizemode))
 
+        if True:
+            command.append("-set")
+            command.append("voxformat_ambientocclusion")
+            command.append(str(0))
+
         if self.voxformat_withcolor:
             command.append("-set")
             command.append("voxformat_withcolor")
