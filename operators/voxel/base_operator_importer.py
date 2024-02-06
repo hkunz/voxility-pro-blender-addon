@@ -21,7 +21,6 @@ def get_blender_support_text():
 
 class BaseOperatorImporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Importer"
-    voxility_type = "importer"
     vertex_color_support = False
 
     filter_glob: bpy.props.StringProperty(
@@ -71,7 +70,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
     def setup_command(self, input, output):
         c = super().setup_command(input, output)
         c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
-        c.voxformat_withcolor = int(self.voxformat_withcolor)
+        c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
 
     def execute(self, _context):
 

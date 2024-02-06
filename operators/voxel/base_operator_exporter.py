@@ -15,7 +15,6 @@ from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
 class BaseOperatorExporter(BaseVoxelOperator):
     bl_description = "Base Voxel Operator Exporter"
-    voxility_type = "exporter"
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",

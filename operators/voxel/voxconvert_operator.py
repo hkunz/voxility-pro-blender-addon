@@ -4,7 +4,6 @@ import subprocess
 import platform
 
 from abc import ABC, abstractmethod
-from bpy_extras.io_utils import ExportHelper
 
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 from voxility_pro.translations import get_translation
@@ -13,7 +12,6 @@ class VoxconvertOperator(bpy.types.Operator):
     bl_description = "Voxconvert Operator"
     bl_options = {'REGISTER', 'UNDO'}
     filename_ext = ""
-    voxility_type = ""
 
     def __init__(self):
         super().__init__()
