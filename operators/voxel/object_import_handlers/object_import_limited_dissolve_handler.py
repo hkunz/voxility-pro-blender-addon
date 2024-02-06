@@ -12,9 +12,9 @@ class ObjectImportLimitedDissolveHandler(IHandler):
          bpy.ops.object.mode_set(mode='EDIT')
          ContextScriptExecuter(
             area_type = AreaType.VIEW_3D.name,
-            script = lambda override, legacy, executer_instance: (
+            script = lambda override: (
                 bpy.ops.mesh.dissolve_limited(override)
-                if legacy
+                if override.legacy
                 else bpy.ops.mesh.dissolve_limited()
             )
         ).execute_script()

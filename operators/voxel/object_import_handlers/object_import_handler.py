@@ -29,7 +29,6 @@ class ObjectImportHandler:
         if self.dissolve_limited:
             ObjectImportLimitedDissolveHandler(obj).execute_handler()
 
-
     def on_object_import(self):
         for obj in self.objects:
             if obj.type != 'MESH':

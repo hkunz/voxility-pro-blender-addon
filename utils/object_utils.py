@@ -137,3 +137,29 @@ def export_obj__deprecated(filepath):
         path_mode='AUTO'
     )
     return filepath
+
+def duplicate_objects(objects):
+    C = bpy.context
+    duplicates = []
+    active_obj = C.view_layer.objects.active
+    for ob in objects:
+        copy = duplicate_object(ob)
+        if ob is active_obj:
+            C.view_layer.objects.active = copy
+        duplicates.append(copy)
+    bpy.ops.object.select_all(action='DESELECT')
+    for ob in duplicates:
+        ob.select_set(True)
+
+def duplicate_object(ob):
+    copy = ob.copy()
+    copy.data = copy.data.copy()
+    bpy.context.collection.objects.link(copy)
+    dg = bpy.context.evaluated_depsgraph_get()
+    dg.update()
+    return copy
+
+def select_objects(objects, active_object):
+    for ob in objects:
+        ob.select_set(True)
+    bpy.context.view_layer.objects.active = active_object

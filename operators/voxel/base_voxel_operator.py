@@ -29,8 +29,6 @@ class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
 
     def setup_command(self, input, output):
         c = super().setup_command(input, output)
-        c.vc_input_path = input
-        c.vc_output_path = output
         c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
         c.vc_merge_vertices = int(self.merge_vertices)
         return c

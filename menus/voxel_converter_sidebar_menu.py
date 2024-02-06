@@ -23,7 +23,7 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
     voxformat_withcolor: bpy.props.BoolProperty(
         name="Use Vertex Colors",
         description=("Use vertex colors in model instead of image texture" if bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION else get_blender_support_text()),
-        default=True,
+        default=(bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION),
     )
 
     merge_vertices: bpy.props.BoolProperty(
@@ -74,14 +74,21 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         #layout.prop(context.scene.voxility_pro_properties, "option_dissolve_limited")
-        layout.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
+        #layout.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
+
+        vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
+        col = layout.column()
+        sub = col.row()
+        sub.enabled = vertex_color_support
+        sub.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
+
         layout.prop(context.scene.voxility_pro_properties, "merge_vertices")
         layout.prop(context.scene.voxility_pro_properties, "voxformat_scale")
         layout.prop(context.scene.voxility_pro_properties, "voxformat_voxelizemode")
         #layout.prop(context.scene.voxility_pro_properties, "palette_file")
         #layout.prop(context.scene.voxility_pro_properties, "export_palette")
         layout.prop(context.scene.voxility_pro_properties, "surface_only")
-        layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxility Pro")
+        layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
 
 def register():
     bpy.utils.register_class(VoxilityProProperties)

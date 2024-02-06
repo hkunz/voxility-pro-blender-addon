@@ -9,7 +9,7 @@ from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 from voxility_pro.translations import get_translation
 
 class VoxconvertOperator(bpy.types.Operator):
-    bl_description = "Voxconvert Operator"
+    bl_description = "Abstract Voxconvert Operator"
     bl_options = {'REGISTER', 'UNDO'}
     filename_ext = ""
 
@@ -19,6 +19,9 @@ class VoxconvertOperator(bpy.types.Operator):
         self.command_builder = VoxConvertCommandBuilder()
 
     def setup_command(self, input, output):
+        c = self.command_builder
+        c.vc_input_path = input
+        c.vc_output_path = output
         return self.command_builder
 
     def execute_voxconvert(self):
