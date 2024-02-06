@@ -12,9 +12,9 @@ from voxility_pro.translations import get_translation
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.enums.version_type import VersionType
 
-VERTEX_COLORS_SUPPORT_BLENDER_VERSION = (3,3,0)
+VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
 def get_blender_support_text():
     return f"Importing objects with vertex colors is only supported for Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above"

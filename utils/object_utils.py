@@ -163,3 +163,7 @@ def select_objects(objects, active_object):
     for ob in objects:
         ob.select_set(True)
     bpy.context.view_layer.objects.active = active_object
+
+def hide_objects_from_viewport(objects, hide=True):
+    for ob in objects:
+        ob.hide_set(hide)

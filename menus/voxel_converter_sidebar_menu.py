@@ -7,8 +7,9 @@ from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
 )
 
 from voxility_pro.utils.utils import get_addon_version
+from voxility_pro.enums.version_type import VersionType
 
-VERTEX_COLORS_SUPPORT_BLENDER_VERSION = (3,3,0) #fixme it's duplicated in base_operator_importer.py
+VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
 def get_blender_support_text():
     return f"Vertex colors are supported in Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above."
@@ -65,6 +66,12 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=False,
     )
 
+    hide_original_objects: bpy.props.BoolProperty(
+        name="Hide Original Objects",
+        description="Hide the original objects after voxelization is complete",
+        default=True,
+    )
+
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_label = f"Voxility Pro {get_addon_version()}"
     bl_space_type = 'VIEW_3D'
@@ -73,8 +80,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        #layout.prop(context.scene.voxility_pro_properties, "option_dissolve_limited")
-        #layout.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
+        properties = context.scene.voxility_pro_properties
+        #layout.prop(properties, "option_dissolve_limited")
+        #layout.prop(properties, "voxformat_withcolor")
 
         vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
         col = layout.column()
@@ -82,12 +90,13 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         sub.enabled = vertex_color_support
         sub.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
 
-        layout.prop(context.scene.voxility_pro_properties, "merge_vertices")
-        layout.prop(context.scene.voxility_pro_properties, "voxformat_scale")
-        layout.prop(context.scene.voxility_pro_properties, "voxformat_voxelizemode")
-        #layout.prop(context.scene.voxility_pro_properties, "palette_file")
-        #layout.prop(context.scene.voxility_pro_properties, "export_palette")
-        layout.prop(context.scene.voxility_pro_properties, "surface_only")
+        layout.prop(properties, "merge_vertices")
+        layout.prop(properties, "voxformat_scale")
+        layout.prop(properties, "voxformat_voxelizemode")
+        #layout.prop(properties, "palette_file")
+        #layout.prop(properties, "export_palette")
+        layout.prop(properties, "surface_only")
+        layout.prop(properties, "hide_original_objects")
         layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
 
 def register():

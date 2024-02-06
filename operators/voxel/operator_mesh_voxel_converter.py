@@ -9,12 +9,9 @@ from mathutils import Vector
 from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 from voxility_pro.translations import get_translation
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, duplicate_objects, select_objects
+from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport
 from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
-from voxility_pro.context.context_script_executer import ContextScriptExecuter
-from voxility_pro.enums.area_type import AreaType
 
 class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
     bl_idname = "wm.voxility_pro_mesh_voxel_convert_operator"
@@ -45,6 +42,10 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         ).on_object_import()
         return True
 
+    def set_scale(self, scale):
+        bpy.context.object.scale = Vector((scale, scale, scale))
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+
     def setup_command(self, input, output):
         c = super().setup_command(input, output)
         c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
@@ -55,17 +56,16 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         c.vc_voxformat_voxelizemode = properties.voxformat_voxelizemode
 
     def execute(self, context):
-        active_object = bpy.context.view_layer.objects.active
+        active_object = context.view_layer.objects.active
         temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
         vc_in_path = os.path.join(temp_dir, 'temp_in.obj')
         vc_out_path = os.path.join(temp_dir, 'temp_out.obj')
-        objects = bpy.context.selected_objects.copy()
+        objects = context.selected_objects.copy()
         self.create_temp_dup(objects)
         self.export_obj(vc_in_path)
-        orig_width = bpy.context.object.dimensions[0]
+        orig_width = context.object.dimensions[0]
         bpy.ops.object.delete(use_global=False)
         select_objects(objects, active_object)
-        print()
         self.setup_command(vc_in_path, vc_out_path)
         success = self.execute_voxconvert()
 
@@ -77,15 +77,17 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
 
         start_time = time.time()
         self.import_obj(vc_out_path)
-        scale = orig_width / bpy.context.object.dimensions[0]
-        bpy.context.object.scale = Vector((scale, scale, scale))
+        self.set_scale(orig_width / context.object.dimensions[0])
         duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {vc_out_path} in {duration}")
-        properties = bpy.context.scene.voxility_pro_properties
+        properties = context.scene.voxility_pro_properties
         if properties.voxformat_withcolor:
             shutil.rmtree(temp_dir)
+
         #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
         #shutil.rmtree(temp_dir)
+        if properties.hide_original_objects:
+            hide_objects_from_viewport(objects)
         return {'FINISHED'}
 
     @classmethod
