@@ -83,5 +83,5 @@ class BaseOperatorExporter(BaseVoxelOperator):
         return {'FINISHED'}
 
     def invoke(self, context, event):
-        self.voxformat_scale = 1.0
+        #self.voxformat_scale = 1.0
         return super().invoke(context, event)

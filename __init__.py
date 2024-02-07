@@ -59,6 +59,11 @@ from voxility_pro.menus.voxel_converter_sidebar_menu import (
     unregister as unregister_sidebar_menu
 )
 
+from voxility_pro.operators.generic_popup_operator import (
+    register as register_generic_popup,
+    unregister as unregister_generic_popup
+)
+
 from voxility_pro.translations import (
     register as register_translations,
     unregister as unregister_translations
@@ -75,9 +80,11 @@ def register():
     register_vox_export_menu()
     register_vox_import_menu()
     register_sidebar_menu()
+    register_generic_popup()
 
 def unregister():
     unregister_translations()
     unregister_vox_export_menu()
     unregister_vox_import_menu()
     unregister_sidebar_menu()
+    unregister_generic_popup
