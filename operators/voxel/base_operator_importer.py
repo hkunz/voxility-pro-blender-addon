@@ -41,6 +41,12 @@ class BaseOperatorImporter(BaseVoxelOperator):
         default=True,
     )
 
+    voxformat_mergequads: bpy.props.BoolProperty(
+        name="Merge Quads",
+        description=("Merge similar quads"),
+        default=False,
+    )
+
     def draw(self, context):
         self.layout.prop(self, "merge_vertices")
         #self.layout.prop(self, "option_dissolve_limited") #FIXME https://blender.stackexchange.com/questions/310984/how-can-i-preserve-face-corner-colors-when-doing-a-limited-dissolve
@@ -71,6 +77,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
         c = super().setup_command(input, output)
         c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
+        c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
 
     def execute(self, _context):
 

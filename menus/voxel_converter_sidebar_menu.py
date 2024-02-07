@@ -66,6 +66,12 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=False,
     )
 
+    voxformat_mergequads: bpy.props.BoolProperty(
+        name="Merge Quads",
+        description="Merge similar quads",
+        default=True,
+    )
+
     hide_original_objects: bpy.props.BoolProperty(
         name="Hide Original Objects",
         description="Hide the original objects after voxelization is complete",
@@ -96,6 +102,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         #layout.prop(properties, "palette_file")
         #layout.prop(properties, "export_palette")
         layout.prop(properties, "surface_only")
+        layout.prop(properties, "voxformat_mergequads")
         layout.prop(properties, "hide_original_objects")
         layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
 

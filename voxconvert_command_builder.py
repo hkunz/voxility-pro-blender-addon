@@ -16,6 +16,7 @@ class VoxConvertCommandBuilder:
         self.vc_export_palette = "palette-nippon.png"
         self.vc_surface_only = 0
         self.vc_voxformat_ambientocclusion = 0
+        self.vc_voxformat_mergequads = 0
 
         self.vc_command = None
 
@@ -56,6 +57,9 @@ class VoxConvertCommandBuilder:
         command.append("-set")
         command.append("voxformat_withcolor")
         command.append(str(self.vc_voxformat_withcolor))
+        command.append("-set")
+        command.append("voxformat_mergequads")
+        command.append(str(self.vc_voxformat_mergequads))
 
         if self.vc_palette_file:
             command.append("-set")

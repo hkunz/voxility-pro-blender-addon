@@ -51,9 +51,10 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
         c.vc_voxformat_withcolor = 1
         properties = bpy.context.scene.voxility_pro_properties
-        c.vc_voxformat_scale = properties.voxformat_scale
-        c.vc_surface_only = properties.surface_only
-        c.vc_voxformat_voxelizemode = properties.voxformat_voxelizemode
+        c.vc_voxformat_scale = float(properties.voxformat_scale)
+        c.vc_surface_only = int(properties.surface_only)
+        c.vc_voxformat_voxelizemode = int(properties.voxformat_voxelizemode)
+        c.vc_voxformat_mergequads = int(properties.voxformat_mergequads)
 
     def execute(self, context):
         active_object = context.view_layer.objects.active
