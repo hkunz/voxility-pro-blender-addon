@@ -28,6 +28,7 @@ This addon is powered by the free, open-source and multi-platform voxel editor V
 * Restart computer
 * Windows > Search > "x64" > open: x64 Native Tools Command Prompt for VS 2022
 * cd to the vengi folder and make sure you delete the "build" folder
+* Open Makefile and change "ON" to "OFF" in -DUSE_SANITIZERS=OFF
 * Type "make" to configure and build or build specific targets like "make voxedit" or "make voxconvert"
 
 ============================================================================
