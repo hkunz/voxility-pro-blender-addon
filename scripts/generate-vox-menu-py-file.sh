@@ -7,7 +7,6 @@ VOX_OP_BASE_DIR="operators/voxel/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
 JSON=$(cat "supported-voxel-formats.json")
 
-
 generate_voxel_formats_menu_py_file() {
     template_file="${MENUS_DIR}${VOX_FORMATS_MENU_TEMPLATE}"
     output_file="${MENUS_DIR}voxel_formats_${1}_menu.py"
@@ -18,6 +17,7 @@ generate_voxel_formats_menu_py_file() {
     cp "$template_file" "$output_file"
 
     extensions=$(echo "$JSON" | jq -r '.[].extension')
+    voxel_formats_list="\n${TAB}FORMATS=["
 
     for type in $extensions; do
         name=$(get_vox_column_value "$type" "$JSON" "name")
@@ -34,13 +34,17 @@ generate_voxel_formats_menu_py_file() {
         fi
         if ([ "$1" == 'export' ] && [ "$save" == '1' ]) || ([ "$1" == 'import' ] && [ "$load" == '1' ]); then
             classes_content+="${TAB}${class_prefix}${code_name},\n"
+            voxel_formats_list+="\n${TAB}${TAB}(\"$(echo ${type} | tr '[:lower:]' '[:upper:]')\", \"${type} (${name})\", \"Target export format: *.${type}\"),"
         fi
     done
+
+    voxel_formats_list+="\n${TAB}]\n"
 
     sed -i " \
         s/{{imports}}/$imports_content/; \
         s/{{classes}}/$classes_content/" \
-    "$output_file"
+        "$output_file"
+    sed -i "s/{{voxel_formats_list}}/${voxel_formats_list}/" "$output_file"
     sed -i "s/{{menu_class}}/VoxelFormats${1^}Menu/g" "$output_file"
     sed -i "s/{{import-export}}/${1}/g" "$output_file"
     sed -i "s/{{vox-class}}/${class_prefix}magicavoxel/g" "$output_file"

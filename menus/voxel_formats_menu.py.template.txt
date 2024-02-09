@@ -8,7 +8,7 @@ CLASSES = [
 class {{menu_class}}(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_{{menu_class}}_submenu"
     bl_label = "Select"
-
+{{voxel_formats_list}}
     def draw(self, _context):
         layout = self.layout
         for cls in CLASSES:
