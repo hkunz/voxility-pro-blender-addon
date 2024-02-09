@@ -6,7 +6,7 @@ def get_addon_version(prependv = True):
     return ('v' if prependv else '') + '.'.join(map(str, bl_info['version']))
 
 def get_voxconvert_version():
-    pattern = r' voxconvert-(\d+\.\d+\.\d+)$'
+    pattern = r' voxconvert-(\d+\.\d+\.\d+(?:-.*)?)$'
     match = re.search(pattern, bl_info["description"])
     version = match.group(1)
     return version
