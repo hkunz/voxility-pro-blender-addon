@@ -73,7 +73,7 @@ class VoxConvertCommandBuilder:
             command.append("--surface-only")
 
         if self.vc_merge_vertices:
-            command.append("--merge")
+            pass #command.append("--merge") #https://github.com/vengi-voxel/vengi/issues/389
 
         command.append("--input")
         command.append(f'"{self.vc_input_path}"')

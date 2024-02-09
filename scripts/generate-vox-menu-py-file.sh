@@ -17,7 +17,7 @@ generate_voxel_formats_menu_py_file() {
     cp "$template_file" "$output_file"
 
     extensions=$(echo "$JSON" | jq -r '.[].extension')
-    voxel_formats_list="\n${TAB}FORMATS=["
+    voxel_formats_list="\n${TAB}FORMATS=[\n${TAB}${TAB}(\"NONE\", \"Don't Export\", \"No specific target format. Only voxelize within this application.\"),"
 
     for type in $extensions; do
         name=$(get_vox_column_value "$type" "$JSON" "name")
@@ -34,7 +34,7 @@ generate_voxel_formats_menu_py_file() {
         fi
         if ([ "$1" == 'export' ] && [ "$save" == '1' ]) || ([ "$1" == 'import' ] && [ "$load" == '1' ]); then
             classes_content+="${TAB}${class_prefix}${code_name},\n"
-            voxel_formats_list+="\n${TAB}${TAB}(\"$(echo ${type} | tr '[:lower:]' '[:upper:]')\", \"${type} (${name})\", \"Target export format: *.${type}\"),"
+            voxel_formats_list+="\n${TAB}${TAB}(\"$(echo ${type} | tr '[:lower:]' '[:upper:]')\", \"${type} (${name})\", \"Target format: *.${type}\"),"
         fi
     done
 

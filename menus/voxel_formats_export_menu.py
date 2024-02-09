@@ -65,6 +65,28 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_VoxelFormatsExportMenu_submenu"
     bl_label = "Select"
 
+    FORMATS=[
+        ("NONE", "Don't Export", "No specific target format. Only voxelize within this application."),
+        ("VOX", "vox (MagicaVoxel)", "Target format: *.vox"),
+        ("QB", "qb (Qubicle Binary Exchange)", "Target format: *.qb"),
+        ("QBT", "qbt (Qubicle Binary Tree Exchange)", "Target format: *.qbt"),
+        ("QEF", "qef (Qubicle Exchange Format ASCII)", "Target format: *.qef"),
+        ("QBCL", "qbcl (Qubicle Project)", "Target format: *.qbcl"),
+        ("BINVOX", "binvox (Binvox command line voxelizer)", "Target format: *.binvox"),
+        ("CUB", "cub (CubeWorld CubeMap)", "Target format: *.cub"),
+        ("VXR", "vxr (Sandbox VoxEdit Hierarchy)", "Target format: *.vxr"),
+        ("VXM", "vxm (Sandbox VoxEdit Model)", "Target format: *.vxm"),
+        ("XRAW", "xraw (MagicaVoxel XRAW)", "Target format: *.xraw"),
+        ("VXL", "vxl (Tiberian Sun)", "Target format: *.vxl"),
+        ("KV6", "kv6 (Voxlap Voxel Engine)", "Target format: *.kv6"),
+        ("KVX", "kvx (Voxlap Voxel model format)", "Target format: *.kvx"),
+        ("GOX", "gox (Goxel)", "Target format: *.gox"),
+        ("VMAX", "vmax (Voxel Max)", "Target format: *.vmax"),
+        ("V3A", "v3a (Voxel3D)", "Target format: *.v3a"),
+        ("VENGI", "vengi (Vengi)", "Target format: *.vengi"),
+        ("3ZH", "3zh (Cubzh)", "Target format: *.3zh"),
+    ]
+
     def draw(self, _context):
         layout = self.layout
         for cls in CLASSES:

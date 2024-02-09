@@ -6,6 +6,7 @@ from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
     unregister as unregister_mesh_voxel_operator
 )
 
+from voxility_pro.menus.voxel_formats_export_menu import VoxelFormatsExportMenu
 from voxility_pro.utils.utils import get_addon_version
 from voxility_pro.enums.version_type import VersionType
 
@@ -78,6 +79,13 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=True,
     )
 
+    export_format: bpy.props.EnumProperty(
+        name="Target",
+        description="Select target voxel export format",
+        items=VoxelFormatsExportMenu.FORMATS,
+        default="NONE",
+    )
+
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_label = f"Voxility Pro {get_addon_version()}"
     bl_space_type = 'VIEW_3D'
@@ -87,8 +95,6 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         properties = context.scene.voxility_pro_properties
-        #layout.prop(properties, "option_dissolve_limited")
-        #layout.prop(properties, "voxformat_withcolor")
 
         vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
         col = layout.column()
@@ -99,12 +105,11 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.prop(properties, "merge_vertices")
         layout.prop(properties, "voxformat_scale")
         layout.prop(properties, "voxformat_voxelizemode")
-        #layout.prop(properties, "palette_file")
-        #layout.prop(properties, "export_palette")
         layout.prop(properties, "surface_only")
         layout.prop(properties, "voxformat_mergequads")
         layout.prop(properties, "hide_original_objects")
         layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
+        layout.prop(properties, "export_format")
 
 def register():
     bpy.utils.register_class(VoxilityProProperties)

@@ -48,15 +48,17 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
 
     def setup_command(self, input, output):
         c = super().setup_command(input, output)
-        c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
         c.vc_voxformat_withcolor = 1
         properties = bpy.context.scene.voxility_pro_properties
         c.vc_voxformat_scale = float(properties.voxformat_scale)
         c.vc_surface_only = int(properties.surface_only)
         c.vc_voxformat_voxelizemode = int(properties.voxformat_voxelizemode)
         c.vc_voxformat_mergequads = int(properties.voxformat_mergequads)
+        c.vc_merge_vertices = int(properties.merge_vertices)
+
 
     def execute(self, context):
+        voxelize_duration = time.time()
         active_object = context.view_layer.objects.active
         temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
         vc_in_path = os.path.join(temp_dir, 'temp_in.obj')
@@ -81,6 +83,7 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         self.set_scale(orig_width / context.object.dimensions[0])
         duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {vc_out_path} in {duration}")
+        self.report({'INFO'}, f"Voxelized in {format_duration(time.time() - voxelize_duration)}")
         properties = context.scene.voxility_pro_properties
         if properties.voxformat_withcolor:
             shutil.rmtree(temp_dir)

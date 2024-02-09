@@ -75,7 +75,6 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
     def setup_command(self, input, output):
         c = super().setup_command(input, output)
-        c.vc_merge_vertices = 0 #no --merge param but still merges vertices using python. remove line when this works
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
 
