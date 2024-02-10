@@ -13,7 +13,7 @@ class IMPORT_OT_voxel_builder(BaseOperatorImporter):
     bl_label = "Voxel Builder (.vbx)"
     bl_description = "Import Voxel Builder format (.vbx)"
 
-    filename_ext = ".vbx"
+    filename_ext: str = ".vbx"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vbx",

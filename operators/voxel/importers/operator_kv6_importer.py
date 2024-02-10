@@ -13,7 +13,7 @@ class IMPORT_OT_voxlap_voxel_engine(BaseOperatorImporter):
     bl_label = "Voxlap Voxel Engine (.kv6)"
     bl_description = "Import Voxlap Voxel Engine format (.kv6)"
 
-    filename_ext = ".kv6"
+    filename_ext: str = ".kv6"
 
     filter_glob: bpy.props.StringProperty(
         default="*.kv6",

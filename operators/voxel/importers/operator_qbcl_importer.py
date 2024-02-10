@@ -13,7 +13,7 @@ class IMPORT_OT_qubicle_project(BaseOperatorImporter):
     bl_label = "Qubicle Project (.qbcl)"
     bl_description = "Import Qubicle Project format (.qbcl)"
 
-    filename_ext = ".qbcl"
+    filename_ext: str = ".qbcl"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbcl",

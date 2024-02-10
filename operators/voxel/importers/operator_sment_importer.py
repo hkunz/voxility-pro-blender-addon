@@ -13,7 +13,7 @@ class IMPORT_OT_starmade(BaseOperatorImporter):
     bl_label = "StarMade (.sment)"
     bl_description = "Import StarMade format (.sment)"
 
-    filename_ext = ".sment"
+    filename_ext: str = ".sment"
 
     filter_glob: bpy.props.StringProperty(
         default="*.sment",

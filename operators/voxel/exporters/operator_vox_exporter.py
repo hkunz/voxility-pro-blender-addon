@@ -13,7 +13,7 @@ class EXPORT_OT_magicavoxel(BaseOperatorExporter):
     bl_label = "MagicaVoxel (.vox)"
     bl_description = "Export selected objects to MagicaVoxel format (.vox)"
 
-    filename_ext = ".vox"
+    filename_ext: str = ".vox"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vox",

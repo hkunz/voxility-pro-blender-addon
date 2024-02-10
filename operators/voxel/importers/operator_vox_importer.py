@@ -13,7 +13,7 @@ class IMPORT_OT_magicavoxel(BaseOperatorImporter):
     bl_label = "MagicaVoxel (.vox)"
     bl_description = "Import MagicaVoxel format (.vox)"
 
-    filename_ext = ".vox"
+    filename_ext: str = ".vox"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vox",

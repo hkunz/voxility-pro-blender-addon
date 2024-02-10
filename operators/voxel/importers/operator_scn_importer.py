@@ -13,7 +13,7 @@ class IMPORT_OT_animatoon_3d_scene(BaseOperatorImporter):
     bl_label = "Animatoon 3D Scene (.scn)"
     bl_description = "Import Animatoon 3D Scene format (.scn)"
 
-    filename_ext = ".scn"
+    filename_ext: str = ".scn"
 
     filter_glob: bpy.props.StringProperty(
         default="*.scn",

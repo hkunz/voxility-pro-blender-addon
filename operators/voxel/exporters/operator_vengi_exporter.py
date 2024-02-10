@@ -13,7 +13,7 @@ class EXPORT_OT_vengi(BaseOperatorExporter):
     bl_label = "Vengi (.vengi)"
     bl_description = "Export selected objects to Vengi format (.vengi)"
 
-    filename_ext = ".vengi"
+    filename_ext: str = ".vengi"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vengi",

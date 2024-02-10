@@ -13,7 +13,7 @@ class IMPORT_OT_sandbox_voxedit_hierarchy(BaseOperatorImporter):
     bl_label = "Sandbox VoxEdit Hierarchy (.vxr)"
     bl_description = "Import Sandbox VoxEdit Hierarchy format (.vxr)"
 
-    filename_ext = ".vxr"
+    filename_ext: str = ".vxr"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxr",

@@ -5,6 +5,11 @@
 # ============================================================================
 
 import bpy
+import bpy_types
+
+from typing import List, Tuple
+
+from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 
 from voxility_pro.operators.voxel.exporters.operator_vox_exporter import EXPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.exporters.operator_qb_exporter import EXPORT_OT_qubicle_binary_exchange
@@ -40,7 +45,7 @@ from voxility_pro.operators.voxel.exporters.operator_3zh_exporter import EXPORT_
 from voxility_pro.operators.voxel.exporters.operator_b64_exporter import EXPORT_OT_cubzh_world
 
 
-CLASSES = [
+CLASSES: List[VoxconvertOperator] = [
     EXPORT_OT_magicavoxel,
     EXPORT_OT_qubicle_binary_exchange,
     EXPORT_OT_qubicle_binary_tree_exchange,
@@ -65,7 +70,7 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_VoxelFormatsExportMenu_submenu"
     bl_label = "Select"
 
-    FORMATS=[
+    FORMATS: List[Tuple[str, str, str]] = [
         ("NONE", "Don't Export", "No specific target format. Only voxelize within this application."),
         ("VOX", "vox (MagicaVoxel)", "Target format: *.vox"),
         ("QB", "qb (Qubicle Binary Exchange)", "Target format: *.qb"),
@@ -87,25 +92,25 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         ("3ZH", "3zh (Cubzh)", "Target format: *.3zh"),
     ]
 
-    def draw(self, _context):
-        layout = self.layout
+    def draw(self, _context: bpy_types.Context) -> None:
+        layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_vox_export_func_callback(self, _context):
+def menu_vox_export_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(EXPORT_OT_magicavoxel.bl_idname)
 
-def menu_VoxelFormatsExportMenu_func_callback(self, _context):
+def menu_VoxelFormatsExportMenu_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="Voxility Voxel Formats")
 
-def register():
+def register() -> None:
     for cls in CLASSES:
         bpy.utils.register_class(cls)
     bpy.utils.register_class(VoxelFormatsExportMenu)
     bpy.types.TOPBAR_MT_file_export.append(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.append(menu_VoxelFormatsExportMenu_func_callback)
 
-def unregister():
+def unregister() -> None:
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class(VoxelFormatsExportMenu)

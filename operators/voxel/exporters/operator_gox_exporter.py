@@ -13,7 +13,7 @@ class EXPORT_OT_goxel(BaseOperatorExporter):
     bl_label = "Goxel (.gox)"
     bl_description = "Export selected objects to Goxel format (.gox)"
 
-    filename_ext = ".gox"
+    filename_ext: str = ".gox"
 
     filter_glob: bpy.props.StringProperty(
         default="*.gox",

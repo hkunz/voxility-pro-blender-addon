@@ -13,7 +13,7 @@ class EXPORT_OT_nicks_voxel_model(BaseOperatorExporter):
     bl_label = "Nicks Voxel Model (.nvm)"
     bl_description = "Export selected objects to Nicks Voxel Model format (.nvm)"
 
-    filename_ext = ".nvm"
+    filename_ext: str = ".nvm"
 
     filter_glob: bpy.props.StringProperty(
         default="*.nvm",

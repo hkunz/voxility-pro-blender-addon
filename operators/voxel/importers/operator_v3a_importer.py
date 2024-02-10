@@ -13,7 +13,7 @@ class IMPORT_OT_voxel3d(BaseOperatorImporter):
     bl_label = "Voxel3D (.v3a)"
     bl_description = "Import Voxel3D format (.v3a)"
 
-    filename_ext = ".v3a"
+    filename_ext: str = ".v3a"
 
     filter_glob: bpy.props.StringProperty(
         default="*.v3a",

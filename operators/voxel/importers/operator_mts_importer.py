@@ -13,7 +13,7 @@ class IMPORT_OT_minetest_template(BaseOperatorImporter):
     bl_label = "Minetest Template (.mts)"
     bl_description = "Import Minetest Template format (.mts)"
 
-    filename_ext = ".mts"
+    filename_ext: str = ".mts"
 
     filter_glob: bpy.props.StringProperty(
         default="*.mts",

@@ -13,7 +13,7 @@ class IMPORT_OT_qubicle_binary_exchange(BaseOperatorImporter):
     bl_label = "Qubicle Binary Exchange (.qb)"
     bl_description = "Import Qubicle Binary Exchange format (.qb)"
 
-    filename_ext = ".qb"
+    filename_ext: str = ".qb"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qb",

@@ -13,7 +13,7 @@ class IMPORT_OT_qubicle_binary_tree_exchange(BaseOperatorImporter):
     bl_label = "Qubicle Binary Tree Exchange (.qbt)"
     bl_description = "Import Qubicle Binary Tree Exchange format (.qbt)"
 
-    filename_ext = ".qbt"
+    filename_ext: str = ".qbt"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbt",

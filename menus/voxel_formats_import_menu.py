@@ -5,6 +5,11 @@
 # ============================================================================
 
 import bpy
+import bpy_types
+
+from typing import List, Tuple
+
+from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 
 from voxility_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
@@ -40,7 +45,7 @@ from voxility_pro.operators.voxel.importers.operator_3zh_importer import IMPORT_
 from voxility_pro.operators.voxel.importers.operator_b64_importer import IMPORT_OT_cubzh_world
 
 
-CLASSES = [
+CLASSES: List[VoxconvertOperator] = [
     IMPORT_OT_magicavoxel,
     IMPORT_OT_qubicle_binary_exchange,
     IMPORT_OT_qubicle_binary_tree_exchange,
@@ -77,8 +82,8 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_VoxelFormatsImportMenu_submenu"
     bl_label = "Select"
 
-    FORMATS=[
-        ("NONE", "Don't Export", "No specific target format. Only voxelize within this application."),
+    FORMATS: List[Tuple[str, str, str]] = [
+        ("NONE", "Don't Import", "No specific target format. Only voxelize within this application."),
         ("VOX", "vox (MagicaVoxel)", "Target format: *.vox"),
         ("QB", "qb (Qubicle Binary Exchange)", "Target format: *.qb"),
         ("QBT", "qbt (Qubicle Binary Tree Exchange)", "Target format: *.qbt"),
@@ -111,25 +116,25 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
         ("B64", "b64 (Cubzh World)", "Target format: *.b64"),
     ]
 
-    def draw(self, _context):
-        layout = self.layout
+    def draw(self, _context: bpy_types.Context) -> None:
+        layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_vox_import_func_callback(self, _context):
+def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
 
-def menu_VoxelFormatsImportMenu_func_callback(self, _context):
+def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
 
-def register():
+def register() -> None:
     for cls in CLASSES:
         bpy.utils.register_class(cls)
     bpy.utils.register_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
-def unregister():
+def unregister() -> None:
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class(VoxelFormatsImportMenu)

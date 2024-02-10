@@ -13,7 +13,7 @@ class IMPORT_OT_cubeworld_cubemap(BaseOperatorImporter):
     bl_label = "CubeWorld CubeMap (.cub)"
     bl_description = "Import CubeWorld CubeMap format (.cub)"
 
-    filename_ext = ".cub"
+    filename_ext: str = ".cub"
 
     filter_glob: bpy.props.StringProperty(
         default="*.cub",

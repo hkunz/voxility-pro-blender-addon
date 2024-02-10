@@ -13,7 +13,7 @@ class EXPORT_OT_sandbox_voxedit_tilemap(BaseOperatorExporter):
     bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
     bl_description = "Export selected objects to Sandbox VoxEdit Tilemap format (.vxt)"
 
-    filename_ext = ".vxt"
+    filename_ext: str = ".vxt"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxt",

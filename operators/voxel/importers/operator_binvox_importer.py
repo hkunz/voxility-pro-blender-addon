@@ -13,7 +13,7 @@ class IMPORT_OT_binvox_command_line_voxelizer(BaseOperatorImporter):
     bl_label = "Binvox command line voxelizer (.binvox)"
     bl_description = "Import Binvox command line voxelizer format (.binvox)"
 
-    filename_ext = ".binvox"
+    filename_ext: str = ".binvox"
 
     filter_glob: bpy.props.StringProperty(
         default="*.binvox",

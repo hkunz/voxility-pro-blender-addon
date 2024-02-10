@@ -13,7 +13,7 @@ class EXPORT_OT_starmade(BaseOperatorExporter):
     bl_label = "StarMade (.sment)"
     bl_description = "Export selected objects to StarMade format (.sment)"
 
-    filename_ext = ".sment"
+    filename_ext: str = ".sment"
 
     filter_glob: bpy.props.StringProperty(
         default="*.sment",

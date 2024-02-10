@@ -13,7 +13,7 @@ class IMPORT_OT_cubzh(BaseOperatorImporter):
     bl_label = "Cubzh (.3zh)"
     bl_description = "Import Cubzh format (.3zh)"
 
-    filename_ext = ".3zh"
+    filename_ext: str = ".3zh"
 
     filter_glob: bpy.props.StringProperty(
         default="*.3zh",

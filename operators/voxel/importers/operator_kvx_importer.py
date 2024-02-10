@@ -13,7 +13,7 @@ class IMPORT_OT_voxlap_voxel_model_format(BaseOperatorImporter):
     bl_label = "Voxlap Voxel model format (.kvx)"
     bl_description = "Import Voxlap Voxel model format format (.kvx)"
 
-    filename_ext = ".kvx"
+    filename_ext: str = ".kvx"
 
     filter_glob: bpy.props.StringProperty(
         default="*.kvx",

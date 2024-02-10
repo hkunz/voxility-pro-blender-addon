@@ -13,7 +13,7 @@ class EXPORT_OT_particubes(BaseOperatorExporter):
     bl_label = "Particubes (.pcubes)"
     bl_description = "Export selected objects to Particubes format (.pcubes)"
 
-    filename_ext = ".pcubes"
+    filename_ext: str = ".pcubes"
 
     filter_glob: bpy.props.StringProperty(
         default="*.pcubes",

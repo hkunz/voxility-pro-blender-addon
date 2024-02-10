@@ -13,7 +13,7 @@ class IMPORT_OT_magicavoxel_xraw(BaseOperatorImporter):
     bl_label = "MagicaVoxel XRAW (.xraw)"
     bl_description = "Import MagicaVoxel XRAW format (.xraw)"
 
-    filename_ext = ".xraw"
+    filename_ext: str = ".xraw"
 
     filter_glob: bpy.props.StringProperty(
         default="*.xraw",

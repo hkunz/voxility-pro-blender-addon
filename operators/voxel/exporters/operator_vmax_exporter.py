@@ -13,7 +13,7 @@ class EXPORT_OT_voxel_max(BaseOperatorExporter):
     bl_label = "Voxel Max (.vmax)"
     bl_description = "Export selected objects to Voxel Max format (.vmax)"
 
-    filename_ext = ".vmax"
+    filename_ext: str = ".vmax"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vmax",

@@ -13,7 +13,7 @@ class IMPORT_OT_minecraft_anvil_region(BaseOperatorImporter):
     bl_label = "Minecraft Anvil Region (.mca)"
     bl_description = "Import Minecraft Anvil Region format (.mca)"
 
-    filename_ext = ".mca"
+    filename_ext: str = ".mca"
 
     filter_glob: bpy.props.StringProperty(
         default="*.mca",

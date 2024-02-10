@@ -1,33 +1,38 @@
 import bpy
+import bpy_types
+
+from typing import List, Tuple
+
+from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 
 {{imports}}
 
-CLASSES = [
+CLASSES: List[VoxconvertOperator] = [
 {{classes}}]
 
 class {{menu_class}}(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_{{menu_class}}_submenu"
     bl_label = "Select"
 {{voxel_formats_list}}
-    def draw(self, _context):
-        layout = self.layout
+    def draw(self, _context: bpy_types.Context) -> None:
+        layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
             layout.operator(cls.bl_idname, text=cls.bl_label)
 
-def menu_vox_{{import-export}}_func_callback(self, _context):
+def menu_vox_{{import-export}}_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator({{vox-class}}.bl_idname)
 
-def menu_{{menu_class}}_func_callback(self, _context):
+def menu_{{menu_class}}_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu({{menu_class}}.bl_idname, text="Voxility Voxel Formats")
 
-def register():
+def register() -> None:
     for cls in CLASSES:
         bpy.utils.register_class(cls)
     bpy.utils.register_class({{menu_class}})
     bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_vox_{{import-export}}_func_callback)
     bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_{{menu_class}}_func_callback)
 
-def unregister():
+def unregister() -> None:
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class({{menu_class}})

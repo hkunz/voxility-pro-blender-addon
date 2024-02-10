@@ -13,7 +13,7 @@ class IMPORT_OT_cubzh_world(BaseOperatorImporter):
     bl_label = "Cubzh World (.b64)"
     bl_description = "Import Cubzh World format (.b64)"
 
-    filename_ext = ".b64"
+    filename_ext: str = ".b64"
 
     filter_glob: bpy.props.StringProperty(
         default="*.b64",

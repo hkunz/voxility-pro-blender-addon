@@ -13,7 +13,7 @@ class IMPORT_OT_nicks_voxel_model(BaseOperatorImporter):
     bl_label = "Nicks Voxel Model (.nvm)"
     bl_description = "Import Nicks Voxel Model format (.nvm)"
 
-    filename_ext = ".nvm"
+    filename_ext: str = ".nvm"
 
     filter_glob: bpy.props.StringProperty(
         default="*.nvm",

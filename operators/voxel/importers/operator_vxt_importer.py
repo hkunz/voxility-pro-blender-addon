@@ -13,7 +13,7 @@ class IMPORT_OT_sandbox_voxedit_tilemap(BaseOperatorImporter):
     bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
     bl_description = "Import Sandbox VoxEdit Tilemap format (.vxt)"
 
-    filename_ext = ".vxt"
+    filename_ext: str = ".vxt"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxt",

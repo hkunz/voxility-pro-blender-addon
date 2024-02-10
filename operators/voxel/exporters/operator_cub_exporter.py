@@ -13,7 +13,7 @@ class EXPORT_OT_cubeworld_cubemap(BaseOperatorExporter):
     bl_label = "CubeWorld CubeMap (.cub)"
     bl_description = "Export selected objects to CubeWorld CubeMap format (.cub)"
 
-    filename_ext = ".cub"
+    filename_ext: str = ".cub"
 
     filter_glob: bpy.props.StringProperty(
         default="*.cub",

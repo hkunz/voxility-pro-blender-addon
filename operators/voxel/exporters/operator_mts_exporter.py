@@ -13,7 +13,7 @@ class EXPORT_OT_minetest_template(BaseOperatorExporter):
     bl_label = "Minetest Template (.mts)"
     bl_description = "Export selected objects to Minetest Template format (.mts)"
 
-    filename_ext = ".mts"
+    filename_ext: str = ".mts"
 
     filter_glob: bpy.props.StringProperty(
         default="*.mts",

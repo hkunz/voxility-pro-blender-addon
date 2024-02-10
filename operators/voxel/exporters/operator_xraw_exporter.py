@@ -13,7 +13,7 @@ class EXPORT_OT_magicavoxel_xraw(BaseOperatorExporter):
     bl_label = "MagicaVoxel XRAW (.xraw)"
     bl_description = "Export selected objects to MagicaVoxel XRAW format (.xraw)"
 
-    filename_ext = ".xraw"
+    filename_ext: str = ".xraw"
 
     filter_glob: bpy.props.StringProperty(
         default="*.xraw",

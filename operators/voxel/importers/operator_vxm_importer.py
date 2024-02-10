@@ -13,7 +13,7 @@ class IMPORT_OT_sandbox_voxedit_model(BaseOperatorImporter):
     bl_label = "Sandbox VoxEdit Model (.vxm)"
     bl_description = "Import Sandbox VoxEdit Model format (.vxm)"
 
-    filename_ext = ".vxm"
+    filename_ext: str = ".vxm"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxm",

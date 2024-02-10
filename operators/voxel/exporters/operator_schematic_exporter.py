@@ -13,7 +13,7 @@ class EXPORT_OT_minecraft_schematic(BaseOperatorExporter):
     bl_label = "Minecraft Schematic (.schematic)"
     bl_description = "Export selected objects to Minecraft Schematic format (.schematic)"
 
-    filename_ext = ".schematic"
+    filename_ext: str = ".schematic"
 
     filter_glob: bpy.props.StringProperty(
         default="*.schematic",

@@ -13,7 +13,7 @@ class IMPORT_OT_particubes(BaseOperatorImporter):
     bl_label = "Particubes (.pcubes)"
     bl_description = "Import Particubes format (.pcubes)"
 
-    filename_ext = ".pcubes"
+    filename_ext: str = ".pcubes"
 
     filter_glob: bpy.props.StringProperty(
         default="*.pcubes",

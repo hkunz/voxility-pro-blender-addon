@@ -13,7 +13,7 @@ class IMPORT_OT_minecraft_level_dat(BaseOperatorImporter):
     bl_label = "Minecraft level dat (.dat)"
     bl_description = "Import Minecraft level dat format (.dat)"
 
-    filename_ext = ".dat"
+    filename_ext: str = ".dat"
 
     filter_glob: bpy.props.StringProperty(
         default="*.dat",

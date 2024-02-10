@@ -13,7 +13,7 @@ class EXPORT_OT_sproxel_csv(BaseOperatorExporter):
     bl_label = "Sproxel csv (.csv)"
     bl_description = "Export selected objects to Sproxel csv format (.csv)"
 
-    filename_ext = ".csv"
+    filename_ext: str = ".csv"
 
     filter_glob: bpy.props.StringProperty(
         default="*.csv",

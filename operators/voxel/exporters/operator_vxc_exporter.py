@@ -13,7 +13,7 @@ class EXPORT_OT_sandbox_voxedit_collection(BaseOperatorExporter):
     bl_label = "Sandbox VoxEdit Collection (.vxc)"
     bl_description = "Export selected objects to Sandbox VoxEdit Collection format (.vxc)"
 
-    filename_ext = ".vxc"
+    filename_ext: str = ".vxc"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxc",

@@ -13,7 +13,7 @@ class EXPORT_OT_qubicle_project(BaseOperatorExporter):
     bl_label = "Qubicle Project (.qbcl)"
     bl_description = "Export selected objects to Qubicle Project format (.qbcl)"
 
-    filename_ext = ".qbcl"
+    filename_ext: str = ".qbcl"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbcl",

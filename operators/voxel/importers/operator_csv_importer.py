@@ -13,7 +13,7 @@ class IMPORT_OT_sproxel_csv(BaseOperatorImporter):
     bl_label = "Sproxel csv (.csv)"
     bl_description = "Import Sproxel csv format (.csv)"
 
-    filename_ext = ".csv"
+    filename_ext: str = ".csv"
 
     filter_glob: bpy.props.StringProperty(
         default="*.csv",

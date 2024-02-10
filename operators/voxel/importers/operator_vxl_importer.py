@@ -13,7 +13,7 @@ class IMPORT_OT_tiberian_sun(BaseOperatorImporter):
     bl_label = "Tiberian Sun (.vxl)"
     bl_description = "Import Tiberian Sun format (.vxl)"
 
-    filename_ext = ".vxl"
+    filename_ext: str = ".vxl"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxl",

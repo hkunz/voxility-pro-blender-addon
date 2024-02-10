@@ -13,7 +13,7 @@ class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
     bl_label = "Qubicle Binary Exchange (.qb)"
     bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"
 
-    filename_ext = ".qb"
+    filename_ext: str = ".qb"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qb",

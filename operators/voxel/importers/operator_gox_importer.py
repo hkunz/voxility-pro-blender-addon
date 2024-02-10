@@ -13,7 +13,7 @@ class IMPORT_OT_goxel(BaseOperatorImporter):
     bl_label = "Goxel (.gox)"
     bl_description = "Import Goxel format (.gox)"
 
-    filename_ext = ".gox"
+    filename_ext: str = ".gox"
 
     filter_glob: bpy.props.StringProperty(
         default="*.gox",

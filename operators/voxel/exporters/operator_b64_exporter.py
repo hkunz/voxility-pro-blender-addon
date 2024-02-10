@@ -13,7 +13,7 @@ class EXPORT_OT_cubzh_world(BaseOperatorExporter):
     bl_label = "Cubzh World (.b64)"
     bl_description = "Export selected objects to Cubzh World format (.b64)"
 
-    filename_ext = ".b64"
+    filename_ext: str = ".b64"
 
     filter_glob: bpy.props.StringProperty(
         default="*.b64",

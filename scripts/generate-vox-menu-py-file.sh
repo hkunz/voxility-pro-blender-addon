@@ -17,7 +17,7 @@ generate_voxel_formats_menu_py_file() {
     cp "$template_file" "$output_file"
 
     extensions=$(echo "$JSON" | jq -r '.[].extension')
-    voxel_formats_list="\n${TAB}FORMATS=[\n${TAB}${TAB}(\"NONE\", \"Don't Export\", \"No specific target format. Only voxelize within this application.\"),"
+    voxel_formats_list="\n${TAB}FORMATS: List[Tuple[str, str, str]] = [\n${TAB}${TAB}(\"NONE\", \"Don't $(echo "$1" | sed 's/.*/\u&/')\", \"No specific target format. Only voxelize within this application.\"),"
 
     for type in $extensions; do
         name=$(get_vox_column_value "$type" "$JSON" "name")

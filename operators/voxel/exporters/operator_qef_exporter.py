@@ -13,7 +13,7 @@ class EXPORT_OT_qubicle_exchange_format_ascii(BaseOperatorExporter):
     bl_label = "Qubicle Exchange Format ASCII (.qef)"
     bl_description = "Export selected objects to Qubicle Exchange Format ASCII format (.qef)"
 
-    filename_ext = ".qef"
+    filename_ext: str = ".qef"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qef",

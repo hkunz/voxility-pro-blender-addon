@@ -13,7 +13,7 @@ class IMPORT_OT_vengi(BaseOperatorImporter):
     bl_label = "Vengi (.vengi)"
     bl_description = "Import Vengi format (.vengi)"
 
-    filename_ext = ".vengi"
+    filename_ext: str = ".vengi"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vengi",

@@ -13,7 +13,7 @@ class IMPORT_OT_cubic_mesh(BaseOperatorImporter):
     bl_label = "CuBic Mesh (.csm)"
     bl_description = "Import CuBic Mesh format (.csm)"
 
-    filename_ext = ".csm"
+    filename_ext: str = ".csm"
 
     filter_glob: bpy.props.StringProperty(
         default="*.csm",
