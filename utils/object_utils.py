@@ -1,25 +1,30 @@
 import bpy
 import sys
 import traceback
+import bpy_types
 
-def check_mesh_exists():
+from types import TracebackType, ModuleType
+from typing import List, Optional, Type
+
+def check_mesh_exists() -> bool:
+    o: bpy.types.Object
     for o in bpy.context.selected_objects:
         if o.type == 'MESH':
             return True
     return False
 
-def deselect_all_objects():
+def deselect_all_objects() -> None:
     bpy.ops.object.select_all(action='DESELECT')
 
-def auto_merge_vertices(obj):
-    C = bpy.context
-    C.view_layer.objects.active = obj
-    s = C.scene.tool_settings
-    merge = s.use_mesh_automerge
-    split = s.use_mesh_automerge_and_split
+def auto_merge_vertices(object: bpy.types.Object) -> None:
+    C: bpy_types.Context = bpy.context
+    C.view_layer.objects.active = object
+    s: bpy.types.ToolSettings = C.scene.tool_settings
+    merge: bool = s.use_mesh_automerge
+    split: bool = s.use_mesh_automerge_and_split
     s.use_mesh_automerge = True
     s.use_mesh_automerge_and_split = True
-    ops = bpy.ops
+    ops: ModuleType = bpy.ops
     ops.object.mode_set(mode='EDIT')
     ops.mesh.select_all(action='SELECT')
     ops.transform.translate(value=(0, 0, 0))
@@ -29,25 +34,29 @@ def auto_merge_vertices(obj):
     s.use_mesh_automerge = merge
     s.use_mesh_automerge_and_split = split
 
-def validate_mesh(object=None):
+def validate_mesh(object: bpy.types.Object=None) -> None:
     if object:
         object.data.validate()
     else:
+        m: bpy_types.Mesh = None
         for m in bpy.data.meshes:
             m.validate()
 
-def import_obj(filepath):
+def import_obj(filepath: str) -> bool:
     print("\nImport:")
+    success: bool = False
     try:
         bpy.ops.wm.obj_import(filepath=filepath)
+        success = True
     except Exception as e:
         import_obj__deprecated(filepath=filepath)
     finally:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         if exc_type is not None:
             traceback.print_exception(exc_type, exc_value, exc_traceback)
+    return success
 
-def export_obj(filepath):
+def export_obj(filepath: str) -> None:
     print("\nExport:")
     try:
         bpy.ops.wm.obj_export(
@@ -100,17 +109,18 @@ def export_obj(filepath):
     except Exception as e:
         export_obj__deprecated(filepath=filepath)
     finally:
+        #exc_type:Optional[Type[BaseException]], exc_value:Optional[BaseException], traceback:Optional[TracebackType] = sys.exc_info()
         exc_type, exc_value, exc_traceback = sys.exc_info()
         if exc_type is not None:
             traceback.print_exception(exc_type, exc_value, exc_traceback)
     return filepath
 
 # bpy.ops.import_scene.obj only works until blender version 3.6
-def import_obj__deprecated(filepath):
+def import_obj__deprecated(filepath: str) -> None:
     bpy.ops.import_scene.obj(filepath=filepath)
 
 # bpy.ops.export_scene.obj only works until blender version 3.6
-def export_obj__deprecated(filepath):
+def export_obj__deprecated(filepath: str) -> None:
     bpy.ops.export_scene.obj(
         filepath=filepath,
         check_existing=True,
@@ -138,12 +148,12 @@ def export_obj__deprecated(filepath):
     )
     return filepath
 
-def duplicate_objects(objects):
-    C = bpy.context
-    duplicates = []
-    active_obj = C.view_layer.objects.active
+def duplicate_objects(objects: List[bpy.types.Object]) -> None:
+    C: bpy_types.Context = bpy.context
+    duplicates: List[bpy.types.Object] = []
+    active_obj: bpy.types.Object = C.view_layer.objects.active
     for ob in objects:
-        copy = duplicate_object(ob)
+        copy: bpy.types.Object = duplicate_object(ob)
         if ob is active_obj:
             C.view_layer.objects.active = copy
         duplicates.append(copy)
@@ -151,19 +161,19 @@ def duplicate_objects(objects):
     for ob in duplicates:
         ob.select_set(True)
 
-def duplicate_object(ob):
-    copy = ob.copy()
+def duplicate_object(ob: bpy.types.Object) -> bpy.types.Object:
+    copy:bpy.types.Object = ob.copy()
     copy.data = copy.data.copy()
     bpy.context.collection.objects.link(copy)
-    dg = bpy.context.evaluated_depsgraph_get()
+    dg: bpy.types.Depsgraph = bpy.context.evaluated_depsgraph_get()
     dg.update()
     return copy
 
-def select_objects(objects, active_object):
+def select_objects(objects: List[bpy.types.Object], active_object: bpy.types.Object) -> None:
     for ob in objects:
         ob.select_set(True)
     bpy.context.view_layer.objects.active = active_object
 
-def hide_objects_from_viewport(objects, hide=True):
+def hide_objects_from_viewport(objects: List[bpy.types.Object], hide: bool=True) -> None:
     for ob in objects:
         ob.hide_set(hide)

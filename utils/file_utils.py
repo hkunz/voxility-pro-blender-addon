@@ -3,48 +3,51 @@ import glob
 import os
 import platform
 
+from typing import List
+
 from voxility_pro.utils.utils import get_voxconvert_version
 from voxility_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
 
-def get_addon_root_dir():
+def get_addon_root_dir() -> str:
     # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\voxility_pro\utils.py
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-    addon_directory = os.path.dirname(script_directory)
+    script_directory: str = os.path.dirname(os.path.abspath(__file__))
+    addon_directory: str = os.path.dirname(script_directory)
     return addon_directory
 
-def check_exe_match(matches, voxconvert_version):
+def check_exe_match(matches: List[str], voxconvert_version: str) -> None:
     if len(matches) == 0:
         raise VoxConvertExeMissingError(voxconvert_version)
 
-def get_voxconvert_filepath():
-    addon_root = get_addon_root_dir()
-    system = platform.system().lower()
-    voxconvert_version = get_voxconvert_version()
-    exe_base_dir = "executable"
-    exe_base_name = "voxconvert"
+def get_voxconvert_filepath() -> str:
+    addon_root: str = get_addon_root_dir()
+    system: str = platform.system().lower()
+    voxconvert_version: str = get_voxconvert_version()
+    exe_base_dir: str = "executable"
+    exe_base_name: str = "voxconvert"
 
     if system == "darwin":
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
+        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
         check_exe_match(matching_files, voxconvert_version)
         return os.path.join(addon_root, matching_files[0]).replace(" ", "\ ")
 
     if system == "windows":
-        matching_files = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
+        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
         check_exe_match(matching_files, voxconvert_version)
         return os.path.join(addon_root, matching_files[0])
 
     return "vengi-voxconvert"
 
-def check_filepath(path, ext):
+def check_filepath(path: str, ext: str) -> str:
     if os.path.isdir(path):
         path = os.path.join(path, f"untitled{ext}")
     elif not path or os.path.isdir(path):
         path = os.path.join(bpy.path.abspath("//"), f"untitled{ext}")
     return path
 
-def get_file_size(file_path):
+def get_file_size(file_path: str) -> str:
+    size: str = None
     try:
-        size_in_bytes = os.path.getsize(file_path)
+        size_in_bytes: int = os.path.getsize(file_path)
         if size_in_bytes < 1024:
             size = f"{size_in_bytes} bytes"
         elif size_in_bytes < 1024 * 1024:
@@ -53,6 +56,8 @@ def get_file_size(file_path):
             size = f"{size_in_bytes / (1024 * 1024):.2f} MB"
         else:
             size = f"{size_in_bytes / (1024 * 1024 * 1024):.2f} GB"
-        return size
     except FileNotFoundError:
-        return None
+        pass
+    finally:
+        pass
+    return str

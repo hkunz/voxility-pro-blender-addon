@@ -12,7 +12,7 @@ from voxility_pro.enums.version_type import VersionType
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
-def get_blender_support_text():
+def get_blender_support_text() -> str:
     return f"Vertex colors are supported in Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above."
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
@@ -92,13 +92,13 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'Voxility'
 
-    def draw(self, context):
-        layout = self.layout
-        properties = context.scene.voxility_pro_properties
+    def draw(self, context) -> None:
+        layout: bpy.types.UILayout = self.layout
+        properties: VoxilityProProperties = context.scene.voxility_pro_properties
 
         vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
-        col = layout.column()
-        sub = col.row()
+        col: bpy.types.UILayout = layout.column()
+        sub: bpy.types.UILayout = col.row()
         sub.enabled = vertex_color_support
         sub.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
 
@@ -111,13 +111,13 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
         layout.prop(properties, "export_format")
 
-def register():
+def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     register_mesh_voxel_operator()
 
-def unregister():
+def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)

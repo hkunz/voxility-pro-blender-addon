@@ -5,10 +5,10 @@ from voxility_pro.context.context_script_executer import ContextScriptExecuter
 from voxility_pro.enums.area_type import AreaType
 
 class ObjectImportLimitedDissolveHandler(IHandler):
-    def __init__(self, object):
-        self.object = object
+    def __init__(self, object: bpy.types.Object):
+        self.object: bpy.types.Object = object
 
-    def execute_handler(self):
+    def execute_handler(self) -> None:
          bpy.ops.object.mode_set(mode='EDIT')
          ContextScriptExecuter(
             area_type = AreaType.VIEW_3D.name,

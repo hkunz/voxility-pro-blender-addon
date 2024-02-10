@@ -3,6 +3,7 @@ import time
 import tempfile
 import shutil
 import os
+import bpy_types
 
 from abc import ABC, abstractmethod
 
@@ -13,6 +14,7 @@ from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.enums.version_type import VersionType
+from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
@@ -47,7 +49,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
         default=False,
     )
 
-    def draw(self, context):
+    def draw(self, context: bpy_types.Context) -> None:
         self.layout.prop(self, "merge_vertices")
         #self.layout.prop(self, "option_dissolve_limited") #FIXME https://blender.stackexchange.com/questions/310984/how-can-i-preserve-face-corner-colors-when-doing-a-limited-dissolve
         col = self.layout.column()
@@ -56,7 +58,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
         sub.prop(self, "voxformat_withcolor")
         super().draw(context)
 
-    def import_obj(self, obj_file):
+    def import_obj(self, obj_file: str) -> bool:
         deselect_all_objects()
         import_obj(obj_file)
 
@@ -73,22 +75,23 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         return True
 
-    def setup_command(self, input, output):
-        c = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
+        c: VoxConvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
+        return c
 
-    def execute(self, _context):
+    def execute(self, _context: bpy_types.Context) -> set[str]:
 
         if not os.path.exists(self.filepath):
             self.report({'ERROR'}, f"{get_translation('error_file_nonexistent')} {self.filepath}")
             return {'CANCELLED'}
 
-        temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
-        out_filepath = os.path.join(temp_dir, 'temp.obj')
+        temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
+        out_filepath: str = os.path.join(temp_dir, 'temp.obj')
 
         self.setup_command(self.filepath, out_filepath)
-        success = self.execute_voxconvert()
+        success: bool = self.execute_voxconvert()
 
         if (success):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
@@ -96,9 +99,9 @@ class BaseOperatorImporter(BaseVoxelOperator):
             shutil.rmtree(temp_dir)
             return {'CANCELLED'}
 
-        start_time = time.time()
+        start_time: float = time.time()
         self.import_obj(out_filepath)
-        duration = format_duration(self.voxconvert_duration + (start_time - time.time()))
+        duration: str = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
         if self.voxformat_withcolor:
@@ -108,8 +111,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         return {'FINISHED'}
 
-    def invoke(self, context, _event):
-        wm = context.window_manager
+    def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
+        wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)
         self.vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION

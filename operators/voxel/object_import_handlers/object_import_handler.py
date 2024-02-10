@@ -8,13 +8,13 @@ from voxility_pro.utils.string_utils import randomize_string
 class ObjectImportHandler:
     IMPORTED_OBJ_BASE_NAME = "Voxility"
 
-    def __init__(self, objects, merge_vertices, dissolve_limited, with_vertex_colors):
+    def __init__(self, objects, merge_vertices, dissolve_limited, with_vertex_colors) -> None:
         self.objects = objects
         self.merge_vertices = merge_vertices
         self.dissolve_limited = dissolve_limited
         self.with_vertex_colors = with_vertex_colors
 
-    def handle_object(self, obj):
+    def handle_object(self, obj) -> None:
         bpy.context.view_layer.objects.active = obj
         bpy.context.object.data.use_auto_smooth = False
         bpy.ops.object.shade_flat()
@@ -29,7 +29,7 @@ class ObjectImportHandler:
         if self.dissolve_limited:
             ObjectImportLimitedDissolveHandler(obj).execute_handler()
 
-    def on_object_import(self):
+    def on_object_import(self) -> None:
         for obj in self.objects:
             if obj.type != 'MESH':
                 continue

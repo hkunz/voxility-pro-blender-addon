@@ -2,7 +2,9 @@ import bpy
 import time
 import subprocess
 import platform
+import bpy_types
 
+from typing import List
 from abc import ABC, abstractmethod
 
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
@@ -11,26 +13,26 @@ from voxility_pro.translations import get_translation
 class VoxconvertOperator(bpy.types.Operator):
     bl_description = "Abstract Voxconvert Operator"
     bl_options = {'REGISTER', 'UNDO'}
-    filename_ext = ""
+    filename_ext: str = ""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        self.voxconvert_duration = 0
-        self.command_builder = VoxConvertCommandBuilder()
+        self.voxconvert_duration: int = 0
+        self.command_builder: VoxConvertCommandBuilder = VoxConvertCommandBuilder()
 
-    def setup_command(self, input, output):
-        c = self.command_builder
+    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
+        c: VoxConvertCommandBuilder = self.command_builder
         c.vc_input_path = input
         c.vc_output_path = output
-        return self.command_builder
+        return c
 
-    def execute_voxconvert(self):
-        start_time = time.time()
+    def execute_voxconvert(self) -> bool:
+        start_time: float = time.time()
         self.command_builder.build_command()
-        success = True
-        command = self.command_builder.get_command()
-        command_str = self.command_builder.get_command_str()
-        cmd = command if platform.system().lower() == "windows" else command_str
+        success: bool = True
+        command: List[str] = self.command_builder.get_command()
+        command_str: str = self.command_builder.get_command_str()
+        cmd: str = command if platform.system().lower() == "windows" else command_str
         print("\nExecute voxconvert command: ", command_str, '\n' + self.command_builder.get_formatted_args())
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
@@ -45,5 +47,5 @@ class VoxconvertOperator(bpy.types.Operator):
         return success
 
     @abstractmethod
-    def execute(_self, _context):
+    def execute(_self, _context: bpy_types.Context) -> set:
         pass

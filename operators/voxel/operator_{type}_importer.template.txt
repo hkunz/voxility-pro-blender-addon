@@ -7,7 +7,7 @@ class IMPORT_OT_{{code_name}}(BaseOperatorImporter):
     bl_label = "{{name}} (.{{type}})"
     bl_description = "Import {{name}} format (.{{type}})"
 
-    filename_ext = ".{{type}}"
+    filename_ext: str = ".{{type}}"
 
     filter_glob: bpy.props.StringProperty(
         default="*.{{type}}",

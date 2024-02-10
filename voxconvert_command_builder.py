@@ -1,24 +1,26 @@
 import platform
 import re
 
+from typing import List
+
 from voxility_pro.utils.file_utils import get_voxconvert_filepath
 
 class VoxConvertCommandBuilder:
-    def __init__(self):
+    def __init__(self) -> None:
 
-        self.vc_input_path = None
-        self.vc_output_path = None
-        self.vc_voxformat_voxelizemode = 0
-        self.vc_merge_vertices = 0
-        self.vc_voxformat_withcolor = 0
-        self.vc_voxformat_scale = 1.0
-        self.vc_palette_file = None
-        self.vc_export_palette = "palette-nippon.png"
-        self.vc_surface_only = 0
-        self.vc_voxformat_ambientocclusion = 0
-        self.vc_voxformat_mergequads = 0
+        self.vc_input_path: str = None
+        self.vc_output_path: str = None
+        self.vc_voxformat_voxelizemode: int = 0
+        self.vc_merge_vertices: int = 0
+        self.vc_voxformat_withcolor: int = 0
+        self.vc_voxformat_scale: float = 1.0
+        self.vc_palette_file: str = None
+        self.vc_export_palette: str = "palette-nippon.png"
+        self.vc_surface_only: int = 0
+        self.vc_voxformat_ambientocclusion: int = 0
+        self.vc_voxformat_mergequads: int = 0
 
-        self.vc_command = None
+        self.vc_command: List[str] = None
 
     # ====================================================================
     # Documentation https://vengi-voxel.github.io/vengi/Configuration/
@@ -30,10 +32,11 @@ class VoxConvertCommandBuilder:
     # windows: exe_path arg1 arg2 argn
     # ====================================================================
 
-    def build_command(self):
-        command = self.vc_command = []
-        system = platform.system().lower()
-        exe = get_voxconvert_filepath()
+    def build_command(self) -> List[str]:
+        self.vc_command = []
+        command: List[str] = self.vc_command
+        system: str = platform.system().lower()
+        exe: str = get_voxconvert_filepath()
 
         if system == "windows":
             command.append('powershell')
@@ -83,17 +86,17 @@ class VoxConvertCommandBuilder:
 
         return command
 
-    def get_command(self):
+    def get_command(self) -> List[str]:
         return self.vc_command
 
-    def get_command_str(self):
+    def get_command_str(self) -> str:
         return ' '.join(self.vc_command)
 
-    def get_input_filepath(self):
+    def get_input_filepath(self) -> str:
         return self.vc_input_path
 
-    def get_formatted_args(self):
-        command_str = self.get_command_str()
-        vox_index = command_str.find("vox")
-        split_args = re.split(r' (?=-|--)', command_str[vox_index:])
+    def get_formatted_args(self) -> str:
+        command_str: str = self.get_command_str()
+        vox_index: int = command_str.find("vox")
+        split_args: List[str] = re.split(r' (?=-|--)', command_str[vox_index:])
         return "\nArguments:\n" + '\n'.join(split_args[1:])

@@ -1,8 +1,9 @@
 import bpy
+import bpy_types
+
 from bpy_extras.io_utils import ExportHelper
 
-import bpy
-
+from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 from voxility_pro.utils.file_utils import check_filepath
 
@@ -27,17 +28,17 @@ class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
         default=False,
     )
 
-    def setup_command(self, input, output):
-        c = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
+        c: VoxConvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
         c.vc_merge_vertices = int(self.merge_vertices)
         return c
 
-    def draw(self, _context):
+    def draw(self, _context: bpy_types.Context) -> None:
         self.layout.prop(self, "voxformat_voxelizemode")
 
-    def invoke(self, context, _event):
-        wm = context.window_manager
+    def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
+        wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)
         return {'RUNNING_MODAL'}

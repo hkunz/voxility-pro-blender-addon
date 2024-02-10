@@ -1,12 +1,14 @@
 import json
 import os
 
+from typing import List
+
 from voxility_pro.utils.file_utils import get_addon_root_dir
 
-LANG = 'en'
-loaded_translations = None
+LANG: str = 'en'
+loaded_translations: List = None
 
-def load_translations(language):
+def load_translations(language: str) -> None:
     translations_folder = os.path.join(get_addon_root_dir(), "languages")
     translations_file = os.path.join(translations_folder, f"{language}.json")
     
@@ -14,7 +16,9 @@ def load_translations(language):
         return json.load(file)
 
 def get_translation(key):
-    return loaded_translations.get(key, key)
+    k = loaded_translations.get(key, key)
+    print("VALUE K ==========", type(k), " === k=", k)
+    return k
 
 def register():
     global loaded_translations

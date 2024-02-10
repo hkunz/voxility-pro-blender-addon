@@ -1,6 +1,9 @@
 # https://blender.stackexchange.com/questions/310837/camera-wont-be-aligned-to-current-view-with-python-scripting
 
 import bpy
+import bpy_types
+
+from typing import List, Tuple
 
 class ProCameraPanel(bpy.types.Panel):
     bl_label = "Pro Camera"
@@ -9,8 +12,8 @@ class ProCameraPanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'Tools'
 
-    def draw(self, context):
-        layout = self.layout
+    def draw(self, context: bpy_types.Context) -> None:
+        layout: bpy.types.UILayout = self.layout
 
         # Add a new camera
         layout.label(text="Add a new Camera")
@@ -36,13 +39,13 @@ class OBJECT_OT_assign_camera(bpy.types.Operator):
     bl_idname = "scene.assign_camera"
     bl_label = "Assign a Camera"
 
-    def execute(self, context):
+    def execute(self, context: bpy_types.Context) -> set[str]:
         # Add a new camera
-        camera_data = bpy.data.cameras.new(name="Camera")
+        camera_data: bpy.types.Camera = bpy.data.cameras.new(name="Camera")
         if camera_data is None:
             return {"CANCELLED"}
 
-        my_camera = bpy.data.objects.new("Camera", camera_data)
+        my_camera: bpy.types.Camera = bpy.data.objects.new("Camera", camera_data)
 
         if my_camera is None:
             return {"CANCELLED"}
@@ -55,7 +58,7 @@ class OBJECT_OT_assign_camera(bpy.types.Operator):
 
         return {"FINISHED"}
 
-def update_camera_lens(self, context):
+def update_camera_lens(_self, context: bpy_types.Context) -> None:
     selected_lens = context.scene.pro_camera_lens
 
     # Set the active camera's lens based on the selected option
@@ -72,7 +75,7 @@ def update_camera_lens(self, context):
             context.scene.camera.data.lens = 240.0
 
 # Define the camera lens options
-lens_options = [
+lens_options: List[Tuple[str, str, str]] = [
     ('WIDE', 'Wide - 24mm', 'Wide angle lens - 24mm'),
     ('STANDARD', 'Standard - 50mm', 'Standard lens - 50mm'),
     ('PORTRAIT', 'Portrait - 80mm', 'Portrait lens - 80mm'),
@@ -81,7 +84,7 @@ lens_options = [
 
 ]
 
-def register():
+def register() -> None:
     bpy.utils.register_class(ProCameraPanel)
     bpy.utils.register_class(OBJECT_OT_assign_camera)
     bpy.types.Scene.pro_camera_lens = bpy.props.EnumProperty(
@@ -92,7 +95,7 @@ def register():
         update=update_camera_lens
     )
 
-def unregister():
+def unregister() -> None:
     bpy.utils.unregister_class(ProCameraPanel)
     bpy.utils.unregister_class(OBJECT_OT_assign_camera)
     del bpy.types.Scene.pro_camera_lens

@@ -1,34 +1,43 @@
 import bpy
 
+from typing import List, Callable
+from bpy.types import (
+    Window,
+    Screen,
+    Area,
+    Region
+)
+
 from abc import ABC, abstractmethod
 from voxility_pro.context.context_executer_override import ContextExecuterOverride
 
 class ContextScriptExecuter(ABC):
 
-    def __init__(self, area_type, ui_type=None, script=None):
-        self.area_type = area_type
-        self.ui_type = ui_type if ui_type else area_type
-        self.script = script
-        self.success = False
-        self.error_message = None
+    def __init__(self, area_type:str, ui_type: str=None, script: Callable=None) -> None:
+        self.area_type: str = area_type
+        self.ui_type: str = ui_type if ui_type else area_type
+        self.script: Callable = script
+        self.success: bool = False
+        self.error_message: str = None
 
     #@abstractmethod
-    def script_content(self, override):
+    def script_content(self, override: ContextExecuterOverride) -> bool:
         self.script(override)
+        return True
 
-    def report_execute_error(self, message):
+    def report_execute_error(self, message: str) -> None:
         self.error_message = f"Error processing script {self.__class__.__name__}. {message}"
         print(self.error_message)
 
-    def execute_script(self):
-        window = bpy.context.window
-        screen = window.screen
-        areas = [area for area in screen.areas if area.type == self.area_type]
-        area = areas[0] if len(areas) else screen.areas[0]
-        prev_ui_type = area.ui_type
+    def execute_script(self) -> bool:
+        window: Window = bpy.context.window
+        screen: Screen = window.screen
+        areas: List[Area] = [area for area in screen.areas if area.type == self.area_type]
+        area: Area = areas[0] if len(areas) else screen.areas[0]
+        prev_ui_type: str = area.ui_type
         area.ui_type = self.ui_type
-        regions = [region for region in area.regions if region.type == 'WINDOW']
-        region = regions[0] if len(regions) else None
+        regions: List[Region] = [region for region in area.regions if region.type == 'WINDOW']
+        region: Region = regions[0] if len(regions) else None
         try:
             with ContextExecuterOverride(window=window, screen=screen, area=area, region=region) as override:
                 self.success = self.script_content(override)

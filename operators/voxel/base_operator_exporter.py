@@ -3,6 +3,7 @@ import os
 import tempfile
 import shutil
 import time
+import bpy_types
 
 from abc import ABC, abstractmethod
 
@@ -43,14 +44,14 @@ class BaseOperatorExporter(BaseVoxelOperator):
         default=False,
     )
 
-    def draw(self, context):
+    def draw(self, context) -> None:
         super().draw(context)
         self.layout.prop(self, "voxformat_scale")
         self.layout.prop(self, "palette_file")
         self.layout.prop(self, "export_palette")
         self.layout.prop(self, "surface_only")
 
-    def export_obj(self, obj_file):
+    def export_obj(self, obj_file: str) -> str:
         start_time = time.time()
         export_obj(obj_file)
         duration = format_duration(time.time() - start_time)
@@ -58,8 +59,8 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
-    def setup_command(self, input, output):
-        c = super().setup_command(input, output)
+    def setup_command(self, input, output) -> VoxConvertCommandBuilder:
+        c: VoxConvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = 0
         c.vc_voxformat_scale = float(self.voxformat_scale)
         c.vc_palette_file = str(self.palette_file)
@@ -67,14 +68,14 @@ class BaseOperatorExporter(BaseVoxelOperator):
         c.vc_surface_only = int(self.surface_only)
         return c
 
-    def execute(self, _context):
+    def execute(self, _context) -> set[str]:
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}
 
         self.filepath = check_filepath(self.filepath, self.filename_ext)
-        temp_dir = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
-        obj_file = os.path.join(temp_dir, 'temp.obj')
+        temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
+        obj_file: str = os.path.join(temp_dir, 'temp.obj')
         self.export_obj(obj_file)
         self.setup_command(obj_file, self.filepath)
         self.execute_voxconvert()
@@ -82,6 +83,6 @@ class BaseOperatorExporter(BaseVoxelOperator):
         shutil.rmtree(temp_dir)
         return {'FINISHED'}
 
-    def invoke(self, context, event):
+    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         #self.voxformat_scale = 1.0
         return super().invoke(context, event)
