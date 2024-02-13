@@ -89,4 +89,4 @@ def unregister() -> None:
     unregister_vox_export_menu()
     unregister_vox_import_menu()
     unregister_sidebar_menu()
-    unregister_generic_popup
+    unregister_generic_popup()
