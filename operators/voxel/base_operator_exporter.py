@@ -23,28 +23,28 @@ class BaseOperatorExporter(BaseVoxelOperator):
         default=1.0,
         min=0.0,
         max=100.0,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     palette_file: bpy.props.StringProperty(
         name="Palette File",
         description="Path to the palette file",
         default="",
         subtype='FILE_PATH',
-    )
+    ) # type: ignore
 
     export_palette: bpy.props.BoolProperty(
         name="Export Palette",
         description="Save the included palette as png next to the source file",
         default=False,
-    )
+    ) # type: ignore
 
     surface_only: bpy.props.BoolProperty(
         name="Surface Only",
         description="Remove any non surface voxel",
         default=False,
-    )
+    ) # type: ignore
 
-    def draw(self, context) -> None:
+    def draw(self, context: bpy_types.Context) -> None:
         super().draw(context)
         self.layout.prop(self, "voxformat_scale")
         self.layout.prop(self, "palette_file")
@@ -59,7 +59,7 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
-    def setup_command(self, input, output) -> VoxConvertCommandBuilder:
+    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
         c: VoxConvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = 0
         c.vc_voxformat_scale = float(self.voxformat_scale)
@@ -86,3 +86,5 @@ class BaseOperatorExporter(BaseVoxelOperator):
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         #self.voxformat_scale = 1.0
         return super().invoke(context, event)
+
+# TODO: put temporary objects into 1 folder so on restart of app we can delete the folder

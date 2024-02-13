@@ -14,19 +14,19 @@ class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
         default="*.*",
         options={'HIDDEN'},
         maxlen=255,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     merge_vertices: bpy.props.BoolProperty(
         name="Merge Vertices",
         description="Automatically merge vertices and split edges",
         default=True,
-    )
+    ) # type: ignore
 
     voxformat_voxelizemode: bpy.props.BoolProperty(
         name="Voxformat Voxelize Mode",
         description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
         default=False,
-    )
+    ) # type: ignore
 
     def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
         c: VoxConvertCommandBuilder = super().setup_command(input, output)
@@ -37,7 +37,7 @@ class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
     def draw(self, _context: bpy_types.Context) -> None:
         self.layout.prop(self, "voxformat_voxelizemode")
 
-    def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
         wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = check_filepath(self.filepath, self.filename_ext)

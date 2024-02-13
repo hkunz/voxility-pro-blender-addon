@@ -29,25 +29,25 @@ class BaseOperatorImporter(BaseVoxelOperator):
         default="*.*",
         options={'HIDDEN'},
         maxlen=255,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     option_dissolve_limited: bpy.props.BoolProperty(
         name="Apply Limited Dissolve",
         description="Simplify mesh by dissolving vertices and edges separating flat regions.",
         default=False,
-    )
+    ) # type: ignore
 
     voxformat_withcolor: bpy.props.BoolProperty(
         name="Use Vertex Colors",
         description=("Use vertex colors in model instead of image texture" if bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION else get_blender_support_text()),
         default=True,
-    )
+    ) # type: ignore
 
     voxformat_mergequads: bpy.props.BoolProperty(
         name="Merge Quads",
         description=("Merge similar quads"),
         default=False,
-    )
+    ) # type: ignore
 
     def draw(self, context: bpy_types.Context) -> None:
         self.layout.prop(self, "merge_vertices")

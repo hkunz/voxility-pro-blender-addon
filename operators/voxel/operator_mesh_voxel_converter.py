@@ -60,7 +60,7 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         c.vc_merge_vertices = int(properties.merge_vertices)
         return c
 
-    def execute(self, context) -> set[str]:
+    def execute(self, context: bpy_types.Context) -> set[str]:
         voxelize_duration: float = time.time()
         active_object: bpy_types.Object = context.view_layer.objects.active
         temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
