@@ -19,4 +19,4 @@ class IMPORT_OT_voxlap_voxel_model_format(BaseOperatorImporter):
         default="*.kvx",
         options={'HIDDEN'},
         maxlen=255,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770

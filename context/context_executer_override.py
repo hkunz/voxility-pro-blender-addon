@@ -2,6 +2,7 @@ import bpy
 
 from typing import Optional, Type
 from types import TracebackType
+
 from bpy.types import (
     Window,
     Screen,

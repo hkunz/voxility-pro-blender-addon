@@ -19,4 +19,4 @@ class IMPORT_OT_qubicle_binary_tree_exchange(BaseOperatorImporter):
         default="*.qbt",
         options={'HIDDEN'},
         maxlen=255,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770

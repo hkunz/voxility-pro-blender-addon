@@ -20,25 +20,25 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         name="Apply Limited Dissolve",
         description="Simplify mesh by dissolving vertices and edges separating flat regions.",
         default=False,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     voxformat_withcolor: bpy.props.BoolProperty(
         name="Use Vertex Colors",
         description=("Use vertex colors in model instead of image texture" if bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION else get_blender_support_text()),
         default=(bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION),
-    )
+    ) # type: ignore
 
     merge_vertices: bpy.props.BoolProperty(
         name="Merge Vertices",
         description="Automatically merge vertices and split edges",
         default=True,
-    )
+    ) # type: ignore
 
     voxformat_voxelizemode: bpy.props.BoolProperty(
         name="Voxformat Voxelize Mode",
         description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
         default=False,
-    )
+    ) # type: ignore
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",
@@ -46,45 +46,45 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=1.0,
         min=0.0,
         max=100.0,
-    )
+    ) # type: ignore
 
     palette_file: bpy.props.StringProperty(
         name="Palette File",
         description="Path to the palette file",
         default="",
         subtype='FILE_PATH',
-    )
+    ) # type: ignore
 
     export_palette: bpy.props.BoolProperty(
         name="Export Palette",
         description="Save the included palette as png next to the source file",
         default=False,
-    )
+    ) # type: ignore
 
     surface_only: bpy.props.BoolProperty(
         name="Surface Only",
         description="Remove any non surface voxel",
         default=False,
-    )
+    ) # type: ignore
 
     voxformat_mergequads: bpy.props.BoolProperty(
         name="Merge Quads",
         description="Merge similar quads",
         default=True,
-    )
+    ) # type: ignore
 
     hide_original_objects: bpy.props.BoolProperty(
         name="Hide Original Objects",
         description="Hide the original objects after voxelization is complete",
         default=True,
-    )
+    ) # type: ignore
 
     export_format: bpy.props.EnumProperty(
         name="Target",
         description="Select target voxel export format",
         items=VoxelFormatsExportMenu.FORMATS,
         default="NONE",
-    )
+    ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_label = f"Voxility Pro {get_addon_version()}"
@@ -100,7 +100,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         col: bpy.types.UILayout = layout.column()
         sub: bpy.types.UILayout = col.row()
         sub.enabled = vertex_color_support
-        sub.prop(context.scene.voxility_pro_properties, "voxformat_withcolor")
+        sub.prop(properties, "voxformat_withcolor")
 
         layout.prop(properties, "merge_vertices")
         layout.prop(properties, "voxformat_scale")

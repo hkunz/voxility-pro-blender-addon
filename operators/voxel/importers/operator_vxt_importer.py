@@ -19,4 +19,4 @@ class IMPORT_OT_sandbox_voxedit_tilemap(BaseOperatorImporter):
         default="*.vxt",
         options={'HIDDEN'},
         maxlen=255,
-    )
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770

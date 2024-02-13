@@ -6,7 +6,7 @@ class GenericPopupOperator(bpy.types.Operator):
     bl_label = "Voxility Pro Message"
     bl_description = "Generic Popup Operator for displaying a custom message"
 
-    message: bpy.props.StringProperty(name="Message")
+    message: bpy.props.StringProperty(name="Message") # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     @classmethod
     def poll(cls, context: bpy_types.Context) -> bool:
