@@ -13,15 +13,15 @@ class GenericPopupOperator(bpy.types.Operator):
         return (context.object is not None and
                 context.object.type == 'MESH')
 
-    def invoke(self, context: bpy_types.Context, _event: bpy.types.Event):
+    def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
         return context.window_manager.invoke_props_dialog(self)
 
-    def draw(self, _context: bpy_types.Context) -> None:
+    def draw(self, _: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         col: bpy.types.UILayout = layout.column()
         col.label(text=self.message)
 
-    def execute(self, context) -> set[str]:
+    def execute(self, _: bpy_types.Context) -> set[str]:
         self.report({'INFO'}, self.message)
         return {'FINISHED'}
 
