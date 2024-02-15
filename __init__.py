@@ -75,7 +75,7 @@ from voxility_pro.translations import (
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(__file__).parent / f"{exe}"
-    print("Using voxconvert: ", app, f"({get_file_size(app)})")
+    print("Using voxconvert:", app, f"({get_file_size(app)})")
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
     return app
 
