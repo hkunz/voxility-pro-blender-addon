@@ -1,7 +1,7 @@
 #!/bin/bash
 
 voxility_pro_version=$(grep -oP '"version": \(([^)]+)\),' __init__.py | sed 's/[^0-9]//g' | tr -d '\n' | sed 's/\(.\)/\1./g' | sed 's/\.$//')
-voxconvert_version=$(cat "__init__.py" | grep -oP 'voxconvert-\K[0-9]+\.[0-9]+\.[0-9]+')
+voxconvert_version=$(cat "__init__.py" | grep -oP 'voxconvert-\K[0-9]+\.[0-9]+\.[0-9]+(?:-.*)?(?=")')
 
 echo "Voxility Pro version: ${voxility_pro_version}"
 echo "Vengi-voxconvert version: ${voxconvert_version}"

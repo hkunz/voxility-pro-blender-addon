@@ -1,7 +1,5 @@
 import bpy
 import time
-import tempfile
-import shutil
 import os
 import bpy_types
 
@@ -10,6 +8,7 @@ from abc import ABC, abstractmethod
 from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
+from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
@@ -87,7 +86,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.report({'ERROR'}, f"{get_translation('error_file_nonexistent')} {self.filepath}")
             return {'CANCELLED'}
 
-        temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
+        temp_dir: str = TempFileManager().create_temp_dir()
         out_filepath: str = os.path.join(temp_dir, 'temp.obj')
 
         self.setup_command(self.filepath, out_filepath)
@@ -96,7 +95,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
         if (success):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
         else:
-            shutil.rmtree(temp_dir)
+            TempFileManager().delete_temp_dir(temp_dir)
             return {'CANCELLED'}
 
         start_time: float = time.time()
@@ -105,9 +104,9 @@ class BaseOperatorImporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
         if self.voxformat_withcolor:
-            shutil.rmtree(temp_dir)
+            TempFileManager().delete_temp_dir(temp_dir)
         #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
-        #shutil.rmtree(temp_dir)
+        #TempFileManager().delete_temp_dir(temp_dir)
 
         return {'FINISHED'}
 

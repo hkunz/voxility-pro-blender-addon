@@ -60,4 +60,4 @@ def get_file_size(file_path: str) -> str:
         pass
     finally:
         pass
-    return str
+    return size

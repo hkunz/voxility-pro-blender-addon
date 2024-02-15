@@ -1,7 +1,5 @@
 import bpy
 import os
-import tempfile
-import shutil
 import time
 import bpy_types
 
@@ -9,6 +7,7 @@ from abc import ABC, abstractmethod
 
 from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
+from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.time_utils import format_duration
@@ -68,23 +67,21 @@ class BaseOperatorExporter(BaseVoxelOperator):
         c.vc_surface_only = int(self.surface_only)
         return c
 
-    def execute(self, _context) -> set[str]:
+    def execute(self, _:bpy_types.Context) -> set[str]:
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}
 
         self.filepath = check_filepath(self.filepath, self.filename_ext)
-        temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
+        temp_dir: str = TempFileManager().create_temp_dir()
         obj_file: str = os.path.join(temp_dir, 'temp.obj')
         self.export_obj(obj_file)
         self.setup_command(obj_file, self.filepath)
         self.execute_voxconvert()
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(self.voxconvert_duration)}")
-        shutil.rmtree(temp_dir)
+        TempFileManager().delete_temp_dir(temp_dir)
         return {'FINISHED'}
 
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         #self.voxformat_scale = 1.0
         return super().invoke(context, event)
-
-# TODO: put temporary objects into 1 folder so on restart of app we can delete the folder

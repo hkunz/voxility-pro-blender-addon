@@ -1,8 +1,6 @@
 import bpy
-import tempfile
 import os
 import time
-import shutil
 import bpy_types
 
 from typing import List
@@ -11,6 +9,7 @@ from mathutils import Vector
 from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 from voxility_pro.translations import get_translation
+from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport
 from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
@@ -20,6 +19,8 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
     bl_idname = "wm.voxility_pro_mesh_voxel_convert_operator"
     bl_label = "Voxility Pro Mesh-Voxel Convert Operator"
     bl_description = "Voxelize or convert selected objects into a single voxel object"
+
+    TARGET_FORMAT: str = None
 
     def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
         duplicate_objects(objects)
@@ -63,7 +64,7 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
     def execute(self, context: bpy_types.Context) -> set[str]:
         voxelize_duration: float = time.time()
         active_object: bpy_types.Object = context.view_layer.objects.active
-        temp_dir: str = tempfile.mkdtemp() # creates a temp directory in os.environ['TEMP']
+        temp_dir: str = TempFileManager().create_temp_dir()
         vc_in_path: str = os.path.join(temp_dir, 'temp_in.obj')
         vc_out_path: str = os.path.join(temp_dir, 'temp_out.obj')
         objects: List[bpy_types.Object] = context.selected_objects.copy()
@@ -78,7 +79,7 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         if (success):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {vc_out_path} ({get_file_size(vc_out_path)}) in {format_duration(self.voxconvert_duration)}")
         else:
-            shutil.rmtree(temp_dir)
+            TempFileManager().delete_temp_dir(temp_dir)
             return {'CANCELLED'}
 
         start_time: float = time.time()
@@ -87,12 +88,12 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         duration: str = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {vc_out_path} in {duration}")
         self.report({'INFO'}, f"Voxelized in {format_duration(time.time() - voxelize_duration)}")
-        properties = context.scene.voxility_pro_properties
+        properties = context.scene.voxility_pro_properties # FIXME: if type is specified as VoxilityProProperties it get circular error
         if properties.voxformat_withcolor:
-            shutil.rmtree(temp_dir)
+            TempFileManager().delete_temp_dir(temp_dir)
 
         #FIXME: we need to delete the temporary directory even without vertex colors but we can't because the color palette is used as texture in the imported object
-        #shutil.rmtree(temp_dir)
+        #TempFileManager().delete_temp_dir(temp_dir)
         if properties.hide_original_objects:
             hide_objects_from_viewport(objects)
         return {'FINISHED'}

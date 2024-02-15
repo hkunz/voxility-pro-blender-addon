@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "Voxility Pro: Voxel File Format Exchange",
-    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-80f09", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 8),
     "blender": (2, 93, 0),
@@ -37,8 +37,11 @@ bl_info = {
 }
 
 import stat
+
 from pathlib import Path
 from typing import Union
+
+from voxility_pro.utils.temp_file_manager import TempFileManager
 
 from voxility_pro.utils.file_utils import (
     get_voxconvert_filepath,
@@ -84,9 +87,11 @@ def register() -> None:
     register_sidebar_menu()
     register_generic_popup()
 
+
 def unregister() -> None:
     unregister_translations()
     unregister_vox_export_menu()
     unregister_vox_import_menu()
     unregister_sidebar_menu()
     unregister_generic_popup()
+    TempFileManager().cleanup()

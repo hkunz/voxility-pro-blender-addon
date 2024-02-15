@@ -15,9 +15,8 @@ def load_translations(language: str) -> None:
     with open(translations_file, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-def get_translation(key):
-    k = loaded_translations.get(key, key)
-    print("VALUE K ==========", type(k), " === k=", k)
+def get_translation(key: str):
+    k: str = loaded_translations.get(key, key)
     return k
 
 def register():
