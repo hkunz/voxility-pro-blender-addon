@@ -28,8 +28,11 @@ class TempFileManager:
         TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"vx{get_addon_version()}-b{get_blender_version()}-tmp{randomize_string(5)}") # vxv1.0.8-bv4.0.1-tmpEGjov
         os.makedirs(name=TempFileManager.TEMP_PARENT_DIRECTORY, exist_ok=True)
         print(f"Created temporary parent directory: {TempFileManager.TEMP_PARENT_DIRECTORY}")
-    
+
     def create_temp_dir(self) -> str:
+        if TempFileManager.TEMP_PARENT_DIRECTORY and not os.path.exists(TempFileManager.TEMP_PARENT_DIRECTORY):
+            print(f"The directory {TempFileManager.TEMP_PARENT_DIRECTORY} was manually deleted or deleted by an external application")
+            TempFileManager.TEMP_PARENT_DIRECTORY = None
         if not TempFileManager.TEMP_PARENT_DIRECTORY:
             self.create_temp_parent_dir()
         dir: str = tempfile.mkdtemp(prefix="", dir=TempFileManager.TEMP_PARENT_DIRECTORY) # creates a temp directory in os.environ['TEMP']/TEMP_PARENT_DIRECTORY/
@@ -54,6 +57,7 @@ class TempFileManager:
             item_path: str = os.path.join(appdata_local_temp_dir, item)
             if os.path.isdir(item_path) and re.match(pattern, item):
                 self.delete_temp_dir(item_path)
+        TempFileManager.TEMP_PARENT_DIRECTORY = None
 
     def clear_temp_directories(self, by_blender_version: bool=True, by_addon_version: bool=True) -> None:
         addon_version: str = get_addon_version(False) if by_addon_version else '\d+\.\d+\.\d+'
@@ -62,3 +66,4 @@ class TempFileManager:
 
     def cleanup(self) -> None:
         self.remove_temp_parent_dir()
+        TempFileManager.TEMP_PARENT_DIRECTORY = None
