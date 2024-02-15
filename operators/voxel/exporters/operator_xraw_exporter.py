@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_magicavoxel_xraw(BaseOperatorExporter):
-    bl_idname = "export.magicavoxel_xraw"
+    bl_idname = "export.voxility_magicavoxel_xraw"
     bl_label = "MagicaVoxel XRAW (.xraw)"
     bl_description = "Export selected objects to MagicaVoxel XRAW format (.xraw)"
 

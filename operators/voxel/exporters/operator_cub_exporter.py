@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_cubeworld_cubemap(BaseOperatorExporter):
-    bl_idname = "export.cubeworld_cubemap"
+    bl_idname = "export.voxility_cubeworld_cubemap"
     bl_label = "CubeWorld CubeMap (.cub)"
     bl_description = "Export selected objects to CubeWorld CubeMap format (.cub)"
 

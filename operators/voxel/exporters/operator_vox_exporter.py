@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_magicavoxel(BaseOperatorExporter):
-    bl_idname = "export.magicavoxel"
+    bl_idname = "export.voxility_magicavoxel"
     bl_label = "MagicaVoxel (.vox)"
     bl_description = "Export selected objects to MagicaVoxel format (.vox)"
 

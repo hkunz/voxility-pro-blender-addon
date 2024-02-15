@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_voxel3d(BaseOperatorImporter):
-    bl_idname = "import.voxel3d"
+    bl_idname = "import.voxility_voxel3d"
     bl_label = "Voxel3D (.v3a)"
     bl_description = "Import Voxel3D format (.v3a)"
 

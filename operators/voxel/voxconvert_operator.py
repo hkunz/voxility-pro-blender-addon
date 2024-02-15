@@ -12,7 +12,7 @@ from voxility_pro.translations import get_translation
 
 class VoxconvertOperator(bpy.types.Operator):
     bl_description = "Abstract Voxconvert Operator"
-    bl_options = {'REGISTER', 'UNDO'}
+    bl_options = {'INTERNAL', 'UNDO'}
     filename_ext: str = ""
 
     def __init__(self) -> None:
@@ -49,3 +49,14 @@ class VoxconvertOperator(bpy.types.Operator):
     @abstractmethod
     def execute(_self, _context: bpy_types.Context) -> set:
         pass
+
+    @classmethod
+    def poll(cls, context: bpy_types.Context) -> bool:
+        active_object: bpy_types.Object = context.active_object
+        selected_objects: List[bpy_types.Object] = context.selected_objects
+        if context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
+            return False
+        for obj in selected_objects:
+            if obj.type != 'MESH' or not obj.data.polygons:
+                return False
+        return True

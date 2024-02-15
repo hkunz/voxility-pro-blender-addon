@@ -3,7 +3,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_{{code_name}}(BaseOperatorImporter):
-    bl_idname = "import.{{code_name}}"
+    bl_idname = "import.voxility_{{code_name}}"
     bl_label = "{{name}} (.{{type}})"
     bl_description = "Import {{name}} format (.{{type}})"
 

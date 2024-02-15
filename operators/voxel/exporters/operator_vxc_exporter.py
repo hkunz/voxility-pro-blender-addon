@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_sandbox_voxedit_collection(BaseOperatorExporter):
-    bl_idname = "export.sandbox_voxedit_collection"
+    bl_idname = "export.voxility_sandbox_voxedit_collection"
     bl_label = "Sandbox VoxEdit Collection (.vxc)"
     bl_description = "Export selected objects to Sandbox VoxEdit Collection format (.vxc)"
 

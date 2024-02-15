@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_magicavoxel_xraw(BaseOperatorImporter):
-    bl_idname = "import.magicavoxel_xraw"
+    bl_idname = "import.voxility_magicavoxel_xraw"
     bl_label = "MagicaVoxel XRAW (.xraw)"
     bl_description = "Import MagicaVoxel XRAW format (.xraw)"
 

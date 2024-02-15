@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_sproxel_csv(BaseOperatorImporter):
-    bl_idname = "import.sproxel_csv"
+    bl_idname = "import.voxility_sproxel_csv"
     bl_label = "Sproxel csv (.csv)"
     bl_description = "Import Sproxel csv format (.csv)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_sandbox_voxedit_tilemap(BaseOperatorExporter):
-    bl_idname = "export.sandbox_voxedit_tilemap"
+    bl_idname = "export.voxility_sandbox_voxedit_tilemap"
     bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
     bl_description = "Export selected objects to Sandbox VoxEdit Tilemap format (.vxt)"
 

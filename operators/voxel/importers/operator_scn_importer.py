@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_animatoon_3d_scene(BaseOperatorImporter):
-    bl_idname = "import.animatoon_3d_scene"
+    bl_idname = "import.voxility_animatoon_3d_scene"
     bl_label = "Animatoon 3D Scene (.scn)"
     bl_description = "Import Animatoon 3D Scene format (.scn)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_minecraft_anvil_region(BaseOperatorExporter):
-    bl_idname = "export.minecraft_anvil_region"
+    bl_idname = "export.voxility_minecraft_anvil_region"
     bl_label = "Minecraft Anvil Region (.mca)"
     bl_description = "Export selected objects to Minecraft Anvil Region format (.mca)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_voxel_builder(BaseOperatorImporter):
-    bl_idname = "import.voxel_builder"
+    bl_idname = "import.voxility_voxel_builder"
     bl_label = "Voxel Builder (.vbx)"
     bl_description = "Import Voxel Builder format (.vbx)"
 

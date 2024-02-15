@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_minetest_template(BaseOperatorExporter):
-    bl_idname = "export.minetest_template"
+    bl_idname = "export.voxility_minetest_template"
     bl_label = "Minetest Template (.mts)"
     bl_description = "Export selected objects to Minetest Template format (.mts)"
 

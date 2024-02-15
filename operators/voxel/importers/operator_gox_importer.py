@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_goxel(BaseOperatorImporter):
-    bl_idname = "import.goxel"
+    bl_idname = "import.voxility_goxel"
     bl_label = "Goxel (.gox)"
     bl_description = "Import Goxel format (.gox)"
 

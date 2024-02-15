@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_sandbox_voxedit_hierarchy(BaseOperatorExporter):
-    bl_idname = "export.sandbox_voxedit_hierarchy"
+    bl_idname = "export.voxility_sandbox_voxedit_hierarchy"
     bl_label = "Sandbox VoxEdit Hierarchy (.vxr)"
     bl_description = "Export selected objects to Sandbox VoxEdit Hierarchy format (.vxr)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_particubes(BaseOperatorExporter):
-    bl_idname = "export.particubes"
+    bl_idname = "export.voxility_particubes"
     bl_label = "Particubes (.pcubes)"
     bl_description = "Export selected objects to Particubes format (.pcubes)"
 

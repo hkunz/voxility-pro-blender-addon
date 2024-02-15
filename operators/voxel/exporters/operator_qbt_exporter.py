@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_qubicle_binary_tree_exchange(BaseOperatorExporter):
-    bl_idname = "export.qubicle_binary_tree_exchange"
+    bl_idname = "export.voxility_qubicle_binary_tree_exchange"
     bl_label = "Qubicle Binary Tree Exchange (.qbt)"
     bl_description = "Export selected objects to Qubicle Binary Tree Exchange format (.qbt)"
 

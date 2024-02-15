@@ -16,8 +16,8 @@ from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
 class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
-    bl_idname = "wm.voxility_pro_mesh_voxel_convert_operator"
-    bl_label = "Voxility Pro Mesh-Voxel Convert Operator"
+    bl_idname = "object.voxility_mesh_voxel_convert"
+    bl_label = "Voxility Pro Mesh-Voxel Convert "
     bl_description = "Voxelize or convert selected objects into a single voxel object"
 
     TARGET_FORMAT: str = None
@@ -97,17 +97,6 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         if properties.hide_original_objects:
             hide_objects_from_viewport(objects)
         return {'FINISHED'}
-
-    @classmethod
-    def poll(cls, context: bpy_types.Context) -> bool:
-        active_object: bpy_types.Object = context.active_object
-        selected_objects: List[bpy_types.Object] = context.selected_objects
-        if context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
-            return False
-        for obj in selected_objects:
-            if obj.type != 'MESH' or not obj.data.polygons:
-                return False
-        return True
 
 def register() -> None:
     bpy.utils.register_class(WM_OT_MeshVoxelConvertOperator)

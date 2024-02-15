@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_nicks_voxel_model(BaseOperatorExporter):
-    bl_idname = "export.nicks_voxel_model"
+    bl_idname = "export.voxility_nicks_voxel_model"
     bl_label = "Nicks Voxel Model (.nvm)"
     bl_description = "Export selected objects to Nicks Voxel Model format (.nvm)"
 

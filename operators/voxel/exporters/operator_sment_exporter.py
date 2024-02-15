@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_starmade(BaseOperatorExporter):
-    bl_idname = "export.starmade"
+    bl_idname = "export.voxility_starmade"
     bl_label = "StarMade (.sment)"
     bl_description = "Export selected objects to StarMade format (.sment)"
 

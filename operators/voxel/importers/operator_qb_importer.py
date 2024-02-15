@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_qubicle_binary_exchange(BaseOperatorImporter):
-    bl_idname = "import.qubicle_binary_exchange"
+    bl_idname = "import.voxility_qubicle_binary_exchange"
     bl_label = "Qubicle Binary Exchange (.qb)"
     bl_description = "Import Qubicle Binary Exchange format (.qb)"
 

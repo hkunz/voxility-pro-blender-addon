@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_tiberian_sun(BaseOperatorExporter):
-    bl_idname = "export.tiberian_sun"
+    bl_idname = "export.voxility_tiberian_sun"
     bl_label = "Tiberian Sun (.vxl)"
     bl_description = "Export selected objects to Tiberian Sun format (.vxl)"
 

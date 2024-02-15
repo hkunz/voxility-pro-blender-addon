@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_minetest_template(BaseOperatorImporter):
-    bl_idname = "import.minetest_template"
+    bl_idname = "import.voxility_minetest_template"
     bl_label = "Minetest Template (.mts)"
     bl_description = "Import Minetest Template format (.mts)"
 

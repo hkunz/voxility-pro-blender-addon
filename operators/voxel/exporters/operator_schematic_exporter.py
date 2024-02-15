@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
 
 class EXPORT_OT_minecraft_schematic(BaseOperatorExporter):
-    bl_idname = "export.minecraft_schematic"
+    bl_idname = "export.voxility_minecraft_schematic"
     bl_label = "Minecraft Schematic (.schematic)"
     bl_description = "Export selected objects to Minecraft Schematic format (.schematic)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_binvox_command_line_voxelizer(BaseOperatorImporter):
-    bl_idname = "import.binvox_command_line_voxelizer"
+    bl_idname = "import.voxility_binvox_command_line_voxelizer"
     bl_label = "Binvox command line voxelizer (.binvox)"
     bl_description = "Import Binvox command line voxelizer format (.binvox)"
 

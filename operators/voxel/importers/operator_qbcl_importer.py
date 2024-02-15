@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_qubicle_project(BaseOperatorImporter):
-    bl_idname = "import.qubicle_project"
+    bl_idname = "import.voxility_qubicle_project"
     bl_label = "Qubicle Project (.qbcl)"
     bl_description = "Import Qubicle Project format (.qbcl)"
 

@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_minecraft_anvil_region(BaseOperatorImporter):
-    bl_idname = "import.minecraft_anvil_region"
+    bl_idname = "import.voxility_minecraft_anvil_region"
     bl_label = "Minecraft Anvil Region (.mca)"
     bl_description = "Import Minecraft Anvil Region format (.mca)"
 

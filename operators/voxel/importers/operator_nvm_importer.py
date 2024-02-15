@@ -9,7 +9,7 @@ import bpy
 from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
 
 class IMPORT_OT_nicks_voxel_model(BaseOperatorImporter):
-    bl_idname = "import.nicks_voxel_model"
+    bl_idname = "import.voxility_nicks_voxel_model"
     bl_label = "Nicks Voxel Model (.nvm)"
     bl_description = "Import Nicks Voxel Model format (.nvm)"
 
