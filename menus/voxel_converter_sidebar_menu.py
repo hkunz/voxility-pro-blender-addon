@@ -6,6 +6,16 @@ from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
     unregister as unregister_mesh_voxel_operator
 )
 
+from voxility_pro.operators.voxel.operator_clear_all_temp_cache import (
+    register as register_all_temp_cache_operator,
+    unregister as unregister_all_temp_cache_operator,
+)
+
+from voxility_pro.operators.voxel.operator_clear_temp_cache import (
+    register as register_temp_cache_operator,
+    unregister as unregister_temp_cache_operator,
+)
+
 from voxility_pro.menus.voxel_formats_export_menu import VoxelFormatsExportMenu
 from voxility_pro.utils.utils import get_addon_version
 from voxility_pro.enums.version_type import VersionType
@@ -116,9 +126,13 @@ def register() -> None:
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     register_mesh_voxel_operator()
+    register_temp_cache_operator()
+    register_all_temp_cache_operator()
 
 def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     unregister_mesh_voxel_operator()
+    unregister_temp_cache_operator()
+    unregister_all_temp_cache_operator()

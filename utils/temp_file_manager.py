@@ -1,11 +1,10 @@
-import bpy
 import os
+import re
 import tempfile
 import shutil
 
 from voxility_pro.utils.utils import get_blender_version, get_addon_version
 from voxility_pro.utils.string_utils import randomize_string
-
 
 class TempFileManager:
 
@@ -26,7 +25,7 @@ class TempFileManager:
 
     def create_temp_parent_dir(self) -> None:
         appdata_local_temp_dir: str = tempfile.gettempdir() # C:/Users/<user>/AppData/Local/Temp/
-        TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"b{get_blender_version()}-vx{get_addon_version()}-tmp{randomize_string(5)}") # bv4.0.1-vxv1.0.8-tmpEGjov
+        TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"vx{get_addon_version()}-b{get_blender_version()}-tmp{randomize_string(5)}") # vxv1.0.8-bv4.0.1-tmpEGjov
         os.makedirs(name=TempFileManager.TEMP_PARENT_DIRECTORY, exist_ok=True)
         print(f"Created temporary parent directory: {TempFileManager.TEMP_PARENT_DIRECTORY}")
     
@@ -48,5 +47,18 @@ class TempFileManager:
         self.delete_temp_dir(TempFileManager.TEMP_PARENT_DIRECTORY)
         print(f"Removed temporary parent directory: {TempFileManager.TEMP_PARENT_DIRECTORY}")
     
+    def clear_all_temp_directories(self, blender_version: str='\d+\.\d+\.\d+', addon_version: str='\d+\.\d+\.\d+') -> None:
+        appdata_local_temp_dir: str = tempfile.gettempdir() # C:/Users/<user>/AppData/Local/Temp/
+        pattern: str = rf'vxv{addon_version}-bv{blender_version}-tmp\w+'
+        for item in os.listdir(appdata_local_temp_dir):
+            item_path: str = os.path.join(appdata_local_temp_dir, item)
+            if os.path.isdir(item_path) and re.match(pattern, item):
+                self.delete_temp_dir(item_path)
+
+    def clear_temp_directories(self, by_blender_version: bool=True, by_addon_version: bool=True) -> None:
+        addon_version: str = get_addon_version(False) if by_addon_version else '\d+\.\d+\.\d+'
+        blend_version: str = get_blender_version(False) if by_blender_version else '\d+\.\d+\.\d+'
+        self.clear_all_temp_directories(blender_version=blend_version, addon_version=addon_version)
+
     def cleanup(self) -> None:
         self.remove_temp_parent_dir()

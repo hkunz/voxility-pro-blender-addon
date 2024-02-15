@@ -87,7 +87,6 @@ def register() -> None:
     register_sidebar_menu()
     register_generic_popup()
 
-
 def unregister() -> None:
     unregister_translations()
     unregister_vox_export_menu()

@@ -5,6 +5,7 @@ class GenericPopupOperator(bpy.types.Operator):
     bl_idname = "object.generic_popup_operator"
     bl_label = "Voxility Pro Message"
     bl_description = "Generic Popup Operator for displaying a custom message"
+    bl_options = {'INTERNAL'}
 
     message: bpy.props.StringProperty(name="Message") # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
@@ -31,5 +32,5 @@ def register() -> None:
 def unregister() -> None:
     bpy.utils.unregister_class(GenericPopupOperator)
 
-def create_generic_popup(message) -> None:
+def create_generic_popup(message: str) -> None:
     bpy.ops.object.generic_popup_operator('INVOKE_DEFAULT', message=message)
