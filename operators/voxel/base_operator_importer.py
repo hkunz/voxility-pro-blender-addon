@@ -119,3 +119,7 @@ class BaseOperatorImporter(BaseVoxelOperator):
             self.voxformat_withcolor = False
             print(get_blender_support_text())
         return {'RUNNING_MODAL'}
+
+    @classmethod
+    def poll(cls, _: bpy_types.Context) -> bool:
+        return True

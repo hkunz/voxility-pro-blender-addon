@@ -1,7 +1,7 @@
 import bpy
 
 from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
-    WM_OT_MeshVoxelConvertOperator,
+    OBJECT_OT_MeshVoxelConvertOperator,
     register as register_mesh_voxel_operator,
     unregister as unregister_mesh_voxel_operator
 )
@@ -118,7 +118,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.prop(properties, "surface_only")
         layout.prop(properties, "voxformat_mergequads")
         layout.prop(properties, "hide_original_objects")
-        layout.operator(WM_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
+        layout.operator(OBJECT_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
         layout.prop(properties, "export_format")
 
 def register() -> None:

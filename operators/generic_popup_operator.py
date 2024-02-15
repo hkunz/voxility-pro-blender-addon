@@ -2,7 +2,7 @@ import bpy
 import bpy_types
 
 class GenericPopupOperator(bpy.types.Operator):
-    bl_idname = "object.generic_popup_operator"
+    bl_idname = "wm.generic_popup_operator"
     bl_label = "Voxility Pro Message"
     bl_description = "Generic Popup Operator for displaying a custom message"
     bl_options = {'INTERNAL'}

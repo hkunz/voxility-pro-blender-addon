@@ -15,7 +15,7 @@ from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
 
-class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
+class OBJECT_OT_MeshVoxelConvertOperator(VoxconvertOperator):
     bl_idname = "object.voxility_mesh_voxel_convert"
     bl_label = "Voxility Pro Mesh-Voxel Convert "
     bl_description = "Voxelize or convert selected objects into a single voxel object"
@@ -99,7 +99,7 @@ class WM_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         return {'FINISHED'}
 
 def register() -> None:
-    bpy.utils.register_class(WM_OT_MeshVoxelConvertOperator)
+    bpy.utils.register_class(OBJECT_OT_MeshVoxelConvertOperator)
 
 def unregister() -> None:
-    bpy.utils.unregister_class(WM_OT_MeshVoxelConvertOperator)
+    bpy.utils.unregister_class(OBJECT_OT_MeshVoxelConvertOperator)
