@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_goxel(BaseOperatorExporter):
+class EXPORT_OT_goxel(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_goxel"
     bl_label = "Goxel (.gox)"
     bl_description = "Export selected objects to Goxel format (.gox)"

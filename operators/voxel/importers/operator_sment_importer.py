@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_starmade(BaseOperatorImporter):
+class IMPORT_OT_starmade(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_starmade"
     bl_label = "StarMade (.sment)"
     bl_description = "Import StarMade format (.sment)"

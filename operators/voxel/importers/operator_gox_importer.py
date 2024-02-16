@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_goxel(BaseOperatorImporter):
+class IMPORT_OT_goxel(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_goxel"
     bl_label = "Goxel (.gox)"
     bl_description = "Import Goxel format (.gox)"

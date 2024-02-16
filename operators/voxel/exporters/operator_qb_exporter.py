@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_qubicle_binary_exchange(BaseOperatorExporter):
+class EXPORT_OT_qubicle_binary_exchange(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_qubicle_binary_exchange"
     bl_label = "Qubicle Binary Exchange (.qb)"
     bl_description = "Export selected objects to Qubicle Binary Exchange format (.qb)"

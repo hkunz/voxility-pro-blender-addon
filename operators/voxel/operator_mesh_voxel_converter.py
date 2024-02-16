@@ -6,16 +6,16 @@ import bpy_types
 from typing import List
 from mathutils import Vector
 
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
-from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport
 from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
 
-class OBJECT_OT_MeshVoxelConvertOperator(VoxconvertOperator):
+class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_idname = "object.voxility_mesh_voxel_convert"
     bl_label = "Voxility Pro Mesh-Voxel Convert "
     bl_description = "Voxelize or convert selected objects into a single voxel object"
@@ -50,8 +50,8 @@ class OBJECT_OT_MeshVoxelConvertOperator(VoxconvertOperator):
         bpy.context.object.scale = Vector((scale, scale, scale))
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
-    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
-        c: VoxConvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = 1
         properties = bpy.context.scene.voxility_pro_properties
         c.vc_voxformat_scale = float(properties.voxformat_scale)

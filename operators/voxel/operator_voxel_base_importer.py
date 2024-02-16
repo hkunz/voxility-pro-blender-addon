@@ -5,23 +5,23 @@ import bpy_types
 
 from abc import ABC, abstractmethod
 
+from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
 from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
-from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.enums.version_type import VersionType
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
 def get_blender_support_text():
     return f"Importing objects with vertex colors is only supported for Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above"
 
-class BaseOperatorImporter(BaseVoxelOperator):
-    bl_description = "Base Voxel Operator Importer"
+class OperatorVoxelBaseImporter(OperatorVoxelBase):
+    bl_description = "Operator Voxel Base Importer"
     vertex_color_support = False
 
     filter_glob: bpy.props.StringProperty(
@@ -74,8 +74,8 @@ class BaseOperatorImporter(BaseVoxelOperator):
 
         return True
 
-    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
-        c: VoxConvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
         return c

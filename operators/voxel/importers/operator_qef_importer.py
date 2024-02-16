@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_qubicle_exchange_format_ascii(BaseOperatorImporter):
+class IMPORT_OT_qubicle_exchange_format_ascii(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_qubicle_exchange_format_ascii"
     bl_label = "Qubicle Exchange Format ASCII (.qef)"
     bl_description = "Import Qubicle Exchange Format ASCII format (.qef)"

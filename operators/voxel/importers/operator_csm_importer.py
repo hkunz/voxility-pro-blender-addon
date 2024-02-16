@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_cubic_mesh(BaseOperatorImporter):
+class IMPORT_OT_cubic_mesh(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_cubic_mesh"
     bl_label = "CuBic Mesh (.csm)"
     bl_description = "Import CuBic Mesh format (.csm)"

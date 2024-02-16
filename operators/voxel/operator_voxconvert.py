@@ -7,21 +7,21 @@ import bpy_types
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
 from voxility_pro.translations import get_translation
 
-class VoxconvertOperator(bpy.types.Operator):
-    bl_description = "Abstract Voxconvert Operator"
+class OperatorVoxconvert(bpy.types.Operator):
+    bl_description = "Operator Voxconvert"
     bl_options = {'INTERNAL', 'UNDO'}
     filename_ext: str = ""
 
     def __init__(self) -> None:
         super().__init__()
         self.voxconvert_duration: int = 0
-        self.command_builder: VoxConvertCommandBuilder = VoxConvertCommandBuilder()
+        self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
 
-    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
-        c: VoxConvertCommandBuilder = self.command_builder
+    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = self.command_builder
         c.vc_input_path = input
         c.vc_output_path = output
         return c

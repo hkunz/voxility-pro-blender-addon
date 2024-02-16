@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_sandbox_voxedit_tilemap(BaseOperatorImporter):
+class IMPORT_OT_sandbox_voxedit_tilemap(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_tilemap"
     bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
     bl_description = "Import Sandbox VoxEdit Tilemap format (.vxt)"

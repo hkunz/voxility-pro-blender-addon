@@ -63,7 +63,7 @@ from voxility_pro.menus.voxel_converter_sidebar_menu import (
     unregister as unregister_sidebar_menu
 )
 
-from voxility_pro.operators.generic_popup_operator import (
+from voxility_pro.operators.operator_generic_popup import (
     register as register_generic_popup,
     unregister as unregister_generic_popup
 )

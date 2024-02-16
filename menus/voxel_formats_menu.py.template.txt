@@ -3,11 +3,11 @@ import bpy_types
 
 from typing import List, Tuple
 
-from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 
 {{imports}}
 
-CLASSES: List[VoxconvertOperator] = [
+CLASSES: List[OperatorVoxconvert] = [
 {{classes}}]
 
 class {{menu_class}}(bpy.types.Menu):

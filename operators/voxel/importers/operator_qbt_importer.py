@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_qubicle_binary_tree_exchange(BaseOperatorImporter):
+class IMPORT_OT_qubicle_binary_tree_exchange(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_qubicle_binary_tree_exchange"
     bl_label = "Qubicle Binary Tree Exchange (.qbt)"
     bl_description = "Import Qubicle Binary Tree Exchange format (.qbt)"

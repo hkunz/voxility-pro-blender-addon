@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_voxlap_voxel_model_format(BaseOperatorExporter):
+class EXPORT_OT_voxlap_voxel_model_format(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_voxlap_voxel_model_format"
     bl_label = "Voxlap Voxel model format (.kvx)"
     bl_description = "Export selected objects to Voxlap Voxel model format format (.kvx)"

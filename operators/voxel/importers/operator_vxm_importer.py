@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_importer import BaseOperatorImporter
+from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_sandbox_voxedit_model(BaseOperatorImporter):
+class IMPORT_OT_sandbox_voxedit_model(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_model"
     bl_label = "Sandbox VoxEdit Model (.vxm)"
     bl_description = "Import Sandbox VoxEdit Model format (.vxm)"

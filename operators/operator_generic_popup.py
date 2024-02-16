@@ -1,8 +1,8 @@
 import bpy
 import bpy_types
 
-class GenericPopupOperator(bpy.types.Operator):
-    bl_idname = "wm.generic_popup_operator"
+class OperatorGenericPopup(bpy.types.Operator):
+    bl_idname = "wm.voxility_generic_popup"
     bl_label = "Voxility Pro Message"
     bl_description = "Generic Popup Operator for displaying a custom message"
     bl_options = {'INTERNAL'}
@@ -27,10 +27,10 @@ class GenericPopupOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 def register() -> None:
-    bpy.utils.register_class(GenericPopupOperator)
+    bpy.utils.register_class(OperatorGenericPopup)
 
 def unregister() -> None:
-    bpy.utils.unregister_class(GenericPopupOperator)
+    bpy.utils.unregister_class(OperatorGenericPopup)
 
 def create_generic_popup(message: str) -> None:
-    bpy.ops.object.generic_popup_operator('INVOKE_DEFAULT', message=message)
+    bpy.ops.wm.voxility_generic_popup('INVOKE_DEFAULT', message=message)

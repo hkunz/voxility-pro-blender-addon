@@ -2,7 +2,7 @@ import bpy
 import bpy_types
 
 from voxility_pro.utils.temp_file_manager import TempFileManager
-from voxility_pro.operators.generic_popup_operator import create_generic_popup
+from voxility_pro.operators.operator_generic_popup import create_generic_popup
 
 class FILE_OT_ClearTempCacheOperator(bpy.types.Operator):
     bl_idname = "file.voxility_clear_temp_cache"

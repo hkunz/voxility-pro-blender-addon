@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_cubeworld_cubemap(BaseOperatorExporter):
+class EXPORT_OT_cubeworld_cubemap(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_cubeworld_cubemap"
     bl_label = "CubeWorld CubeMap (.cub)"
     bl_description = "Export selected objects to CubeWorld CubeMap format (.cub)"

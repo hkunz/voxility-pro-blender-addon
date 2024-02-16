@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_sandbox_voxedit_model(BaseOperatorExporter):
+class EXPORT_OT_sandbox_voxedit_model(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_sandbox_voxedit_model"
     bl_label = "Sandbox VoxEdit Model (.vxm)"
     bl_description = "Export selected objects to Sandbox VoxEdit Model format (.vxm)"

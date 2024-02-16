@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_minecraft_level_dat(BaseOperatorExporter):
+class EXPORT_OT_minecraft_level_dat(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_minecraft_level_dat"
     bl_label = "Minecraft level dat (.dat)"
     bl_description = "Export selected objects to Minecraft level dat format (.dat)"

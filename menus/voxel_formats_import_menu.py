@@ -9,7 +9,7 @@ import bpy_types
 
 from typing import List, Tuple
 
-from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 
 from voxility_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
@@ -45,7 +45,7 @@ from voxility_pro.operators.voxel.importers.operator_3zh_importer import IMPORT_
 from voxility_pro.operators.voxel.importers.operator_b64_importer import IMPORT_OT_cubzh_world
 
 
-CLASSES: List[VoxconvertOperator] = [
+CLASSES: List[OperatorVoxconvert] = [
     IMPORT_OT_magicavoxel,
     IMPORT_OT_qubicle_binary_exchange,
     IMPORT_OT_qubicle_binary_tree_exchange,

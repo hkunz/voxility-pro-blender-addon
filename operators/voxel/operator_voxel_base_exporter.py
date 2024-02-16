@@ -5,16 +5,16 @@ import bpy_types
 
 from abc import ABC, abstractmethod
 
-from voxility_pro.operators.voxel.base_voxel_operator import BaseVoxelOperator
+from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
+from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
 
-class BaseOperatorExporter(BaseVoxelOperator):
-    bl_description = "Base Voxel Operator Exporter"
+class OperatorVoxelBaseExporter(OperatorVoxelBase):
+    bl_description = "Operator Voxel Base Exporter"
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",
@@ -58,8 +58,8 @@ class BaseOperatorExporter(BaseVoxelOperator):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
-    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
-        c: VoxConvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_withcolor = 0
         c.vc_voxformat_scale = float(self.voxformat_scale)
         c.vc_palette_file = str(self.palette_file)

@@ -6,9 +6,9 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.base_operator_exporter import BaseOperatorExporter
+from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_cubic_mesh(BaseOperatorExporter):
+class EXPORT_OT_cubic_mesh(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_cubic_mesh"
     bl_label = "CuBic Mesh (.csm)"
     bl_description = "Export selected objects to CuBic Mesh format (.csm)"

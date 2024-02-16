@@ -3,12 +3,12 @@ import bpy_types
 
 from bpy_extras.io_utils import ExportHelper
 
-from voxility_pro.voxconvert_command_builder import VoxConvertCommandBuilder
-from voxility_pro.operators.voxel.voxconvert_operator import VoxconvertOperator
+from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 from voxility_pro.utils.file_utils import check_filepath
 
-class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
-    bl_description = "Base Voxel Operator"
+class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
+    bl_description = "Operator Voxel Base"
 
     filter_glob: bpy.props.StringProperty(
         default="*.*",
@@ -28,8 +28,8 @@ class BaseVoxelOperator(VoxconvertOperator, ExportHelper):
         default=False,
     ) # type: ignore
 
-    def setup_command(self, input: str, output: str) -> VoxConvertCommandBuilder:
-        c: VoxConvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, output)
         c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
         c.vc_merge_vertices = int(self.merge_vertices)
         return c

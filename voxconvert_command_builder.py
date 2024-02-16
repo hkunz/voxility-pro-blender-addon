@@ -5,7 +5,7 @@ from typing import List
 
 from voxility_pro.utils.file_utils import get_voxconvert_filepath
 
-class VoxConvertCommandBuilder:
+class VoxconvertCommandBuilder:
     def __init__(self) -> None:
 
         self.vc_input_path: str = None
