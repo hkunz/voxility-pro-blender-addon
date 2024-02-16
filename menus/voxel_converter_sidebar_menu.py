@@ -121,6 +121,8 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.operator(OBJECT_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
         layout.prop(properties, "export_format")
 
+        print("REDRW ===== ", properties.export_format, type(properties.export_format))
+
 def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)

@@ -26,12 +26,13 @@ if [ ! -d "$vox_exe_dir" ]; then
 fi
 
 zip_cmd="zip -r '${output_zip}' '${parent_folder}'/* \
-  --exclude "$parent_folder/.vscode/*" \
-  --exclude "$parent_folder/.git/*" \
-  --exclude "$parent_folder/temp/*" \
-  --exclude "$parent_folder/*.sh" \
-  --exclude "$parent_folder/*.template.*" \
-  --exclude "$parent_folder/$(basename "$0")" \
+  --exclude '${parent_folder}'/.vscode/* \
+  --exclude '${parent_folder}'/.git/* \
+  --exclude '${parent_folder}'/temp/* \
+  --exclude '${parent_folder}'/**/useful/* \
+  --exclude '${parent_folder}'/scripts/* \
+  --exclude '${parent_folder}'/*.template.* \
+  --exclude '${parent_folder}'/$(basename "$0") \
 "
 
 mapfile -t exclude_pycache < <(find "${parent_folder}" -type d -name "__pycache__")
