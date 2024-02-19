@@ -48,6 +48,8 @@ from voxility_pro.operators.voxel.importers.operator_b64_importer import IMPORT_
 CLASSES: List[OperatorVoxconvert] = [
     IMPORT_OT_magicavoxel,
     IMPORT_OT_qubicle_binary_exchange,
+]
+'''
     IMPORT_OT_qubicle_binary_tree_exchange,
     IMPORT_OT_qubicle_exchange_format_ascii,
     IMPORT_OT_qubicle_project,
@@ -77,6 +79,7 @@ CLASSES: List[OperatorVoxconvert] = [
     IMPORT_OT_cubzh,
     IMPORT_OT_cubzh_world,
 ]
+'''
 
 class VoxelFormatsImportMenu(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_VoxelFormatsImportMenu_submenu"
@@ -124,19 +127,24 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
 def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
 
+def menu_qb_import_func_callback(self, _context: bpy_types.Context) -> None:
+    self.layout.operator(IMPORT_OT_qubicle_binary_exchange.bl_idname)
+
 def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
 
 def register() -> None:
     for cls in CLASSES:
         bpy.utils.register_class(cls)
-    bpy.utils.register_class(VoxelFormatsImportMenu)
+    #bpy.utils.register_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
-    bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
+    bpy.types.TOPBAR_MT_file_import.append(menu_qb_import_func_callback)
+    #bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
 def unregister() -> None:
     for cls in CLASSES:
         bpy.utils.unregister_class(cls)
-    bpy.utils.unregister_class(VoxelFormatsImportMenu)
+    #bpy.utils.unregister_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
-    bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)
+    bpy.types.TOPBAR_MT_file_import.remove(menu_qb_import_func_callback)
+    #bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)

@@ -84,13 +84,13 @@ def register() -> None:
     register_translations()
     register_vox_export_menu()
     register_vox_import_menu()
-    register_sidebar_menu()
-    register_generic_popup()
+    #register_sidebar_menu()
+    #register_generic_popup()
 
 def unregister() -> None:
     unregister_translations()
     unregister_vox_export_menu()
     unregister_vox_import_menu()
-    unregister_sidebar_menu()
-    unregister_generic_popup()
+    #unregister_sidebar_menu()
+    #unregister_generic_popup()
     TempFileManager().cleanup()
