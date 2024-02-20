@@ -12,15 +12,28 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
     bl_label = "Voxility Pro Save Voxelized Mesh"
     bl_description = "Save the voxelized mesh as specified in target voxel format"
 
-    VOX_TARGET_FORMAT_CURRENT_SELECTION = VoxelFormatsExportMenu.get_formats_list_value()
-    VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.get_formats_list_value()
-    VOX_OUTPUT_PATH = None
+    VOX_TARGET_FORMAT_CURRENT_SELECTION: str = VoxelFormatsExportMenu.get_formats_list_value()
+    VOX_TARGET_FORMAT_EXT: str = VoxelFormatsExportMenu.get_formats_list_value()
+    VOX_OUTPUT_PATH: str = None
 
-    def execute(self, context: bpy_types.Context) -> set[str]:
+    directory: bpy.props.StringProperty(
+        name="Output Directory",
+        description="Directory where the voxelized mesh will be saved",
+        subtype='DIR_PATH'
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+
+    filter_folder: bpy.props.BoolProperty(
+        default=True,
+        options={"HIDDEN"}
+    ) # type: ignore
+
+    def execute(self, _: bpy_types.Context) -> set[str]:
+        print("Selected directory:", self.directory)
+        #TODO
         return {'FINISHED'}
 
     @classmethod
-    def poll(cls, context: bpy_types.Context) -> bool:
+    def poll(cls, _: bpy_types.Context) -> bool:
         none: str = VoxelFormatsExportMenu.get_formats_list_value()
         if cls.VOX_TARGET_FORMAT_EXT == none or cls.VOX_TARGET_FORMAT_CURRENT_SELECTION == none:
             return False
@@ -29,6 +42,10 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
         if not p.exists(cls.VOX_OUTPUT_PATH):
             return False
         return True
+
+    def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
 
 def register() -> None:
     bpy.utils.register_class(OBJECT_OT_MeshVoxelSaveOperator)
