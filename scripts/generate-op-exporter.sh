@@ -3,14 +3,14 @@
 source scripts/utils.sh
 
 VOX_OP_BASE_DIR="operators/voxel/"
-FORMATS_FILE="supported-voxel-formats.txt"
+FORMATS_FILE="resources/supported-voxel-formats.txt"
 
 if ! command -v jq &> /dev/null; then
     echo "jq is not installed. Please install it before running the script."
     exit 1
 fi
 
-JSON=$(cat "supported-voxel-formats.json")
+JSON=$(cat "resources/supported-voxel-formats.json")
 
 get_usage_text() {
     echo "Usage: $0 [--all|-a|--export|-e|--import|-i] | <type> <'import' or 'export'>"

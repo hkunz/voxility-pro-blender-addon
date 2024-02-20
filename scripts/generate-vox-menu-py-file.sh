@@ -5,7 +5,7 @@ source scripts/utils.sh
 UI_DIR="ui/"
 VOX_OP_BASE_DIR="operators/voxel/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
-JSON=$(cat "supported-voxel-formats.json")
+JSON=$(cat "resources/supported-voxel-formats.json")
 
 generate_voxel_formats_menu_py_file() {
     template_file="${UI_DIR}${VOX_FORMATS_MENU_TEMPLATE}"

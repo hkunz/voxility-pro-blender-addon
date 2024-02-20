@@ -1,7 +1,7 @@
 #!/bin/bash
 
-input_file="supported-voxel-formats.txt"
-json_output_file="supported-voxel-formats.json"
+input_file="resources/supported-voxel-formats.txt"
+json_output_file="resources/supported-voxel-formats.json"
 
 echo -n > "$json_output_file"
 
