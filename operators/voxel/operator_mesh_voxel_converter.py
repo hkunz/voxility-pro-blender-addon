@@ -14,6 +14,7 @@ from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all
 from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 
 class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_idname = "object.voxility_mesh_voxel_convert"
@@ -21,6 +22,11 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_description = "Voxelize or convert selected objects into a single voxel object"
 
     TARGET_FORMAT: str = None
+
+    vox_target_format_ext: bpy.props.StringProperty(
+        name="Target Voxel Format Extension",
+        default=VoxelFormatsExportMenu.FORMATS[0][0]
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
         duplicate_objects(objects)
@@ -74,6 +80,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         bpy.ops.object.delete(use_global=False)
         select_objects(objects, active_object)
         self.setup_command(vc_in_path, vc_out_path)
+        print("Target Voxel Format:", self.vox_target_format_ext)
         success: bool = self.execute_voxconvert()
 
         if (success):

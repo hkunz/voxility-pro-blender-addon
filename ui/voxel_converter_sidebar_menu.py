@@ -118,10 +118,11 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.prop(properties, "surface_only")
         layout.prop(properties, "voxformat_mergequads")
         layout.prop(properties, "hide_original_objects")
-        layout.operator(OBJECT_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
-        layout.prop(properties, "export_format")
 
-        print("REDRW ===== ", properties.export_format, type(properties.export_format))
+        op = layout.operator(OBJECT_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
+        op.vox_target_format_ext = properties.export_format # <bpy_struct, OBJECT_OT_voxility_mesh_voxel_convert at 0x0000021AE2D89BC8> <class 'bpy.types.OBJECT_OT_voxility_mesh_voxel_convert'>
+
+        layout.prop(properties, "export_format")
 
 def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
