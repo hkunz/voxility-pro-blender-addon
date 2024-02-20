@@ -9,8 +9,8 @@ LANG: str = 'en'
 loaded_translations: List = None
 
 def load_translations(language: str) -> None:
-    translations_folder = os.path.join(get_addon_root_dir(), "languages")
-    translations_file = os.path.join(translations_folder, f"{language}.json")
+    languages_folder = os.path.join(get_addon_root_dir(), "translation/languages")
+    translations_file = os.path.join(languages_folder, f"{language}.json")
     
     with open(translations_file, 'r', encoding='utf-8') as file:
         return json.load(file)

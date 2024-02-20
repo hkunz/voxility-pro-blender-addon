@@ -68,7 +68,7 @@ from voxility_pro.operators.operator_generic_popup import (
     unregister as unregister_generic_popup
 )
 
-from voxility_pro.translations import (
+from voxility_pro.translation.translations import (
     register as register_translations,
     unregister as unregister_translations
 )

@@ -8,7 +8,7 @@ from typing import List
 from abc import ABC, abstractmethod
 
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
-from voxility_pro.translations import get_translation
+from voxility_pro.translation.translations import get_translation
 
 class OperatorVoxconvert(bpy.types.Operator):
     bl_description = "Operator Voxconvert"
