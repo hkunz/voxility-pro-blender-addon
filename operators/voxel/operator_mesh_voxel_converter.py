@@ -7,7 +7,7 @@ from typing import List
 from mathutils import Vector
 
 from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport

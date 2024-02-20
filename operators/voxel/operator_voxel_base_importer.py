@@ -6,7 +6,7 @@ import bpy_types
 from abc import ABC, abstractmethod
 
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
-from voxility_pro.operators.voxel.object_import_handlers.object_import_handler import ObjectImportHandler
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
