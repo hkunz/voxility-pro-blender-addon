@@ -9,7 +9,7 @@ from bpy.types import (
     ShaderNode,
 )
 
-from voxility_pro.operators.handler_interface import IHandler
+from voxility_pro.operators.common.handler_interface import IHandler
 from voxility_pro.context.context_script_executer import ContextScriptExecuter
 from voxility_pro.context.context_executer_override import ContextExecuterOverride
 from voxility_pro.enums.area_type import AreaType

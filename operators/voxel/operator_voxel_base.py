@@ -3,7 +3,7 @@ import bpy_types
 
 from bpy_extras.io_utils import ExportHelper
 
-from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 from voxility_pro.utils.file_utils import check_filepath
 

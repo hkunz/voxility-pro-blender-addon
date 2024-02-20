@@ -11,7 +11,7 @@ from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists
 from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 
 class OperatorVoxelBaseExporter(OperatorVoxelBase):
     bl_description = "Operator Voxel Base Exporter"

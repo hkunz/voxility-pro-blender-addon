@@ -13,7 +13,7 @@ from voxility_pro.utils.file_utils import check_filepath, get_file_size
 from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
 from voxility_pro.utils.time_utils import format_duration
 from voxility_pro.enums.version_type import VersionType
-from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 

@@ -13,7 +13,7 @@ from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport
 from voxility_pro.utils.file_utils import get_file_size
 from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 
 class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_idname = "object.voxility_mesh_voxel_convert"
