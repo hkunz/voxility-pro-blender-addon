@@ -23,10 +23,13 @@ class TempFileManager:
         self._initialized = True
         print("Initialized", self)
 
+    def create_directory(self, directory) -> None:
+        os.makedirs(name=directory, exist_ok=True)
+
     def create_temp_parent_dir(self) -> None:
         appdata_local_temp_dir: str = tempfile.gettempdir() # C:/Users/<user>/AppData/Local/Temp/
         TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"vx{get_addon_version()}-b{get_blender_version()}-tmp{randomize_string(5)}") # vxv1.0.8-bv4.0.1-tmpEGjov
-        os.makedirs(name=TempFileManager.TEMP_PARENT_DIRECTORY, exist_ok=True)
+        self.create_directory(TempFileManager.TEMP_PARENT_DIRECTORY)
         print(f"Created temporary parent directory: {TempFileManager.TEMP_PARENT_DIRECTORY}")
 
     def create_temp_dir(self) -> str:

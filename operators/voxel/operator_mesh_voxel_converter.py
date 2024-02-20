@@ -3,6 +3,7 @@ import os
 import time
 import bpy_types
 
+from os import path as p
 from typing import List
 from mathutils import Vector
 
@@ -69,21 +70,22 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         return c
 
     def generate_output_paths(self, temp_dir: str) -> List[str]:
-        output_paths = [os.path.join(temp_dir, 'temp_out.obj')]
+        paths = [p.join(temp_dir, 'temp_out.obj')]
         type: str = self.vox_target_format_ext.lower()
-        if type != "none":
-            type_dir = os.path.join(temp_dir, type)
-            os.makedirs(type_dir, exist_ok=True)
-            output_paths.append(os.path.join(type_dir, f'temp_out.{type}'))
-        return output_paths
+        if type == "none":
+            return paths
+        type_dir = p.join(temp_dir, type)
+        TempFileManager().create_directory(type_dir)
+        paths.append(p.join(type_dir, f'temp_out.{type}'))
+        return paths
 
     def execute(self, context: bpy_types.Context) -> set[str]:
         voxelize_duration: float = time.time()
         active_object: bpy_types.Object = context.view_layer.objects.active
-        if OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR is None:
+        if OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR is None or not p.exists(OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR):
             OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR = TempFileManager().create_temp_dir()
         temp_dir: str = OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR
-        vc_in_path: str = os.path.join(temp_dir, 'temp_in.obj')
+        vc_in_path: str = p.join(temp_dir, 'temp_in.obj')
         objects: List[bpy_types.Object] = context.selected_objects.copy()
         self.create_temp_dup(objects)
         self.export_obj(vc_in_path)
