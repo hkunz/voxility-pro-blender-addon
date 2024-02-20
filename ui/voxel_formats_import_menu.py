@@ -83,7 +83,7 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
     bl_label = "Select"
 
     FORMATS: List[Tuple[str, str, str]] = [
-        ("NONE", "Don't Import", "No specific target format. Only voxelize within this application."),
+        ("NONE", "None", "No specific target format. Only voxelize within this application."),
         ("VOX", "vox (MagicaVoxel)", "Target format: *.vox"),
         ("QB", "qb (Qubicle Binary Exchange)", "Target format: *.qb"),
         ("QBT", "qbt (Qubicle Binary Tree Exchange)", "Target format: *.qbt"),
@@ -115,6 +115,10 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
         ("3ZH", "3zh (Cubzh)", "Target format: *.3zh"),
         ("B64", "b64 (Cubzh World)", "Target format: *.b64"),
     ]
+
+    @staticmethod
+    def get_formats_list_value(index: int=0) -> str:
+        return VoxelFormatsImportMenu.FORMATS[index][0]
 
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout

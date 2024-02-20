@@ -8,6 +8,7 @@ from typing import List
 from mathutils import Vector
 
 from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
+from voxility_pro.operators.voxel.operator_mesh_voxel_save import OBJECT_OT_MeshVoxelSaveOperator
 from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler
 from voxility_pro.translation.translations import get_translation
 from voxility_pro.utils.temp_file_manager import TempFileManager
@@ -19,7 +20,7 @@ from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 
 class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_idname = "object.voxility_mesh_voxel_convert"
-    bl_label = "Voxility Pro Mesh-Voxel Convert "
+    bl_label = "Voxility Pro Mesh-Voxel Convert"
     bl_description = "Voxelize or convert selected objects into a single voxel object"
 
     TEMP_DIR: str = None
@@ -27,7 +28,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
 
     vox_target_format_ext: bpy.props.StringProperty(
         name="Target Voxel Format Extension",
-        default=VoxelFormatsExportMenu.FORMATS[0][0]
+        default=VoxelFormatsExportMenu.get_formats_list_value()
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
@@ -80,6 +81,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         return paths
 
     def execute(self, context: bpy_types.Context) -> set[str]:
+        OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.get_formats_list_value()
         voxelize_duration: float = time.time()
         active_object: bpy_types.Object = context.view_layer.objects.active
         if OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR is None or not p.exists(OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR):
@@ -114,6 +116,9 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
 
         if properties.hide_original_objects:
             hide_objects_from_viewport(objects)
+
+        OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = self.vox_target_format_ext
+        OBJECT_OT_MeshVoxelSaveOperator.VOX_OUTPUT_PATH = vc_out_paths[1] if len(vc_out_paths) > 1 else None
         return {'FINISHED'}
 
 def register() -> None:

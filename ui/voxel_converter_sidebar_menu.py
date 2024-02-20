@@ -6,6 +6,12 @@ from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
     unregister as unregister_mesh_voxel_operator
 )
 
+from voxility_pro.operators.voxel.operator_mesh_voxel_save import (
+    OBJECT_OT_MeshVoxelSaveOperator,
+    register as register_mesh_voxel_save_operator,
+    unregister as unregister_mesh_voxel_save_operator
+)
+
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import (
     register as register_all_temp_cache_operator,
     unregister as unregister_all_temp_cache_operator,
@@ -124,11 +130,15 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         layout.prop(properties, "export_format")
 
+        op = layout.operator(OBJECT_OT_MeshVoxelSaveOperator.bl_idname, text="Save Target Format")
+        OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_CURRENT_SELECTION = properties.export_format
+
 def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     register_mesh_voxel_operator()
+    register_mesh_voxel_save_operator()
     register_temp_cache_operator()
     register_all_temp_cache_operator()
 
@@ -137,5 +147,6 @@ def unregister() -> None:
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     unregister_mesh_voxel_operator()
+    unregister_mesh_voxel_save_operator()
     unregister_temp_cache_operator()
     unregister_all_temp_cache_operator()
