@@ -16,7 +16,7 @@ from voxility_pro.operators.voxel.operator_clear_temp_cache import (
     unregister as unregister_temp_cache_operator,
 )
 
-from voxility_pro.menus.voxel_formats_export_menu import VoxelFormatsExportMenu
+from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 from voxility_pro.utils.utils import get_addon_version
 from voxility_pro.enums.version_type import VersionType
 

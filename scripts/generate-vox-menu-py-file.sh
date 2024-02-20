@@ -2,14 +2,14 @@
 
 source scripts/utils.sh
 
-MENUS_DIR="menus/"
+UI_DIR="ui/"
 VOX_OP_BASE_DIR="operators/voxel/"
 VOX_FORMATS_MENU_TEMPLATE="voxel_formats_menu.py.template.txt"
 JSON=$(cat "supported-voxel-formats.json")
 
 generate_voxel_formats_menu_py_file() {
-    template_file="${MENUS_DIR}${VOX_FORMATS_MENU_TEMPLATE}"
-    output_file="${MENUS_DIR}voxel_formats_${1}_menu.py"
+    template_file="${UI_DIR}${VOX_FORMATS_MENU_TEMPLATE}"
+    output_file="${UI_DIR}voxel_formats_${1}_menu.py"
     class_prefix="$(echo "$1" | tr '[:lower:]' '[:upper:]')_OT_"
     imports_content=""
     classes_content=""

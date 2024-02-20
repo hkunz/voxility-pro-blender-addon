@@ -48,17 +48,17 @@ from voxility_pro.utils.file_utils import (
     get_file_size
 )
 
-from voxility_pro.menus.voxel_formats_export_menu import (
+from voxility_pro.ui.voxel_formats_export_menu import (
     register as register_vox_export_menu,
     unregister as unregister_vox_export_menu
 )
 
-from voxility_pro.menus.voxel_formats_import_menu import (
+from voxility_pro.ui.voxel_formats_import_menu import (
     register as register_vox_import_menu,
     unregister as unregister_vox_import_menu
 )
 
-from voxility_pro.menus.voxel_converter_sidebar_menu import (
+from voxility_pro.ui.voxel_converter_sidebar_menu import (
     register as register_sidebar_menu,
     unregister as unregister_sidebar_menu
 )
