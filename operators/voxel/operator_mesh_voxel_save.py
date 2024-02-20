@@ -1,10 +1,11 @@
 import bpy
 import bpy_types
+import os
+import shutil
 
 from os import path as p
 from typing import List
 
-from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 
 class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
@@ -28,8 +29,10 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
     ) # type: ignore
 
     def execute(self, _: bpy_types.Context) -> set[str]:
-        print("Selected directory:", self.directory)
-        #TODO
+        temp_dir = os.path.dirname(OBJECT_OT_MeshVoxelSaveOperator.VOX_OUTPUT_PATH)
+        print("Temporary contents in temp directory:", temp_dir)
+        print("Save contents to destination directory:", self.directory)
+        shutil.copytree(src=temp_dir, dst=self.directory, dirs_exist_ok=True)
         return {'FINISHED'}
 
     @classmethod
