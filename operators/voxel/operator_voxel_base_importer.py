@@ -3,6 +3,7 @@ import time
 import os
 import bpy_types
 
+from typing import List
 from abc import ABC, abstractmethod
 
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
@@ -74,8 +75,8 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
 
         return True
 
-    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
-        c: VoxconvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
         return c
@@ -89,7 +90,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         temp_dir: str = TempFileManager().create_temp_dir()
         out_filepath: str = os.path.join(temp_dir, 'temp.obj')
 
-        self.setup_command(self.filepath, out_filepath)
+        self.setup_command(self.filepath, [out_filepath])
         success: bool = self.execute_voxconvert()
 
         if (success):

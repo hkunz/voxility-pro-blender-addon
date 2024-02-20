@@ -9,7 +9,7 @@ class VoxconvertCommandBuilder:
     def __init__(self) -> None:
 
         self.vc_input_path: str = None
-        self.vc_output_path: str = None
+        self.vc_output_paths: List[str] = None
         self.vc_voxformat_voxelizemode: int = 0
         self.vc_merge_vertices: int = 0
         self.vc_voxformat_withcolor: int = 0
@@ -80,8 +80,11 @@ class VoxconvertCommandBuilder:
 
         command.append("--input")
         command.append(f'"{self.vc_input_path}"')
-        command.append("--output")
-        command.append(f'"{self.vc_output_path}"')
+
+        for output_path in self.vc_output_paths:
+            command.append("--output")
+            command.append(f'"{output_path}"')
+
         command.append("--force")
 
         return command

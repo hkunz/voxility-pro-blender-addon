@@ -56,8 +56,8 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         bpy.context.object.scale = Vector((scale, scale, scale))
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
-    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
-        c: VoxconvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = 1
         properties = bpy.context.scene.voxility_pro_properties
         c.vc_voxformat_scale = float(properties.voxformat_scale)
@@ -79,7 +79,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         orig_width: float = context.object.dimensions[0]
         bpy.ops.object.delete(use_global=False)
         select_objects(objects, active_object)
-        self.setup_command(vc_in_path, vc_out_path)
+        self.setup_command(vc_in_path, [vc_out_path])
         print("Target Voxel Format:", self.vox_target_format_ext)
         success: bool = self.execute_voxconvert()
 

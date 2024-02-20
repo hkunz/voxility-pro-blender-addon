@@ -20,10 +20,10 @@ class OperatorVoxconvert(bpy.types.Operator):
         self.voxconvert_duration: int = 0
         self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
 
-    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
+    def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
         c: VoxconvertCommandBuilder = self.command_builder
         c.vc_input_path = input
-        c.vc_output_path = output
+        c.vc_output_paths = outputs
         return c
 
     def execute_voxconvert(self) -> bool:

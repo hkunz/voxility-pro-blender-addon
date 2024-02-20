@@ -3,6 +3,7 @@ import os
 import time
 import bpy_types
 
+from typing import List
 from abc import ABC, abstractmethod
 
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
@@ -58,8 +59,8 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
-    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
-        c: VoxconvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = 0
         c.vc_voxformat_scale = float(self.voxformat_scale)
         c.vc_palette_file = str(self.palette_file)
@@ -76,7 +77,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         temp_dir: str = TempFileManager().create_temp_dir()
         obj_file: str = os.path.join(temp_dir, 'temp.obj')
         self.export_obj(obj_file)
-        self.setup_command(obj_file, self.filepath)
+        self.setup_command(obj_file, [self.filepath])
         self.execute_voxconvert()
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(self.voxconvert_duration)}")
         TempFileManager().delete_temp_dir(temp_dir)

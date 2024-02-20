@@ -1,6 +1,7 @@
 import bpy
 import bpy_types
 
+from typing import List
 from bpy_extras.io_utils import ExportHelper
 
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
@@ -28,8 +29,8 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
         default=False,
     ) # type: ignore
 
-    def setup_command(self, input: str, output: str) -> VoxconvertCommandBuilder:
-        c: VoxconvertCommandBuilder = super().setup_command(input, output)
+    def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
+        c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
         c.vc_merge_vertices = int(self.merge_vertices)
         return c
