@@ -28,12 +28,13 @@ class OperatorVoxconvert(bpy.types.Operator):
 
     def execute_voxconvert(self) -> bool:
         start_time: float = time.time()
-        self.command_builder.build_command()
+        c:VoxconvertCommandBuilder = self.command_builder
+        c.build_command()
         success: bool = True
-        command: List[str] = self.command_builder.get_command()
-        command_str: str = self.command_builder.get_command_str()
+        command: List[str] = c.get_command()
+        command_str: str = c.get_command_str()
         cmd: str = command if platform.system().lower() == "windows" else command_str
-        print("\nExecute voxconvert command: ", command_str, '\n' + self.command_builder.get_formatted_args())
+        print("\nExecute voxconvert command: ", command_str, '\n' + c.get_formatted_args())
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
             subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
@@ -41,13 +42,14 @@ class OperatorVoxconvert(bpy.types.Operator):
             success = False
             print(f"Error: Command exited with return code {e.returncode}")
             print(f"Standard Error: {e.stderr}")
-            self.report({'ERROR'}, f"Error processing file: {self.command_builder.get_input_filepath()}")
+            if not c.test:
+                self.report({'ERROR'}, f"Error processing file: {c.get_input_filepath()}")
         self.voxconvert_duration = time.time() - start_time
         print("executed successfully:", success)
         return success
 
     @abstractmethod
-    def execute(_self, _context: bpy_types.Context) -> set:
+    def execute(_self, _context: bpy_types.Context) -> set[str]:
         pass
 
     @classmethod

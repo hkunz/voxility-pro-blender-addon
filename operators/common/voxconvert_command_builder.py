@@ -8,6 +8,8 @@ from voxility_pro.utils.file_utils import get_voxconvert_filepath
 class VoxconvertCommandBuilder:
     def __init__(self) -> None:
 
+        self.test = False
+
         self.vc_input_path: str = None
         self.vc_output_paths: List[str] = None
         self.vc_voxformat_voxelizemode: int = 0
@@ -19,6 +21,7 @@ class VoxconvertCommandBuilder:
         self.vc_surface_only: int = 0
         self.vc_voxformat_ambientocclusion: int = 0
         self.vc_voxformat_mergequads: int = 0
+        self.vc_force_overwrite: bool = True
 
         self.vc_command: List[str] = None
 
@@ -44,6 +47,10 @@ class VoxconvertCommandBuilder:
             command.append(f'& "{exe}"')
         else:
             command.append(exe)
+
+        if self.test:
+            #command.append("--help")
+            return command
 
         command.append("-set")
         command.append("metric_flavor")
@@ -78,14 +85,16 @@ class VoxconvertCommandBuilder:
         if self.vc_merge_vertices:
             pass #command.append("--merge") #https://github.com/vengi-voxel/vengi/issues/389
 
-        command.append("--input")
-        command.append(f'"{self.vc_input_path}"')
+        if self.vc_input_path:
+            command.append("--input")
+            command.append(f'"{self.vc_input_path}"')
 
         for output_path in self.vc_output_paths:
             command.append("--output")
             command.append(f'"{output_path}"')
 
-        command.append("--force")
+        if self.vc_force_overwrite:
+            command.append("--force")
 
         return command
 
