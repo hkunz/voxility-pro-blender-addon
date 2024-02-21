@@ -6,6 +6,7 @@ from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup
 
 class FILE_OT_ClearTempCacheOperator(OperatorGenericPopup):
     bl_idname = "file.voxility_clear_temp_cache"
+    bl_label = "Clear Voxility Pro Cache"
     bl_description = "Delete temporary Voxility Pro directories of current Blender and Voxility Pro version"
     bl_options = {'REGISTER'}
 

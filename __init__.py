@@ -42,7 +42,7 @@ import stat
 from pathlib import Path
 from typing import Union
 
-from voxility_pro.ui.addon_preferences import AddonPreferences
+from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences
 from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations
@@ -60,7 +60,7 @@ def add_executable_permission(exe: Union[str, Path]) -> Path:
 
 def register() -> None:
     add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
-    bpy.utils.register_class(AddonPreferences)
+    register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
     register_translations()
     register_vox_export_menu()
@@ -69,7 +69,7 @@ def register() -> None:
     register_generic_popup()
 
 def unregister() -> None:
-    bpy.utils.unregister_class(AddonPreferences)
+    unregister_preferences()
     bpy.utils.unregister_class(OperatorVoxconvertTest)
     unregister_translations()
     unregister_vox_export_menu()

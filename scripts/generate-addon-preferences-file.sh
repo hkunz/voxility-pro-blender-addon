@@ -35,7 +35,7 @@ generate_addon_preferences_py_file() {
             properties_content+="${TAB}${TAB}default=True,\n"
             properties_content+="${TAB}${TAB}update=update_bool_property,\n"
             properties_content+="${TAB}) # type: ignore\n\n"
-            layout_content+="\n${TAB}${TAB}layout.prop(self, \"type_${type}\")"
+            layout_content+="\n${TAB}${TAB}box.prop(self, \"type_${type}\")"
         fi
     done
 
@@ -44,7 +44,7 @@ generate_addon_preferences_py_file() {
         s/{{properties}}/$properties_content/; \
         s/{{layout}}/$layout_content/" \
         "$output_file"
-    #sed -i "s/{{vox-class}}/${class_prefix}magicavoxel/g" "$output_file"
+
     sed -i "1i $(get_autogenerate_notice)" "$output_file"
     echo "Generated file: $output_file"
 }

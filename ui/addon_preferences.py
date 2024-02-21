@@ -74,6 +74,26 @@ def update_bool_property(self, context: bpy_types.Context) -> None:
     if self.type_b64:
         pass
 
+class UpdateVoxelFormatsOperator(bpy.types.Operator):
+    bl_idname = "preferences.voxility_update_voxel_formats"
+    bl_label = "Update Voxel Formats"
+    bl_description = "Update voxel formats to only show preferred types"
+    bl_options = {'INTERNAL'}
+
+    def execute(self, context) -> set[str]:
+        self.report({'INFO'}, "Voxel update formats ... TODO")
+        return {'FINISHED'}
+
+class ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
+    bl_idname = "preferences.voxility_clear_voxel_formats_checkboxes"
+    bl_label = "Uncheck All"
+    bl_description = "Uncheck all checkboxes"
+    bl_options = {'INTERNAL'}
+
+    def execute(self, context) -> set[str]:
+        self.report({'INFO'}, "Uncheck all ... TODO")
+        return {'FINISHED'}
+
 class AddonPreferences(bpy.types.AddonPreferences):
     bl_idname = "voxility_pro" # __name__ if the class is defined inside __init__.py
 
@@ -272,37 +292,56 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
     def draw(self, context: bpy_types.Context) -> None:
         layout = self.layout
-        layout.label(text="Default Export Formats:")
+        box = layout.box()
 
-        layout.prop(self, "type_vox")
-        layout.prop(self, "type_qb")
-        layout.prop(self, "type_qbt")
-        layout.prop(self, "type_qef")
-        layout.prop(self, "type_qbcl")
-        layout.prop(self, "type_binvox")
-        layout.prop(self, "type_cub")
-        layout.prop(self, "type_schematic")
-        layout.prop(self, "type_dat")
-        layout.prop(self, "type_mca")
-        layout.prop(self, "type_mts")
-        layout.prop(self, "type_vxc")
-        layout.prop(self, "type_vxr")
-        layout.prop(self, "type_vxt")
-        layout.prop(self, "type_vxm")
-        layout.prop(self, "type_xraw")
-        layout.prop(self, "type_vxl")
-        layout.prop(self, "type_kv6")
-        layout.prop(self, "type_kvx")
-        layout.prop(self, "type_scn")
-        layout.prop(self, "type_csv")
-        layout.prop(self, "type_sment")
-        layout.prop(self, "type_gox")
-        layout.prop(self, "type_vmax")
-        layout.prop(self, "type_vbx")
-        layout.prop(self, "type_v3a")
-        layout.prop(self, "type_vengi")
-        layout.prop(self, "type_nvm")
-        layout.prop(self, "type_pcubes")
-        layout.prop(self, "type_csm")
-        layout.prop(self, "type_3zh")
-        layout.prop(self, "type_b64")
+        split = box.split(factor=0.3)
+        col = split.column()
+        col.operator("preferences.voxility_clear_voxel_formats_checkboxes", text="Uncheck All")
+        col = split.column()
+        col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Format Preferences")
+
+        layout.label(text="Default Export Formats:")
+        box = layout.box()
+
+        box.prop(self, "type_vox")
+        box.prop(self, "type_qb")
+        box.prop(self, "type_qbt")
+        box.prop(self, "type_qef")
+        box.prop(self, "type_qbcl")
+        box.prop(self, "type_binvox")
+        box.prop(self, "type_cub")
+        box.prop(self, "type_schematic")
+        box.prop(self, "type_dat")
+        box.prop(self, "type_mca")
+        box.prop(self, "type_mts")
+        box.prop(self, "type_vxc")
+        box.prop(self, "type_vxr")
+        box.prop(self, "type_vxt")
+        box.prop(self, "type_vxm")
+        box.prop(self, "type_xraw")
+        box.prop(self, "type_vxl")
+        box.prop(self, "type_kv6")
+        box.prop(self, "type_kvx")
+        box.prop(self, "type_scn")
+        box.prop(self, "type_csv")
+        box.prop(self, "type_sment")
+        box.prop(self, "type_gox")
+        box.prop(self, "type_vmax")
+        box.prop(self, "type_vbx")
+        box.prop(self, "type_v3a")
+        box.prop(self, "type_vengi")
+        box.prop(self, "type_nvm")
+        box.prop(self, "type_pcubes")
+        box.prop(self, "type_csm")
+        box.prop(self, "type_3zh")
+        box.prop(self, "type_b64")
+
+def register() -> None:
+    bpy.utils.register_class(AddonPreferences)
+    bpy.utils.register_class(UpdateVoxelFormatsOperator)
+    bpy.utils.register_class(ClearVoxelFormatsCheckboxesOperator)
+
+def unregister() -> None:
+    bpy.utils.unregister_class(AddonPreferences)
+    bpy.utils.unregister_class(UpdateVoxelFormatsOperator)
+    bpy.utils.unregister_class(ClearVoxelFormatsCheckboxesOperator)
