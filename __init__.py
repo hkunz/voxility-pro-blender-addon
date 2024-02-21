@@ -42,38 +42,15 @@ import stat
 from pathlib import Path
 from typing import Union
 
+from voxility_pro.ui.addon_preferences import AddonPreferences
+from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
 from voxility_pro.utils.temp_file_manager import TempFileManager
+from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations
+from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu
+from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
+from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
+from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup
 from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest
-
-from voxility_pro.utils.file_utils import (
-    get_voxconvert_filepath,
-    get_file_size
-)
-
-from voxility_pro.ui.voxel_formats_export_menu import (
-    register as register_vox_export_menu,
-    unregister as unregister_vox_export_menu
-)
-
-from voxility_pro.ui.voxel_formats_import_menu import (
-    register as register_vox_import_menu,
-    unregister as unregister_vox_import_menu
-)
-
-from voxility_pro.ui.voxel_converter_sidebar_menu import (
-    register as register_sidebar_menu,
-    unregister as unregister_sidebar_menu
-)
-
-from voxility_pro.operators.operator_generic_popup import (
-    register as register_generic_popup,
-    unregister as unregister_generic_popup
-)
-
-from voxility_pro.translation.translations import (
-    register as register_translations,
-    unregister as unregister_translations
-)
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(__file__).parent / f"{exe}"
@@ -83,6 +60,7 @@ def add_executable_permission(exe: Union[str, Path]) -> Path:
 
 def register() -> None:
     add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
+    bpy.utils.register_class(AddonPreferences)
     bpy.utils.register_class(OperatorVoxconvertTest)
     register_translations()
     register_vox_export_menu()
@@ -91,6 +69,7 @@ def register() -> None:
     register_generic_popup()
 
 def unregister() -> None:
+    bpy.utils.unregister_class(AddonPreferences)
     bpy.utils.unregister_class(OperatorVoxconvertTest)
     unregister_translations()
     unregister_vox_export_menu()
