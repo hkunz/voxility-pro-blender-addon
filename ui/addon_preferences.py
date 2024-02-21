@@ -7,6 +7,8 @@
 import bpy
 import bpy_types
 
+from typing import List
+
 def update_bool_property(self, context: bpy_types.Context) -> None:
 
     if self.type_vox:
@@ -91,7 +93,9 @@ class ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        self.report({'INFO'}, "Uncheck all ... TODO")
+        addon_preferences: bpy.types.Addon = context.preferences.addons[AddonPreferences.bl_idname]
+        preferences: AddonPreferences = addon_preferences.preferences
+        preferences.clear_all_checkboxes()
         return {'FINISHED'}
 
 class AddonPreferences(bpy.types.AddonPreferences):
@@ -290,6 +294,15 @@ class AddonPreferences(bpy.types.AddonPreferences):
     ) # type: ignore
 
 
+    CHECKBOXES: List[str] = ["type_vox","type_qb","type_qbt","type_qef","type_qbcl","type_binvox","type_cub","type_schematic","type_dat","type_mca","type_mts","type_vxc","type_vxr","type_vxt","type_vxm","type_xraw","type_vxl","type_kv6","type_kvx","type_scn","type_csv","type_sment","type_gox","type_vmax","type_vbx","type_v3a","type_vengi","type_nvm","type_pcubes","type_csm","type_3zh","type_b64",]
+
+    def set_checkbox(self, prop_name: str, value: bool) -> None:
+        setattr(self, prop_name, value)
+
+    def clear_all_checkboxes(self) -> None:
+        for prop_name in self.CHECKBOXES:
+            self.set_checkbox(prop_name, False)
+
     def draw(self, context: bpy_types.Context) -> None:
         layout = self.layout
         box = layout.box()
@@ -298,43 +311,14 @@ class AddonPreferences(bpy.types.AddonPreferences):
         col = split.column()
         col.operator("preferences.voxility_clear_voxel_formats_checkboxes", text="Uncheck All")
         col = split.column()
-        col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Format Preferences")
+        col.alert = True
+        btn = col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Formats")
 
-        layout.label(text="Default Export Formats:")
+        layout.label(text="Tick your voxel formats and then click Update Voxel Formats")
         box = layout.box()
 
-        box.prop(self, "type_vox")
-        box.prop(self, "type_qb")
-        box.prop(self, "type_qbt")
-        box.prop(self, "type_qef")
-        box.prop(self, "type_qbcl")
-        box.prop(self, "type_binvox")
-        box.prop(self, "type_cub")
-        box.prop(self, "type_schematic")
-        box.prop(self, "type_dat")
-        box.prop(self, "type_mca")
-        box.prop(self, "type_mts")
-        box.prop(self, "type_vxc")
-        box.prop(self, "type_vxr")
-        box.prop(self, "type_vxt")
-        box.prop(self, "type_vxm")
-        box.prop(self, "type_xraw")
-        box.prop(self, "type_vxl")
-        box.prop(self, "type_kv6")
-        box.prop(self, "type_kvx")
-        box.prop(self, "type_scn")
-        box.prop(self, "type_csv")
-        box.prop(self, "type_sment")
-        box.prop(self, "type_gox")
-        box.prop(self, "type_vmax")
-        box.prop(self, "type_vbx")
-        box.prop(self, "type_v3a")
-        box.prop(self, "type_vengi")
-        box.prop(self, "type_nvm")
-        box.prop(self, "type_pcubes")
-        box.prop(self, "type_csm")
-        box.prop(self, "type_3zh")
-        box.prop(self, "type_b64")
+        for prop_name in self.CHECKBOXES:
+            box.prop(self, prop_name)
 
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)

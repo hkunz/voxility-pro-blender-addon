@@ -1,6 +1,8 @@
 import bpy
 import bpy_types
 
+from typing import List
+
 def update_bool_property(self, context: bpy_types.Context) -> None:
 {{check}}
 
@@ -21,13 +23,24 @@ class ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        self.report({'INFO'}, "Uncheck all ... TODO")
+        addon_preferences: bpy.types.Addon = context.preferences.addons[AddonPreferences.bl_idname]
+        preferences: AddonPreferences = addon_preferences.preferences
+        preferences.clear_all_checkboxes()
         return {'FINISHED'}
 
 class AddonPreferences(bpy.types.AddonPreferences):
     bl_idname = "voxility_pro" # __name__ if the class is defined inside __init__.py
 
 {{properties}}
+    CHECKBOXES: List[str] = [{{checkboxes}}]
+
+    def set_checkbox(self, prop_name: str, value: bool) -> None:
+        setattr(self, prop_name, value)
+
+    def clear_all_checkboxes(self) -> None:
+        for prop_name in self.CHECKBOXES:
+            self.set_checkbox(prop_name, False)
+
     def draw(self, context: bpy_types.Context) -> None:
         layout = self.layout
         box = layout.box()
@@ -36,11 +49,14 @@ class AddonPreferences(bpy.types.AddonPreferences):
         col = split.column()
         col.operator("preferences.voxility_clear_voxel_formats_checkboxes", text="Uncheck All")
         col = split.column()
-        col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Format Preferences")
+        col.alert = True
+        btn = col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Formats")
 
-        layout.label(text="Default Export Formats:")
+        layout.label(text="Tick your voxel formats and then click Update Voxel Formats")
         box = layout.box()
-{{layout}}
+
+        for prop_name in self.CHECKBOXES:
+            box.prop(self, prop_name)
 
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)
