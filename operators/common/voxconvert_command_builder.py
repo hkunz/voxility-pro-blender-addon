@@ -16,8 +16,8 @@ class VoxconvertCommandBuilder:
         self.vc_merge_vertices: int = 0
         self.vc_voxformat_withcolor: int = 0
         self.vc_voxformat_scale: float = 1.0
-        self.vc_palette_file: str = None
-        self.vc_export_palette: str = "palette-nippon.png"
+        self.vc_palette_file: str = "built-in:nippon"
+        self.vc_export_palette: bool = False
         self.vc_surface_only: int = 0
         self.vc_voxformat_ambientocclusion: int = 0
         self.vc_voxformat_mergequads: int = 0
@@ -74,7 +74,7 @@ class VoxconvertCommandBuilder:
         if self.vc_palette_file:
             command.append("-set")
             command.append("palette")
-            command.append(self.palette_file)
+            command.append(self.vc_palette_file)
 
         if self.vc_export_palette:
             command.append("--export-palette")

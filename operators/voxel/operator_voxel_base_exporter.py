@@ -28,7 +28,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     palette_file: bpy.props.StringProperty(
         name="Palette File",
         description="Path to the palette file",
-        default="",
+        default="built-in:nippon",
         subtype='FILE_PATH',
     ) # type: ignore
 
@@ -46,10 +46,10 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def draw(self, context: bpy_types.Context) -> None:
         super().draw(context)
-        self.layout.prop(self, "voxformat_scale")
-        self.layout.prop(self, "palette_file")
-        self.layout.prop(self, "export_palette")
+        #self.layout.prop(self, "palette_file")
+        #self.layout.prop(self, "export_palette")
         self.layout.prop(self, "surface_only")
+        self.layout.prop(self, "voxformat_scale")
 
     def export_obj(self, obj_file: str) -> str:
         start_time = time.time()
@@ -64,7 +64,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         c.vc_voxformat_withcolor = 0
         c.vc_voxformat_scale = float(self.voxformat_scale)
         c.vc_palette_file = str(self.palette_file)
-        c.vc_export_palette = str(self.export_palette)
+        c.vc_export_palette = self.export_palette
         c.vc_surface_only = int(self.surface_only)
         return c
 

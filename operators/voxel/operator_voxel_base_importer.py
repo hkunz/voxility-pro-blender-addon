@@ -79,6 +79,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
+        c.vc_palette_file = ""
         return c
 
     def execute(self, _context: bpy_types.Context) -> set[str]:
