@@ -59,10 +59,12 @@ CLASSES: List[OperatorVoxconvert] = [
     EXPORT_OT_tiberian_sun,
     EXPORT_OT_voxlap_voxel_engine,
     EXPORT_OT_voxlap_voxel_model_format,
+    EXPORT_OT_sproxel_csv,
     EXPORT_OT_goxel,
     EXPORT_OT_voxel_max,
     EXPORT_OT_voxel3d,
     EXPORT_OT_vengi,
+    EXPORT_OT_particubes,
     EXPORT_OT_cubzh,
 ]
 
@@ -85,10 +87,12 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         ("VXL", "vxl (Tiberian Sun)", "Target format: *.vxl"),
         ("KV6", "kv6 (Voxlap Voxel Engine)", "Target format: *.kv6"),
         ("KVX", "kvx (Voxlap Voxel model format)", "Target format: *.kvx"),
+        ("CSV", "csv (Sproxel csv)", "Target format: *.csv"),
         ("GOX", "gox (Goxel)", "Target format: *.gox"),
         ("VMAX", "vmax (Voxel Max)", "Target format: *.vmax"),
         ("V3A", "v3a (Voxel3D)", "Target format: *.v3a"),
         ("VENGI", "vengi (Vengi)", "Target format: *.vengi"),
+        ("PCUBES", "pcubes (Particubes)", "Target format: *.pcubes"),
         ("3ZH", "3zh (Cubzh)", "Target format: *.3zh"),
     ]
 

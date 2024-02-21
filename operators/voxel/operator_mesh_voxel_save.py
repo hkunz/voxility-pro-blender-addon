@@ -10,7 +10,7 @@ from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 
 class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
     bl_idname = "object.voxility_mesh_voxel_save"
-    bl_label = "Voxility Pro Save Voxelized Mesh"
+    bl_label = "Save"
     bl_description = "Save the voxelized mesh as specified in target voxel format"
 
     VOX_TARGET_FORMAT_CURRENT_SELECTION: str = VoxelFormatsExportMenu.get_formats_list_value()
@@ -28,11 +28,24 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
         options={"HIDDEN"}
     ) # type: ignore
 
+    option_overwrite: bpy.props.BoolProperty(
+        name="Overwrite Files & Folders",
+        description=("Overwrite files and folders with same name"),
+        default=True,
+    ) # type: ignore
+
+    def draw(self, context: bpy_types.Context) -> None:
+        col = self.layout.column()
+        sub = col.row()
+        sub.enabled = False
+        sub.prop(self, "option_overwrite")
+
     def execute(self, _: bpy_types.Context) -> set[str]:
         temp_dir = os.path.dirname(OBJECT_OT_MeshVoxelSaveOperator.VOX_OUTPUT_PATH)
         print("Temporary contents in temp directory:", temp_dir)
         print("Save contents to destination directory:", self.directory)
         shutil.copytree(src=temp_dir, dst=self.directory, dirs_exist_ok=True)
+        self.report({'INFO'}, f"Files saved in {self.directory}")
         return {'FINISHED'}
 
     @classmethod

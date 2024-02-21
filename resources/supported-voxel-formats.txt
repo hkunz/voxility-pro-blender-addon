@@ -21,7 +21,7 @@ Tiberian Sun                    | vxl         | X       | X      |            | 
 Voxlap Voxel Engine             | kv6         | X       | X      |            |         |            |
 Voxlap Voxel model format       | kvx         | X       | X      |            |         |            |
 Animatoon 3D Scene              | scn         | X       |        |            | X       |            |
-Sproxel csv                     | csv         | X       | X      | X          |         |            | X
+Sproxel csv                     | csv         | X       | X      | X          |         |            |
 StarMade                        | sment       | X       |        | X          |         |            |
 Goxel                           | gox         | X       | X      | X          | X       |            |
 Voxel Max                       | vmax        | X       | X      | X          |         |            |
@@ -29,7 +29,7 @@ Voxel Builder                   | vbx         | X       |        |            | 
 Voxel3D                         | v3a         | X       | X      |            |         |            |
 Vengi                           | vengi       | X       | X      | X          | X       |            |
 Nicks Voxel Model               | nvm         | X       |        |            |         |            |
-Particubes                      | pcubes      | X       | X      | X          |         |            | X
+Particubes                      | pcubes      | X       | X      | X          |         |            |
 CuBic Mesh                      | csm         | X       |        |            |         |            |
 Cubzh                           | 3zh         | X       | X      | X          | X       |            |
 Cubzh World                     | b64         | X       |        |            |         |            |
