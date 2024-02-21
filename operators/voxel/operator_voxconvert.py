@@ -45,7 +45,7 @@ class OperatorVoxconvert(bpy.types.Operator):
             if not c.test:
                 self.report({'ERROR'}, f"Error processing file: {c.get_input_filepath()}")
         self.voxconvert_duration = time.time() - start_time
-        print("executed successfully:", success)
+        print("executed successfully:", c.test or success)
         return success
 
     @abstractmethod
