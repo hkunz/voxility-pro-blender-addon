@@ -21,6 +21,7 @@ vox-menus:
 	@echo "Generating voxel submenu files ..."
 	./scripts/generate-vox-menu-py-file.sh import
 	./scripts/generate-vox-menu-py-file.sh export
+	./scripts/generate-addon-preferences-file.sh
 
 create-next-tag:
 	@echo "=====================================================================================>"

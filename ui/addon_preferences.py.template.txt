@@ -1,0 +1,14 @@
+import bpy
+import bpy_types
+
+def update_bool_property(self, context: bpy_types.Context) -> None:
+{{check}}
+
+class AddonPreferences(bpy.types.AddonPreferences):
+    bl_idname = "voxility_pro" # __name__ if the class is defined inside __init__.py
+
+{{properties}}
+    def draw(self, context: bpy_types.Context) -> None:
+        layout = self.layout
+        layout.label(text="Default Export Formats:")
+{{layout}}

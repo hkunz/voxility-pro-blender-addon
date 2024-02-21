@@ -1,0 +1,20 @@
+import bpy
+import bpy_types
+
+def update_bool_property(self, context: bpy_types.Context) -> None:
+    if self.type_vox:
+        pass
+
+class AddonPreferences(bpy.types.AddonPreferences):
+    bl_idname = "voxility_pro" # __name__ if the class is defined inside __init__.py
+
+    type_{{type}}: bpy.props.BoolProperty(
+        name="{{name}}",
+        default=True,
+        update=update_bool_property
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+
+    def draw(self, context: bpy_types.Context) -> None:
+        layout = self.layout
+        layout.label(text="Default Export Formats:")
+        layout.prop(self, "type_{{type}}")
