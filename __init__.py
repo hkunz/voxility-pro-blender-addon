@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "Voxility Pro: Voxel File Format Exchange",
-    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-80f09", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-70258", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 9),
     "blender": (2, 93, 0),
