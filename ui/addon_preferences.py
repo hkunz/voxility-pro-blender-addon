@@ -12,7 +12,7 @@ from typing import List
 
 from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
 from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
-from voxility_pro.utils.utils import try_register_operator, try_unregister_operator
+from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name
 
 def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> None:
     exporter = get_voxel_exporter_by_type(vox_type)
@@ -52,7 +52,7 @@ class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class AddonPreferences(bpy.types.AddonPreferences):
-    bl_idname = "voxility_pro" # __name__ if the class is defined inside __init__.py
+    bl_idname = get_addon_module_name() # __name__ if the class is defined inside __init__.py
 
     type_vox: bpy.props.BoolProperty(
         name="*.vox (MagicaVoxel)",
@@ -273,20 +273,11 @@ class AddonPreferences(bpy.types.AddonPreferences):
         for prop_name in self.CHECKBOXES:
             box.prop(self, prop_name)
 
-def get_enabled_voxel_types() -> List[str]:
-    addon: bpy.types.Addon = bpy.context.preferences.addons[AddonPreferences.bl_idname]
-    addon_prefs: AddonPreferences = addon.preferences
-    types: List[str] = []
-    for prop_name in AddonPreferences.CHECKBOXES:
-        if getattr(addon_prefs, prop_name):
-            types.append(prop_name.split("_")[1])
-    return types
-
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)
     bpy.utils.register_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
-    enabled_vox_types: List[str] = get_enabled_voxel_types()
+    enabled_vox_types: List[str] = get_preferences_voxel_types()
     register_vox_export_menu(enabled_vox_types)
     register_vox_import_menu(enabled_vox_types)
 

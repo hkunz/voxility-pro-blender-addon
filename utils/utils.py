@@ -1,9 +1,12 @@
 import bpy
 import re
 
-from typing import Callable, Any, Tuple
+from typing import List, Callable, Any, Tuple
 
 from voxility_pro import bl_info
+
+def get_addon_module_name() -> str:
+    return "voxility_pro"
 
 def get_blender_version(prependv: bool=True) -> str:
     v: Tuple[int, int, int] = bpy.app.version
@@ -18,6 +21,15 @@ def get_voxconvert_version() -> str:
     match = re.search(pattern, bl_info["description"])
     version = match.group(1)
     return version
+
+def get_preferences_voxel_types() -> List[str]:
+    addon: bpy.types.Addon = bpy.context.preferences.addons[get_addon_module_name()]
+    addon_prefs = addon.preferences
+    types: List[str] = []
+    for prop_name in addon_prefs.CHECKBOXES:
+        if getattr(addon_prefs, prop_name):
+            types.append(prop_name.split("_")[1])
+    return types
 
 def is_class_registered(cls) -> bool:
     idname_py = cls.bl_idname
