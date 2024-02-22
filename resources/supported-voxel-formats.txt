@@ -24,7 +24,7 @@ Animatoon 3D Scene              | scn         | X       |        |            | 
 Sproxel csv                     | csv         | X       | X      | X          |         |            |
 StarMade                        | sment       | X       |        | X          |         |            |
 Goxel                           | gox         | X       | X      | X          | X       |            |
-Voxel Max                       | vmax        | X       | X      | X          |         |            |
+Voxel Max                       | vmax        | X       |        | X          |         |            |
 Voxel Builder                   | vbx         | X       |        |            |         |            |
 Voxel3D                         | v3a         | X       | X      |            |         |            |
 Vengi                           | vengi       | X       | X      | X          | X       |            |

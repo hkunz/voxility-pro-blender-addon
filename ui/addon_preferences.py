@@ -7,6 +7,7 @@
 import bpy
 import bpy_types
 
+from bpy.types import UILayout
 from typing import List
 
 def update_bool_property(self, context: bpy_types.Context) -> None:
@@ -76,7 +77,7 @@ def update_bool_property(self, context: bpy_types.Context) -> None:
     if self.type_b64:
         pass
 
-class UpdateVoxelFormatsOperator(bpy.types.Operator):
+class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_update_voxel_formats"
     bl_label = "Update Voxel Formats"
     bl_description = "Update voxel formats to only show preferred types"
@@ -86,7 +87,7 @@ class UpdateVoxelFormatsOperator(bpy.types.Operator):
         self.report({'INFO'}, "Voxel update formats ... TODO")
         return {'FINISHED'}
 
-class ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
+class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_clear_voxel_formats_checkboxes"
     bl_label = "Uncheck All"
     bl_description = "Uncheck all checkboxes"
@@ -304,15 +305,15 @@ class AddonPreferences(bpy.types.AddonPreferences):
             self.set_checkbox(prop_name, False)
 
     def draw(self, context: bpy_types.Context) -> None:
-        layout = self.layout
-        box = layout.box()
+        layout: UILayout = self.layout
+        box: UILayout = layout.box()
 
-        split = box.split(factor=0.3)
-        col = split.column()
-        col.operator("preferences.voxility_clear_voxel_formats_checkboxes", text="Uncheck All")
+        split: UILayout = box.split(factor=0.3)
+        col: UILayout = split.column()
+        col.operator(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator.bl_idname, text="Uncheck All")
         col = split.column()
         col.alert = True
-        btn = col.operator("preferences.voxility_update_voxel_formats", text="Update Voxel Formats")
+        col.operator(PREFERENCES_OT_UpdateVoxelFormatsOperator.bl_idname, text="Update Voxel Formats")
 
         layout.label(text="Tick your voxel formats and then click Update Voxel Formats")
         box = layout.box()
@@ -322,10 +323,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
 
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)
-    bpy.utils.register_class(UpdateVoxelFormatsOperator)
-    bpy.utils.register_class(ClearVoxelFormatsCheckboxesOperator)
+    bpy.utils.register_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
+    bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
 
 def unregister() -> None:
     bpy.utils.unregister_class(AddonPreferences)
-    bpy.utils.unregister_class(UpdateVoxelFormatsOperator)
-    bpy.utils.unregister_class(ClearVoxelFormatsCheckboxesOperator)
+    bpy.utils.unregister_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
+    bpy.utils.unregister_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
