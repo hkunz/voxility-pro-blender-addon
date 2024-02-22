@@ -4,11 +4,24 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
-from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
-from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
+from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
+from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
+from voxility_pro.utils.utils import try_register_operator, try_unregister_operator
 
-def update_bool_property(self, context: bpy_types.Context) -> None:
-{{check}}
+def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> None:
+    exporter = get_voxel_exporter_by_type(vox_type)
+    importer = get_voxel_importer_by_type(vox_type)
+    print("value === ", vox_type, importer, exporter)
+    if getattr(self, f"type_{vox_type}"):
+        if exporter:
+            try_register_operator(exporter)
+        if importer:
+            try_register_operator(importer)
+    else:
+        if exporter:
+            try_unregister_operator(exporter)
+        if importer:
+            try_unregister_operator(importer)
 
 class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_update_voxel_formats"

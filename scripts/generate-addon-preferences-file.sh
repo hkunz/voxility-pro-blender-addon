@@ -10,7 +10,6 @@ generate_addon_preferences_py_file() {
     template_file="${UI_DIR}${ADDON_PREFERENCES_TEMPLATE}"
     output_file="${UI_DIR}addon_preferences.py"
 
-    check_content=""
     properties_content=""
     checkboxes_content=""
 
@@ -28,19 +27,16 @@ generate_addon_preferences_py_file() {
             continue
         fi
         if [ "$save" == '1' ] || [ "$load" == '1' ]; then
-            check_content+="\n${TAB}if self.type_${type}:"
-            check_content+="\n${TAB}${TAB}pass"
             properties_content+="${TAB}type_${type}: bpy.props.BoolProperty(\n"
             properties_content+="${TAB}${TAB}name=\"*.${type} (${name})\",\n"
             properties_content+="${TAB}${TAB}default=True,\n"
-            properties_content+="${TAB}${TAB}update=update_bool_property,\n"
+            properties_content+="${TAB}${TAB}update=lambda self, context: update_bool_property(self, context, \"${type}\")\n"
             properties_content+="${TAB}) # type: ignore\n\n"
             checkboxes_content+="\"type_${type}\","
         fi
     done
 
     sed -i " \
-        s/{{check}}/$check_content/; \
         s/{{properties}}/$properties_content/; \
         s/{{checkboxes}}/$checkboxes_content/" \
         "$output_file"

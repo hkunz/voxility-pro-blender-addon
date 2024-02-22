@@ -12,6 +12,7 @@ from typing import List, Tuple
 
 from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 from voxility_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError
+from voxility_pro.utils.utils import is_class_registered, try_register_operator, try_unregister_operator
 
 from voxility_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
@@ -129,7 +130,8 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
-            layout.operator(cls.bl_idname, text=cls.bl_label)
+            if is_class_registered(cls):
+                layout.operator(cls.bl_idname, text=cls.bl_label)
 
 def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
@@ -137,35 +139,23 @@ def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
 def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
 
-def get_voxel_operator_by_type(voxel_type: str) -> OperatorVoxconvert:
+def get_voxel_importer_by_type(voxel_type: str) -> OperatorVoxconvert:
     for cls in CLASSES:
         if voxel_type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1):
             return cls
-    raise UnknownVoxelTypeError(voxel_type)
-
-def register_voxel_operator(cls: OperatorVoxconvert) -> None:
-    try:
-        bpy.utils.register_class(cls)
-    except:
-        pass
-
-def unregister_voxel_operator(cls: OperatorVoxconvert) -> None:
-    try:
-        bpy.utils.unregister_class(cls)
-    except:
-        pass
+    return None
 
 def register(enabled_types: List[str]) -> None:
     for cls in CLASSES:
         if any(type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1) for type in enabled_types):
-            register_voxel_operator(cls)
+            try_register_operator(cls)
     bpy.utils.register_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
 def unregister() -> None:
     for cls in CLASSES:
-        unregister_voxel_operator(cls)
+        try_unregister_operator(cls)
     bpy.utils.unregister_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)

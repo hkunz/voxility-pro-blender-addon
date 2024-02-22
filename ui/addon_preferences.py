@@ -10,75 +10,24 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
-from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
-from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
+from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
+from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
+from voxility_pro.utils.utils import try_register_operator, try_unregister_operator
 
-def update_bool_property(self, context: bpy_types.Context) -> None:
-
-    if self.type_vox:
-        pass
-    if self.type_qb:
-        pass
-    if self.type_qbt:
-        pass
-    if self.type_qef:
-        pass
-    if self.type_qbcl:
-        pass
-    if self.type_binvox:
-        pass
-    if self.type_cub:
-        pass
-    if self.type_schematic:
-        pass
-    if self.type_dat:
-        pass
-    if self.type_mca:
-        pass
-    if self.type_mts:
-        pass
-    if self.type_vxc:
-        pass
-    if self.type_vxr:
-        pass
-    if self.type_vxt:
-        pass
-    if self.type_vxm:
-        pass
-    if self.type_xraw:
-        pass
-    if self.type_vxl:
-        pass
-    if self.type_kv6:
-        pass
-    if self.type_kvx:
-        pass
-    if self.type_scn:
-        pass
-    if self.type_csv:
-        pass
-    if self.type_sment:
-        pass
-    if self.type_gox:
-        pass
-    if self.type_vmax:
-        pass
-    if self.type_vbx:
-        pass
-    if self.type_v3a:
-        pass
-    if self.type_vengi:
-        pass
-    if self.type_nvm:
-        pass
-    if self.type_pcubes:
-        pass
-    if self.type_csm:
-        pass
-    if self.type_3zh:
-        pass
-    if self.type_b64:
-        pass
+def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> None:
+    exporter = get_voxel_exporter_by_type(vox_type)
+    importer = get_voxel_importer_by_type(vox_type)
+    print("value === ", vox_type, importer, exporter)
+    if getattr(self, f"type_{vox_type}"):
+        if exporter:
+            try_register_operator(exporter)
+        if importer:
+            try_register_operator(importer)
+    else:
+        if exporter:
+            try_unregister_operator(exporter)
+        if importer:
+            try_unregister_operator(importer)
 
 class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_update_voxel_formats"
@@ -108,193 +57,193 @@ class AddonPreferences(bpy.types.AddonPreferences):
     type_vox: bpy.props.BoolProperty(
         name="*.vox (MagicaVoxel)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vox")
     ) # type: ignore
 
     type_qb: bpy.props.BoolProperty(
         name="*.qb (Qubicle Binary Exchange)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "qb")
     ) # type: ignore
 
     type_qbt: bpy.props.BoolProperty(
         name="*.qbt (Qubicle Binary Tree Exchange)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "qbt")
     ) # type: ignore
 
     type_qef: bpy.props.BoolProperty(
         name="*.qef (Qubicle Exchange Format ASCII)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "qef")
     ) # type: ignore
 
     type_qbcl: bpy.props.BoolProperty(
         name="*.qbcl (Qubicle Project)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "qbcl")
     ) # type: ignore
 
     type_binvox: bpy.props.BoolProperty(
         name="*.binvox (Binvox command line voxelizer)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "binvox")
     ) # type: ignore
 
     type_cub: bpy.props.BoolProperty(
         name="*.cub (CubeWorld CubeMap)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "cub")
     ) # type: ignore
 
     type_schematic: bpy.props.BoolProperty(
         name="*.schematic (Minecraft Schematic)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "schematic")
     ) # type: ignore
 
     type_dat: bpy.props.BoolProperty(
         name="*.dat (Minecraft level dat)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "dat")
     ) # type: ignore
 
     type_mca: bpy.props.BoolProperty(
         name="*.mca (Minecraft Anvil Region)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "mca")
     ) # type: ignore
 
     type_mts: bpy.props.BoolProperty(
         name="*.mts (Minetest Template)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "mts")
     ) # type: ignore
 
     type_vxc: bpy.props.BoolProperty(
         name="*.vxc (Sandbox VoxEdit Collection)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vxc")
     ) # type: ignore
 
     type_vxr: bpy.props.BoolProperty(
         name="*.vxr (Sandbox VoxEdit Hierarchy)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vxr")
     ) # type: ignore
 
     type_vxt: bpy.props.BoolProperty(
         name="*.vxt (Sandbox VoxEdit Tilemap)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vxt")
     ) # type: ignore
 
     type_vxm: bpy.props.BoolProperty(
         name="*.vxm (Sandbox VoxEdit Model)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vxm")
     ) # type: ignore
 
     type_xraw: bpy.props.BoolProperty(
         name="*.xraw (MagicaVoxel XRAW)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "xraw")
     ) # type: ignore
 
     type_vxl: bpy.props.BoolProperty(
         name="*.vxl (Tiberian Sun)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vxl")
     ) # type: ignore
 
     type_kv6: bpy.props.BoolProperty(
         name="*.kv6 (Voxlap Voxel Engine)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "kv6")
     ) # type: ignore
 
     type_kvx: bpy.props.BoolProperty(
         name="*.kvx (Voxlap Voxel model format)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "kvx")
     ) # type: ignore
 
     type_scn: bpy.props.BoolProperty(
         name="*.scn (Animatoon 3D Scene)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "scn")
     ) # type: ignore
 
     type_csv: bpy.props.BoolProperty(
         name="*.csv (Sproxel csv)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "csv")
     ) # type: ignore
 
     type_sment: bpy.props.BoolProperty(
         name="*.sment (StarMade)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "sment")
     ) # type: ignore
 
     type_gox: bpy.props.BoolProperty(
         name="*.gox (Goxel)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "gox")
     ) # type: ignore
 
     type_vmax: bpy.props.BoolProperty(
         name="*.vmax (Voxel Max)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vmax")
     ) # type: ignore
 
     type_vbx: bpy.props.BoolProperty(
         name="*.vbx (Voxel Builder)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vbx")
     ) # type: ignore
 
     type_v3a: bpy.props.BoolProperty(
         name="*.v3a (Voxel3D)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "v3a")
     ) # type: ignore
 
     type_vengi: bpy.props.BoolProperty(
         name="*.vengi (Vengi)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "vengi")
     ) # type: ignore
 
     type_nvm: bpy.props.BoolProperty(
         name="*.nvm (Nicks Voxel Model)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "nvm")
     ) # type: ignore
 
     type_pcubes: bpy.props.BoolProperty(
         name="*.pcubes (Particubes)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "pcubes")
     ) # type: ignore
 
     type_csm: bpy.props.BoolProperty(
         name="*.csm (CuBic Mesh)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "csm")
     ) # type: ignore
 
     type_3zh: bpy.props.BoolProperty(
         name="*.3zh (Cubzh)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "3zh")
     ) # type: ignore
 
     type_b64: bpy.props.BoolProperty(
         name="*.b64 (Cubzh World)",
         default=True,
-        update=update_bool_property,
+        update=lambda self, context: update_bool_property(self, context, "b64")
     ) # type: ignore
 
 
