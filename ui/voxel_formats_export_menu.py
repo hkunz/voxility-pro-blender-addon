@@ -134,6 +134,8 @@ def register(enabled_types: List[str]) -> None:
     bpy.types.TOPBAR_MT_file_export.append(menu_VoxelFormatsExportMenu_func_callback)
 
 def unregister() -> None:
+    for cls in CLASSES:
+        unregister_voxel_operator(cls)
     bpy.utils.unregister_class(VoxelFormatsExportMenu)
     bpy.types.TOPBAR_MT_file_export.remove(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.remove(menu_VoxelFormatsExportMenu_func_callback)

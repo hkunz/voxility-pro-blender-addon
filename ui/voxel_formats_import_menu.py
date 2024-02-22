@@ -160,6 +160,8 @@ def register(enabled_types: List[str]) -> None:
     bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
 def unregister() -> None:
+    for cls in CLASSES:
+        unregister_voxel_operator(cls)
     bpy.utils.unregister_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)

@@ -54,6 +54,8 @@ def register(enabled_types: List[str]) -> None:
     bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_{{menu_class}}_func_callback)
 
 def unregister() -> None:
+    for cls in CLASSES:
+        unregister_voxel_operator(cls)
     bpy.utils.unregister_class({{menu_class}})
     bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_vox_{{import-export}}_func_callback)
     bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_{{menu_class}}_func_callback)
