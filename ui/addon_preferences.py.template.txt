@@ -4,6 +4,9 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
+from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
+from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
+
 def update_bool_property(self, context: bpy_types.Context) -> None:
 {{check}}
 
@@ -59,12 +62,26 @@ class AddonPreferences(bpy.types.AddonPreferences):
         for prop_name in self.CHECKBOXES:
             box.prop(self, prop_name)
 
+def get_enabled_voxel_types() -> List[str]:
+    addon: bpy.types.Addon = bpy.context.preferences.addons[AddonPreferences.bl_idname]
+    addon_prefs: AddonPreferences = addon.preferences
+    types: List[str] = []
+    for prop_name in AddonPreferences.CHECKBOXES:
+        if getattr(addon_prefs, prop_name):
+            types.append(prop_name.split("_")[1])
+    return types
+
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)
     bpy.utils.register_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
+    enabled_vox_types: List[str] = get_enabled_voxel_types()
+    register_vox_export_menu(enabled_vox_types)
+    register_vox_import_menu(enabled_vox_types)
 
 def unregister() -> None:
     bpy.utils.unregister_class(AddonPreferences)
     bpy.utils.unregister_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
     bpy.utils.unregister_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
+    unregister_vox_export_menu()
+    unregister_vox_import_menu()

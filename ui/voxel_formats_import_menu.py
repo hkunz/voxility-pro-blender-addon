@@ -6,6 +6,7 @@
 
 import bpy
 import bpy_types
+import re
 
 from typing import List, Tuple
 
@@ -135,16 +136,30 @@ def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
 def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
 
-def register() -> None:
-    for cls in CLASSES:
+def register_voxel_operator(cls) -> None:
+    try:
         bpy.utils.register_class(cls)
+    except:
+        pass
+
+def unregister_voxel_operator(cls) -> None:
+    try:
+        bpy.utils.unregister_class(cls)
+    except:
+        pass
+
+def register_voxel_operators(enabled_types: List[str]) -> None:
+    for cls in CLASSES:
+        if any(type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1) for type in enabled_types):
+            register_voxel_operator(cls)
+
+def register(enabled_types: List[str]) -> None:
+    register_voxel_operators(enabled_types)
     bpy.utils.register_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
 def unregister() -> None:
-    for cls in CLASSES:
-        bpy.utils.unregister_class(cls)
     bpy.utils.unregister_class(VoxelFormatsImportMenu)
     bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)

@@ -4,7 +4,8 @@ all: \
 	clean \
 	vox-support-formats \
 	vox-operators \
-	vox-menus
+	vox-menus \
+	vox-addon-preferences
 
 vox-support-formats:
 	@echo "=====================================================================================>"
@@ -21,6 +22,10 @@ vox-menus:
 	@echo "Generating voxel submenu files ..."
 	./scripts/generate-vox-menu-py-file.sh import
 	./scripts/generate-vox-menu-py-file.sh export
+
+vox-addon-preferences:
+	@echo "=====================================================================================>"
+	@echo "Generating AddonPreferences file ..."
 	./scripts/generate-addon-preferences-file.sh
 
 create-next-tag:

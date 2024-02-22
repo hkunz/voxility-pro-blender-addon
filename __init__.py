@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "Voxility Pro: Voxel File Format Exchange",
-    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-70258", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-3c331", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 9),
     "blender": (2, 93, 0),
@@ -47,8 +47,6 @@ from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
 from voxility_pro.utils.temp_file_manager import TempFileManager
 from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations
 from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu
-from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu
-from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu
 from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup
 from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest
 
@@ -63,8 +61,6 @@ def register() -> None:
     register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
     register_translations()
-    register_vox_export_menu()
-    register_vox_import_menu()
     register_sidebar_menu()
     register_generic_popup()
 
@@ -72,8 +68,6 @@ def unregister() -> None:
     unregister_preferences()
     bpy.utils.unregister_class(OperatorVoxconvertTest)
     unregister_translations()
-    unregister_vox_export_menu()
-    unregister_vox_import_menu()
     unregister_sidebar_menu()
     unregister_generic_popup()
     TempFileManager().cleanup()
