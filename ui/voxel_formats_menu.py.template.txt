@@ -44,12 +44,12 @@ def register(enabled_types: List[str]) -> None:
         if any(type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1) for type in enabled_types):
             try_register_operator(cls)
     bpy.utils.register_class({{menu_class}})
-    bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_vox_{{import-export}}_func_callback)
+    #bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_vox_{{import-export}}_func_callback)
     bpy.types.TOPBAR_MT_file_{{import-export}}.append(menu_{{menu_class}}_func_callback)
 
 def unregister() -> None:
     for cls in CLASSES:
         try_unregister_operator(cls)
     bpy.utils.unregister_class({{menu_class}})
-    bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_vox_{{import-export}}_func_callback)
+    #bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_vox_{{import-export}}_func_callback)
     bpy.types.TOPBAR_MT_file_{{import-export}}.remove(menu_{{menu_class}}_func_callback)

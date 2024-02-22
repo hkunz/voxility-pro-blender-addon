@@ -150,12 +150,12 @@ def register(enabled_types: List[str]) -> None:
         if any(type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1) for type in enabled_types):
             try_register_operator(cls)
     bpy.utils.register_class(VoxelFormatsImportMenu)
-    bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
+    #bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.append(menu_VoxelFormatsImportMenu_func_callback)
 
 def unregister() -> None:
     for cls in CLASSES:
         try_unregister_operator(cls)
     bpy.utils.unregister_class(VoxelFormatsImportMenu)
-    bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
+    #bpy.types.TOPBAR_MT_file_import.remove(menu_vox_import_func_callback)
     bpy.types.TOPBAR_MT_file_import.remove(menu_VoxelFormatsImportMenu_func_callback)

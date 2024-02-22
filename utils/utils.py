@@ -20,22 +20,18 @@ def get_voxconvert_version() -> str:
     return version
 
 def is_class_registered(cls) -> bool:
-    return True
-    #FIXME: bpy.ops.import is invalid syntax
-    idname: str = eval(f"bpy.ops.{cls.bl_idname}.idname()")
+    idname_py = cls.bl_idname
+    module, op = idname_py.split(".")
+    idname = module.upper() + "_" + "OT" + "_" + op
     return hasattr(bpy.types, idname)
 
 def try_register_operator(cls) -> None:
-    try:
+    if not is_class_registered(cls):
         bpy.utils.register_class(cls)
-    except:
-        pass
 
 def try_unregister_operator(cls) -> None:
-    try:
+    if is_class_registered(cls):
         bpy.utils.unregister_class(cls)
-    except:
-        pass
 
 def abstract_method(func: Callable) -> Callable[..., Any]:
     #@wraps(func)

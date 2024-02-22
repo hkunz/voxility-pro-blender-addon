@@ -11,7 +11,7 @@ from voxility_pro.utils.utils import try_register_operator, try_unregister_opera
 def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> None:
     exporter = get_voxel_exporter_by_type(vox_type)
     importer = get_voxel_importer_by_type(vox_type)
-    print("value === ", vox_type, importer, exporter)
+
     if getattr(self, f"type_{vox_type}"):
         if exporter:
             try_register_operator(exporter)
