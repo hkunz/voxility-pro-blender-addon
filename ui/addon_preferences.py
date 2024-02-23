@@ -16,8 +16,8 @@ from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_i
 from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name, get_voxconvert_version, get_voxconvert_author
 
 def update_voxel_formats_preferences() -> None:
-    addon: bpy.types.Addon = bpy.context.preferences.addons[AddonPreferences.bl_idname]
-    prefs: AddonPreferences = addon.preferences
+    addon: bpy.types.Addon = bpy.context.preferences.addons[VoxilityAddonPreferences.bl_idname]
+    prefs: VoxilityAddonPreferences = addon.preferences
     VoxelFormatsExportMenu.PREFERENCES_FORMATS.clear()
     for i, item in enumerate(VoxelFormatsExportMenu.FORMATS):
         if not i or getattr(prefs, f"type_{item[0].lower()}"):
@@ -47,8 +47,8 @@ class PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        addon_preferences: bpy.types.Addon = context.preferences.addons[AddonPreferences.bl_idname]
-        preferences: AddonPreferences = addon_preferences.preferences
+        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxilityAddonPreferences.bl_idname]
+        preferences: VoxilityAddonPreferences = addon_preferences.preferences
         preferences.check_all_checkboxes()
         return {'FINISHED'}
 
@@ -59,12 +59,12 @@ class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        addon_preferences: bpy.types.Addon = context.preferences.addons[AddonPreferences.bl_idname]
-        preferences: AddonPreferences = addon_preferences.preferences
+        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxilityAddonPreferences.bl_idname]
+        preferences: VoxilityAddonPreferences = addon_preferences.preferences
         preferences.clear_all_checkboxes()
         return {'FINISHED'}
 
-class AddonPreferences(bpy.types.AddonPreferences):
+class VoxilityAddonPreferences(bpy.types.AddonPreferences):
     bl_idname = get_addon_module_name() # __name__ if the class is defined inside __init__.py
 
     type_vox: bpy.props.BoolProperty(
@@ -300,7 +300,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box.label(text=f"This addon is powered by vengi-voxconvert v{get_voxconvert_version()} by {get_voxconvert_author()}")
 
 def register() -> None:
-    bpy.utils.register_class(AddonPreferences)
+    bpy.utils.register_class(VoxilityAddonPreferences)
     bpy.utils.register_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     enabled_vox_types: List[str] = get_preferences_voxel_types()
@@ -309,7 +309,7 @@ def register() -> None:
     update_voxel_formats_preferences()
 
 def unregister() -> None:
-    bpy.utils.unregister_class(AddonPreferences)
+    bpy.utils.unregister_class(VoxilityAddonPreferences)
     bpy.utils.unregister_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.unregister_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     unregister_vox_export_menu()
