@@ -13,7 +13,7 @@ from typing import List
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
 from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
-from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name
+from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name, get_voxconvert_version, get_voxconvert_author
 
 def update_voxel_formats_preferences() -> None:
     addon: bpy.types.Addon = bpy.context.preferences.addons[AddonPreferences.bl_idname]
@@ -40,20 +40,22 @@ def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
 
     update_voxel_formats_preferences()
 
-class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
-    bl_idname = "preferences.voxility_update_voxel_formats"
-    bl_label = "Update Voxel Formats"
-    bl_description = "Update voxel formats to only show preferred types"
+class PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator(bpy.types.Operator):
+    bl_idname = "preferences.voxility_check_voxel_formats_checkboxes"
+    bl_label = "Check All"
+    bl_description = "Tick all checkboxes"
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        self.report({'INFO'}, "Voxel update formats ... TODO")
+        addon_preferences: bpy.types.Addon = context.preferences.addons[AddonPreferences.bl_idname]
+        preferences: AddonPreferences = addon_preferences.preferences
+        preferences.check_all_checkboxes()
         return {'FINISHED'}
 
 class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_clear_voxel_formats_checkboxes"
     bl_label = "Uncheck All"
-    bl_description = "Uncheck all checkboxes"
+    bl_description = "Untick all checkboxes"
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
@@ -261,32 +263,45 @@ class AddonPreferences(bpy.types.AddonPreferences):
     CHECKBOXES: List[str] = ["type_vox","type_qb","type_qbt","type_qef","type_qbcl","type_binvox","type_cub","type_schematic","type_dat","type_mca","type_mts","type_vxc","type_vxr","type_vxt","type_vxm","type_xraw","type_vxl","type_kv6","type_kvx","type_scn","type_csv","type_sment","type_gox","type_vmax","type_vbx","type_v3a","type_vengi","type_nvm","type_pcubes","type_csm","type_3zh","type_b64",]
 
     def set_checkbox(self, prop_name: str, value: bool) -> None:
-        setattr(self, prop_name, value)
+        if getattr(self, prop_name) != value:
+            setattr(self, prop_name, value)
+
+    def check_all_checkboxes(self) -> None:
+        for prop_name in self.CHECKBOXES:
+            self.set_checkbox(prop_name, True)
 
     def clear_all_checkboxes(self) -> None:
         for prop_name in self.CHECKBOXES:
             self.set_checkbox(prop_name, False)
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, _: bpy_types.Context) -> None:
         layout: UILayout = self.layout
-        box: UILayout = layout.box()
+        options_box: UILayout = layout.box()
+        box: UILayout = options_box.box()
 
-        split: UILayout = box.split(factor=0.3)
-        col: UILayout = split.column()
-        col.operator(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator.bl_idname, text="Uncheck All")
-        col = split.column()
-        col.alert = True
-        col.operator(PREFERENCES_OT_UpdateVoxelFormatsOperator.bl_idname, text="Update Voxel Formats")
+        split: UILayout = box.split(factor=0.5)
+        col1: UILayout = split.column()
+        col1.operator(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator.bl_idname, text="Uncheck All Boxes")
+        col2 = split.column()
+        col2.operator(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator.bl_idname, text="Check All Boxes")
 
-        layout.label(text="Tick your voxel formats and then click Update Voxel Formats")
+        box = options_box.box()
+        split = box.split(factor=0.33)
+        col1 = split.column()
+        col2 = split.column()
+        col3 = split.column()
+
+        num_boxes = len(self.CHECKBOXES)
+        third = int(num_boxes/3)
+        third2 = int(2*num_boxes/3)
+        for i, prop_name in enumerate(self.CHECKBOXES):
+            (col1 if i <= third else (col2 if i <= third2 else col3)).prop(self, prop_name)
         box = layout.box()
-
-        for prop_name in self.CHECKBOXES:
-            box.prop(self, prop_name)
+        box.label(text=f"This addon is powered by vengi-voxconvert v{get_voxconvert_version()} by {get_voxconvert_author()}")
 
 def register() -> None:
     bpy.utils.register_class(AddonPreferences)
-    bpy.utils.register_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
+    bpy.utils.register_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     enabled_vox_types: List[str] = get_preferences_voxel_types()
     register_vox_export_menu(enabled_vox_types)
@@ -295,7 +310,7 @@ def register() -> None:
 
 def unregister() -> None:
     bpy.utils.unregister_class(AddonPreferences)
-    bpy.utils.unregister_class(PREFERENCES_OT_UpdateVoxelFormatsOperator)
+    bpy.utils.unregister_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.unregister_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     unregister_vox_export_menu()
     unregister_vox_import_menu()

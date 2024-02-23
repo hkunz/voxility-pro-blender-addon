@@ -1,4 +1,7 @@
 import bpy
+import bpy_types
+
+from typing import Tuple, List
 
 from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
     OBJECT_OT_MeshVoxelConvertOperator,
@@ -31,7 +34,7 @@ VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDE
 def get_blender_support_text() -> str:
     return f"Vertex colors are supported in Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above."
 
-def my_settings_callback(scene, context):
+def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
 class VoxilityProProperties(bpy.types.PropertyGroup):

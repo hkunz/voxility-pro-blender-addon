@@ -22,6 +22,9 @@ def get_voxconvert_version() -> str:
     version = match.group(1)
     return version
 
+def get_voxconvert_author() -> str:
+    return "Martin Gerhardy"
+
 def get_preferences_voxel_types() -> List[str]:
     addon: bpy.types.Addon = bpy.context.preferences.addons[get_addon_module_name()]
     addon_prefs = addon.preferences
