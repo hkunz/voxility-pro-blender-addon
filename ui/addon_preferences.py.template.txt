@@ -32,9 +32,7 @@ def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
         if importer:
             try_unregister_operator(importer)
 
-        VoxelFormatsExportMenu.PREFERENCES_FORMATS.clear()
-        for item in VoxelFormatsExportMenu.FORMATS:
-            VoxelFormatsExportMenu.PREFERENCES_FORMATS.append(item)
+    update_voxel_formats_preferences()
 
 class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_update_voxel_formats"
