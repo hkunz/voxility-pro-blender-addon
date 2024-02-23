@@ -102,7 +102,7 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         name="Target",
         description="Select target voxel export format",
         items=my_settings_callback,
-        #default="NONE",
+        #default="NONE", # cannot set a default when using dynamic EnumProperty
     ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
