@@ -97,6 +97,10 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         ("3ZH", "3zh (Cubzh)", "Target format: *.3zh"),
     ]
 
+    PREFERENCES_FORMATS: List[Tuple[str, str, str]] = [
+        ("NONE", "None", "No specific target format. Only voxelize within this application."),
+    ] # list is populated by AddonPreferences
+
     @staticmethod
     def get_formats_list_value(index: int=0) -> str:
         return VoxelFormatsExportMenu.FORMATS[index][0]

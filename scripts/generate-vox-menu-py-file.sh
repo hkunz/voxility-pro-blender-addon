@@ -17,7 +17,8 @@ generate_voxel_formats_menu_py_file() {
     cp "$template_file" "$output_file"
 
     extensions=$(echo "$JSON" | jq -r '.[].extension')
-    voxel_formats_list="\n${TAB}FORMATS: List[Tuple[str, str, str]] = [\n${TAB}${TAB}(\"NONE\", \"None\", \"No specific target format. Only voxelize within this application.\"),"
+    voxel_formats_list_first_item="(\"NONE\", \"None\", \"No specific target format. Only voxelize within this application.\")"
+    voxel_formats_list="\n${TAB}FORMATS: List[Tuple[str, str, str]] = [\n${TAB}${TAB}${voxel_formats_list_first_item},"
 
     for type in $extensions; do
         name=$(get_vox_column_value "$type" "$JSON" "name")
@@ -39,6 +40,8 @@ generate_voxel_formats_menu_py_file() {
     done
 
     voxel_formats_list+="\n${TAB}]\n"
+    voxel_formats_list+="\n${TAB}PREFERENCES_FORMATS: List[Tuple[str, str, str]] = [\n${TAB}${TAB}${voxel_formats_list_first_item},"
+    voxel_formats_list+="\n${TAB}] # list is populated by AddonPreferences"
 
     sed -i " \
         s/{{imports}}/$imports_content/; \

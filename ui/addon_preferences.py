@@ -10,11 +10,20 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
+from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
 from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
 from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name
 
-def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> None:
+def update_voxel_formats_preferences() -> None:
+    addon: bpy.types.Addon = bpy.context.preferences.addons[AddonPreferences.bl_idname]
+    prefs: AddonPreferences = addon.preferences
+    VoxelFormatsExportMenu.PREFERENCES_FORMATS.clear()
+    for i, item in enumerate(VoxelFormatsExportMenu.FORMATS):
+        if not i or getattr(prefs, f"type_{item[0].lower()}"):
+            VoxelFormatsExportMenu.PREFERENCES_FORMATS.append(item)
+
+def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
     exporter = get_voxel_exporter_by_type(vox_type)
     importer = get_voxel_importer_by_type(vox_type)
 
@@ -28,6 +37,8 @@ def update_bool_property(self, context: bpy_types.Context, vox_type: str) -> Non
             try_unregister_operator(exporter)
         if importer:
             try_unregister_operator(importer)
+
+    update_voxel_formats_preferences()
 
 class PREFERENCES_OT_UpdateVoxelFormatsOperator(bpy.types.Operator):
     bl_idname = "preferences.voxility_update_voxel_formats"
@@ -280,6 +291,7 @@ def register() -> None:
     enabled_vox_types: List[str] = get_preferences_voxel_types()
     register_vox_export_menu(enabled_vox_types)
     register_vox_import_menu(enabled_vox_types)
+    update_voxel_formats_preferences()
 
 def unregister() -> None:
     bpy.utils.unregister_class(AddonPreferences)

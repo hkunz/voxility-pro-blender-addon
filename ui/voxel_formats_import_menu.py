@@ -123,6 +123,10 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
         ("B64", "b64 (Cubzh World)", "Target format: *.b64"),
     ]
 
+    PREFERENCES_FORMATS: List[Tuple[str, str, str]] = [
+        ("NONE", "None", "No specific target format. Only voxelize within this application."),
+    ] # list is populated by AddonPreferences
+
     @staticmethod
     def get_formats_list_value(index: int=0) -> str:
         return VoxelFormatsImportMenu.FORMATS[index][0]

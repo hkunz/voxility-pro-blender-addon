@@ -17,6 +17,7 @@ class {{menu_class}}(bpy.types.Menu):
     bl_idname = "TOPBAR_MT_select_{{menu_class}}_submenu"
     bl_label = "Select"
 {{voxel_formats_list}}
+
     @staticmethod
     def get_formats_list_value(index: int=0) -> str:
         return {{menu_class}}.FORMATS[index][0]

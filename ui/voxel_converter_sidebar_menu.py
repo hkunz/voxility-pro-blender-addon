@@ -31,6 +31,9 @@ VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDE
 def get_blender_support_text() -> str:
     return f"Vertex colors are supported in Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above."
 
+def my_settings_callback(scene, context):
+    return VoxelFormatsExportMenu.PREFERENCES_FORMATS
+
 class VoxilityProProperties(bpy.types.PropertyGroup):
     option_dissolve_limited: bpy.props.BoolProperty(
         name="Apply Limited Dissolve",
@@ -98,8 +101,8 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
     export_format: bpy.props.EnumProperty(
         name="Target",
         description="Select target voxel export format",
-        items=VoxelFormatsExportMenu.FORMATS,
-        default="NONE",
+        items=my_settings_callback,
+        #default="NONE",
     ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
