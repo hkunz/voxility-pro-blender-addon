@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_sandbox_voxedit_model(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_model"
-    bl_label = "Sandbox VoxEdit Model (.vxm)"
+    bl_label = "Import VXM"
     bl_description = "Import Sandbox VoxEdit Model format (.vxm)"
 
     filename_ext: str = ".vxm"
+    voxel_type: str = "vxm"
+    voxel_name: str = "Sandbox VoxEdit Model"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxm",

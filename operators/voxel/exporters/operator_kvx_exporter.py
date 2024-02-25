@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_voxlap_voxel_model_format(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_voxlap_voxel_model_format"
-    bl_label = "Voxlap Voxel model format (.kvx)"
+    bl_label = "Export KVX"
     bl_description = "Export selected objects to Voxlap Voxel model format format (.kvx)"
 
     filename_ext: str = ".kvx"
+    voxel_type: str = "kvx"
+    voxel_name: str = "Voxlap Voxel model format"
 
     filter_glob: bpy.props.StringProperty(
         default="*.kvx",

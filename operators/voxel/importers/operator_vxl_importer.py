@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_tiberian_sun(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_tiberian_sun"
-    bl_label = "Tiberian Sun (.vxl)"
+    bl_label = "Import VXL"
     bl_description = "Import Tiberian Sun format (.vxl)"
 
     filename_ext: str = ".vxl"
+    voxel_type: str = "vxl"
+    voxel_name: str = "Tiberian Sun"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxl",

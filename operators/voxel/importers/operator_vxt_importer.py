@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_sandbox_voxedit_tilemap(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_tilemap"
-    bl_label = "Sandbox VoxEdit Tilemap (.vxt)"
+    bl_label = "Import VXT"
     bl_description = "Import Sandbox VoxEdit Tilemap format (.vxt)"
 
     filename_ext: str = ".vxt"
+    voxel_type: str = "vxt"
+    voxel_name: str = "Sandbox VoxEdit Tilemap"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxt",

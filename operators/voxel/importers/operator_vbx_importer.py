@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_voxel_builder(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_voxel_builder"
-    bl_label = "Voxel Builder (.vbx)"
+    bl_label = "Import VBX"
     bl_description = "Import Voxel Builder format (.vbx)"
 
     filename_ext: str = ".vbx"
+    voxel_type: str = "vbx"
+    voxel_name: str = "Voxel Builder"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vbx",

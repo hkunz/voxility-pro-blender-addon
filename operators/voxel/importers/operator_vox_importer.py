@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_magicavoxel(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_magicavoxel"
-    bl_label = "MagicaVoxel (.vox)"
+    bl_label = "Import VOX"
     bl_description = "Import MagicaVoxel format (.vox)"
 
     filename_ext: str = ".vox"
+    voxel_type: str = "vox"
+    voxel_name: str = "MagicaVoxel"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vox",

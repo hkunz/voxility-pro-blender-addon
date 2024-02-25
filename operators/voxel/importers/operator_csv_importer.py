@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_sproxel_csv(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sproxel_csv"
-    bl_label = "Sproxel csv (.csv)"
+    bl_label = "Import CSV"
     bl_description = "Import Sproxel csv format (.csv)"
 
     filename_ext: str = ".csv"
+    voxel_type: str = "csv"
+    voxel_name: str = "Sproxel csv"
 
     filter_glob: bpy.props.StringProperty(
         default="*.csv",

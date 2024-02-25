@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_qubicle_binary_exchange(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_qubicle_binary_exchange"
-    bl_label = "Qubicle Binary Exchange (.qb)"
+    bl_label = "Import QB"
     bl_description = "Import Qubicle Binary Exchange format (.qb)"
 
     filename_ext: str = ".qb"
+    voxel_type: str = "qb"
+    voxel_name: str = "Qubicle Binary Exchange"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qb",

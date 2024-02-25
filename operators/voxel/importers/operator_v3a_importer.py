@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_voxel3d(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_voxel3d"
-    bl_label = "Voxel3D (.v3a)"
+    bl_label = "Import V3A"
     bl_description = "Import Voxel3D format (.v3a)"
 
     filename_ext: str = ".v3a"
+    voxel_type: str = "v3a"
+    voxel_name: str = "Voxel3D"
 
     filter_glob: bpy.props.StringProperty(
         default="*.v3a",

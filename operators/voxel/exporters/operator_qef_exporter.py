@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_qubicle_exchange_format_ascii(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_qubicle_exchange_format_ascii"
-    bl_label = "Qubicle Exchange Format ASCII (.qef)"
+    bl_label = "Export QEF"
     bl_description = "Export selected objects to Qubicle Exchange Format ASCII format (.qef)"
 
     filename_ext: str = ".qef"
+    voxel_type: str = "qef"
+    voxel_name: str = "Qubicle Exchange Format ASCII"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qef",

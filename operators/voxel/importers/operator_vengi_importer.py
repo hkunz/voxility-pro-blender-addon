@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_vengi(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_vengi"
-    bl_label = "Vengi (.vengi)"
+    bl_label = "Import VENGI"
     bl_description = "Import Vengi format (.vengi)"
 
     filename_ext: str = ".vengi"
+    voxel_type: str = "vengi"
+    voxel_name: str = "Vengi"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vengi",

@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_minecraft_anvil_region(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_minecraft_anvil_region"
-    bl_label = "Minecraft Anvil Region (.mca)"
+    bl_label = "Import MCA"
     bl_description = "Import Minecraft Anvil Region format (.mca)"
 
     filename_ext: str = ".mca"
+    voxel_type: str = "mca"
+    voxel_name: str = "Minecraft Anvil Region"
 
     filter_glob: bpy.props.StringProperty(
         default="*.mca",

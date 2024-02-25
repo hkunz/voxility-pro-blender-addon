@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_nicks_voxel_model(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_nicks_voxel_model"
-    bl_label = "Nicks Voxel Model (.nvm)"
+    bl_label = "Import NVM"
     bl_description = "Import Nicks Voxel Model format (.nvm)"
 
     filename_ext: str = ".nvm"
+    voxel_type: str = "nvm"
+    voxel_name: str = "Nicks Voxel Model"
 
     filter_glob: bpy.props.StringProperty(
         default="*.nvm",

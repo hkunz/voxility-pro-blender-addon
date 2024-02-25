@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_voxel_max(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_voxel_max"
-    bl_label = "Voxel Max (.vmax)"
+    bl_label = "Import VMAX"
     bl_description = "Import Voxel Max format (.vmax)"
 
     filename_ext: str = ".vmax"
+    voxel_type: str = "vmax"
+    voxel_name: str = "Voxel Max"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vmax",

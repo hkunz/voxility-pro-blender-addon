@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_sandbox_voxedit_model(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_sandbox_voxedit_model"
-    bl_label = "Sandbox VoxEdit Model (.vxm)"
+    bl_label = "Export VXM"
     bl_description = "Export selected objects to Sandbox VoxEdit Model format (.vxm)"
 
     filename_ext: str = ".vxm"
+    voxel_type: str = "vxm"
+    voxel_name: str = "Sandbox VoxEdit Model"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxm",

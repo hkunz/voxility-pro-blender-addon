@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_goxel(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_goxel"
-    bl_label = "Goxel (.gox)"
+    bl_label = "Import GOX"
     bl_description = "Import Goxel format (.gox)"
 
     filename_ext: str = ".gox"
+    voxel_type: str = "gox"
+    voxel_name: str = "Goxel"
 
     filter_glob: bpy.props.StringProperty(
         default="*.gox",

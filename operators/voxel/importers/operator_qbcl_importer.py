@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_qubicle_project(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_qubicle_project"
-    bl_label = "Qubicle Project (.qbcl)"
+    bl_label = "Import QBCL"
     bl_description = "Import Qubicle Project format (.qbcl)"
 
     filename_ext: str = ".qbcl"
+    voxel_type: str = "qbcl"
+    voxel_name: str = "Qubicle Project"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbcl",

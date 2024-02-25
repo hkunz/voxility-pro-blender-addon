@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_qubicle_binary_tree_exchange(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_qubicle_binary_tree_exchange"
-    bl_label = "Qubicle Binary Tree Exchange (.qbt)"
+    bl_label = "Export QBT"
     bl_description = "Export selected objects to Qubicle Binary Tree Exchange format (.qbt)"
 
     filename_ext: str = ".qbt"
+    voxel_type: str = "qbt"
+    voxel_name: str = "Qubicle Binary Tree Exchange"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbt",

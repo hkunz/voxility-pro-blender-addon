@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_binvox_command_line_voxelizer(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_binvox_command_line_voxelizer"
-    bl_label = "Binvox command line voxelizer (.binvox)"
+    bl_label = "Export BINVOX"
     bl_description = "Export selected objects to Binvox command line voxelizer format (.binvox)"
 
     filename_ext: str = ".binvox"
+    voxel_type: str = "binvox"
+    voxel_name: str = "Binvox command line voxelizer"
 
     filter_glob: bpy.props.StringProperty(
         default="*.binvox",

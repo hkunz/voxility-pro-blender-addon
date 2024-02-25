@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_cubeworld_cubemap(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_cubeworld_cubemap"
-    bl_label = "CubeWorld CubeMap (.cub)"
+    bl_label = "Import CUB"
     bl_description = "Import CubeWorld CubeMap format (.cub)"
 
     filename_ext: str = ".cub"
+    voxel_type: str = "cub"
+    voxel_name: str = "CubeWorld CubeMap"
 
     filter_glob: bpy.props.StringProperty(
         default="*.cub",

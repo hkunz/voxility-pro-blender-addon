@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_minetest_template(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_minetest_template"
-    bl_label = "Minetest Template (.mts)"
+    bl_label = "Export MTS"
     bl_description = "Export selected objects to Minetest Template format (.mts)"
 
     filename_ext: str = ".mts"
+    voxel_type: str = "mts"
+    voxel_name: str = "Minetest Template"
 
     filter_glob: bpy.props.StringProperty(
         default="*.mts",

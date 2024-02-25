@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_minecraft_schematic(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_minecraft_schematic"
-    bl_label = "Minecraft Schematic (.schematic)"
+    bl_label = "Export SCHEMATIC"
     bl_description = "Export selected objects to Minecraft Schematic format (.schematic)"
 
     filename_ext: str = ".schematic"
+    voxel_type: str = "schematic"
+    voxel_name: str = "Minecraft Schematic"
 
     filter_glob: bpy.props.StringProperty(
         default="*.schematic",

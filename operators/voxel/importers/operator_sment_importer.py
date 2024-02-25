@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_starmade(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_starmade"
-    bl_label = "StarMade (.sment)"
+    bl_label = "Import SMENT"
     bl_description = "Import StarMade format (.sment)"
 
     filename_ext: str = ".sment"
+    voxel_type: str = "sment"
+    voxel_name: str = "StarMade"
 
     filter_glob: bpy.props.StringProperty(
         default="*.sment",

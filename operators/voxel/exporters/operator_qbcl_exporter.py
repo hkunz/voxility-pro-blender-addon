@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_qubicle_project(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_qubicle_project"
-    bl_label = "Qubicle Project (.qbcl)"
+    bl_label = "Export QBCL"
     bl_description = "Export selected objects to Qubicle Project format (.qbcl)"
 
     filename_ext: str = ".qbcl"
+    voxel_type: str = "qbcl"
+    voxel_name: str = "Qubicle Project"
 
     filter_glob: bpy.props.StringProperty(
         default="*.qbcl",

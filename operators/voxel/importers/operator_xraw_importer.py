@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_magicavoxel_xraw(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_magicavoxel_xraw"
-    bl_label = "MagicaVoxel XRAW (.xraw)"
+    bl_label = "Import XRAW"
     bl_description = "Import MagicaVoxel XRAW format (.xraw)"
 
     filename_ext: str = ".xraw"
+    voxel_type: str = "xraw"
+    voxel_name: str = "MagicaVoxel XRAW"
 
     filter_glob: bpy.props.StringProperty(
         default="*.xraw",

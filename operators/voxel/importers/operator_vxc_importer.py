@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_sandbox_voxedit_collection(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_collection"
-    bl_label = "Sandbox VoxEdit Collection (.vxc)"
+    bl_label = "Import VXC"
     bl_description = "Import Sandbox VoxEdit Collection format (.vxc)"
 
     filename_ext: str = ".vxc"
+    voxel_type: str = "vxc"
+    voxel_name: str = "Sandbox VoxEdit Collection"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxc",

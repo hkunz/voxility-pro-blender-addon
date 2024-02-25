@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_voxlap_voxel_engine(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_voxlap_voxel_engine"
-    bl_label = "Voxlap Voxel Engine (.kv6)"
+    bl_label = "Import KV6"
     bl_description = "Import Voxlap Voxel Engine format (.kv6)"
 
     filename_ext: str = ".kv6"
+    voxel_type: str = "kv6"
+    voxel_name: str = "Voxlap Voxel Engine"
 
     filter_glob: bpy.props.StringProperty(
         default="*.kv6",

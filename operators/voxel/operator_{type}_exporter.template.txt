@@ -4,10 +4,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_{{code_name}}(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_{{code_name}}"
-    bl_label = "{{name}} (.{{type}})"
+    bl_label = "Export {{TYPE}}"
     bl_description = "Export selected objects to {{name}} format (.{{type}})"
 
     filename_ext: str = ".{{type}}"
+    voxel_type: str = "{{type}}"
+    voxel_name: str = "{{name}}"
 
     filter_glob: bpy.props.StringProperty(
         default="*.{{type}}",

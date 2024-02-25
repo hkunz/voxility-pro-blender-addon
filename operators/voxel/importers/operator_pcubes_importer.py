@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_particubes(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_particubes"
-    bl_label = "Particubes (.pcubes)"
+    bl_label = "Import PCUBES"
     bl_description = "Import Particubes format (.pcubes)"
 
     filename_ext: str = ".pcubes"
+    voxel_type: str = "pcubes"
+    voxel_name: str = "Particubes"
 
     filter_glob: bpy.props.StringProperty(
         default="*.pcubes",

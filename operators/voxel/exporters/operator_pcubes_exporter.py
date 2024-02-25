@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_particubes(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_particubes"
-    bl_label = "Particubes (.pcubes)"
+    bl_label = "Export PCUBES"
     bl_description = "Export selected objects to Particubes format (.pcubes)"
 
     filename_ext: str = ".pcubes"
+    voxel_type: str = "pcubes"
+    voxel_name: str = "Particubes"
 
     filter_glob: bpy.props.StringProperty(
         default="*.pcubes",

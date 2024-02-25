@@ -135,7 +135,7 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
         layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
             if is_class_registered(cls):
-                layout.operator(cls.bl_idname, text=cls.bl_label)
+                layout.operator(cls.bl_idname, text=f"{cls.voxel_name} ({cls.filename_ext})")
 
 def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
@@ -145,13 +145,13 @@ def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context)
 
 def get_voxel_importer_by_type(voxel_type: str) -> OperatorVoxconvert:
     for cls in CLASSES:
-        if voxel_type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1):
+        if voxel_type == cls.voxel_type:
             return cls
     return None
 
 def register(enabled_types: List[str]) -> None:
     for cls in CLASSES:
-        if any(type == re.search(r'\(\.([^)\s]+)\)', cls.bl_label).group(1) for type in enabled_types):
+        if any(type == cls.voxel_type for type in enabled_types):
             try_register_operator(cls)
     bpy.utils.register_class(VoxelFormatsImportMenu)
     #bpy.types.TOPBAR_MT_file_import.append(menu_vox_import_func_callback)

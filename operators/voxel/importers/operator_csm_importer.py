@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_cubic_mesh(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_cubic_mesh"
-    bl_label = "CuBic Mesh (.csm)"
+    bl_label = "Import CSM"
     bl_description = "Import CuBic Mesh format (.csm)"
 
     filename_ext: str = ".csm"
+    voxel_type: str = "csm"
+    voxel_name: str = "CuBic Mesh"
 
     filter_glob: bpy.props.StringProperty(
         default="*.csm",

@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_minecraft_level_dat(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_minecraft_level_dat"
-    bl_label = "Minecraft level dat (.dat)"
+    bl_label = "Export DAT"
     bl_description = "Export selected objects to Minecraft level dat format (.dat)"
 
     filename_ext: str = ".dat"
+    voxel_type: str = "dat"
+    voxel_name: str = "Minecraft level dat"
 
     filter_glob: bpy.props.StringProperty(
         default="*.dat",

@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_animatoon_3d_scene(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_animatoon_3d_scene"
-    bl_label = "Animatoon 3D Scene (.scn)"
+    bl_label = "Import SCN"
     bl_description = "Import Animatoon 3D Scene format (.scn)"
 
     filename_ext: str = ".scn"
+    voxel_type: str = "scn"
+    voxel_name: str = "Animatoon 3D Scene"
 
     filter_glob: bpy.props.StringProperty(
         default="*.scn",

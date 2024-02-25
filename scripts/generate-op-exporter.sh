@@ -27,7 +27,13 @@ copy_and_modify_template() {
     cp "$source_file" "$destination_file"
 
     sed -i "1i $(get_autogenerate_notice)" "$destination_file"
-    sed -i "s/{{type}}/$type/g; s/{{name}}/$name/g; s/{{code_name}}/$code_name/g" "$destination_file"
+
+    sed -i " \
+        s/{{type}}/$type/g; \
+        s/{{TYPE}}/$(echo $type | tr '[:lower:]' '[:upper:]')/g; \
+        s/{{name}}/$name/g; \
+        s/{{code_name}}/$code_name/g" \
+        "$destination_file"
 
     echo "Generated operator ${3}er $destination_file"
 }

@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_cubzh(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_cubzh"
-    bl_label = "Cubzh (.3zh)"
+    bl_label = "Import 3ZH"
     bl_description = "Import Cubzh format (.3zh)"
 
     filename_ext: str = ".3zh"
+    voxel_type: str = "3zh"
+    voxel_name: str = "Cubzh"
 
     filter_glob: bpy.props.StringProperty(
         default="*.3zh",

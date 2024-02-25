@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVo
 
 class EXPORT_OT_cubzh_world(OperatorVoxelBaseExporter):
     bl_idname = "export.voxility_cubzh_world"
-    bl_label = "Cubzh World (.b64)"
+    bl_label = "Export B64"
     bl_description = "Export selected objects to Cubzh World format (.b64)"
 
     filename_ext: str = ".b64"
+    voxel_type: str = "b64"
+    voxel_name: str = "Cubzh World"
 
     filter_glob: bpy.props.StringProperty(
         default="*.b64",

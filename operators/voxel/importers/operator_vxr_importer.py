@@ -10,10 +10,12 @@ from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVo
 
 class IMPORT_OT_sandbox_voxedit_hierarchy(OperatorVoxelBaseImporter):
     bl_idname = "import.voxility_sandbox_voxedit_hierarchy"
-    bl_label = "Sandbox VoxEdit Hierarchy (.vxr)"
+    bl_label = "Import VXR"
     bl_description = "Import Sandbox VoxEdit Hierarchy format (.vxr)"
 
     filename_ext: str = ".vxr"
+    voxel_type: str = "vxr"
+    voxel_name: str = "Sandbox VoxEdit Hierarchy"
 
     filter_glob: bpy.props.StringProperty(
         default="*.vxr",
