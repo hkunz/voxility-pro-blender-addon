@@ -1,6 +1,6 @@
 #!/bin/bash
 
-voxility_pro_version=$(grep -oP '"version": \(([^)]+)\),' __init__.py | sed 's/[^0-9]//g' | tr -d '\n' | sed 's/\(.\)/\1./g' | sed 's/\.$//')
+voxility_pro_version=$(grep -oP '"version": \(\K\d+,\s*\d+,\s*\d+' __init__.py | tr -d ' \n' | sed 's/,/./g')
 voxconvert_version=$(cat "__init__.py" | grep -oP 'voxconvert-\K[0-9]+\.[0-9]+\.[0-9]+(?:-.*)?(?=")')
 
 echo "Voxility Pro version: ${voxility_pro_version}"
@@ -29,6 +29,7 @@ zip_cmd=("zip" "-r" "${output_zip}" "${parent_folder}"/* \
   "--exclude" "${parent_folder}/.vscode/*" \
   "--exclude" "${parent_folder}/.git/*" \
   "--exclude" "${parent_folder}/temp/*" \
+  "--exclude" "${parent_folder}/**/documentation/*" \
   "--exclude" "${parent_folder}/**/useful/*" \
   "--exclude" "${parent_folder}/scripts/*" \
   "--exclude" "${parent_folder}/*.template.*" \
