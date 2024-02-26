@@ -1,0 +1,130 @@
+<p>Download the zip file that comes with your purchase and <a
+href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html" target="_blank"
+>install the addon</a> via <i>Edit &gt;
+Preferences &gt; Add-ons</i>. Click <b>Install </b>and select the zip
+file you downloaded. Search for the term <i>vox </i>and tick the checkbox
+next left to the Addon name <b>Import-Export: MagicaVoxel Exporter</b>.
+Don't forget to save your preferences using <i>Save Preferences </i>button
+so you don't have to tick the checkbox again the next time you open Blender.</p>
+<ul>
+<li><b style="background-color: rgb(255, 255, 0);">Attention!&nbsp;</b>
+    <b>&nbsp;</b>If you are a&nbsp;<b>Mac OS</b>&nbsp;or a <b>Linux </b>user you have to do an
+additional step after installation. Please see at bottom of this page!</li>
+</ul>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/4582976cb46de932f077982b618d1e0f.png"
+style="max-width: 100%;"></p>
+<p>Before you use this feature, it is recommended to switch to the <a
+href="https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html"
+target="_blank">Scripting workspace</a> tab so you can see the processing
+output, and please take note of the dimension of the object. The larger the object in dimensions,
+the more voxel detail you can produce, but it may take longer to process. While it may seem that the
+user interface is not responding or in a hang state, rest assured it is processing. Kindly be
+patient and await the completion of the process; the output will be visible in the&nbsp;<a
+href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank"
+>Info Editor</a>.</p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/69619b536bafe30c9f1836099eea2731.png"
+style="max-width: 100%;"><br></p>
+<p>You will see the <b>vox </b>option under <i>File
+&gt; Export &gt; MagicaVoxel (.vox)</i><span> and the <b>qb </b>option
+under&nbsp;</span><i>File &gt; Export &gt; Qubicle (.qb).&nbsp;</i><span
+>Just simply select the object(s) in Blender that you want to export to
+voxel format then export. Please experiment first with smaller sized objects that have lesser
+vertices to get a feel for the addon. It can take from seconds to several minutes depending on how
+complex your object is. Complexity is compounded by more vertices and faces. So it is always a
+good idea to try to decimate and reduce the amount of vertices before using this feature.
+</span><b>Please be patient</b><span>. Be careful
+for objects that exceed 100 meters in dimension. The bigger the object, the more voxels, and the
+longer it will take to finish processing. The first export may take longer than the succeeding
+exports. So try the export first with the default cube. It may take longer than normal for the
+first time export.</span></p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/4a2a6e5788a973db24a13f8e51a0a323.png"
+style="max-width: 100%;"><span><br></span></p>
+<p></p>
+<p>You can adjust some settings for the resulting vox file. Hover over each
+item to see a tooltip for its function. Be careful with the <b>Voxformat Scale</b>. First experiment
+with lower values like <b>1</b>&nbsp;and then <b>2</b> and up to see how the number of voxels add up
+in the resulting output. Don't immediately go to 10 or 100! Keep in mind that increasing this value
+will result in higher voxel resolution but will also extend the time required to generate the vox
+file. It could take up to several minutes depending on how fast your computer is so please be
+patient.</p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/ec2550fdaa08febbc307544eef7d3c43.png"
+style="max-width: 100%;"><br></p>
+<p>Now you can directly open the generated&nbsp;<b>.vox</b> file in <b
+>MagicaVoxel </b>or <b>VoxEdit</b><span
+> or the generated <b>.qb</b>&nbsp;file in </span><b
+>Qubicle</b>. Please don't hesitate to message us for issues so we can
+address them promptly. Enjoy!</p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/dfa520efde70e82f73440d431272e3d4.jpg"
+style="max-width: 100%;"></p>
+<p><br></p>
+<p style="font-size: 2rem;"><span style="font-weight: bolder; background-color: rgb(255, 255, 0);">MAC
+OS and LINUX post Installation&nbsp;</span></p>
+<p>
+<font color="#000000" style="">Please take note of the <b>voxconvert </b>version, which is an
+executable binary used inside of the <b>Vox Exporter</b> addon, because this information may be
+needed after installation. For example, for the&nbsp;<b>Vox Exporter</b> version <b>1.0.5</b>, the
+<b>voxconvert </b>version used is&nbsp;<b
+style="background-color: rgb(255, 255, 0);">&nbsp;0.0.28&nbsp;</b><b style="">&nbsp;</b>which
+can be found inside the description of the addon under menu <i>Edit &gt; Preferences &gt;
+Add-ons</i>.</font><br>
+</p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/20c1604acb188999b07d43440330e524.png"
+style="max-width: 100%;"><br></p>
+<p>Also please take note of the Blender version used. You can get the version
+by navigating to menu <i>Help &gt; Manual</i> which opens a browser. In this example the version
+is&nbsp;<span style="background-color: rgb(255, 255, 0);"> <b>4.0</b>&nbsp;</span> version. This
+information may also be needed right after addon installation.</p>
+<p><img
+src="https://markets-rails.s3.amazonaws.com/cache/f5e72afad79c6dd6bea43ba294d9d077.png"
+style="max-width: 100%;"></p>
+<p><br></p>
+<p><b style="background-color: rgb(255, 255, 0);">MAC OS: Important
+Instructions for Mac users after Installation&nbsp;</b></p>
+<p>Here are instructions to follow after you have installed the addon on
+Blender running on <b>Mac OS</b>. Due to <a
+href="https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip"
+target="_blank">this issue described here</a>, you have to manually set the third-party
+vox-converter binary file as executable. To do this, simply do:</p>
+<ol>
+<li>Hold down <b>Command </b>and press <b>Space </b>and type in <b>terminal
+</b>then press <b>Enter </b>or open terminal window using <a
+href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial</a></li>
+<li>Copy the following command text. Modify the text to adjust to your
+<u>Blender version</u> and the <u>voxconvert version</u> if applicable: <br>
+<pre
+style="white-space: pre-wrap;">cd; cd Library/Application\ Support/Blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert</pre>
+</li>
+<li>Then paste the new modified text and press <b>Enter</b></li>
+</ol>
+<p>Read the terminal console output and make sure there are no errors. Now
+you are good to go.&nbsp;<span>Let us know if you have any
+issues.</span><span>&nbsp;</span><span
+>Enjoy!</span></p>
+<p><span><br></span></p>
+<p><span
+style="font-weight: bolder; background-color: rgb(255, 255, 0);">LINUX: Important Instructions for
+Linux users after Installation&nbsp;</span><b><br></b></p>
+<p>Here are instructions to follow after you have installed the addon on
+Blender running on <b>Linux</b>. <a href="https://youtu.be/SkB-eRCzWIU?si=gIY1pz6VRJbMw_Pl&amp;t=35"
+target="_blank">Open the terminal</a> and&nbsp;<span>Copy the following
+command text. Modify the text to adjust to your <u>Blender version</u> and the <u>voxconvert
+version</u> if applicable.</span><br></p>
+<pre
+style="white-space: pre-wrap;">cd ~/.config/blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font><blender_version>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/linux/</blender_version></pre>
+<p>Then paste the new modified text into the terminal and press&nbsp;<span
+style="font-weight: bolder;">Enter</span>. Make sure the path is correct and there are no errors.
+Then copy each line and paste into terminal and press <b>Enter</b>. Read the terminal outputs
+because you may need to type in&nbsp;<font color="#000000"
+style="background-color: rgb(255, 255, 0);">&nbsp;<b>y</b>&nbsp;</font> for <b>yes </b>and press
+<b>Enter</b> to confirm installation.</p>
+<pre><blender_version>sudo dpkg -i vengi-shared_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo dpkg -i vengi-voxconvert_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo apt-get install -f<br>vengi-voxconvert --version</blender_version></pre>
+<p>Read the output for each line you execute and make sure there are no
+errors. If all is good you will see the last line print out the version. Close Blender and open
+again. Enjoy!</p>
+<p><br></p>

@@ -1,0 +1,13 @@
+Note: You can start a local server to test the html file
+
+METHOD 1:
+
+* Navigate: cd voxility_pro/resources/documentation/
+* Execute: python3 -m http.server
+* Browser: https://http://localhost:8000
+
+METHOD 2:
+
+* Install Live Server extension on VSCode
+* Open HTML file in VSCode
+* Run Ctrl + Shift + P > "Live Server: Open with Live Server"
