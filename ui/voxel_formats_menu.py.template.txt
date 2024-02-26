@@ -18,9 +18,7 @@ class {{menu_class}}(bpy.types.Menu):
     bl_label = "Select"
 {{voxel_formats_list}}
 
-    @staticmethod
-    def get_formats_list_value(index: int=0) -> str:
-        return {{menu_class}}.FORMATS[index][0]
+    SELECTION_NONE:str = FORMATS[0][0]
 
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout

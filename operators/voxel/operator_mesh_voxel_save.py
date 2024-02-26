@@ -13,8 +13,8 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
     bl_label = "Save"
     bl_description = "Save the voxelized mesh as specified in target voxel format"
 
-    VOX_TARGET_FORMAT_CURRENT_SELECTION: str = VoxelFormatsExportMenu.get_formats_list_value()
-    VOX_TARGET_FORMAT_EXT: str = VoxelFormatsExportMenu.get_formats_list_value()
+    VOX_TARGET_FORMAT_CURRENT_SELECTION: str = VoxelFormatsExportMenu.SELECTION_NONE
+    VOX_TARGET_FORMAT_EXT: str = VoxelFormatsExportMenu.SELECTION_NONE
     VOX_OUTPUT_PATH: str = None
 
     directory: bpy.props.StringProperty(
@@ -50,7 +50,7 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
 
     @classmethod
     def poll(cls, _: bpy_types.Context) -> bool:
-        none: str = VoxelFormatsExportMenu.get_formats_list_value()
+        none: str = VoxelFormatsExportMenu.SELECTION_NONE
         if cls.VOX_TARGET_FORMAT_EXT == none or cls.VOX_TARGET_FORMAT_CURRENT_SELECTION == none:
             return False
         if cls.VOX_TARGET_FORMAT_EXT != cls.VOX_TARGET_FORMAT_CURRENT_SELECTION:

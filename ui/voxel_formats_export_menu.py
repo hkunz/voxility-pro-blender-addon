@@ -101,9 +101,7 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         ("NONE", "None", "No specific target format. Only voxelize within this application."),
     ] # list is populated by AddonPreferences
 
-    @staticmethod
-    def get_formats_list_value(index: int=0) -> str:
-        return VoxelFormatsExportMenu.FORMATS[index][0]
+    SELECTION_NONE:str = FORMATS[0][0]
 
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout

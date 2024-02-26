@@ -62,6 +62,7 @@ class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
         addon_preferences: bpy.types.Addon = context.preferences.addons[VoxilityAddonPreferences.bl_idname]
         preferences: VoxilityAddonPreferences = addon_preferences.preferences
         preferences.clear_all_checkboxes()
+        bpy.context.scene.voxility_pro_properties.export_format = VoxelFormatsExportMenu.SELECTION_NONE
         return {'FINISHED'}
 
 class VoxilityAddonPreferences(bpy.types.AddonPreferences):

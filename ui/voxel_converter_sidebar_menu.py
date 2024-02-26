@@ -136,7 +136,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         layout.prop(properties, "export_format")
 
-        if properties.export_format == VoxelFormatsExportMenu.get_formats_list_value():
+        if properties.export_format == VoxelFormatsExportMenu.SELECTION_NONE:
             return
 
         op = layout.operator(OBJECT_OT_MeshVoxelSaveOperator.bl_idname, text="Save Target Format")

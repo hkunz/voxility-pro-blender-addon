@@ -1,5 +1,4 @@
 import bpy
-import os
 import time
 import bpy_types
 
@@ -28,7 +27,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
 
     vox_target_format_ext: bpy.props.StringProperty(
         name="Target Voxel Format Extension",
-        default=VoxelFormatsExportMenu.get_formats_list_value()
+        default=VoxelFormatsExportMenu.SELECTION_NONE
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
@@ -73,7 +72,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     def generate_output_paths(self, temp_dir: str) -> List[str]:
         paths = [p.join(temp_dir, 'temp_out.obj')]
         type: str = self.vox_target_format_ext.lower()
-        if type == "none":
+        if type == VoxelFormatsExportMenu.SELECTION_NONE.lower():
             return paths
         type_dir = p.join(temp_dir, type)
         TempFileManager().create_directory(type_dir)
@@ -81,8 +80,8 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         return paths
 
     def execute(self, context: bpy_types.Context) -> set[str]:
-        OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.get_formats_list_value()
         voxelize_duration: float = time.time()
+        OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.SELECTION_NONE
         active_object: bpy_types.Object = context.view_layer.objects.active
         if OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR is None or not p.exists(OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR):
             OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR = TempFileManager().create_temp_dir()
