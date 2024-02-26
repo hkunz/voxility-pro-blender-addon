@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs -->
+<html lang="en" class="wf-bebasneue-n4-active wf-lato-i4-active wf-lato-i7-active wf-lato-n7-active wf-lato-n4-active wf-merriweather-n7-active wf-merriweather-n4-active wf-merriweather-i4-active wf-merriweather-i7-active wf-active">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    .turbolinks-progress-bar {
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: #0076ff;
+      z-index: 9999;
+      transition: width 300ms ease-out, opacity 150ms 150ms ease-in;
+      transform: translate3d(0, 0, 0);
+    }
+  </style>
+  <style type="text/css">.swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px}.swal-icon--error__line--left{-webkit-transform:rotate(45deg);transform:rotate(45deg);left:17px}.swal-icon--error__line--right{-webkit-transform:rotate(-45deg);transform:rotate(-45deg);right:16px}@-webkit-keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@-webkit-keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}@keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}.swal-icon--warning{border-color:#f8bb86;-webkit-animation:pulseWarning .75s infinite alternate;animation:pulseWarning .75s infinite alternate}.swal-icon--warning__body{width:5px;height:47px;top:10px;border-radius:2px;margin-left:-2px}.swal-icon--warning__body,.swal-icon--warning__dot{position:absolute;left:50%;background-color:#f8bb86}.swal-icon--warning__dot{width:7px;height:7px;border-radius:50%;margin-left:-4px;bottom:-11px}@-webkit-keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}@keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}.swal-icon--success{border-color:#a5dc86}.swal-icon--success:after,.swal-icon--success:before{content:"";border-radius:50%;position:absolute;width:60px;height:120px;background:#fff;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal-icon--success:before{border-radius:120px 0 0 120px;top:-7px;left:-33px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:60px 60px;transform-origin:60px 60px}.swal-icon--success:after{border-radius:0 120px 120px 0;top:-11px;left:30px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 60px;transform-origin:0 60px;-webkit-animation:rotatePlaceholder 4.25s ease-in;animation:rotatePlaceholder 4.25s ease-in}.swal-icon--success__ring{width:80px;height:80px;border:4px solid hsla(98,55%,69%,.2);border-radius:50%;box-sizing:content-box;position:absolute;left:-4px;top:-4px;z-index:2}.swal-icon--success__hide-corners{width:5px;height:90px;background-color:#fff;padding:1px;position:absolute;left:28px;top:8px;z-index:1;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal-icon--success__line{height:5px;background-color:#a5dc86;display:block;border-radius:2px;position:absolute;z-index:2}.swal-icon--success__line--tip{width:25px;left:14px;top:46px;-webkit-transform:rotate(45deg);transform:rotate(45deg);-webkit-animation:animateSuccessTip .75s;animation:animateSuccessTip .75s}.swal-icon--success__line--long{width:47px;right:8px;top:38px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-animation:animateSuccessLong .75s;animation:animateSuccessLong .75s}@-webkit-keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@-webkit-keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}@keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}.swal-icon--info{border-color:#c9dae1}.swal-icon--info:before{width:5px;height:29px;bottom:17px;border-radius:2px;margin-left:-2px}.swal-icon--info:after,.swal-icon--info:before{content:"";position:absolute;left:50%;background-color:#c9dae1}.swal-icon--info:after{width:7px;height:7px;border-radius:50%;margin-left:-3px;top:19px}.swal-icon{width:80px;height:80px;border-width:4px;border-style:solid;border-radius:50%;padding:0;position:relative;box-sizing:content-box;margin:20px auto}.swal-icon:first-child{margin-top:32px}.swal-icon--custom{width:auto;height:auto;max-width:100%;border:none;border-radius:0}.swal-icon img{max-width:100%;max-height:100%}.swal-title{color:rgba(0,0,0,.65);font-weight:600;text-transform:none;position:relative;display:block;padding:13px 16px;font-size:27px;line-height:normal;text-align:center;margin-bottom:0}.swal-title:first-child{margin-top:26px}.swal-title:not(:first-child){padding-bottom:0}.swal-title:not(:last-child){margin-bottom:13px}.swal-text{font-size:16px;position:relative;float:none;line-height:normal;vertical-align:top;text-align:left;display:inline-block;margin:0;padding:0 10px;font-weight:400;color:rgba(0,0,0,.64);max-width:calc(100% - 20px);overflow-wrap:break-word;box-sizing:border-box}.swal-text:first-child{margin-top:45px}.swal-text:last-child{margin-bottom:45px}.swal-footer{text-align:right;padding-top:13px;margin-top:13px;padding:13px 16px;border-radius:inherit;border-top-left-radius:0;border-top-right-radius:0}.swal-button-container{margin:5px;display:inline-block;position:relative}.swal-button{background-color:#7cd1f9;color:#fff;border:none;box-shadow:none;border-radius:5px;font-weight:600;font-size:14px;padding:10px 24px;margin:0;cursor:pointer}.swal-button:not([disabled]):hover{background-color:#78cbf2}.swal-button:active{background-color:#70bce0}.swal-button:focus{outline:none;box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(43,114,165,.29)}.swal-button[disabled]{opacity:.5;cursor:default}.swal-button::-moz-focus-inner{border:0}.swal-button--cancel{color:#555;background-color:#efefef}.swal-button--cancel:not([disabled]):hover{background-color:#e8e8e8}.swal-button--cancel:active{background-color:#d7d7d7}.swal-button--cancel:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(116,136,150,.29)}.swal-button--danger{background-color:#e64942}.swal-button--danger:not([disabled]):hover{background-color:#df4740}.swal-button--danger:active{background-color:#cf423b}.swal-button--danger:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(165,43,43,.29)}.swal-content{padding:0 20px;margin-top:20px;font-size:medium}.swal-content:last-child{margin-bottom:20px}.swal-content__input,.swal-content__textarea{-webkit-appearance:none;background-color:#fff;border:none;font-size:14px;display:block;box-sizing:border-box;width:100%;border:1px solid rgba(0,0,0,.14);padding:10px 13px;border-radius:2px;transition:border-color .2s}.swal-content__input:focus,.swal-content__textarea:focus{outline:none;border-color:#6db8ff}.swal-content__textarea{resize:vertical}.swal-button--loading{color:transparent}.swal-button--loading~.swal-button__loader{opacity:1}.swal-button__loader{position:absolute;height:auto;width:43px;z-index:2;left:50%;top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);text-align:center;pointer-events:none;opacity:0}.swal-button__loader div{display:inline-block;float:none;vertical-align:baseline;width:9px;height:9px;padding:0;border:none;margin:2px;opacity:.4;border-radius:7px;background-color:hsla(0,0%,100%,.9);transition:background .2s;-webkit-animation:swal-loading-anim 1s infinite;animation:swal-loading-anim 1s infinite}.swal-button__loader div:nth-child(3n+2){-webkit-animation-delay:.15s;animation-delay:.15s}.swal-button__loader div:nth-child(3n+3){-webkit-animation-delay:.3s;animation-delay:.3s}@-webkit-keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}@keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}.swal-overlay{position:fixed;top:0;bottom:0;left:0;right:0;text-align:center;font-size:0;overflow-y:auto;background-color:rgba(0,0,0,.4);z-index:10000;pointer-events:none;opacity:0;transition:opacity .3s}.swal-overlay:before{content:" ";display:inline-block;vertical-align:middle;height:100%}.swal-overlay--show-modal{opacity:1;pointer-events:auto}.swal-overlay--show-modal .swal-modal{opacity:1;pointer-events:auto;box-sizing:border-box;-webkit-animation:showSweetAlert .3s;animation:showSweetAlert .3s;will-change:transform}.swal-modal{width:478px;opacity:0;pointer-events:none;background-color:#fff;text-align:center;border-radius:5px;position:static;margin:20px auto;display:inline-block;vertical-align:middle;-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;z-index:10001;transition:opacity .2s,-webkit-transform .3s;transition:transform .3s,opacity .2s;transition:transform .3s,opacity .2s,-webkit-transform .3s}@media (max-width:500px){.swal-modal{width:calc(100% - 20px)}}@-webkit-keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}</style>
+  <link rel="stylesheet" media="screen" href="./voxility-documentation/application-651cc9df.css"
+    data-turbolinks-track="reload">
+</head>
+<body class="layout-products-docs bg-light">
+  <button type="button" class="btn btn-light mt-2 mt-md-3 shadow d-lg-none shopping-cart-mobile">
+    <a class="shopping-cart-wrapper d-flex align-items-center text-nounderline text-nocolor"
+      href="https://blendermarket.com/cart">
+      <i class="fas fa-shopping-cart fa-2x shopping-cart-icon mr-1"></i>
+      <span class="badge badge-primary shopping-cart-badge">0</span>
+    </a>
+  </button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-3 shadow-sm">
+    <div class="container d-flex align-items-center">
+      <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#collapsible-navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="p-2 text-nounderline d-flex justify-content-center logo-link" href="https://blendermarket.com/">
+        <div class="logo-wrapper d-flex align-items-center">
+          <div class="logo-icon"></div>
+          <div class="logo-text-wrapper">
+            <h4 class="logo-text">
+              Blender Market
+            </h4>
+            <p class="logo-tagline">The indie market for Blender creators</p>
+          </div>
+        </div>
+      </a>
+      <div class="d-none d-md-inline-block p-2 flex-fill">
+      </div>
+      <div class="collapse navbar-collapse justify-content-lg-end" id="collapsible-navbar">
+        <div class="p-2 pr-4 text-nowrap">
+          <ul class="navbar-nav list-inline">
+            <li class="nav-item list-inline-item">
+              <a class="nav-link text-nocolor" href="https://blendermarket.com/products?sort_sales=desc">Popular</a>
+            </li>
+            <li class="nav-item list-inline-item">
+              <a class="nav-link text-nocolor" href="https://blendermarket.com/products?sort_date=desc">New</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="nav-link text-nocolor" href="https://blendermarket.com/products?sort_price=asc">Free</a>
+            </li>
+          </ul>
+        </div>
+        <div class="p-2 text-nowrap">
+          <div class="d-flex justify-content-lg-end">
+            <div class="d-none d-lg-inline-block pr-3">
+              <a class="shopping-cart-wrapper d-flex align-items-center text-nounderline text-nocolor"
+                href="https://blendermarket.com/cart">
+                <i class="fas fa-shopping-cart fa-2x shopping-cart-icon mr-1"></i>
+                <span class="badge badge-primary shopping-cart-badge" style="display:none">0</span>
+              </a>
+            </div>
+            <div class="user-nav-wrapper">
+              <div class="dropdown">
+                <a class="dropdown-toggle text-nounderline text-nocolor user-dropdown-toggle" data-toggle="dropdown"
+                  href="https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs#">
+                  <img class="avatar" src="./voxility-documentation/logo-sq.png">
+                  <strong>Harry Kunz</strong>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right mt-3 user-dropdown-menu">
+                  <div class="dropdown-divider d-block d-lg-none"></div>
+                  <a class="dropdown-item" href="https://blendermarket.com/account">My Account</a>
+                  <a class="dropdown-item" href="https://blendermarket.com/account/orders">Orders</a>
+                  <a class="dropdown-item" href="https://blendermarket.com/inbox">
+                    Inbox
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="https://blendermarket.com/creator/dashboard">Creator Dashboard</a>
+                  <a class="dropdown-item" href="https://blendermarket.com/creator/products">My Products</a>
+                  <a class="dropdown-item" href="https://blendermarket.com/creator/sales">Sales</a>
+                  <div class="dropdown-divider"></div>
+                  <a target="_blank" class="dropdown-item" href="https://support.blendermarket.com/">
+                    Help Desk <i class="fas fa-external-link-alt ml-1"></i>
+                  </a>
+                  <a class="dropdown-item" rel="nofollow" data-method="delete"
+                    href="https://blendermarket.com/logout">Log Out</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row pb-4 d-none d-lg-block">
+      <div class="col text-center">
+        <div class="d-inline-flex border p-1 bg-white rounded w-100 shadow-sm">
+          <li class="list-inline-item flex-grow-1">
+            <a class="btn w-100" href="https://blendermarket.com/products">All Products</a>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/addons">Addons</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Addons</span>
+              </button>
+              <div class="dropdown-menu">
+                <div class="d-flex">
+                  <div>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/animation-scripts-and-addons">Animation</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/asset-management">Asset
+                      Management</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/import-export">Import &amp;
+                      Export</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/interface">Interface</a>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/materials-and-shading-addons">Materials and Shading</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/modeling">Modeling</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/presets">Presets</a>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/rendering-scripts-and-addons">Rendering</a>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/rigging-scripts-and-addons">Rigging</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/theme-packages">Theme
+                      Packages</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/vse">VSE</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/models">Models</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Models</span>
+              </button>
+              <div class="dropdown-menu">
+                <div class="d-flex">
+                  <div>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/3d-printable">3D Printable</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/anatomy">Anatomy</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/animals">Animals</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/animation-models">Animation</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/architecture">Architecture</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/asset-libraries">Asset
+                      Libraries</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/base-meshes">Base Meshes</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/model-buildings">Buildings</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/characters">Characters</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/clothes-accessories">Clothes
+                      &amp; Accessories</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/creatures">Creatures</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/decals">Decals</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/design-elements">Design
+                      Elements</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/electronics">Electronics</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/engines-parts">Engines &amp;
+                      Parts</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/fantasy-fiction">Fantasy &amp;
+                      Fiction</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/food-drinks">Food &amp;
+                      Drinks</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/furnishings">Furnishings</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/game-ready">Game Ready</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/humans">Humans</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/miscellaneous">Miscellaneous</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/motion-graphics">Motion
+                      Graphics</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/music">Music</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/nature">Nature</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/parametric-models">Parametric
+                      Models</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/products">Products</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/science">Science</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/sci-fi">Sci-Fi</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/sports">Sports</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/tools">Tools</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/toys-games">Toys &amp; Games</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/urban">Urban</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/vehicles">Vehicles</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/weapons-armor">Weapons &amp;
+                      Armor</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/surfacing">Surfacing</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Surfacing</span>
+              </button>
+              <div class="dropdown-menu">
+                <div class="d-flex">
+                  <div>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/animals-textures">Animals</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/buildings">Buildings</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/ceramic">Ceramic</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/concrete">Concrete</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/fabric">Fabric</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/glass">Glass</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/ground">Ground</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/hdri-images">HDRI Images</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/humans-textures">Humans</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/ice">Ice</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/marble">Marble</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/metal">Metal</a>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/miscellaneous-materials-and-shaders">Miscellaneous</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/organic">Organic</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/ornaments">Ornaments</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/plants">Plants</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/plastic">Plastic</a>
+                    <a class="dropdown-item"
+                      href="https://blendermarket.com/categories/sci-fi-materials-and-shaders">Sci Fi</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/stone">Stone</a>
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/water">Water</a>
+                  </div>
+                  <div class="col">
+                    <a class="dropdown-item" href="https://blendermarket.com/categories/wood">Wood</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/modifier-setups">Modifier Setups</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Modifier Setups</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="https://blendermarket.com/categories/geometry-node-groups">Geometry Node
+                  Groups</a>
+                <a class="dropdown-item" href="https://blendermarket.com/categories/procedural-generators">Procedural
+                  Generators</a>
+                <a class="dropdown-item" href="https://blendermarket.com/categories/simulations-effects">Simulations
+                  &amp; Effects</a>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/render-setups">Render Setups</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Render Setups</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="https://blendermarket.com/categories/compositing-presets">Compositing
+                  Presets</a>
+                <a class="dropdown-item" href="https://blendermarket.com/categories/studio-lighting">Studio Lighting</a>
+              </div>
+            </div>
+          </li>
+          <li class="list-inline-item flex-grow-1">
+            <div class="btn-group w-100">
+              <a class="btn pr-0" href="https://blendermarket.com/categories/training">Training</a>
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                style="width: 30px; padding-left:0px" data-toggle="dropdown">
+                <span class="sr-only">Toggle Dropdown - Training</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="https://blendermarket.com/categories/ebooks">e-Books</a>
+                <a class="dropdown-item" href="https://blendermarket.com/categories/video-tutorials">Video Tutorials</a>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="body-inner">
+    <main class="mb-5">
+      <div class="container">
+        <header class="mt-4">
+          <div class="row">
+            <div class="col">
+              <h2>Magicavoxel Vox Exporter</h2>
+              <p class="product-meta">by <a href="https://blendermarket.com/creators/harrymckenzie">Harry McKenzie</a> in <a href="https://blendermarket.com/categories/addons">Addons</a>
+                <a href="https://blendermarket.com/creator/products/vox-exporter-for-magicavoxel-and-voxedit/edit">(edit)</a>
+              </p>
+            </div>
+          </div>
+          <hr>
+        </header>
+        <div class="row">
+          <div class="col">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg">
+            <div class="d-flex">
+              <div class="flex-grow-1">
+                <ul class="nav nav-pills mb-3 nav-product">
+                  <li class="nav-item">
+                    <a class="nav-link "
+                      href="https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link "
+                      href="https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/faq">FAQ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active"
+                      href="https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs">Documentation</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link "
+                      href="https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/ratings">Ratings</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div class="js-add-remove-wish">
+                  <a class="add-wish text-nocolor" title="Add to Wish List" data-remote="true" rel="nofollow"
+                    data-method="post"
+                    href="https://blendermarket.com/wish_list_items?wish_list_item%5Bproduct_id%5D=200036">
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-bookmark fa-stack-2x"></i>
+                      <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="tabs-panel is-active has-back quarantine" id="tab-docs">
+
+
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================== C O N T E N T   S T A R T ===================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+
+
+<p style="font-size: 1rem;">Download the zip file that comes with your purchase and <a
+    href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html" target="_blank"
+    style="font-size: 1rem;">install the addon</a> via <i style="font-size: 1rem;">Edit &gt;
+    Preferences &gt; Add-ons</i>. Click <b style="font-size: 1rem;">Install </b>and select the zip
+  file you downloaded. Search for the term <i style="font-size: 1rem;">vox </i>and tick the checkbox
+  next left to the Addon name <b style="font-size: 1rem;">Import-Export: MagicaVoxel Exporter</b>.
+  Don't forget to save your preferences using <i style="font-size: 1rem;">Save Preferences </i>button
+  so you don't have to tick the checkbox again the next time you open Blender.</p>
+<ul>
+  <li style="font-size: 1rem;"><b style="background-color: rgb(255, 255, 0);">Attention!&nbsp;</b><b
+      style="">&nbsp;</b>If you are a&nbsp;<b>Mac OS</b>&nbsp;or a <b>Linux </b>user you have to do an
+    additional step after installation. Please see at bottom of this page!</li>
+</ul>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/4582976cb46de932f077982b618d1e0f.png"
+    style="max-width: 100%;"></p>
+<p style="font-size: 1rem;">Before you use this feature, it is recommended to switch to the <a
+    href="https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html"
+    target="_blank" style="font-size: 1rem;">Scripting workspace</a> tab so you can see the processing
+  output, and please take note of the dimension of the object. The larger the object in dimensions,
+  the more voxel detail you can produce, but it may take longer to process. While it may seem that the
+  user interface is not responding or in a hang state, rest assured it is processing. Kindly be
+  patient and await the completion of the process; the output will be visible in the&nbsp;<a
+    href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank"
+    style="font-size: 1rem;">Info Editor</a>.</p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/69619b536bafe30c9f1836099eea2731.png"
+    style="max-width: 100%;"><br></p>
+<p style="font-size: 1rem;">You will see the <b>vox </b>option under <i style="font-size: 1rem;">File
+    &gt; Export &gt; MagicaVoxel (.vox)</i><span style="font-size: 1rem;"> and the <b>qb </b>option
+    under&nbsp;</span><i style="font-size: 1rem;">File &gt; Export &gt; Qubicle (.qb).&nbsp;</i><span
+    style="font-size: 1rem;">Just simply select the object(s) in Blender that you want to export to
+    voxel format then export. Please experiment first with smaller sized objects that have lesser
+    vertices to get a feel for the addon. It can take from seconds to several minutes depending on how
+    complex your object is. Complexity is compounded by more vertices and faces. So it is always a
+    good idea to try to decimate and reduce the amount of vertices before using this feature.
+  </span><b style="font-size: 1rem;">Please be patient</b><span style="font-size: 1rem;">. Be careful
+    for objects that exceed 100 meters in dimension. The bigger the object, the more voxels, and the
+    longer it will take to finish processing. The first export may take longer than the succeeding
+    exports. So try the export first with the default cube. It may take longer than normal for the
+    first time export.</span></p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/4a2a6e5788a973db24a13f8e51a0a323.png"
+    style="max-width: 100%;"><span style="font-size: 1rem;"><br></span></p>
+<p style="font-size: 1rem;"></p>
+<p style="font-size: 1rem;">You can adjust some settings for the resulting vox file. Hover over each
+  item to see a tooltip for its function. Be careful with the <b>Voxformat Scale</b>. First experiment
+  with lower values like <b>1</b>&nbsp;and then <b>2</b> and up to see how the number of voxels add up
+  in the resulting output. Don't immediately go to 10 or 100! Keep in mind that increasing this value
+  will result in higher voxel resolution but will also extend the time required to generate the vox
+  file. It could take up to several minutes depending on how fast your computer is so please be
+  patient.</p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/ec2550fdaa08febbc307544eef7d3c43.png"
+    style="max-width: 100%;"><br></p>
+<p style="font-size: 1rem;">Now you can directly open the generated&nbsp;<b>.vox</b> file in <b
+    style="font-size: 1rem;">MagicaVoxel </b>or <b style="font-size: 1rem;">VoxEdit</b><span
+    style="font-size: 1rem;"> or the generated <b>.qb</b>&nbsp;file in </span><b
+    style="font-size: 1rem;">Qubicle</b>. Please don't hesitate to message us for issues so we can
+  address them promptly. Enjoy!</p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/dfa520efde70e82f73440d431272e3d4.jpg"
+    style="max-width: 100%;"></p>
+<p style="font-size: 1rem;"><br></p>
+<p style="font-size: 2rem;"><span style="font-weight: bolder; background-color: rgb(255, 255, 0);">MAC
+    OS and LINUX post Installation&nbsp;</span></p>
+<p style="font-size: 1rem;">
+  <font color="#000000" style="">Please take note of the <b>voxconvert </b>version, which is an
+    executable binary used inside of the <b>Vox Exporter</b> addon, because this information may be
+    needed after installation. For example, for the&nbsp;<b>Vox Exporter</b> version <b>1.0.5</b>, the
+    <b>voxconvert </b>version used is&nbsp;<b
+      style="background-color: rgb(255, 255, 0);">&nbsp;0.0.28&nbsp;</b><b style="">&nbsp;</b>which
+    can be found inside the description of the addon under menu <i>Edit &gt; Preferences &gt;
+      Add-ons</i>.</font><br>
+</p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/20c1604acb188999b07d43440330e524.png"
+    style="max-width: 100%;"><br></p>
+<p style="font-size: 1rem;">Also please take note of the Blender version used. You can get the version
+  by navigating to menu <i>Help &gt; Manual</i> which opens a browser. In this example the version
+  is&nbsp;<span style="background-color: rgb(255, 255, 0);"> <b>4.0</b>&nbsp;</span> version. This
+  information may also be needed right after addon installation.</p>
+<p style="font-size: 1rem;"><img
+    src="https://markets-rails.s3.amazonaws.com/cache/f5e72afad79c6dd6bea43ba294d9d077.png"
+    style="max-width: 100%;"></p>
+<p style="font-size: 1rem;"><br></p>
+<p style="font-size: 1rem;"><b style="background-color: rgb(255, 255, 0);">MAC OS: Important
+    Instructions for Mac users after Installation&nbsp;</b></p>
+<p style="font-size: 1rem;">Here are instructions to follow after you have installed the addon on
+  Blender running on <b>Mac OS</b>. Due to <a
+    href="https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip"
+    target="_blank">this issue described here</a>, you have to manually set the third-party
+  vox-converter binary file as executable. To do this, simply do:</p>
+<ol>
+  <li style="font-size: 1rem;">Hold down <b>Command </b>and press <b>Space </b>and type in <b>terminal
+    </b>then press <b>Enter </b>or open terminal window using <a
+      href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial</a></li>
+  <li style="font-size: 1rem;">Copy the following command text. Modify the text to adjust to your
+    <u>Blender version</u> and the <u>voxconvert version</u> if applicable: <br>
+    <pre
+      style="white-space: pre-wrap;">cd; cd Library/Application\ Support/Blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert</pre>
+  </li>
+  <li style="font-size: 1rem;">Then paste the new modified text and press <b>Enter</b></li>
+</ol>
+<p style="font-size: 1rem;">Read the terminal console output and make sure there are no errors. Now
+  you are good to go.&nbsp;<span style="font-size: 1rem;">Let us know if you have any
+    issues.</span><span style="font-size: 1rem;">&nbsp;</span><span
+    style="font-size: 1rem;">Enjoy!</span></p>
+<p style="font-size: 1rem;"><span style="font-size: 1rem;"><br></span></p>
+<p style="font-size: 1rem;"><span
+    style="font-weight: bolder; background-color: rgb(255, 255, 0);">LINUX: Important Instructions for
+    Linux users after Installation&nbsp;</span><b><br></b></p>
+<p style="font-size: 1rem;">Here are instructions to follow after you have installed the addon on
+  Blender running on <b>Linux</b>. <a href="https://youtu.be/SkB-eRCzWIU?si=gIY1pz6VRJbMw_Pl&amp;t=35"
+    target="_blank">Open the terminal</a> and&nbsp;<span style="font-size: 1rem;">Copy the following
+    command text. Modify the text to adjust to your <u>Blender version</u> and the <u>voxconvert
+      version</u> if applicable.</span><br></p>
+<pre
+  style="white-space: pre-wrap;">cd ~/.config/blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font><blender_version>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/linux/</blender_version></pre>
+<p style="font-size: 1rem;">Then paste the new modified text into the terminal and press&nbsp;<span
+    style="font-weight: bolder;">Enter</span>. Make sure the path is correct and there are no errors.
+  Then copy each line and paste into terminal and press <b>Enter</b>. Read the terminal outputs
+  because you may need to type in&nbsp;<font color="#000000"
+    style="background-color: rgb(255, 255, 0);">&nbsp;<b>y</b>&nbsp;</font> for <b>yes </b>and press
+  <b>Enter</b> to confirm installation.</p>
+<pre><blender_version>sudo dpkg -i vengi-shared_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo dpkg -i vengi-voxconvert_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo apt-get install -f<br>vengi-voxconvert --version</blender_version></pre>
+<p style="font-size: 1rem;">Read the output for each line you execute and make sure there are no
+  errors. If all is good you will see the last line print out the version. Close Blender and open
+  again. Enjoy!</p>
+<p style="font-size: 1rem;"><br></p>
+
+
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================== C O N T E N T   E N D ========================================= -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+<!-- ==================================================================================================== -->
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4">
+            <div class="action-wish mb-3">
+              <form class="button_to" method="post" action="https://blendermarket.com/cart_items?product_id=200036"
+                data-remote="true"><button
+                  class="btn btn-primary btn-block btn-lg js-product-addToCart btn-add-to-cart shadow"
+                  data-original-price="$9.99" type="submit">
+                  $9.99 - Purchase
+                </button><input type="hidden" name="authenticity_token"
+                  value="7MD1oSog+GCxlnJvz88zlrAdqBhwQv6+kC1RyoG1w1sMVPZ6LPJzZulGldKkY19w3S6+i7zSjsDA7cioZZQMMg==">
+              </form>
+            </div>
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body text-center">
+                <div class="vendor-info">
+                  <img class="avatar avatar-lg" src="./voxility-documentation/logo-sq.png">
+                  <p class="mb-1 mt-3"><strong>Harry McKenzie</strong></p>
+                  <a target="_blank" class="small" href="https://www.youtube.com/c/harrymckenzietv">
+                    Visit Website <i class="fas fa-external-link-alt "></i>
+                  </a> <a class="btn btn-outline-secondary btn-block mt-2"
+                    href="https://blendermarket.com/creators/harrymckenzie">See all items by this creator</a>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body p-2">
+                <table class="table table-sm table-striped small mb-0">
+                  <tbody>
+                    <tr>
+                      <td>Customer Ratings</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>Average Rating</td>
+                      <td>
+                        <div class="star-ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                            class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="dev-fund-contributor">Dev Fund Contributor</td>
+                      <td><i class="fas fa-heart "></i></td>
+                    </tr>
+                    <tr>
+                      <td>Published</td>
+                      <td>about 1 month ago</td>
+                    </tr>
+                    <tr>
+                      <td>Blender Version</td>
+                      <td>4.0, 3.6, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.93</td>
+                    </tr>
+                    <tr>
+                      <td>License</td>
+                      <td><a href="https://blendermarket.com/page/gpl-license">GPL</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card mb-1 shadow-sm">
+              <div class="card-body text-center">
+                <img class="mb-4" src="./voxility-documentation/support-icon.png">
+                <h5>Have questions before purchasing?</h5>
+                <p>Contact the Creator with your questions right now.</p>
+                <a class="btn btn-outline-secondary shop-contact mb-3" data-toggle="modal"
+                  data-target="#message-creator-5891220">Ask a Question</a>
+                <div class="modal js-support-modal" tabindex="-1" id="message-creator-5891220" data-reveal=""
+                  data-animation-in="fade-in" data-animation-out="fade-out">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form class="simple_form new_conversation" id="new_conversation"
+                        action="https://blendermarket.com/inbox/conversations" accept-charset="UTF-8" method="post">
+                        <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token"
+                          value="hP2+1jCzgH5snPkAd2jybBrf09BW8h4IZct94UhDMnJkab0NNmELeDRMHr0cxJ6Kd+zFQ5pibnY1C+SDrGL9Gw==">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Product Support</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <input type="submit" name="commit" value="Send Message" class="btn btn-primary"
+                            data-disable-with="Please wait...">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="small mt-3 mb-5">
+              <strong>Tags:</strong>
+              <a href="https://blendermarket.com/tags/cubicle">cubicle</a>, <a
+                href="https://blendermarket.com/tags/3d-exporting">3D Exporting</a>, <a
+                href="https://blendermarket.com/tags/addon">addon</a>, <a
+                href="https://blendermarket.com/tags/qubicle">qubicle</a>, <a
+                href="https://blendermarket.com/tags/addon-for-blender">addon for blender</a>, <a
+                href="https://blendermarket.com/tags/export">Export</a>, <a
+                href="https://blendermarket.com/tags/voxel-art">voxel art</a>, <a
+                href="https://blendermarket.com/tags/voxel">voxel</a>, <a
+                href="https://blendermarket.com/tags/magicavoxel">magicavoxel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="bg-dark text-light pt-5 pb-4">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-2 offset-5 mb-2 col-lg-1 offset-lg-0">
+            <img class="logo_footer-bee" src="./voxility-documentation/transparent_bee.png">
+          </div>
+          <div class="col-12 col-lg-6">
+            <h5>Built by Blenderheads, for the Blender Community</h5>
+            <p>Blender Market's goal is to give our community a trusted platform for earning a living with software that
+              we all love, Blender.</p>
+            <p>Made with love from the humans behind <a href="https://cgcookie.com/"><img class="logo_byline"
+                  src="./voxility-documentation/cgc_logo.png"> CG Cookie</a>
+            </p>
+            <p>Follow us:
+              <a target="_blank" href="https://twitter.com/blendermarket">Twitter</a>,
+              <a target="_blank" href="https://www.facebook.com/cgcookieblendermarket/">Facebook</a>,
+              and <a target="_blank" href="https://www.instagram.com/blendermarket3d/">Instagram</a>
+            </p>
+          </div>
+          <div class="col-12 col-lg-2 offset-lg-1">
+            <h6>Company</h6>
+            <ul class="list-unstyled">
+              <li><a href="https://blendermarket.com/page/about">About Us</a></li>
+              <li><a href="https://support.blendermarket.com/article/154-becoming-an-affiliate">Affiliate Program</a>
+              </li>
+              <li><a href="https://blendermarket.com/posts">Blog</a></li>
+              <li><a href="https://blendermarket.com/page/enterprise">Enterprise</a></li>
+              <li><a href="https://blendermarket.com/market-stats">Market Stats</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-2">
+            <h6>Support</h6>
+            <ul class="list-unstyled">
+              <li><a href="https://support.blendermarket.com/">Help Desk</a></li>
+              <li><a href="https://support.blendermarket.com/collection/1-selling">Creator Help</a></li>
+              <li><a href="https://support.blendermarket.com/article/226-understanding-product-license-types">Product
+                  Licensing</a></li>
+              <li><a href="https://blendermarket.com/policies/terms-of-service">Terms of Use</a></li>
+              <li><a href="https://blendermarket.com/policies/privacy-policy">Privacy Policy</a></li>
+              <li><a href="mailto:support@blendermarket.com">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col text-center text-muted">
+            <p>© 2024 Blender Market, LLC. All rights reserved. v<strong>2.6.0.3</strong></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <img src="./voxility-documentation/adsct" height="1" width="1" style="display: none;"><img
+    src="./voxility-documentation/adsct(1)" height="1" width="1" style="display: none;"><iframe
+    name="__privateStripeMetricsController8160" frameborder="0" allowtransparency="true" scrolling="no"
+    role="presentation" allow="payment *" src="./voxility-documentation/m-outer-3437aaddcdf6922d623e172c2d6f9278.html"
+    aria-hidden="true" tabindex="-1"
+    style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe
+    name="__uspapiLocator" tabindex="-1" role="presentation" aria-hidden="true" title="Blank"
+    style="display: none; position: absolute; width: 1px; height: 1px; top: -9999px;"
+    src="./voxility-documentation/saved_resource.html"></iframe>
+  <div id="beacon-container">
+    <div class="hsds-beacon">
+      <div class="Beacon">
+        <div class="ContainerGradient-sc-62zoy-0 dkxqZi"></div>
+        <div class="ContainerFramecss__WrapperUI-sc-d7rzhh-0 iwDBWz BeaconContainer is-configDisplayRight"></div>
+        <div class="FabButtonFramecss__FabButtonFrameUI-sc-y1b4md-0 jJdTJu BeaconFabButtonFrame"
+          style="border-radius: 55px; height: 55px; position: fixed; transform: scale(1); width: 104px; z-index: 1049;">
+          <iframe title="Help Scout Beacon - Open" id="" allowtransparency="true" data-cy="FrameComponent"
+            src="./voxility-documentation/saved_resource(2).html"></iframe></div>
+      </div>
+    </div>
+  </div><iframe name="__privateStripeMetricsController3560" frameborder="0" allowtransparency="true" scrolling="no"
+    role="presentation" allow="payment *"
+    src="./voxility-documentation/m-outer-3437aaddcdf6922d623e172c2d6f9278(1).html" aria-hidden="true" tabindex="-1"
+    style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe
+    name="__privateStripeMetricsController7670" frameborder="0" allowtransparency="true" scrolling="no"
+    role="presentation" allow="payment *"
+    src="./voxility-documentation/m-outer-3437aaddcdf6922d623e172c2d6f9278(2).html" aria-hidden="true" tabindex="-1"
+    style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
+</body>
+</html>
