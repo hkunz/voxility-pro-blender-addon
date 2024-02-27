@@ -1,0 +1,101 @@
+<!-- Accepted Tags & Attributes: https://support.blendermarket.com/article/280-customizing-your-content -->
+<style>
+  h4.outline-item-h4 {font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6.outline-item-h6 {font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6.outline-item-small-h6 {font-weight: bold; background-color: #76a1ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h4 .outline-number-main {background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6 .outline-number-1sub {background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6 .outline-number-2sub {background-color: #000; color:#fff; padding: 2px 15px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  table tr.alternate-color-1 {background-color: #dfdfdf; background-color: #f1f1f1;}
+  table tr.alternate-color-2 {background-color: #dfdfdf; background-color: #f1f1f1;}
+  .formats-table tbody tr:nth-child(odd) {background-color: #dfdfdf;}
+  .formats-table tbody tr:nth-child(even) {background-color: #f1f1f1;}
+  table .padded-cell {padding: 5px 25px;}
+  table .center-cell {text-align: center;}
+</style>
+
+<h4 class="outline-item-h4"><span class="outline-number-main">1</span> Introduction</h4>
+<p><b>Voxility Pro: Voxel File Format Exchange</b> is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
+<p>Voxility Pro supports seamless import and export of various popular voxel file formats, including <b>MagicaVoxel</b> (.<b>vox</b>), <b>Qubicle</b> (.<b>qb</b>), <b>Voxlap</b> (.<b>vxl</b>), and many more, ensuring compatibility with a wide range of voxel editors and game engines.</p>
+<p>Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy">Martin Gerhardy</a> as part of <a href="https://github.com/vengi-voxel/vengi">Vengi Voxel</a> — an open-source and multi-platform voxel editor — Voxility Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
+<h6 class="outline-item-h6"><span class="outline-number-1sub">1.1</span> Overview</h6>
+<p><b>Voxility Pro</b> offers a robust set of tools and functionalities tailored specifically for voxel modeling enthusiasts. From mesh conversion to import/export capabilities, Voxility Pro provides a complete solution for incorporating voxel-based techniques into your projects.</p>
+<img src="./voxility-documentation/voxility-images/step-4-ui-export-and-sidebar.png" alt="Voxility Pro Overview">
+<p></p>
+<h6 class="outline-item-h6"><span class="outline-number-1sub">1.2</span> Purpose</h6>
+<p>The primary goal of <b>Voxility Pro</b> is to simplify the process of working with voxel data in Blender while preserving the fidelity of your original models. One of its standout features is the ability to convert meshes with textures into voxel-type meshes. These voxel meshes can be exported to various formats such as .<b>vox</b>, .<b>qb</b>, .<b>vxl</b>, and more. Importantly, Voxility Pro <b>preserves color information</b> during this conversion process, enabling seamless transitions between traditional mesh modeling and voxel-based workflows.</p>
+<h6 class="outline-item-h6"><span class="outline-number-1sub">1.3</span> Functionality</h6>
+<p><b>Voxility Pro</b> boasts a range of powerful functionalities, including:</p>
+<table border="0" cellpadding="10" cellspacing="0">
+<tr>
+    <th>Feature</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td style="white-space: nowrap;">Mesh Conversion</td>
+    <td>Transform polygonal meshes into voxel-based representations with ease.</td>
+</tr>
+<tr>
+    <td style="white-space: nowrap;">Texture Preservation</td>
+    <td>Retain color information from textures during mesh-to-voxel conversion.</td>
+</tr>
+<tr>
+    <td style="white-space: nowrap;">Import & Export</td>
+    <td>Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td>
+</tr>
+<tr>
+    <td style="white-space: nowrap;">Efficient Workflow</td>
+    <td>Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td>
+</tr>
+</table>
+<p></p>  
+<h6 class="outline-item-h6"><span class="outline-number-1sub">1.4</span> Compatibility</h6>
+<p><b>Voxility Pro</b> is compatible with <b>Blender</b> versions <b>2.93.0</b> to <b>4.0</b> and above, ensuring broad accessibility for Blender users. It also supports import and export functionalities for popular voxel file formats such as <b>MagicaVoxel</b> (.<b>vox</b>) and <b>Qubicle</b> (.<b>qb</b>) and many more, providing flexibility and interoperability with other voxel editing software. You can check your Blender version under menu <i>Help > Manual </i>:</p>
+<img src="./voxility-documentation/voxility-images/step-0-check-blender-version.png" alt="Check Blender Version">
+<p>This will open a browser window where you will see the Blender version in the upper left corner.</p>
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">1.4.1</span> Supported Import Formats</h6>
+<p>Voxility Pro supports a wide range of formats:</p>
+<table class="formats-table" style="border-collapse: collapse; border: none; width: 100%; padding: 8px;">
+<thead style="background-color: #e27c08;">
+    <tr style="color: #ffffff;">
+    <th class="padded-cell">Name</th>
+    <th class="center-cell">File Extension</th>
+    <th class="center-cell">Import</th>
+    <th class="center-cell">Export</th>
+    </tr>
+</thead>
+<tbody>
+    <tr class="alternate-color-1"><td class="padded-cell">MagicaVoxel</td><td class="center-cell">vox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Qubicle Binary Exchange</td><td class="center-cell">qb</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Qubicle Binary Tree Exchange</td><td class="center-cell">qbt</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Qubicle Exchange Format ASCII</td><td class="center-cell">qef</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Qubicle Project</td><td class="center-cell">qbcl</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Binvox command line voxelizer</td><td class="center-cell">binvox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">CubeWorld CubeMap</td><td class="center-cell">cub</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Minecraft Schematic</td><td class="center-cell">schematic</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Minecraft level dat</td><td class="center-cell">dat</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Minecraft Anvil Region</td><td class="center-cell">mca</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Minetest Template</td><td class="center-cell">mts</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Sandbox VoxEdit Collection</td><td class="center-cell">vxc</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Sandbox VoxEdit Hierarchy</td><td class="center-cell">vxr</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Sandbox VoxEdit Tilemap</td><td class="center-cell">vxt</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Sandbox VoxEdit Model</td><td class="center-cell">vxm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">MagicaVoxel XRAW</td><td class="center-cell">xraw</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Tiberian Sun</td><td class="center-cell">vxl</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Voxlap Voxel Engine</td><td class="center-cell">kv6</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Voxlap Voxel model format</td><td class="center-cell">kvx</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Animatoon 3D Scene</td><td class="center-cell">scn</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Sproxel csv</td><td class="center-cell">csv</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">StarMade</td><td class="center-cell">sment</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Goxel</td><td class="center-cell">gox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Voxel Max</td><td class="center-cell">vmax</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Voxel Builder</td><td class="center-cell">vbx</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Voxel3D</td><td class="center-cell">v3a</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Vengi</td><td class="center-cell">vengi</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Nicks Voxel Model</td><td class="center-cell">nvm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Particubes</td><td class="center-cell">pcubes</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">CuBic Mesh</td><td class="center-cell">csm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Cubzh</td><td class="center-cell">3zh</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color-1"><td class="padded-cell">Cubzh World</td><td class="center-cell">b64</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+</tbody>
+</table>

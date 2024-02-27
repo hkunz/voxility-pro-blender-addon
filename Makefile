@@ -28,6 +28,11 @@ vox-addon-preferences:
 	@echo "Generating AddonPreferences file ..."
 	./scripts/generate-addon-preferences-file.sh
 
+vox-documentation-content-final:
+	@echo "=====================================================================================>"
+	@echo "Generating voxility documentation content file ..."
+	./scripts/generate-documentation-content-html.sh
+
 create-next-tag:
 	@echo "=====================================================================================>"
 	@echo "Create new tag ..."
