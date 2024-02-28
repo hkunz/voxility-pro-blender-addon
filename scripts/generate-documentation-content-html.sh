@@ -6,6 +6,14 @@ RESOURCES_DIR="resources/"
 DOCUMENT_CONTENT_TEMPLATE="${RESOURCES_DIR}documentation/voxility-content-test.html"
 DOCUMENT_CONTENT_FINAL="${RESOURCES_DIR}documentation/voxility-content-final.html"
 
+cleanup() {
+    echo "Script interrupted. Cleaning up..."
+    rm -f resources/documentation/sed* # remove temporary file created by the sed command if it is interrupted
+    exit 1
+}
+
+trap cleanup INT
+
 generate_voxility_content_final_file() {
     output_file="${DOCUMENT_CONTENT_FINAL}"
     cp "${DOCUMENT_CONTENT_TEMPLATE}" "${output_file}"
@@ -22,11 +30,15 @@ generate_voxility_content_final_file() {
 replace_class_with_style_attribute() {
     local output_file="$1"
     CSS=$(sed -n '/<style>/,/<\/style>/p' "$output_file" | sed '1d;$d')
-
-        while IFS= read -r line; do
-        class=$(echo "$line" | awk -F '.' '{print $2}' | sed 's/ *$//' | sed 's/ .*//')
-        css=$(echo "$line" | sed 's/.*{\(.*\)}.*/\1/')
-        echo Replace class=\"$class\" with style=\"$css\"
+    while IFS= read -r line; do
+        trimmed_line="${line#"${line%%[![:space:]]*}"}"
+        trimmed_line="${trimmed_line%"${trimmed_line##*[![:space:]]}"}"
+        if [[ -z $trimmed_line || $trimmed_line == "/*"* ]]; then
+            continue
+        fi
+        class=$(echo "$trimmed_line" | awk -F '.' '{print $2}' | sed 's/ *$//' | sed 's/ .*//')
+        css=$(echo "$trimmed_line" | sed 's/.*{\(.*\)}.*/\1/')
+        echo "Replace class=\"$class\" => style=\"${css:0:100}$(if [ ${#css} -gt 100 ]; then echo '...'; fi)\""
         sed -i "s/class=\"$class\"/style=\"$css\"/g" "$output_file"
     done <<< "$CSS"
 }
@@ -38,11 +50,8 @@ modify_alternate_row_colors() {
     tr_tags=$(grep -o '<tr[^>]*style="[^"]*background-color:[^"]*background-color:[^"]*"[^>]*>.*' "$output_file")
     color=""
     while IFS= read -r tr_tag; do
-        if (( i % 2 == 0 )); then
-            color=$(echo "$tr_tag" | grep -o 'background-color:[^;]*; ' | head -n 1)
-        else
-            color=$(echo "$tr_tag" | grep -o 'background-color:[^;]*;' | sed '2!d')
-        fi
+        color=$(echo "$tr_tag" | grep -o 'background-color:[^;]*;' | sed -n "$(( i % 2 == 0 ? 1 : 2 ))p")
+        echo "$i: use ${color} in ${tr_tag:0:100}$(if [ ${#tr_tag} -gt 100 ]; then echo '...'; fi)"
         modified_line=$(echo "$tr_tag" | sed "s/${color}//")
         sed -i "s|$tr_tag|$modified_line|" "$output_file"
         ((i++))
