@@ -6,7 +6,7 @@
   h6.outline-item-small-h6 {font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
   h4 .outline-number-main {background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
   h6 .outline-number-1sub {background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
-  h6 .outline-number-2sub {background-color: #000; color:#fff; padding: 2px 15px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6 .outline-number-2sub {background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
 
   p.default-format {text-align: justify; padding-left: 5px; padding-right: 5px;}
   div.section-end {margin-bottom: 30px;}
@@ -29,7 +29,7 @@
   table thead.table-header-type {background-color: #292929;}
   span.boxed-text {color:white; font-weight: bold; background-color: #444444; padding: 0px 8px 1px 8px; border-radius: 5px;}
   span.boxed-voxility {color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;}
-  span.orange-boxed-text {color:white; font-weight: bold; background-color: #e27c08; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  span.orange-boxed-text {color:white; font-weight: bold; background-color: #ff8000; padding: 0px 8px 1px 8px; border-radius: 5px;}
   span.yellow-boxed-text {color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 8px 1px 8px; border-radius: 5px;}
   span.white-boxed-text {color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 1px 8px; border-radius: 5px;}
   ol span.ordered-list-item {background: rgb(0, 0, 0); border-radius: 100%; color: white; width: 1.2em; text-align: center; display: inline-block; padding: 5px;}
@@ -39,12 +39,13 @@
   div.console-body {background-color: black; color: white; padding: 15px; font-family: 'Courier New', Courier, monospace; font-weight: normal; text-align: left;}
 
   pre.terminal-style {color: #fff; background-color:#202020; white-space: pre-wrap;}
+  span.arrow {margin:2px;}
 </style>
 <!-- =================================================================================================== -->
 <!-- 1 === Introduction -->
 <!-- =================================================================================================== -->
 <h4 class="outline-item-h4"><span class="outline-number-main">1</span> Introduction</h4>
-<p class="default-format"><span class="boxed-voxility">Voxility Pro: Voxel File Format Exchange</span> is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro: Voxel File Format Exchange</span> is a comprehensive <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html">Blender addon</a> designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
 <p class="default-format">This addon supports seamless import and export of various popular voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and a plethora of <a href="#fileformats">many more voxel file formats</a>, ensuring compatibility with a wide range of voxel editors and game engines.</p>
 <div style="background-color: #363636; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px;">
   <p style="color:#ffffff;font-weight: normal; text-align: justify;">Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of <a href="https://github.com/vengi-voxel/vengi"><b>Vengi Voxel</b></a> — an open-source and multi-platform voxel editor — <b>Voxility Pro</b> brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
@@ -83,7 +84,7 @@
 <!-- 1.4 === Compatibility -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.4</span> Compatibility</h6>
-<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span class="boxed-text">Help</span> → <span class="boxed-text">Manual</span></p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span class="boxed-text">Help</span><span class="arrow">→</span><span class="boxed-text">Manual</span></p>
 <img style="margin-bottom: 10px;" src="./voxility-documentation/voxility-images/step-0-check-blender-version.png" alt="Check Blender Version">
 <p class="default-format">It also supports import and export functionalities for popular voxel file formats such as <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and <a href="#fileformats">many more voxel file formats</a>, providing flexibility and interoperability with other voxel editing software.</p>
 <div class="section-end"></div>
@@ -170,7 +171,7 @@
   <li>Locate the <span class="boxed-voxility">Voxility Pro</span> addon product page.</li>
   <li>Click on the <span class="orange-boxed-text">Purchase</span> or <span class="orange-boxed-text">Download</span> button to obtain the addon.</li>
   <li>Complete the payment process if required.</li>
-  <li>Once the download is complete, you will receive a ZIP file containing the addon.</li>
+  <li>Once the download is complete, you will receive a <span class="orange-boxed-text">.zip</span> file containing the addon.</li>
 </ul>
 <div class="section-end"></div>
 <!-- =================================================================================================== -->
@@ -179,9 +180,10 @@
 <h6 class="outline-item-h6"><span class="outline-number-1sub">2.3</span> Addon Installation</h6>
 <p class="default-format">After downloading the <span class="boxed-voxility">Voxility Pro</span> addon and launching Blender on your system, you can install it by following these instructions:</p>
 <ul style="list-style: disc">
-  <li>Go to menu <span class="boxed-text">Edit</span> → <span class="boxed-text">Preferences...</span> → <b>Add-ons</b></li>
+  <li>Go to menu <span class="boxed-text">Edit</span><span class="arrow">→</span><span class="boxed-text">Preferences...</span><span class="arrow">→</span><b>Add-ons</b></li>
+  <span class="arrow">→</span>
   <li>At the top right of the window, click on the <span class="boxed-text">Install...</span> button.</li>
-  <li>Navigate to where you downloaded the ZIP file and select it.</li>
+  <li>Navigate to where you downloaded the <span class="orange-boxed-text">.zip</span> file and select it.</li>
   <li>Click the <span class="boxed-text">Install Add-on</span> button to install the addon.</li>
   <li>Enable the addon by checking the checkbox as shown below.</li>
 </ul>
@@ -199,10 +201,10 @@
     For example, for the addon version <span class="yellow-boxed-text"><b>1.0.12</b></span>,
     the <b>voxconvert </b>version used is <span class="yellow-boxed-text"><b>0.0.29</b></span>
     which can be found inside the description of the addon under
-    menu <span class="boxed-text">Edit</span> → <span class="boxed-text">Preferences...</span> → <b>Add-ons</b></p>
+    menu <span class="boxed-text">Edit</span><span class="arrow">→</span><span class="boxed-text">Preferences...</span><span class="arrow">→</span><b>Add-ons</b></p>
 <img src="./voxility-documentation/voxility-images/step-0-preferences-install-addon-check.png" style="max-width: 100%;"><br>
 <div class="section-spacer"></div>
-<p>Also please take note of the Blender version used. You can get the version by navigating to menu <span class="boxed-text">Help</span> → <span class="boxed-text">Manual</span> which opens a browser. In this example the version is <span class="yellow-boxed-text"><b>4.0</b></span>.</p>
+<p>Also please take note of the Blender version used. You can get the version by navigating to menu <span class="boxed-text">Help</span><span class="arrow">→</span><span class="boxed-text">Manual</span> which opens a browser. In this example the version is <span class="yellow-boxed-text"><b>4.0</b></span>.</p>
 <p><img
 src="https://markets-rails.s3.amazonaws.com/cache/f5e72afad79c6dd6bea43ba294d9d077.png"
 style="max-width: 100%;"></p>
@@ -228,7 +230,7 @@ href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial
   <div class="console-window">
     <div class="title-bar">Terminal</div>
     <div class="console-body">
-        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.28</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
+        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
     </div>
   </div>
 </li>
@@ -245,7 +247,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     Then modify the text to adjust to your <b>Blender version</b> (e.g.<span class="yellow-boxed-text"><b>4.0</b></span>)
     and the <b>voxconvert version</b> (e.g.<span class="yellow-boxed-text"><b>0.0.29</b></span>). Then copy-paste the new modified text into your
     <a target="_blank" href="https://en.wikipedia.org/wiki/Linux_console">Linux Console</a>
-    and press <span class="boxed-text">Enter</span>.</p>
+    and press <span class="boxed-text">Enter</span></p>
 <div class="console-window">
   <div class="title-bar">Linux Console</div>
   <div class="console-body">
@@ -282,17 +284,41 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <!-- 3.1 === Configuration Options -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.1</span> Configuration Options</h6>
-<p class="default-format">Enhance the Addon by clicking the small arrow located to the left of the addon name and checkbox. This action will unveil a plethora of configuration options, allowing you to personalize your experience and tailor the application to meet your unique requirements.</p>
+<p class="default-format">Enhance the addon by navigating to menu <span class="boxed-text">Edit</span><span class="arrow">→</span><span class="boxed-text">Preferences...</span><span class="arrow">→</span><b>Add-ons</b> and searching for <u><b>VOXILITY</b></u>. Then, click the small arrow located to the left of the addon name and checkbox. This action will unveil a plethora of configuration options, allowing you to personalize your experience and tailor the application to meet your unique requirements.</p>
 <img src="./voxility-documentation/voxility-images/step-2-preferences-expand.png" alt="Voxility Pro Configuration Options">
 <div class="section-spacer"></div>
 <p class="default-format">Select the checkboxes corresponding to the voxel file formats you'll use. This streamlines the options list by hiding unnecessary choices during object import/export, preventing clutter and ensuring a smoother workflow. Below is an example of some selected options. Observe that the import list and export list (<b>supported</b> export formats only) now exclusively presents the options you've configured.</p>
 <img src="./voxility-documentation/voxility-images/step-3-preferences-relevant-file-types.png" alt="Voxility Pro Configuration Customization">
-<div class="section-end"></div>
+<div class="section-spacer"></div>
+<div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
+  <p style="color:#000;font-weight: normal; text-align: justify;">
+    <b>NOTE</b>: Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">save your preferences</a> using <span class="boxed-text">Save Preferences</span> button located in the lower left corner of the Preferences windows, so you don't have to tick the checkboxes again the next time you open Blender.</p>
+</div>
 <!-- =================================================================================================== -->
 <!-- 3.2 === User Interface Overview -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.2</span> User Interface Overview</h6>
 <p class="default-format">In this section, we'll provide an overview of the user interface to familiarize you with the main components and features.</p>
+<!-- =================================================================================================== -->
+<!-- 3.2.1 === Export Voxel Format File -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.1</span> Export Voxel Format File</h6>
+<p class="default-format">Exporting stuff here <span class="boxed-text">File</span><span class="arrow">→</span><span class="boxed-text">Export</span>→</span><span class="boxed-text">Voxility Voxel Formats</span>→</span><span class="orange-boxed-text">.*</span></p>
+<img src="./voxility-documentation/voxility-images/step-4a-ui-export.png" alt="Voxility Pro Export Voxel Format File">
+<div class="section-spacer"></div>
+<!-- =================================================================================================== -->
+<!-- 3.2.2 === Import Voxel Format File -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.2</span> Import Voxel Format File</h6>
+<p class="default-format">Importing stuff here <span class="boxed-text">File</span><span class="arrow">→</span><span class="boxed-text">Import</span>→</span><span class="boxed-text">Voxility Voxel Formats</span>→</span><span class="orange-boxed-text">.*</span></p>
+<img src="./voxility-documentation/voxility-images/step-5a-ui-import.png" alt="Voxility Pro Import Voxel Format File">
+<div class="section-spacer"></div>
+<!-- =================================================================================================== -->
+<!-- 3.2.3 === Mesh Conversion w/ N-Panel -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Mesh Conversion Voxelize Button</h6>
+<p class="default-format">N-Panel <span class="boxed-text">N-Panel</span><span class="arrow">→</span><span class="boxed-text">Voxility</span>→</span><span class="boxed-text">Voxelize</span></p>
+<img src="./voxility-documentation/voxility-images/step-8-ui-target-save-to-folder.png" alt="Voxility Pro N-Panel">
 <div class="section-end"></div>
 <!-- =================================================================================================== -->
 <!-- 3.3 === Basic Operations -->
@@ -301,26 +327,50 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <div class="section-end"></div>
 
 
+<pre>
+4. Main Features
+4.1 Feature 1
+4.1.1 Description
+4.1.2 Usage
+4.1.3 Examples
+4.2 Feature 2
+4.2.1 Description
+4.2.2 Usage
+4.2.3 Examples
+(Continue this pattern for each main feature)
+
+5. Advanced Techniques
+5.1 Advanced Feature 1
+5.1.1 Description
+5.1.2 Usage
+5.1.3 Examples
+5.2 Advanced Feature 2
+5.2.1 Description
+5.2.2 Usage
+5.2.3 Examples
+(Continue this pattern for each advanced technique)
+
+6. Troubleshooting
+6.1 Common Issues
+6.2 Error Messages
+6.3 Solutions
+
+7. FAQ
+7.1 Frequently Asked Questions
+7.2 Answers
+
+8. Support and Community
+8.1 Contact Information
+8.2 Online Resources
+8.3 Community Forums
+
+9. Appendix
+9.1 Glossary
+9.2 Additional Resources
+9.3 Version History
+</pre>
 
 
-
-<h4>1. Introduction</h4>
-<p>Download the zip file that comes with your purchase and <a
-href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html" target="_blank"
->install the addon</a> via <i>Edit &gt;
-Preferences &gt; Add-ons</i>. Click <b>Install </b>and select the zip
-file you downloaded. Search for the term <i>vox </i>and tick the checkbox
-next left to the Addon name <b>Import-Export: MagicaVoxel Exporter</b>.
-Don't forget to save your preferences using <i>Save Preferences </i>button
-so you don't have to tick the checkbox again the next time you open Blender.</p>
-<ul>
-<li><b style="background-color: rgb(255, 255, 0);">Attention!&nbsp;</b>
-    <b>&nbsp;</b>If you are a&nbsp;<b>Mac OS</b>&nbsp;or a <b>Linux </b>user you have to do an
-additional step after installation. Please see at bottom of this page!</li>
-</ul>
-<p><img
-src="https://markets-rails.s3.amazonaws.com/cache/4582976cb46de932f077982b618d1e0f.png"
-style="max-width: 100%;"></p>
 <p>Before you use this feature, it is recommended to switch to the <a
 href="https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html"
 target="_blank">Scripting workspace</a> tab so you can see the processing
