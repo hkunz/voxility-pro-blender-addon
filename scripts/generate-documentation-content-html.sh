@@ -18,6 +18,7 @@ generate_voxility_content_final_file() {
     output_file="${DOCUMENT_CONTENT_FINAL}"
     cp "${DOCUMENT_CONTENT_TEMPLATE}" "${output_file}"
     sed -i -e '/nth-child/d' "$output_file"
+    sed -i '/^[[:space:]]*\/\*/d;/^[[:space:]]*$/d' "$output_file"
 
     replace_class_with_style_attribute $output_file
     modify_alternate_row_colors $output_file
@@ -31,13 +32,8 @@ replace_class_with_style_attribute() {
     local output_file="$1"
     CSS=$(sed -n '/<style>/,/<\/style>/p' "$output_file" | sed '1d;$d')
     while IFS= read -r line; do
-        trimmed_line="${line#"${line%%[![:space:]]*}"}"
-        trimmed_line="${trimmed_line%"${trimmed_line##*[![:space:]]}"}"
-        if [[ -z $trimmed_line || $trimmed_line == "/*"* ]]; then
-            continue
-        fi
-        class=$(echo "$trimmed_line" | awk -F '.' '{print $2}' | sed 's/ *$//' | sed 's/ .*//')
-        css=$(echo "$trimmed_line" | sed 's/.*{\(.*\)}.*/\1/')
+        class=$(echo "$line" | awk -F '.' '{print $2}' | sed 's/ *$//' | sed 's/ .*//')
+        css=$(echo "$line" | sed 's/.*{\(.*\)}.*/\1/')
         echo "Replace class=\"$class\" => style=\"${css:0:100}$(if [ ${#css} -gt 100 ]; then echo '...'; fi)\""
         sed -i "s/class=\"$class\"/style=\"$css\"/g" "$output_file"
     done <<< "$CSS"
