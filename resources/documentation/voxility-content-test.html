@@ -1,80 +1,97 @@
 <!-- Accepted Tags & Attributes: https://support.blendermarket.com/article/280-customizing-your-content -->
 <!-- NOTE: Don't use 'class' and 'style' attributes together because the processing script will replace class with style resulting in double style attributes -->
 <style>
-  h4.outline-item-h4 {font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
-  h6.outline-item-h6 {font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
-  h6.outline-item-small-h6 {font-weight: bold; background-color: #76a1ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h4.outline-item-h4 {font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6.outline-item-h6 {font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+  h6.outline-item-small-h6 {font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
   h4 .outline-number-main {background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
   h6 .outline-number-1sub {background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
   h6 .outline-number-2sub {background-color: #000; color:#fff; padding: 2px 15px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;}
+
   p.default-format {text-align: justify; padding-left: 5px; padding-right: 5px;}
   div.section-end {margin-bottom: 30px;}
   div.section-spacer {margin-bottom: 20px;}
+
   table tr.default-alternate-color {background-color: #dfdfdf; background-color: #f1f1f1;} /* script will process alternation */
-  .default-table tbody tr:nth-child(odd) {background-color: #dfdfdf;} /* testing purposes only */
-  .default-table tbody tr:nth-child(even) {background-color: #f1f1f1;} /* testing purposes only */
+  .default-table tbody tr:nth-child(odd) {background-color: #dfdfdf;} /* only works in test enviroment and will be removed by script */
+  .default-table tbody tr:nth-child(even) {background-color: #f1f1f1;} /* only works in test enviroment and will be removed by script */
+
   table tr.alternate-color {background-color: #e4f5ff; background-color: #cde9fa;} /* script will process alternation */
-  .formats-table tbody tr:nth-child(odd) {background-color: #e4f5ff;} /* testing purposes only */
-  .formats-table tbody tr:nth-child(even) {background-color: #cde9fa;} /* testing purposes only */
+  .formats-table tbody tr:nth-child(odd) {background-color: #e4f5ff;} /* only works in test enviroment and will be removed by script */
+  .formats-table tbody tr:nth-child(even) {background-color: #cde9fa;} /* only works in test enviroment and will be removed by script */
+
   .default-table {border-collapse: separate; border: 4px; width: 100%; padding: 0px;}
   .formats-table {border-collapse: separate; border: 4px; width: 100%; padding: 0px;}
+
   table .padded-cell {padding: 5px 25px;}
   table .padded-cell-no-wrap {padding: 5px 25px; white-space: nowrap;}
   table .center-cell {text-align: center;}
-  table thead.table-header-type {background-color: #e27c08;}
-  span.boxed-text {color:white; background-color: #202020; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  table thead.table-header-type {background-color: #292929;}
+  span.boxed-text {color:white; font-weight: bold; background-color: #444444; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  span.boxed-voxility {color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  span.orange-boxed-text {color:white; font-weight: bold; background-color: #e27c08; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  span.yellow-boxed-text {color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 8px 1px 8px; border-radius: 5px;}
+  span.white-boxed-text {color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 1px 8px; border-radius: 5px;}
   ol span.ordered-list-item {background: rgb(0, 0, 0); border-radius: 100%; color: white; width: 1.2em; text-align: center; display: inline-block; padding: 5px;}
-</style>
 
+  div.console-window {width: 100%; margin: 15px auto; border: 1px solid #9c9c9c; border-radius: 10px; overflow: hidden;}
+  div.title-bar {background-color: #cfcfcf; color: rgb(26, 26, 26); padding: 5px 5px 5px 10px; font-weight: bold; user-select: none;}
+  div.console-body {background-color: black; color: white; padding: 15px; font-family: 'Courier New', Courier, monospace; font-weight: normal; text-align: left;}
+
+  pre.terminal-style {color: #fff; background-color:#202020; white-space: pre-wrap;}
+</style>
+<!-- =================================================================================================== -->
+<!-- 1 === Introduction -->
+<!-- =================================================================================================== -->
 <h4 class="outline-item-h4"><span class="outline-number-main">1</span> Introduction</h4>
-<p class="default-format"><b>Voxility Pro: Voxel File Format Exchange</b> is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
-<p class="default-format">Voxility Pro supports seamless import and export of various popular voxel file formats, including <b>MagicaVoxel</b> (.<b>vox</b>), <b>Qubicle</b> (.<b>qb</b>), <b>Voxlap</b> (.<b>vxl</b>), and many more, ensuring compatibility with a wide range of voxel editors and game engines.</p>
-<div style="background-color: #202020; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px;">
-  <p style="color:#ffffff;font-weight: bold; text-align: justify;">Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy">Martin Gerhardy</a> as part of <a href="https://github.com/vengi-voxel/vengi">Vengi Voxel</a> — an open-source and multi-platform voxel editor — Voxility Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro: Voxel File Format Exchange</span> is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
+<p class="default-format">This addon supports seamless import and export of various popular voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and a plethora of <a href="#fileformats">many more voxel file formats</a>, ensuring compatibility with a wide range of voxel editors and game engines.</p>
+<div style="background-color: #363636; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px;">
+  <p style="color:#ffffff;font-weight: normal; text-align: justify;">Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of <a href="https://github.com/vengi-voxel/vengi"><b>Vengi Voxel</b></a> — an open-source and multi-platform voxel editor — <b>Voxility Pro</b> brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
 </div>
+<!-- =================================================================================================== -->
+<!-- 1.1 === Overview -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.1</span> Overview</h6>
-<p class="default-format"><b>Voxility Pro</b> offers a robust set of tools and functionalities tailored specifically for voxel modeling enthusiasts. From <b>Mesh Conversion</b> to <b>Import</b> and <b>Export</b> capabilities, Voxility Pro provides a complete solution for incorporating voxel-based techniques into your projects.</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> offers a robust set of tools and functionalities tailored specifically for voxel modeling enthusiasts. From <span class="orange-boxed-text">Mesh Conversion</span> to <span class="orange-boxed-text">Import</span> and <span class="orange-boxed-text">Export</span> capabilities, this addon provides a complete solution for incorporating voxel-based techniques into your projects.</p>
 <img src="./voxility-documentation/voxility-images/step-4-ui-export-and-sidebar.png" alt="Voxility Pro Overview">
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 1.2 === Purpose -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.2</span> Purpose</h6>
-<p class="default-format">The primary goal of <b>Voxility Pro</b> is to simplify the process of working with voxel data in Blender while preserving the fidelity of your original models. One of its standout features is the ability to convert meshes with textures into voxel-type meshes. These voxel meshes can be exported to various formats such as .<b>vox</b>, .<b>qb</b>, .<b>vxl</b>, and more. Importantly, Voxility Pro <b>preserves color information</b> during this conversion process, enabling seamless transitions between traditional mesh modeling and voxel-based workflows.</p>
+<p class="default-format">The primary goal of <span class="boxed-voxility">Voxility Pro</span> is to simplify the process of working with voxel data in Blender while preserving the fidelity of your original models. One of its standout features is the ability to convert meshes with textures into voxel-type meshes. These voxel meshes can be exported to various formats such as <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and a plethora of <a href="#fileformats">many more voxel file formats</a>. Importantly, this addon <b>preserves color information</b> during the conversion process, enabling seamless transitions between traditional mesh modeling and voxel-based workflows.</p>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 1.3 === Functionality -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.3</span> Functionality</h6>
-<p class="default-format"><b>Voxility Pro</b> boasts a range of powerful functionalities, including:</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> boasts a range of powerful functionalities, including:</p>
 <table class="default-table">
   <thead class="table-header-type">
-    <tr style="color:#ffffff;">
-      <th class="padded-cell">Feature</th>
-      <th class="padded-cell">Description</th>
-    </tr>
+    <tr style="color:#ffffff;"><th class="padded-cell">Feature</th><th class="padded-cell">Description</th>
   </thead>
 <tbody>
-  <tr class="default-alternate-color">
-    <td class="padded-cell-no-wrap"><b>Mesh Conversion</b></td>
-    <td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td>
-  </tr>
-  <tr class="default-alternate-color">
-    <td class="padded-cell-no-wrap"><b>Texture Preservation</b></td>
-    <td class="padded-cell">Retain color information from textures during mesh-to-voxel conversion.</td>
-  </tr>
-  <tr class="default-alternate-color">
-    <td class="padded-cell-no-wrap"><b>Import & Export</b></td>
-    <td class="padded-cell">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td>
-  </tr>
-  <tr class="default-alternate-color">
-    <td class="padded-cell-no-wrap"><b>Efficient Workflow</b></td>
-    <td class="padded-cell">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td>
-  </tr>
-  </tbody>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Mesh Conversion</b></td><td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Texture Preservation</b></td><td class="padded-cell">Retain color information from textures during mesh-to-voxel conversion.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Import / Export</b></td><td class="padded-cell">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Efficient Workflow</b></td><td class="padded-cell">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
+</tbody>
 </table>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 1.4 === Compatibility -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.4</span> Compatibility</h6>
-<p class="default-format"><b>Voxility Pro</b> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, ensuring broad accessibility for Blender users. You can check your Blender version under menu <i>Help > Manual </i>:</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span class="boxed-text">Help</span> → <span class="boxed-text">Manual</span></p>
 <img style="margin-bottom: 10px;" src="./voxility-documentation/voxility-images/step-0-check-blender-version.png" alt="Check Blender Version">
-<p class="default-format">It also supports import and export functionalities for popular voxel file formats such as <b>MagicaVoxel</b> (.<b>vox</b>) and <b>Qubicle</b> (.<b>qb</b>) and many more, providing flexibility and interoperability with other voxel editing software.</p>
+<p class="default-format">It also supports import and export functionalities for popular voxel file formats such as <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and <a href="#fileformats">many more voxel file formats</a>, providing flexibility and interoperability with other voxel editing software.</p>
 <div class="section-end"></div>
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">1.4.1</span> Supported Voxel File Formats</h6>
-<p class="default-format"><b>Voxility Pro</b> supports a wide range of formats, and we are continually adding more support. Currently, the following types are supported, indicated by a checkmark for their corresponding import or export format.</p>
+<!-- =================================================================================================== -->
+<!-- 1.4.1 === Supported Voxel File Formats -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6" id="fileformats"><span class="outline-number-2sub">1.4.1</span> Supported Voxel File Formats</h6>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> supports a wide range of formats, and we are continually adding more support. Currently, the following types are supported, indicated by a checkmark for their corresponding import or export format.</p>
 <table class="formats-table">
   <thead class="table-header-type">
     <tr style="color:#ffffff;">
@@ -85,45 +102,52 @@
     </tr>
   </thead>
   <tbody style="font-weight:bold; color:#646464">
-    <tr class="alternate-color"><td class="padded-cell">MagicaVoxel</td><td class="center-cell">vox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Qubicle Binary Exchange</td><td class="center-cell">qb</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Qubicle Binary Tree Exchange</td><td class="center-cell">qbt</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Qubicle Exchange Format ASCII</td><td class="center-cell">qef</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Qubicle Project</td><td class="center-cell">qbcl</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Binvox command line voxelizer</td><td class="center-cell">binvox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">CubeWorld CubeMap</td><td class="center-cell">cub</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Minecraft Schematic</td><td class="center-cell">schematic</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Minecraft level dat</td><td class="center-cell">dat</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Minecraft Anvil Region</td><td class="center-cell">mca</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Minetest Template</td><td class="center-cell">mts</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Collection</td><td class="center-cell">vxc</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Hierarchy</td><td class="center-cell">vxr</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Tilemap</td><td class="center-cell">vxt</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Model</td><td class="center-cell">vxm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">MagicaVoxel XRAW</td><td class="center-cell">xraw</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Tiberian Sun</td><td class="center-cell">vxl</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Voxlap Voxel Engine</td><td class="center-cell">kv6</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Voxlap Voxel model format</td><td class="center-cell">kvx</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Animatoon 3D Scene</td><td class="center-cell">scn</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Sproxel csv</td><td class="center-cell">csv</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">StarMade</td><td class="center-cell">sment</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Goxel</td><td class="center-cell">gox</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Voxel Max</td><td class="center-cell">vmax</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Voxel Builder</td><td class="center-cell">vbx</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Voxel3D</td><td class="center-cell">v3a</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Vengi</td><td class="center-cell">vengi</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Nicks Voxel Model</td><td class="center-cell">nvm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Particubes</td><td class="center-cell">pcubes</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">CuBic Mesh</td><td class="center-cell">csm</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Cubzh</td><td class="center-cell">3zh</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
-    <tr class="alternate-color"><td class="padded-cell">Cubzh World</td><td class="center-cell">b64</td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">MagicaVoxel</td><td class="center-cell"><span class="orange-boxed-text">.vox</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Qubicle Binary Exchange</td><td class="center-cell"><span class="orange-boxed-text">.qb</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Qubicle Binary Tree Exchange</td><td class="center-cell"><span class="orange-boxed-text">.qbt</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Qubicle Exchange Format ASCII</td><td class="center-cell"><span class="orange-boxed-text">.qef</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Qubicle Project</td><td class="center-cell"><span class="orange-boxed-text">.qbcl</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Binvox command line voxelizer</td><td class="center-cell"><span class="orange-boxed-text">.binvox</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">CubeWorld CubeMap</td><td class="center-cell"><span class="orange-boxed-text">.cub</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Minecraft Schematic</td><td class="center-cell"><span class="orange-boxed-text">.schematic</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Minecraft level dat</td><td class="center-cell"><span class="orange-boxed-text">.dat</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Minecraft Anvil Region</td><td class="center-cell"><span class="orange-boxed-text">.mca</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Minetest Template</td><td class="center-cell"><span class="orange-boxed-text">.mts</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Collection</td><td class="center-cell"><span class="orange-boxed-text">.vxc</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Hierarchy</td><td class="center-cell"><span class="orange-boxed-text">.vxr</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Tilemap</td><td class="center-cell"><span class="orange-boxed-text">.vxt</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Sandbox VoxEdit Model</td><td class="center-cell"><span class="orange-boxed-text">.vxm</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">MagicaVoxel XRAW</td><td class="center-cell"><span class="orange-boxed-text">.xraw</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Tiberian Sun</td><td class="center-cell"><span class="orange-boxed-text">.vxl</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Voxlap Voxel Engine</td><td class="center-cell"><span class="orange-boxed-text">.kv6</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Voxlap Voxel model format</td><td class="center-cell"><span class="orange-boxed-text">.kvx</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Animatoon 3D Scene</td><td class="center-cell"><span class="orange-boxed-text">.scn</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Sproxel csv</td><td class="center-cell"><span class="orange-boxed-text">.csv</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">StarMade</td><td class="center-cell"><span class="orange-boxed-text">.sment</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Goxel</td><td class="center-cell"><span class="orange-boxed-text">.gox</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Voxel Max</td><td class="center-cell"><span class="orange-boxed-text">.vmax</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Voxel Builder</td><td class="center-cell"><span class="orange-boxed-text">.vbx</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Voxel3D</td><td class="center-cell"><span class="orange-boxed-text">.v3a</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Vengi</td><td class="center-cell"><span class="orange-boxed-text">.vengi</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Nicks Voxel Model</td><td class="center-cell"><span class="orange-boxed-text">.nvm</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Particubes</td><td class="center-cell"><span class="orange-boxed-text">.pcubes</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">CuBic Mesh</td><td class="center-cell"><span class="orange-boxed-text">.csm</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Cubzh</td><td class="center-cell"><span class="orange-boxed-text">.3zh</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b>✓</b></td></tr>
+    <tr class="alternate-color"><td class="padded-cell">Cubzh World</td><td class="center-cell"><span class="orange-boxed-text">.b64</span></td><td class="center-cell"><b>✓</b></td><td class="center-cell"><b> </b></td></tr>
   </tbody>
 </table>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 2 === Installation -->
+<!-- =================================================================================================== -->
 <h4 class="outline-item-h4"><span class="outline-number-main">2</span> Installation</h4>
+<p class="default-format">We are now prepared to proceed with the installation process. Allow us to guide you through each step of the process in a systematic manner.</p>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 2.1 === Addon Requirements -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">2.1</span> Addon Requirements</h6>
-<p class="default-format">It is crucial to ensure that your system meets all the necessary requirements for running the addon effectively. Please verify the following requirements:</p>
+<p class="default-format">It is crucial to ensure that your system meets all the necessary requirements for running this addon effectively. Please verify the following requirements:</p>
 <table class="default-table">
   <thead class="table-header-type">
     <tr style="color:#ffffff;">
@@ -132,103 +156,131 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="default-alternate-color">
-      <td class="padded-cell-no-wrap"><b>Blender Version</b></td>
-      <td class="padded-cell">Voxility Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td>
-    </tr>
-    <tr class="default-alternate-color">
-      <td class="padded-cell-no-wrap"><b>Operating System</b></td>
-      <td class="padded-cell">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td>
-    </tr>
-    <tr class="default-alternate-color">
-      <td class="padded-cell-no-wrap"><b>Hardware Requirements</b></td>
-      <td class="padded-cell">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td>
-    </tr>
-    </tbody>
-  </table>
+    <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Blender Version</b></td><td class="padded-cell">Voxility Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td></tr>
+    <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Operating System</b></td><td class="padded-cell">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td></tr>
+    <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Hardware Requirements</b></td><td class="padded-cell">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td></tr>
+  </tbody>
+</table>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 2.2 === Addon Download -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">2.2</span> Addon Download</h6>
-<ol style="list-style: none; counter-reset: item;">
-  <li style="margin-right: 10px;"><span class="ordered-list-item">1</span>Visit the official Blender Market website or the Voxility Pro developer's website.</li>
-  <li style="margin-right: 10px;"><span class="ordered-list-item">2</span>Locate the Voxility Pro addon product page.</li>
-  <li style="margin-right: 10px;"><span class="ordered-list-item">3</span>Click on the "Purchase" or "Download" button to obtain the addon.</li>
-  <li style="margin-right: 10px;"><span class="ordered-list-item">4</span>Complete the payment process if required.</li>
-  <li style="margin-right: 10px;"><span class="ordered-list-item">5</span>Once the download is complete, you will receive a ZIP file containing the addon.</li>
-</ol>
+<ul style="list-style: disc">
+  <li>Locate the <span class="boxed-voxility">Voxility Pro</span> addon product page.</li>
+  <li>Click on the <span class="orange-boxed-text">Purchase</span> or <span class="orange-boxed-text">Download</span> button to obtain the addon.</li>
+  <li>Complete the payment process if required.</li>
+  <li>Once the download is complete, you will receive a ZIP file containing the addon.</li>
+</ul>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 2.3 === Addon Installation -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">2.3</span> Addon Installation</h6>
-<p class="default-format">After downloading the <b>Voxility Pro</b> addon, you can install it in Blender by following these instructions:</p>
-<ol>
-  <li>Launch Blender on your system.</li>
-  <li>Open the <span class="boxed-text">Edit</span> menu and select <span class="boxed-text">Preferences</span>.</li>
-  <li>In the Preferences window, click on the <b>Add-ons</b> tab.</li>
+<p class="default-format">After downloading the <span class="boxed-voxility">Voxility Pro</span> addon and launching Blender on your system, you can install it by following these instructions:</p>
+<ul style="list-style: disc">
+  <li>Go to menu <span class="boxed-text">Edit</span> → <span class="boxed-text">Preferences...</span> → <b>Add-ons</b></li>
   <li>At the top right of the window, click on the <span class="boxed-text">Install...</span> button.</li>
-  <li>Navigate to the location where you downloaded the Voxility Pro addon ZIP file and select it.</li>
+  <li>Navigate to where you downloaded the ZIP file and select it.</li>
   <li>Click the <span class="boxed-text">Install Add-on</span> button to install the addon.</li>
-  <li>Once installed, enable the addon by checking the checkbox next to the left of its name in the list of addons.</li>
-  <li>Optionally, configure any addon-specific settings or preferences.</li>
-  <li>Close the Preferences window.</li>
-  <li>The Voxility Pro addon is now installed and ready to use in Blender.</li>
-</ol>
-<img src="./voxility-documentation/voxility-images/step-1-preferences-install-addon.png" alt="Voxility Pro Installation">
-<div class="section-end"></div>
+  <li>Enable the addon by checking the checkbox as shown below.</li>
+</ul>
+<p><img src="./voxility-documentation/voxility-images/step-1-preferences-install-addon.png" alt="Voxility Pro Installation"></p>
+<p class="default-format"><span class="boxed-text">✓ The Voxility Pro addon is now installed in Blender</span></p>
+<!-- =================================================================================================== -->
+<!-- 2.4 === Addon Activation -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">2.4</span> Addon Activation</h6>
-<p class="default-format">To activate the <b>Voxility Pro</b> addon and unlock its full range of features, please follow the instructions provided below based on your respective Operating System. But first please review the following information. Take note of the <b>voxconvert </b>version, which is an executable binary file used within this addon, because this information may be needed after addon installation depending on your Operating System. For example, for the addon version <b style="background-color: rgb(255, 255, 0);">&nbsp;1.0.12&nbsp;</b>, the <b>voxconvert </b>version used is&nbsp;<b style="background-color: rgb(255, 255, 0);">&nbsp;0.0.29&nbsp;</b>&nbsp;which can be found inside the description of the addon under menu <i>Edit &gt; Preferences &gt; Add-ons</i>.</font><br></p>
+<p class="default-format">To activate the <span class="boxed-voxility">Voxility Pro</span> addon and unlock its full range of features,
+    please follow the instructions provided below based on your respective Operating System.
+    But first please review the following information. Take note of the <b>voxconvert</b> version,
+    which is an executable binary file used within this addon,
+    because this information may be needed after addon installation depending on your Operating System.
+    For example, for the addon version <span class="yellow-boxed-text"><b>1.0.12</b></span>,
+    the <b>voxconvert </b>version used is <span class="yellow-boxed-text"><b>0.0.29</b></span>
+    which can be found inside the description of the addon under
+    menu <span class="boxed-text">Edit</span> → <span class="boxed-text">Preferences...</span> → <b>Add-ons</b></p>
 <img src="./voxility-documentation/voxility-images/step-0-preferences-install-addon-check.png" style="max-width: 100%;"><br>
 <div class="section-spacer"></div>
-<p>Also please take note of the Blender version used. You can get the version by navigating to menu <i>Help &gt; Manual</i> which opens a browser. In this example the version is&nbsp;<span style="background-color: rgb(255, 255, 0);"> <b>4.0</b>&nbsp;</span>.</p>
+<p>Also please take note of the Blender version used. You can get the version by navigating to menu <span class="boxed-text">Help</span> → <span class="boxed-text">Manual</span> which opens a browser. In this example the version is <span class="yellow-boxed-text"><b>4.0</b></span>.</p>
 <p><img
 src="https://markets-rails.s3.amazonaws.com/cache/f5e72afad79c6dd6bea43ba294d9d077.png"
 style="max-width: 100%;"></p>
 <div class="section-end"></div>
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.1</span> Windows Activation</h6>
-<p class="default-format">If you are running Blender on Windows then you are all set. Please feel free to proceed to the <b>Getting Started</b> section.</p>
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.2</span> Mac OS Activation</h6>
-<p class="default-format">If you are running Blender on Mac OS then.</p>
-<p>Here are instructions to follow after you have installed the addon on
-Blender running on <b>Mac OS</b>. Due to <a
+<!-- =================================================================================================== -->
+<!-- 2.4.1 === Microsoft Windows Activation -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.1</span> Microsoft Windows Activation</h6>
+<p class="default-format">If you are running Blender on <b>Microsoft Windows</b> then you are all set. Please feel free to proceed to the <b>Getting Started</b> section.</p>
+<!-- =================================================================================================== -->
+<!-- 2.4.2 === Apple Mac OS Activation -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.2</span> Apple Mac OS Activation</h6>
+<p class="default-format">After you have installed the addon in Blender running on <b>Mac OS</b> you have to activate it. Due to <a
 href="https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip"
 target="_blank">this issue described here</a>, you have to manually set the third-party
-vox-converter binary file as executable. To do this, simply do:</p>
-<ol>
-<li>Hold down <b>Command </b>and press <b>Space </b>and type in <b>terminal
-</b>then press <b>Enter </b>or open terminal window using <a
+<b>vengi-voxconvert</b> binary file as executable. To do this, simply do:</p>
+<ul style="text-align: justify;">
+<li>Hold down the <span class="boxed-text">Command</span> key and press <span class="boxed-text">Spacebar</span> and type in <u><b>terminal</b></u> then press <span class="boxed-text">Enter</span> or open a <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> window using <a
 href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial</a></li>
-<li>Copy the following command text. Modify the text to adjust to your
-<u>Blender version</u> and the <u>voxconvert version</u> if applicable: <br>
-<pre
-style="white-space: pre-wrap;">cd; cd Library/Application\ Support/Blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert</pre>
+<li>Copy the following command text and paste into any text editor. Then modify the text to adjust to your
+  <b>Blender version</b> (e.g.<span class="yellow-boxed-text"><b>4.0</b></span>) and the <b>voxconvert version</b> (e.g.<span class="yellow-boxed-text"><b>0.0.29</b></span>):
+  <div class="console-window">
+    <div class="title-bar">Terminal</div>
+    <div class="console-body">
+        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.28</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
+    </div>
+  </div>
 </li>
-<li>Then paste the new modified text and press <b>Enter</b></li>
-</ol>
-<p>Read the terminal console output and make sure there are no errors. Now
-you are good to go.&nbsp;<span>Let us know if you have any
-issues.</span><span>&nbsp;</span><span
->Enjoy!</span></p>
+<li>Then copy-paste the new modified text into your <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> and press <span class="boxed-text">Enter</span></li>
+<li>Read the terminal console output and make sure there are no errors.</li>
+</ul>
+<!-- =================================================================================================== -->
+<!-- 2.4.3 === Linux Platform Activation -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.3</span> Linux Platform Activation</h6>
-Linux users after Installation&nbsp;</span><b><br></b></p>
-<p>Here are instructions to follow after you have installed the addon on
-Blender running on <b>Linux</b>. <a href="https://youtu.be/SkB-eRCzWIU?si=gIY1pz6VRJbMw_Pl&amp;t=35"
-target="_blank">Open the terminal</a> and&nbsp;<span>Copy the following
-command text. Modify the text to adjust to your <u>Blender version</u> and the <u>voxconvert
-version</u> if applicable.</span><br></p>
-<pre
-style="white-space: pre-wrap;">cd ~/.config/blender/<font color="#000000" style="background-color: rgb(255, 255, 0);">4.0</font><blender_version>/scripts/addons/vox_exporter/voxconvert-executable/<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>/linux/</blender_version></pre>
-<p>Then paste the new modified text into the terminal and press&nbsp;<span
-style="font-weight: bolder;">Enter</span>. Make sure the path is correct and there are no errors.
-Then copy each line and paste into terminal and press <b>Enter</b>. Read the terminal outputs
-because you may need to type in&nbsp;<font color="#000000"
-style="background-color: rgb(255, 255, 0);">&nbsp;<b>y</b>&nbsp;</font> for <b>yes </b>and press
-<b>Enter</b> to confirm installation.</p>
-<pre><blender_version>sudo dpkg -i vengi-shared_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo dpkg -i vengi-voxconvert_<font color="#000000" style="background-color: rgb(255, 255, 0);">0.0.28</font>.0-1_amd64.deb<br>sudo apt-get install -f<br>vengi-voxconvert --version</blender_version></pre>
-<p>Read the output for each line you execute and make sure there are no
-errors. If all is good you will see the last line print out the version. Close Blender and open
-again. Enjoy!</p>
+<p class="default-format">After installing the addon on
+Blender running on <b>Linux</b>, <a href="https://youtu.be/SkB-eRCzWIU?si=gIY1pz6VRJbMw_Pl&amp;t=35"
+target="_blank">open the Linux Console or Terminal</a> and copy-paste the following command text into any text editor.
+    Then modify the text to adjust to your <b>Blender version</b> (e.g.<span class="yellow-boxed-text"><b>4.0</b></span>)
+    and the <b>voxconvert version</b> (e.g.<span class="yellow-boxed-text"><b>0.0.29</b></span>). Then copy-paste the new modified text into your
+    <a target="_blank" href="https://en.wikipedia.org/wiki/Linux_console">Linux Console</a>
+    and press <span class="boxed-text">Enter</span>.</p>
+<div class="console-window">
+  <div class="title-bar">Linux Console</div>
+  <div class="console-body">
+    cd ~/.config/blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/linux/
+  </div>
+</div>
+<p class="default-format">Make sure the path is correct and there are no errors. Then copy the following commands line by line and paste each line into terminal and press <span class="boxed-text">Enter</span>.
+    Read the terminal outputs, because you may need to type in <span class="yellow-boxed-text"><b>y</b></span> for <b>yes </b>and press
+    <span class="boxed-text">Enter</span> to confirm command.
+</p>
+<div class="console-window">
+  <div class="title-bar">Linux Console</div>
+  <div class="console-body">
+    sudo dpkg -i vengi-shared_<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>.0-1_amd64.deb<br>sudo dpkg -i vengi-voxconvert_<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>.0-1_amd64.deb<br/>sudo apt-get install -f
+  </div>
+</div>
+<p class="default-format">Read the output for each line you execute and make sure there are no errors.
+    Finally test if you have successfully installed <b>vengi-voxconvert</b> by typing in the following command:
+<div class="console-window">
+    <div class="title-bar">Linux Console</div>
+    <div class="console-body">
+      vengi-voxconvert --version
+    </div>
+  </div>
+  <p class="default-format">This should print out the voxconvert version. If successful, close Blender, reopen it, and the command should become available for Blender.</p>
 <div class="section-end"></div>
-
+<!-- =================================================================================================== -->
+<!-- 3 === Getting Started -->
+<!-- =================================================================================================== -->
 <h4 class="outline-item-h4"><span class="outline-number-main">3</span> Getting Started</h4>
 <p class="default-format">We'll walk you through the initial steps to familiarize yourself with our addon and its basic functionalities. Whether you're a newcomer or a seasoned user, this guide will help you navigate through the essential features and get you up to speed quickly.</p>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 3.1 === Configuration Options -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.1</span> Configuration Options</h6>
 <p class="default-format">Enhance the Addon by clicking the small arrow located to the left of the addon name and checkbox. This action will unveil a plethora of configuration options, allowing you to personalize your experience and tailor the application to meet your unique requirements.</p>
 <img src="./voxility-documentation/voxility-images/step-2-preferences-expand.png" alt="Voxility Pro Configuration Options">
@@ -236,9 +288,15 @@ again. Enjoy!</p>
 <p class="default-format">Select the checkboxes corresponding to the voxel file formats you'll use. This streamlines the options list by hiding unnecessary choices during object import/export, preventing clutter and ensuring a smoother workflow. Below is an example of some selected options. Observe that the import list and export list (<b>supported</b> export formats only) now exclusively presents the options you've configured.</p>
 <img src="./voxility-documentation/voxility-images/step-3-preferences-relevant-file-types.png" alt="Voxility Pro Configuration Customization">
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 3.2 === User Interface Overview -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.2</span> User Interface Overview</h6>
 <p class="default-format">In this section, we'll provide an overview of the user interface to familiarize you with the main components and features.</p>
 <div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 3.3 === Basic Operations -->
+<!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.3</span> Basic Operations</h6>
 <div class="section-end"></div>
 
