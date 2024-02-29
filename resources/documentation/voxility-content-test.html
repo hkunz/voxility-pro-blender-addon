@@ -31,6 +31,7 @@
   span.boxed-text {color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;}
   span.boxed-voxility {color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;}
   span.orange-boxed-text {color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;}
+  span.red-boxed-text {color:white; font-weight: bold; background-color: #ff4800; padding: 0px 5px 0px 5px; border-radius: 5px;}
   span.blue-boxed-text {color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;}
   span.yellow-boxed-text {color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;}
   span.white-boxed-text {color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 0px 8px; border-radius: 5px;}
@@ -46,6 +47,8 @@
   div.image-container {display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;}
   div img.image-step {display: block; margin-bottom: -1px;}
   div.image-description {background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;}
+  div.text-block {background-color: #363636; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px; color:#ffffff; font-weight: normal; text-align: justify;}
+  div.text-gray-block {border: 3px solid #ff4800; color:#fff; font-weight: normal; background-color: #333333; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px; text-align: justify;}
 </style>
 <!-- =================================================================================================== -->
 <!-- 1 === Introduction -->
@@ -53,8 +56,8 @@
 <h4 class="outline-item-h4"><span class="outline-number-main">1</span> Introduction</h4>
 <p class="default-format"><span class="boxed-voxility">Voxility Pro: Voxel File Format Exchange</span> is a comprehensive <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html">Blender addon</a> designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, Voxility Pro empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.</p>
 <p class="default-format">This addon supports seamless import and export of various popular voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>), <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>), and a plethora of <a href="#fileformats">many more voxel file formats</a>, ensuring compatibility with a wide range of voxel editors and game engines.</p>
-<div style="background-color: #363636; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px;">
-  <p style="color:#ffffff;font-weight: normal; text-align: justify;">Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of <a href="https://github.com/vengi-voxel/vengi"><b>Vengi Voxel</b></a> — an open-source and multi-platform voxel editor — <b>Voxility Pro</b> brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
+<div class="text-block">
+  <p>Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of <a href="https://github.com/vengi-voxel/vengi"><b>Vengi Voxel</b></a> — an open-source and multi-platform voxel editor — <b>Voxility Pro</b> brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.</p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 1.1 === Overview -->
@@ -108,7 +111,7 @@
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6" id="fileformats"><span class="outline-number-2sub">1.4.1</span> Supported Voxel File Formats</h6>
 <p class="default-format"><span class="boxed-voxility">Voxility Pro</span> supports a wide range of formats, and we are continually adding more support. Currently, the following types are supported, indicated by a checkmark for their corresponding import or export format.</p>
-<table class="formats-table">
+<table class="default-table">
   <thead class="table-header-type">
     <tr style="color:#ffffff;">
       <th class="padded-cell">Name</th>
@@ -229,7 +232,7 @@
 <div class="image-container">
   <img class="image-step" src="./voxility-documentation/voxility-images/step-0-check-blender-version.png" alt="Check Blender Version">
   <div class="image-description">
-    In this example the Blender version is <span class="yellow-boxed-text"><b>4.0</b></span>.
+    In this example the Blender version is <span class="yellow-boxed-text"><b>4.0</b></span>
   </div>
 </div>
 <!-- =================================================================================================== -->
@@ -323,7 +326,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 </div>
 <div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
   <p style="color:#000;font-weight: normal; text-align: justify;">
-    <b>NOTE</b>: Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">save your preferences</a> using <span class="boxed-text">Save Preferences</span> button located in the lower left corner of the Preferences window, so you don't have to tick the checkboxes again the next time you open Blender.</p>
+    <span class="blue-boxed-text">NOTE:</span> Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">save your preferences</a> using <span class="boxed-text">Save Preferences</span> button located in the lower left corner of the Preferences window, so you don't have to tick the checkboxes again the next time you open Blender.</p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 3.2 === User Interface Overview -->
@@ -334,29 +337,113 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <!-- 3.2.1 === Export Voxel Format File -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.1</span> Export Voxel Format File</h6>
-<p class="default-format">You can export your mesh by selecting the mesh-type objects and accessing the export options through menu
+
+<p class="default-format">You can export to various popular voxel file formats,
+  including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
+  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>),
+  <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
+  and <a href="#fileformats">many more voxel file formats</a>
+  by accessing the export options through menu
   <span class="boxed-text">File</span><span class="arrow">&rArr;</span><span class="boxed-text">Export</span><span
   class="arrow">&rArr;</span><span class="boxed-text">Voxility Voxel Formats</span><span
   class="arrow">&rArr;</span><span class="orange-boxed-text">.*</span>
-  and selecting the voxel file format of choice. Remember you can streamline this export list by filtering out only the relevant options through the <a href="#configsection">Configuration Options</a>.</p>
-<img class="image-step" src="./voxility-documentation/voxility-images/step-4a-ui-export.png" alt="Voxility Pro Export Voxel Format File">
-<p class="default-format">You will be presented with the <b>Export Dialog</b> where you can select a location and input a file name. Press the <span class="boxed-text">Export</span> button to start the conversion process and save it to your chosen destination. This may take some time, so please be patient.</p>
-<img class="image-step" src="./voxility-documentation/voxility-images/step-6-ui-export-dialog.png" alt="Voxility Pro Export Voxel Format Dialog">
-<div class="section-end"></div>
+  and selecting a voxel format of your choice. You can streamline this export list by filtering out
+  only the relevant options through the <a href="#configsection">Configuration Options</a>.</p>
+<div class="image-container">
+  <img class="image-step" src="./voxility-documentation/voxility-images/step-4-ui-export.png" alt="Voxility Pro Export Voxel Format File">
+  <div class="image-description">
+    Export to any <a href="#fileformats">supported voxel file format</a> of your choice
+  </div>
+</div>
+<p class="default-format">Simply select all mesh objects and export. You will be presented with the <span class="blue-boxed-text">Export Dialog</span>
+  where you can select a location and input a file name.
+  You can also adjust the export options such as the <span class="boxed-text">Voxformat Scale</span> attribute,
+  which increases the voxel resolution of your output. Hover over each option to reveal a tooltip explaining each property.
+  Press the <span class="boxed-text">Export</span> button to start the conversion process and save it to your chosen destination.
+  This may take some time, so <b>please be patient.</b></p>
+<div class="image-container">
+  <img class="image-step" src="./voxility-documentation/voxility-images/step-6-ui-export-dialog.png" alt="Voxility Pro Export Voxel Format Dialog">
+  <div class="image-description">
+    In this example we are exporting to <span class="orange-boxed-text">.vox</span> file format
+  </div>
+</div>
+<p class="default-format">In the previous example we exported a <span class="orange-boxed-text">.vox</span> file which can be opened in <a target="_blank" href="https://ephtracy.github.io/">MagicaVoxel</a></p>
+<div class="image-container">
+  <img class="image-step" src="./voxility-documentation/voxility-images/sample-magicavoxel-render.png" alt="Voxility Pro Export Voxel Format Dialog">
+  <div class="image-description">
+    This is a sample render preview in <b>MagicaVoxel</b> of the exported <span class="orange-boxed-text">.vox</span> file.
+  </div>
+</div>
+<p class="default-format"><b>MagicaVoxel</b> is just one example of various software and game engines that are capable of processing a wide array of voxel file formats, each designed to accommodate different needs and functionalities.</p>
+<div class="text-gray-block"><p>
+  <span class="red-boxed-text">WARNING:</span> Before delving into larger projects,
+  it's recommended to start with smaller objects containing fewer vertices to familiarize yourself with the addon's functionality.
+  Processing time can vary significantly, ranging from seconds to several minutes,
+  depending on the complexity of your object and your computer specifications.
+  Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
+  Therefore, consider reducing the number of vertices through decimation before using certain features.
+  Begin with low <b>Voxformat Scale</b> values like <b>1.0</b> and gradually increase until you achieve the desired voxel resolution.
+  While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
+</div>
 <!-- =================================================================================================== -->
 <!-- 3.2.2 === Import Voxel Format File -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.2</span> Import Voxel Format File</h6>
-<p class="default-format">Importing stuff here <span class="boxed-text">File</span><span class="arrow">&rArr;</span><span class="boxed-text">Import</span><span class="arrow">&rArr;</span><span class="boxed-text">Voxility Voxel Formats</span><span class="arrow">&rArr;</span><span class="orange-boxed-text">.*</span></p>
-<img src="./voxility-documentation/voxility-images/step-5a-ui-import.png" alt="Voxility Pro Import Voxel Format File">
-<div class="section-spacer"></div>
+<p class="default-format">You can import various popular voxel file formats,
+  including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
+  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>),
+  <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
+  and <a href="#fileformats">many more voxel file formats</a>
+  by accessing the import options through menu
+  <span class="boxed-text">File</span><span class="arrow">&rArr;</span><span class="boxed-text">Import</span><span
+  class="arrow">&rArr;</span><span class="boxed-text">Voxility Voxel Formats</span><span
+  class="arrow">&rArr;</span><span class="orange-boxed-text">.*</span>
+  and selecting a supported voxel file. You can streamline this import list by filtering out
+  only the relevant options through the <a href="#configsection">Configuration Options</a>.</p>
+<div class="image-container">
+  <img class="image-step" src="./voxility-documentation/voxility-images/step-5-ui-import.png" alt="Voxility Pro Import Voxel Format File">
+  <div class="image-description">
+    Import any <a href="#fileformats">supported voxel file format</a> of your choice
+  </div>
+</div>
+<p>Once you have chosen a voxel format, you will be presented with the <span class="blue-boxed-text">Import Dialog</span>
+  where you can select a file to import. You can also adjust the import options.
+  Hover over each option to reveal a tooltip explaining each property.
+  Press the <span class="boxed-text">Import</span> button to start the import process.
+  This may take some time, so <b>please be patient.</b></p>
+<div class="image-container">
+  <img src="./voxility-documentation/voxility-images/step-7-ui-import-dialog.png" alt="Voxility Pro N-Panel Voxelize Button">
+  <div class="image-description">
+    Import Dialog
+  </div>
+</div>
+<div class="text-gray-block">
+  <p><span class="red-boxed-text">WARNING:</span> Before diving into larger projects,
+    it's advisable to start with smaller files to familiarize yourself with the addon's functionality.
+    The processing time can vary significantly, ranging from seconds to several minutes,
+    depending on the complexity of your voxel file and your computer specifications.
+    While it may seem that the user interface is not responding or in a hang state,
+    rest assured it is processing. Kindly be patient and await the completion of the process.
+  </p>
+</div>
 <!-- =================================================================================================== -->
 <!-- 3.2.3 === Mesh Conversion w/ N-Panel -->
 <!-- =================================================================================================== -->
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Mesh Conversion Voxelize Button</h6>
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Mesh Conversion: Voxelize Button</h6>
 <p class="default-format">N-Panel <span class="boxed-text">N-Panel</span><span class="arrow">&rArr;</span><span class="boxed-text">Voxility</span><span class="arrow">&rArr;</span><span class="boxed-text">Voxelize</span></p>
-<img src="./voxility-documentation/voxility-images/step-8-ui-target-save-to-folder.png" alt="Voxility Pro N-Panel">
-<div class="section-end"></div>
+<div class="image-container">
+  <img src="./voxility-documentation/voxility-images/sample-use-step-1-select-meshes-to-voxelize.png" alt="Voxility Pro N-Panel Voxelize Button">
+  <div class="image-description">
+    Voxelize Button
+  </div>
+</div>
+<p class="default-format">Save</p>
+<div class="image-container">
+  <img src="./voxility-documentation/voxility-images/sample-use-step-3-save-target.png" alt="Voxility Pro N-Panel Save Button">
+  <div class="image-description">
+    Save Button
+  </div>
+</div>
 <!-- =================================================================================================== -->
 <!-- 3.3 === Basic Operations -->
 <!-- =================================================================================================== -->
@@ -416,45 +503,6 @@ the more voxel detail you can produce, but it may take longer to process. While 
 user interface is not responding or in a hang state, rest assured it is processing. Kindly be
 patient and await the completion of the process; the output will be visible in the&nbsp;<a
 href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank"
->Info Editor</a>.</p>
-<p><img
-src="https://markets-rails.s3.amazonaws.com/cache/69619b536bafe30c9f1836099eea2731.png"
-style="max-width: 100%;"><br></p>
-<p>You will see the <b>vox </b>option under <i>File
-&gt; Export &gt; MagicaVoxel (.vox)</i><span> and the <b>qb </b>option
-under&nbsp;</span><i>File &gt; Export &gt; Qubicle (.qb).&nbsp;</i><span
->Just simply select the object(s) in Blender that you want to export to
-voxel format then export. Please experiment first with smaller sized objects that have lesser
-vertices to get a feel for the addon. It can take from seconds to several minutes depending on how
-complex your object is. Complexity is compounded by more vertices and faces. So it is always a
-good idea to try to decimate and reduce the amount of vertices before using this feature.
-</span><b>Please be patient</b><span>. Be careful
-for objects that exceed 100 meters in dimension. The bigger the object, the more voxels, and the
-longer it will take to finish processing. The first export may take longer than the succeeding
-exports. So try the export first with the default cube. It may take longer than normal for the
-first time export.</span></p>
-<p><img
-src="https://markets-rails.s3.amazonaws.com/cache/4a2a6e5788a973db24a13f8e51a0a323.png"
-style="max-width: 100%;"><span><br></span></p>
-<p></p>
 
-<p>You can adjust some settings for the resulting vox file. Hover over each
-item to see a tooltip for its function. Be careful with the <b>Voxformat Scale</b>. First experiment
-with lower values like <b>1</b>&nbsp;and then <b>2</b> and up to see how the number of voxels add up
-in the resulting output. Don't immediately go to 10 or 100! Keep in mind that increasing this value
-will result in higher voxel resolution but will also extend the time required to generate the vox
-file. It could take up to several minutes depending on how fast your computer is so please be
-patient.</p>
-<p><img
-src="https://markets-rails.s3.amazonaws.com/cache/ec2550fdaa08febbc307544eef7d3c43.png"
-style="max-width: 100%;"><br></p>
-<p>Now you can directly open the generated&nbsp;<b>.vox</b> file in <b
->MagicaVoxel </b>or <b>VoxEdit</b><span
-> or the generated <b>.qb</b>&nbsp;file in </span><b
->Qubicle</b>. Please don't hesitate to message us for issues so we can
-address them promptly. Enjoy!</p>
-<p><img
-src="https://markets-rails.s3.amazonaws.com/cache/dfa520efde70e82f73440d431272e3d4.jpg"
-style="max-width: 100%;"></p>
 
 
