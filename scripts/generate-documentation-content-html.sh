@@ -48,7 +48,7 @@ modify_alternate_row_colors() {
     while IFS= read -r tr_tag; do
         color=$(echo "$tr_tag" | grep -o 'background-color:[^;]*;' | sed -n "$(( i % 2 == 0 ? 1 : 2 ))p")
         echo "$i: use ${color} in ${tr_tag:0:100}$(if [ ${#tr_tag} -gt 100 ]; then echo '...'; fi)"
-        modified_line=$(echo "$tr_tag" | sed "s/${color}//")
+        modified_line=$(echo "$tr_tag" | sed "s/ *${color} *//")
         sed -i "s|$tr_tag|$modified_line|" "$output_file"
         ((i++))
     done <<< "$tr_tags"
