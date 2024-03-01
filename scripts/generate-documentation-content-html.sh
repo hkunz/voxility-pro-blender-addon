@@ -3,8 +3,8 @@
 source scripts/utils.sh
 
 RESOURCES_DIR="resources/"
-DOCUMENT_CONTENT_TEMPLATE="${RESOURCES_DIR}documentation/voxility-content-test.html"
-DOCUMENT_CONTENT_FINAL="${RESOURCES_DIR}documentation/voxility-content-final.html"
+DOCUMENT_CONTENT_TEMPLATE="${RESOURCES_DIR}documentation/content/voxility-content-test.html"
+DOCUMENT_CONTENT_FINAL="${RESOURCES_DIR}documentation/content/voxility-content-final.html"
 
 cleanup() {
     echo "Script interrupted. Cleaning up..."
