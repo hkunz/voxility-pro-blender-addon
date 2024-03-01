@@ -15,7 +15,7 @@ METHOD 2:
 * Install Live Server extension on VSCode
 * Open HTML file in VSCode
 * Run Ctrl + Shift + P > "Live Server: Open with Live Server"
-* http://127.0.0.1:5500/resources/documentation/content/voxility-content-test.html
+* http://127.0.0.1:5500/resources/documentation/voxility-documentation.html
 
 =============================================================================================
 MODIFY DOCUMENTATION

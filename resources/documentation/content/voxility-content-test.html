@@ -60,10 +60,13 @@
   it empowers artists and designers to unleash their creativity and explore new dimensions of voxel
   modeling within the familiar Blender environment.</p>
 <p class="default-format"><span class="boxed-voxility">Voxility Pro</span> supports seamless import and export of
-  various popular voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
+  various popular textured voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
   <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
   and a plethora of <a href="#fileformats">many more voxel file formats</a>,
-  ensuring compatibility with a wide range of voxel editors and game engines.</p>
+  ensuring compatibility with a wide range of voxel editors and game engines.
+  Additionally, this addon introduces an <a href="#voxelizesection">integrated voxelization feature</a> for textured meshes,
+  allowing for streamlined voxelization directly within Blender.
+</p>
 <div class="text-block">
   <p>Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by
     <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of
@@ -77,7 +80,7 @@
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.1</span> Overview</h6>
 <p class="default-format"><span class="boxed-voxility">Voxility Pro</span> offers a robust set of tools and functionalities
-  tailored specifically for voxel modeling enthusiasts. From <span class="orange-boxed-text">Mesh Conversion</span>
+  tailored specifically for voxel modeling enthusiasts. From integrated <span class="orange-boxed-text">Mesh Voxelization</span>
   to <span class="orange-boxed-text">Import</span> and <span class="orange-boxed-text">Export</span> capabilities,
   this addon provides a complete solution for incorporating voxel-based techniques into your projects.
 </p>
@@ -110,7 +113,7 @@
     <tr style="color:#ffffff;"><th class="padded-cell">Feature</th><th class="padded-cell">Description</th>
   </thead>
 <tbody>
-  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Mesh Conversion</b></td><td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Mesh Voxelization</b></td><td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Texture Preservation</b></td><td class="padded-cell">Retain color information from textures during mesh-to-voxel conversion.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Import / Export</b></td><td class="padded-cell">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Efficient Workflow</b></td><td class="padded-cell">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
@@ -138,7 +141,7 @@
 <table class="default-table">
   <thead class="table-header-type">
     <tr style="color:#ffffff;">
-      <th class="padded-cell">Name</th>
+      <th class="padded-cell">Voxel File Format Name</th>
       <th class="center-cell">File Extension</th>
       <th class="center-cell">Import</th>
       <th class="center-cell">Export</th>
@@ -455,9 +458,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   </p>
 </div>
 <!-- =================================================================================================== -->
-<!-- 3.2.3 === Mesh Conversion w/ N-Panel -->
+<!-- 3.2.3 === Integrated Mesh Voxelization -->
 <!-- =================================================================================================== -->
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Mesh Conversion: Voxelize Button</h6>
+<h6 id="voxelizesection" class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Integrated Mesh Voxelization</h6>
 <p class="default-format">You can also convert your textured mesh objects into voxel representation directly within Blender.
   Simply position your mouse in the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/introduction.html">3D Viewport</a>
   and press the <span class="boxed-text">N</span> key. 
@@ -585,11 +588,11 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   <tr class="default-alternate-color"><td class="padded-cell"><b>Addon</b></td><td class="padded-cell">Piece of software that extends the functionality of Blender, designed to enhance and streamline various aspects of the Blender workflow.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell"><b>Texture</b></td><td class="padded-cell">Surface appearance of an object when it's rendered. It includes characteristics such as color, roughness, reflectivity, and bumpiness, etc.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell"><b>VOX File</b></td><td class="padded-cell">Simple binary format used to store voxel data. It consists of a header section followed by the voxel data, which is typically encoded using run-length encoding (RLE) or other compression techniques to reduce file size.</td></tr>
-  <tr class="default-alternate-color"><td class="padded-cell"><b>MagicaVoxel</b></td><td class="padded-cell">Voxel modeling software that uses its own proprietary file format for saving voxel models.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell"><b>MagicaVoxel</b></td><td class="padded-cell">Voxel modeling software that uses its own proprietary file format (.VOX) for saving voxel models.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell"><b>Qubicle</b></td><td class="padded-cell">Voxel modeling software that uses its own file format (.QB) for saving voxel models.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell"><b>Executable</b></td><td class="padded-cell">External program or script that can be run by Blender as a separate process.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell"><b>Terminal or Console</b></td><td class="padded-cell">Provides a command-line interface where users can type commands directly to interact with the operating system and run various programs or utilities.</td></tr>
-  <tr class="default-alternate-color"><td class="padded-cell"><b>ZIP File</b></td><td class="padded-cell">Compressed archive that contains one or more assets. Users can install these addons by importing the zip file directly into Blender's addon manager, simplifying the installation process.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell"><b>ZIP File</b></td><td class="padded-cell">Compressed archive that contains script and one or more assets. Users can install these addons by importing the zip file directly into Blender's addon manager, simplifying the installation process.</td></tr>
   <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
 </tbody>
 </table>
