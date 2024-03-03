@@ -25,6 +25,7 @@ table .padded-cell-no-wrap {padding: 5px 25px; white-space: nowrap;}
 table .center-cell {text-align: center;}
 table thead.table-header-type {background-color: #292929;}
 table tbody td.table-footer-type {background-color: #555555; height:10px;}
+
 span.boxed-text {color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;}
 span.boxed-voxility {color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;}
 span.orange-boxed-text {color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;}
@@ -32,7 +33,9 @@ span.red-boxed-text {color:white; font-weight: bold; background-color: #ff4800; 
 span.blue-boxed-text {color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;}
 span.yellow-boxed-text {color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;}
 span.white-boxed-text {color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 0px 8px; border-radius: 5px;}
-ol span.ordered-list-item {background: rgb(0, 0, 0); border-radius: 100%; color: white; width: 1.2em; text-align: center; display: inline-block; padding: 5px;}
+
+span.partial-orange-boxed-text {color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;}
+span.partial-black-boxed-text {color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
 
 div.console-window {width: 100%; margin: 15px auto; border: 1px solid #9c9c9c; border-radius: 10px; overflow: hidden;}
 div.title-bar {background-color: #cfcfcf; color: rgb(26, 26, 26); padding: 5px 5px 5px 10px; font-weight: bold; user-select: none;}

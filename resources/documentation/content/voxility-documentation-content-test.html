@@ -1,6 +1,36 @@
 <!-- Accepted Tags & Attributes: https://support.blendermarket.com/article/280-customizing-your-content -->
 <!-- NOTE: Don't use 'class' and 'style' attributes together because the processing script will replace class with style resulting in double style attributes -->
-
+<!--
+1 Introduction
+1.1 Overview
+1.2 Purpose
+1.3 Functionality
+1.4 Compatibility
+1.4.1 Supported Voxel File Formats
+2 Installation
+2.1 Addon Requirements
+2.2 Addon Download
+2.3 Addon Installation
+2.4 Addon Activation
+2.4.1 Microsoft Windows Activation
+2.4.2 Apple Mac OS Activation
+2.4.3 Linux Platform Activation
+3 Getting Started
+3.1 Configuration Options
+3.2 User Interface Overview
+3.2.1 Export Voxel Format File
+3.2.2 Import Voxel Format File
+3.2.3 Integrated Mesh Voxelization
+3.3 Voxility Logging
+4 Troubleshooting
+4.1 Common Issues
+5 Support and Community
+5.1 Contact Information
+6 Appendix
+6.1 Glossary
+6.2 Additional Resources
+6.3 Version History
+-->
 <!-- =================================================================================================== -->
 <!-- 1 === Introduction -->
 <!-- =================================================================================================== -->
@@ -11,8 +41,10 @@
   it empowers artists and designers to unleash their creativity and explore new dimensions of voxel
   modeling within the familiar Blender environment.</p>
 <p class="default-format"><span class="boxed-voxility">Voxility Pro</span> supports seamless import and export of
-  various popular textured voxel file formats, including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
-  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
+  various popular textured voxel file formats, including
+  <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
+  <span class="partial-black-boxed-text">Qubicle</span><span class="partial-orange-boxed-text">.qb</span>
+  <span class="partial-black-boxed-text">Voxlap</span><span class="partial-orange-boxed-text">.vxl</span>
   and a plethora of <a href="#fileformats">many more voxel file formats</a>,
   ensuring compatibility with a wide range of voxel editors and game engines.
   Additionally, this addon introduces an <a href="#voxelizesection">integrated voxelization feature</a> for textured meshes,
@@ -48,8 +80,10 @@
 <p class="default-format">The primary goal of <span class="boxed-voxility">Voxility Pro</span>
   is to simplify the process of working with voxel data in Blender while preserving the fidelity of your original models.
   One of its standout features is the ability to convert meshes with textures into voxel-type meshes.
-  These voxel meshes can be exported to various formats such as <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
-  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>), <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
+  These voxel meshes can be exported to various formats such as
+  <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
+  <span class="partial-black-boxed-text">Qubicle</span><span class="partial-orange-boxed-text">.qb</span>
+  <span class="partial-black-boxed-text">Voxlap</span><span class="partial-orange-boxed-text">.vxl</span>
   and <a href="#fileformats">many more voxel file formats</a>. Importantly, this addon <b>preserves color information</b>
   during the conversion process, enabling seamless transitions between traditional mesh modeling and voxel-based workflows.
 </p>
@@ -58,7 +92,8 @@
 <!-- 1.3 === Functionality -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.3</span> Functionality</h6>
-<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> boasts a range of powerful functionalities, including:</p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> boasts a range of powerful functionalities.</p>
+<h6 class="outline-item-small-h6" id="fileformats"><span class="outline-number-2sub">1.3.1</span> Functionalities</h6>
 <table class="default-table">
   <thead class="table-header-type">
     <tr style="color:#ffffff;"><th class="padded-cell">Feature</th><th class="padded-cell">Description</th>
@@ -71,6 +106,22 @@
   <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
 </tbody>
 </table>
+<div class="section-end"></div>
+<h6 class="outline-item-small-h6" id="fileformats"><span class="outline-number-2sub">1.3.2</span> Limitations</h6>
+<p class="default-format">
+  Most file formats don't support exporting complex textures,
+  let alone full-blown material definitions or other application-specific features.
+  For more detailed information on this limitation, please refer to
+  <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
+  Hence, our addon can only support the conversion of meshes that utilize simple material definitions, either through the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
+  node or basic color diffuse definitions via the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
+  This conversion process generates a new voxelized mesh. If <span class="boxed-text">Use Vertex Colors</span> is enabled,
+  the resulting mesh will incorporate vertex colors. Otherwise, the conversion will produce a new Image Texture instead.
+  Please note that applying another conversion to a previously voxelized mesh is not supported
+  if vertex colors are utilized. In such case, it is recommended to revert to the original mesh.
+</p>
 <div class="section-end"></div>
 <!-- =================================================================================================== -->
 <!-- 1.4 === Compatibility -->
@@ -316,10 +367,10 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.1</span> Export Voxel Format File</h6>
 
-<p class="default-format">You can export to various popular voxel file formats,
-  including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
-  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>),
-  <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
+<p class="default-format">You have the flexibility to export your models to a diverse range of widely recognized and popular voxel file formats,
+  including <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
+  <span class="partial-black-boxed-text">Qubicle</span><span class="partial-orange-boxed-text">.qb</span>
+  <span class="partial-black-boxed-text">Voxlap</span><span class="partial-orange-boxed-text">.vxl</span>
   and <a href="#fileformats">many more voxel file formats</a>
   by accessing the export options through menu
   <span class="boxed-text">File</span><span class="arrow">&rArr;</span><span class="boxed-text">Export</span><span
@@ -370,11 +421,11 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <!-- 3.2.2 === Import Voxel Format File -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.2</span> Import Voxel Format File</h6>
-<p class="default-format">You can import various popular voxel file formats,
-  including <span class="orange-boxed-text">.vox</span> (<b>MagicaVoxel</b>),
-  <span class="orange-boxed-text">.qb</span> (<b>Qubicle</b>),
-  <span class="orange-boxed-text">.vxl</span> (<b>Voxlap</b>),
-  and <a href="#fileformats">many more voxel file formats</a>
+<p class="default-format">You have the flexibility to import your models from a diverse range of widely recognized and popular voxel file formats,
+  including <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
+  <span class="partial-black-boxed-text">Qubicle</span><span class="partial-orange-boxed-text">.qb</span>
+  <span class="partial-black-boxed-text">Voxlap</span><span class="partial-orange-boxed-text">.vxl</span>
+  as well as <a href="#fileformats">numerous other voxel file formats</a>
   by accessing the import options through menu
   <span class="boxed-text">File</span><span class="arrow">&rArr;</span><span class="boxed-text">Import</span><span
   class="arrow">&rArr;</span><span class="boxed-text">Voxility Voxel Formats</span><span

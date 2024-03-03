@@ -11,8 +11,10 @@
   it empowers artists and designers to unleash their creativity and explore new dimensions of voxel
   modeling within the familiar Blender environment.</p>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> supports seamless import and export of
-  various popular textured voxel file formats, including <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> (<b>MagicaVoxel</b>),
-  <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qb</span> (<b>Qubicle</b>), <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxl</span> (<b>Voxlap</b>),
+  various popular textured voxel file formats, including
+  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">MagicaVoxel</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.vox</span>
+  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Qubicle</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.qb</span>
+  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Voxlap</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.vxl</span>
   and a plethora of <a href="#fileformats">many more voxel file formats</a>,
   ensuring compatibility with a wide range of voxel editors and game engines.
   Additionally, this addon introduces an <b>integrated voxelization feature</b> for textured meshes,
@@ -134,6 +136,22 @@
     This is a sample render preview in <b>MagicaVoxel</b> of an exported <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file.
   </div>
 </div>
+<div style="margin-bottom: 30px;"></div>
+<h4 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;" id="fileformats"><span style="background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">About</span> Limitations</h4>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  Most file formats don't support exporting complex textures,
+  let alone full-blown material definitions or other application-specific features.
+  For more detailed information on this limitation, please refer to
+  <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
+  Hence, our addon can only support the conversion of meshes that utilize simple material definitions, either through the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
+  node or basic color diffuse definitions via the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
+  This conversion process generates a new voxelized mesh. If <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Use Vertex Colors</span> is enabled,
+  the resulting mesh will incorporate vertex colors. Otherwise, the conversion will produce a new Image Texture instead.
+  Please note that applying another conversion to a previously voxelized mesh is not supported
+  if vertex colors are utilized. In such case, it is recommended to revert to the original mesh.
+</p>
 <div style="margin-bottom: 30px;"></div>
 <h4 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;" id="fileformats"><span style="background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">About</span> Final Considerations</h4>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
