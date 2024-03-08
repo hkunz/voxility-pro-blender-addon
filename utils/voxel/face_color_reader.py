@@ -31,8 +31,8 @@ class FaceColorReader:
             min_x, min_y, min_z = min(min_x, voxel_center.x), min(min_y, voxel_center.y), min(min_z, voxel_center.z)
             max_x, max_y, max_z = max(max_x, voxel_center.x), max(max_y, voxel_center.y), max(max_z, voxel_center.z)
 
-        self.min_values = Vector(round(min_x), round(min_y), round(min_z))
-        self.max_values = Vector(round(max_x), round(max_y), round(max_z))
+        self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
+        self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
 
         for i, f in enumerate(bm.faces):
             centers_kd.insert(centers_voxel[i], i) # populate the tree
@@ -67,6 +67,7 @@ class FaceColorReader:
 
     def get_face_color(self, bm, materials, face_index):
         m = materials[bm.faces[face_index].material_index]
+        #FIXME check if index out of range
         if m[2]: # either direct color
             return m[2]
         else: # or the color in the image texture
@@ -83,7 +84,7 @@ class FaceColorReader:
         return min_x, min_y, min_z, max_x, max_y, max_z
 
     def get_voxel_color_data(self):
-        min_x, min_y, min_z, max_x, max_y, max_z = reader.get_min_max_voxel_dimensions()
+        min_x, min_y, min_z, max_x, max_y, max_z = self.get_min_max_voxel_dimensions()
         data = []
         for x in range(min_x, max_x + 1):
             layer = []
@@ -102,9 +103,9 @@ class FaceColorReader:
 
 # Example Usage:
 def write_sample_qb_file():
-    from voxility_pro.utils.voxel_writer.qb_writer import Qb, QbMatrix
+    #from voxility_pro.utils.voxel_writer.qb_writer import Qb, QbMatrix
     obj = bpy.context.active_object
-    geometry_nodes_modifier = obj.modifiers["VoxelizeModifier"]
+    geometry_nodes_modifier = obj.modifiers["VoxelizeModifier"] # bpy.context.object.modifiers["VoxelizeModifier"].name = "VoxelizeModifier"
     voxel_size = round(geometry_nodes_modifier["Socket_3"], 3)
     reader = FaceColorReader(obj, voxel_size)
     data = reader.get_voxel_color_data()
