@@ -21,6 +21,7 @@ class VoxconvertCommandBuilder:
         self.vc_surface_only: int = 0
         self.vc_voxformat_ambientocclusion: int = 0
         self.vc_voxformat_mergequads: int = 0
+        self.vc_core_colorreduction: bool = False
         self.vc_force_overwrite: bool = True
 
         self.vc_command: List[str] = None
@@ -70,6 +71,11 @@ class VoxconvertCommandBuilder:
         command.append("-set")
         command.append("voxformat_mergequads")
         command.append(str(self.vc_voxformat_mergequads))
+
+        if self.vc_core_colorreduction:
+            command.append("-set")
+            command.append("core_colorreduction")
+            command.append("KMeans")
 
         if self.vc_palette_file:
             command.append("-set")

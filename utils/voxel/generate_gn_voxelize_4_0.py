@@ -4,7 +4,7 @@ import bpy
 
 def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
-        return
+        return bpy.data.node_groups[node_group_name]
 
     voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
 
@@ -18,13 +18,13 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     mesh_socket = voxelize.interface.new_socket(name = "Mesh", in_out='INPUT', socket_type = 'NodeSocketGeometry')
     mesh_socket.attribute_domain = 'POINT'
 
-    #Socket Value
-    value_socket = voxelize.interface.new_socket(name = "Value", in_out='INPUT', socket_type = 'NodeSocketFloat')
-    value_socket.subtype = 'NONE'
-    value_socket.default_value = default_value
-    value_socket.min_value = min_value
-    value_socket.max_value = max_value
-    value_socket.attribute_domain = 'POINT'
+    #Socket Voxel Size
+    voxel_size_socket = voxelize.interface.new_socket(name = "Voxel Size", in_out='INPUT', socket_type = 'NodeSocketFloat')
+    voxel_size_socket.subtype = 'NONE'
+    voxel_size_socket.default_value = default_value
+    voxel_size_socket.min_value = min_value
+    voxel_size_socket.max_value = max_value
+    voxel_size_socket.attribute_domain = 'POINT'
 
 
     #node Reroute.002
@@ -301,9 +301,6 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     group_output.name = "Group Output"
     group_output.is_active_output = True
 
-
-
-
     #Set locations
     reroute_002.location = (-976.8480224609375, 125.14899444580078)
     mesh_to_volume.location = (-745.2174072265625, 211.2906951904297)
@@ -445,24 +442,87 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     voxelize.links.new(merge_by_distance.outputs[0], group_output.inputs[0])
     #reroute_001.Output -> mesh_to_volume.Voxel Size
     voxelize.links.new(reroute_001.outputs[0], mesh_to_volume.inputs[2])
-    #group_input.Value -> vector_math.Vector
+    #group_input.Voxel Size -> vector_math.Vector
     voxelize.links.new(group_input.outputs[1], vector_math.inputs[1])
     #group_input_002.Mesh -> capture_attribute.Geometry
     voxelize.links.new(group_input_002.outputs[0], capture_attribute.inputs[0])
     #group_input_002.Mesh -> sample_nearest_surface.Mesh
     voxelize.links.new(group_input_002.outputs[0], sample_nearest_surface.inputs[0])
-    #group_input.Value -> reroute_001.Input
+    #group_input.Voxel Size -> reroute_001.Input
     voxelize.links.new(group_input.outputs[1], reroute_001.inputs[0])
     #reroute_001.Output -> vector_math_001.Scale
     voxelize.links.new(reroute_001.outputs[0], vector_math_001.inputs[3])
     #group_input.Mesh -> reroute_002.Input
     voxelize.links.new(group_input.outputs[0], reroute_002.inputs[0])
-    #group_input_001.Value -> math_003.Value
+    #group_input_001.Voxel Size -> math_003.Value
     voxelize.links.new(group_input_001.outputs[1], math_003.inputs[0])
     #math_003.Value -> reroute.Input
     voxelize.links.new(math_003.outputs[0], reroute.inputs[0])
-    
     return voxelize
+
+#initialize voxelizemodifier node group
+def voxelizemodifier_node_group_4_0(voxelize, node_group_name):
+    if node_group_name in bpy.data.node_groups:
+        return bpy.data.node_groups[node_group_name]
+
+    voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
+
+    voxelizemodifier.is_modifier = True
+
+    #initialize voxelizemodifier nodes
+    #voxelizemodifier interface
+    #Socket Geometry
+    geometry_socket_1 = voxelizemodifier.interface.new_socket(name = "Geometry", in_out='OUTPUT', socket_type = 'NodeSocketGeometry')
+    geometry_socket_1.attribute_domain = 'POINT'
+
+    #Socket Geometry
+    geometry_socket_2 = voxelizemodifier.interface.new_socket(name = "Geometry", in_out='INPUT', socket_type = 'NodeSocketGeometry')
+    geometry_socket_2.attribute_domain = 'POINT'
+
+    #Socket Voxel Size
+    voxel_size_socket_1 = voxelizemodifier.interface.new_socket(name = "Voxel Size", in_out='INPUT', socket_type = 'NodeSocketFloat')
+    voxel_size_socket_1.subtype = 'NONE'
+    voxel_size_socket_1.default_value = 0.05000000074505806
+    voxel_size_socket_1.min_value = 0.009999999776482582
+    voxel_size_socket_1.max_value = 1.0
+    voxel_size_socket_1.attribute_domain = 'POINT'
+
+
+    #node Group Input
+    group_input_1 = voxelizemodifier.nodes.new("NodeGroupInput")
+    group_input_1.name = "Group Input"
+
+    #node Group Output
+    group_output_1 = voxelizemodifier.nodes.new("NodeGroupOutput")
+    group_output_1.name = "Group Output"
+    group_output_1.is_active_output = True
+
+    #node Group.001
+    group_001 = voxelizemodifier.nodes.new("GeometryNodeGroup")
+    group_001.name = "Group.001"
+    group_001.node_tree = voxelize
+    #Socket_2
+    group_001.inputs[1].default_value = 0.5
+
+
+
+
+    #Set locations
+    group_input_1.location = (561.7833862304688, -190.9309844970703)
+    group_output_1.location = (1087.428466796875, -143.74620056152344)
+    group_001.location = (776.3731079101562, -143.63876342773438)
+
+    #Set dimensions
+    group_input_1.width, group_input_1.height = 140.0, 100.0
+    group_output_1.width, group_output_1.height = 140.0, 100.0
+    group_001.width, group_001.height = 234.54656982421875, 100.0
+
+    #initialize voxelizemodifier links
+    #group_001.Geometry -> group_output_1.Geometry
+    voxelizemodifier.links.new(group_001.outputs[0], group_output_1.inputs[0])
+    #group_input_1.Geometry -> group_001.Mesh
+    voxelizemodifier.links.new(group_input_1.outputs[0], group_001.inputs[0])
+    return voxelizemodifier
 
 def get_currently_added_modifier(obj):
     for m in reversed(obj.modifiers):
@@ -470,33 +530,34 @@ def get_currently_added_modifier(obj):
             return m
     return None
 
-def get_associated_nodegroup(object_modifier):
+def get_associated_nodegroup(node_group_name):
     for ng in bpy.data.node_groups:
-        if ng == object_modifier.node_group:
+        if ng.name == node_group_name:
             return ng
     return None
 
-def add_modifier_blender_4_0(obj, node_group_name):
-    node_name = 'VoxelizeModifier'
+def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default_value):
 
     if obj is None:
         return
 
     bpy.ops.object.modifier_add(type='NODES')
 
-    vox_modifier = get_currently_added_modifier(obj)
-    vox_modifier.name = node_name # NodesModifier.name (same name for different objects but increments if in same object multiple vox modifiers
+    vox_modifier = obj.modifiers[-1]
+    vox_modifier.name = mod_node_group_name # NodesModifier.name (same name for different objects but increments if in same object multiple vox modifiers
     vox_modifier_name = vox_modifier.name
-    vox_modifier.node_group = bpy.data.node_groups[node_group_name]
-
-    vox_nodegroup = get_associated_nodegroup(vox_modifier)
-    vox_nodegroup.name = node_name # GeometryNodeTree.name (e.g. VoxelizeModifier.001)
-    vox_nodegroup_name = vox_nodegroup.name
+    vox_modifier.node_group = voxelizemodifier
+    vox_modifier["Socket_2"] = default_value
+    voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group.001'].inputs["Voxel Size"])
+    
 
 def add_voxelizer_4_0(obj, min_value, max_value, default_value):
     node_group_name = "Voxelize"
     voxelize = voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value)
-    add_modifier_blender_4_0(obj, node_group_name)
+    mod_node_group_name = "VoxelizeModifier"
+    voxelizemodifier = voxelizemodifier_node_group_4_0(voxelize, mod_node_group_name)
+    add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default_value)
 
 # example usage:
-# add_voxelizer_4_0(bpy.context.active_object, 0, 100, 0.4)
+add_voxelizer_4_0(bpy.context.active_object, 0, 100, 0.4)
+

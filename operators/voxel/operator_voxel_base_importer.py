@@ -80,6 +80,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
         c.vc_palette_file = ""
+        c.vc_core_colorreduction = (self.voxel_type == "qb")
         return c
 
     def execute(self, _context: bpy_types.Context) -> set[str]:

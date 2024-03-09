@@ -11,6 +11,8 @@ from voxility_pro.utils.file_utils import check_filepath
 class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     bl_description = "Operator Voxel Base"
 
+    voxel_type: str = ""
+
     filter_glob: bpy.props.StringProperty(
         default="*.*",
         options={'HIDDEN'},
