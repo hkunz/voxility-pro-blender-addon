@@ -4,7 +4,7 @@ import bpy
 
 def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
-        return
+        return bpy.data.node_groups[node_group_name]
 
     voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
 
@@ -26,14 +26,14 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     mesh_to_volume.inputs[5].default_value = 0.0
     #Fill Volume
     mesh_to_volume.inputs[6].default_value = True
-    
+
     #node Reroute.001
     reroute_001 = voxelize.nodes.new("NodeReroute")
     reroute_001.name = "Reroute.001"
     #node Combine XYZ
     combine_xyz = voxelize.nodes.new("ShaderNodeCombineXYZ")
     combine_xyz.name = "Combine XYZ"
-    
+
     #node Math
     math = voxelize.nodes.new("ShaderNodeMath")
     math.name = "Math"
@@ -43,7 +43,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     math.inputs[1].default_value = 0.5
     #Value_002
     math.inputs[2].default_value = 0.5
-    
+
     #node Math.001
     math_001 = voxelize.nodes.new("ShaderNodeMath")
     math_001.name = "Math.001"
@@ -53,7 +53,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     math_001.inputs[1].default_value = 0.5
     #Value_002
     math_001.inputs[2].default_value = 0.5
-    
+
     #node Math.002
     math_002 = voxelize.nodes.new("ShaderNodeMath")
     math_002.name = "Math.002"
@@ -63,7 +63,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     math_002.inputs[1].default_value = 0.5
     #Value_002
     math_002.inputs[2].default_value = 0.5
-    
+
     #node Vector Math.002
     vector_math_002 = voxelize.nodes.new("ShaderNodeVectorMath")
     vector_math_002.name = "Vector Math.002"
@@ -72,7 +72,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math_002.inputs[1].default_value = (0.0, 0.0, 0.0)
     #Vector_002
     vector_math_002.inputs[2].default_value = (0.0, 0.0, 0.0)
-    
+
     #node Group Input.001
     group_input_001 = voxelize.nodes.new("NodeGroupInput")
     group_input_001.name = "Group Input.001"
@@ -80,22 +80,18 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     #input Mesh
     voxelize.inputs.new('NodeSocketGeometry', "Mesh")
     voxelize.inputs[0].attribute_domain = 'POINT'
-    
-    #input Value
-    voxelize.inputs.new('NodeSocketFloat', "Value")
+
+    #input Voxel Size
+    voxelize.inputs.new('NodeSocketFloat', "Voxel Size")
     voxelize.inputs[1].default_value = default_value
     voxelize.inputs[1].min_value = min_value
     voxelize.inputs[1].max_value = max_value
     voxelize.inputs[1].attribute_domain = 'POINT'
-    
+
     #node Position
     position = voxelize.nodes.new("GeometryNodeInputPosition")
     position.name = "Position"
-    
-    #node Group Input
-    group_input = voxelize.nodes.new("NodeGroupInput")
-    group_input.name = "Group Input"
-    
+
     #node Math.003
     math_003 = voxelize.nodes.new("ShaderNodeMath")
     math_003.name = "Math.003"
@@ -105,7 +101,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     math_003.inputs[1].default_value = 2.0
     #Value_002
     math_003.inputs[2].default_value = 0.5
-    
+
     #node Vector Math
     vector_math = voxelize.nodes.new("ShaderNodeVectorMath")
     vector_math.name = "Vector Math"
@@ -114,7 +110,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math.inputs[2].default_value = (0.0, 0.0, 0.0)
     #Scale
     vector_math.inputs[3].default_value = 1.0
-    
+
     #node Reroute
     reroute = voxelize.nodes.new("NodeReroute")
     reroute.name = "Reroute"
@@ -126,11 +122,11 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math_001.inputs[1].default_value = (0.0, 0.0, 0.0)
     #Vector_002
     vector_math_001.inputs[2].default_value = (0.0, 0.0, 0.0)
-    
+
     #node Separate XYZ
     separate_xyz = voxelize.nodes.new("ShaderNodeSeparateXYZ")
     separate_xyz.name = "Separate XYZ"
-    
+
     #node Volume to Mesh
     volume_to_mesh = voxelize.nodes.new("GeometryNodeVolumeToMesh")
     volume_to_mesh.name = "Volume to Mesh"
@@ -143,18 +139,18 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     volume_to_mesh.inputs[3].default_value = 0.10000000149011612
     #Adaptivity
     volume_to_mesh.inputs[4].default_value = 0.0
-    
+
     #node Position.001
     position_001 = voxelize.nodes.new("GeometryNodeInputPosition")
     position_001.name = "Position.001"
-    
+
     #node Named Attribute
     named_attribute = voxelize.nodes.new("GeometryNodeInputNamedAttribute")
     named_attribute.name = "Named Attribute"
     named_attribute.data_type = 'FLOAT_VECTOR'
     #Name
     named_attribute.inputs[0].default_value = "UVMap"
-    
+
     #node Vector Math.003
     vector_math_003 = voxelize.nodes.new("ShaderNodeVectorMath")
     vector_math_003.name = "Vector Math.003"
@@ -163,11 +159,11 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math_003.inputs[2].default_value = (0.0, 0.0, 0.0)
     #Scale
     vector_math_003.inputs[3].default_value = 1.0
-    
+
     #node Group Input.002
     group_input_002 = voxelize.nodes.new("NodeGroupInput")
     group_input_002.name = "Group Input.002"
-    
+
     #node Set Position
     set_position = voxelize.nodes.new("GeometryNodeSetPosition")
     set_position.name = "Set Position"
@@ -175,7 +171,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     set_position.inputs[1].default_value = True
     #Offset
     set_position.inputs[3].default_value = (0.0, 0.0, 0.0)
-    
+
     #node Sample Nearest Surface
     sample_nearest_surface = voxelize.nodes.new("GeometryNodeSampleNearestSurface")
     sample_nearest_surface.name = "Sample Nearest Surface"
@@ -188,11 +184,11 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     sample_nearest_surface.inputs[4].default_value = (0.0, 0.0, 0.0, 0.0)
     #Value_Bool
     sample_nearest_surface.inputs[5].default_value = False
-    
+
     #node Normal
     normal = voxelize.nodes.new("GeometryNodeInputNormal")
     normal.name = "Normal"
-    
+
     #node Evaluate on Domain
     evaluate_on_domain = voxelize.nodes.new("GeometryNodeFieldOnDomain")
     evaluate_on_domain.name = "Evaluate on Domain"
@@ -206,7 +202,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     evaluate_on_domain.inputs[3].default_value = (0.0, 0.0, 0.0, 0.0)
     #Value_Bool
     evaluate_on_domain.inputs[4].default_value = False
-    
+
     #node Capture Attribute
     capture_attribute = voxelize.nodes.new("GeometryNodeCaptureAttribute")
     capture_attribute.name = "Capture Attribute"
@@ -222,21 +218,21 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     capture_attribute.inputs[4].default_value = True
     #Value_004
     capture_attribute.inputs[5].default_value = 0
-    
+
     #node Set Material Index
     set_material_index = voxelize.nodes.new("GeometryNodeSetMaterialIndex")
     set_material_index.name = "Set Material Index"
     #Selection
     set_material_index.inputs[1].default_value = True
-    
+
     #node Material Index
     material_index = voxelize.nodes.new("GeometryNodeInputMaterialIndex")
     material_index.name = "Material Index"
-    
+
     #node Join Geometry
     join_geometry = voxelize.nodes.new("GeometryNodeJoinGeometry")
     join_geometry.name = "Join Geometry"
-    
+
     #node Store Named Attribute
     store_named_attribute = voxelize.nodes.new("GeometryNodeStoreNamedAttribute")
     store_named_attribute.name = "Store Named Attribute"
@@ -254,7 +250,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     store_named_attribute.inputs[6].default_value = False
     #Value_Int
     store_named_attribute.inputs[7].default_value = 0
-    
+
     #node Sample Nearest Surface.001
     sample_nearest_surface_001 = voxelize.nodes.new("GeometryNodeSampleNearestSurface")
     sample_nearest_surface_001.name = "Sample Nearest Surface.001"
@@ -267,13 +263,13 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     sample_nearest_surface_001.inputs[4].default_value = (0.0, 0.0, 0.0, 0.0)
     #Value_Bool
     sample_nearest_surface_001.inputs[5].default_value = False
-    
+
     #node Delete Geometry
     delete_geometry = voxelize.nodes.new("GeometryNodeDeleteGeometry")
     delete_geometry.name = "Delete Geometry"
     delete_geometry.domain = 'POINT'
     delete_geometry.mode = 'ALL'
-    
+
     #node Merge by Distance
     merge_by_distance = voxelize.nodes.new("GeometryNodeMergeByDistance")
     merge_by_distance.name = "Merge by Distance"
@@ -282,7 +278,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     merge_by_distance.inputs[1].default_value = True
     #Distance
     merge_by_distance.inputs[2].default_value = 0.0010000000474974513
-    
+
     #node Group Output
     group_output = voxelize.nodes.new("NodeGroupOutput")
     group_output.name = "Group Output"
@@ -291,10 +287,11 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     #output Geometry
     voxelize.outputs.new('NodeSocketGeometry', "Geometry")
     voxelize.outputs[0].attribute_domain = 'POINT'
-    
-    
-    
-    
+
+    #node Group Input
+    group_input = voxelize.nodes.new("NodeGroupInput")
+    group_input.name = "Group Input"
+
     #Set locations
     reroute_002.location = (-976.8480224609375, 125.14899444580078)
     mesh_to_volume.location = (-745.2174072265625, 211.2906951904297)
@@ -306,7 +303,6 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math_002.location = (-695.9293212890625, -300.3758850097656)
     group_input_001.location = (-1187.799560546875, -181.96035766601562)
     position.location = (-1187.5992431640625, -106.9603500366211)
-    group_input.location = (-1187.799560546875, 20.039649963378906)
     math_003.location = (-1064.2021484375, -200.38575744628906)
     vector_math.location = (-1064.2021484375, -65.38575744628906)
     reroute.location = (-842.562255859375, -409.3598937988281)
@@ -330,7 +326,8 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     delete_geometry.location = (484.7822265625, 135.68016052246094)
     merge_by_distance.location = (643.374755859375, 145.15731811523438)
     group_output.location = (795.1829833984375, 125.6429443359375)
-    
+    group_input.location = (-1187.799560546875, 20.039649963378906)
+
     #Set dimensions
     reroute_002.width, reroute_002.height = 16.0, 100.0
     mesh_to_volume.width, mesh_to_volume.height = 182.27731323242188, 100.0
@@ -342,7 +339,6 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     vector_math_002.width, vector_math_002.height = 100.0, 100.0
     group_input_001.width, group_input_001.height = 100.3353271484375, 100.0
     position.width, position.height = 100.0, 100.0
-    group_input.width, group_input.height = 100.3353271484375, 100.0
     math_003.width, math_003.height = 100.0, 100.0
     vector_math.width, vector_math.height = 100.0, 100.0
     reroute.width, reroute.height = 16.0, 100.0
@@ -366,7 +362,8 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     delete_geometry.width, delete_geometry.height = 140.0, 100.0
     merge_by_distance.width, merge_by_distance.height = 131.17848205566406, 100.0
     group_output.width, group_output.height = 140.0, 100.0
-    
+    group_input.width, group_input.height = 100.3353271484375, 100.0
+
     #initialize voxelize links
     #capture_attribute.Geometry -> join_geometry.Geometry
     voxelize.links.new(capture_attribute.outputs[0], join_geometry.inputs[0])
@@ -436,23 +433,80 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     voxelize.links.new(merge_by_distance.outputs[0], group_output.inputs[0])
     #reroute_001.Output -> mesh_to_volume.Voxel Size
     voxelize.links.new(reroute_001.outputs[0], mesh_to_volume.inputs[2])
-    #group_input.Value -> vector_math.Vector
+    #group_input.Voxel Size -> vector_math.Vector
     voxelize.links.new(group_input.outputs[1], vector_math.inputs[1])
     #group_input_002.Mesh -> capture_attribute.Geometry
     voxelize.links.new(group_input_002.outputs[0], capture_attribute.inputs[0])
     #group_input_002.Mesh -> sample_nearest_surface.Mesh
     voxelize.links.new(group_input_002.outputs[0], sample_nearest_surface.inputs[0])
-    #group_input.Value -> reroute_001.Input
+    #group_input.Voxel Size -> reroute_001.Input
     voxelize.links.new(group_input.outputs[1], reroute_001.inputs[0])
     #reroute_001.Output -> vector_math_001.Scale
     voxelize.links.new(reroute_001.outputs[0], vector_math_001.inputs[3])
     #group_input.Mesh -> reroute_002.Input
     voxelize.links.new(group_input.outputs[0], reroute_002.inputs[0])
-    #group_input_001.Value -> math_003.Value
+    #group_input_001.Voxel Size -> math_003.Value
     voxelize.links.new(group_input_001.outputs[1], math_003.inputs[0])
     #math_003.Value -> reroute.Input
     voxelize.links.new(math_003.outputs[0], reroute.inputs[0])
     return voxelize
+
+#initialize voxelizemodifier node group
+def voxelizemodifier_node_group_3_5(voxelize, node_group_name):
+    if node_group_name in bpy.data.node_groups:
+        return bpy.data.node_groups[node_group_name]
+
+    voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
+
+    #initialize voxelizemodifier nodes
+    #node Group Input
+    group_input_1 = voxelizemodifier.nodes.new("NodeGroupInput")
+    group_input_1.name = "Group Input"
+    #voxelizemodifier inputs
+    #input Geometry
+    voxelizemodifier.inputs.new('NodeSocketGeometry', "Geometry")
+    voxelizemodifier.inputs[0].attribute_domain = 'POINT'
+
+    #input Voxel Size
+    voxelizemodifier.inputs.new('NodeSocketFloat', "Voxel Size")
+    voxelizemodifier.inputs[1].default_value = 0.4000000059604645
+    voxelizemodifier.inputs[1].min_value = 0.0
+    voxelizemodifier.inputs[1].max_value = 100.0
+    voxelizemodifier.inputs[1].attribute_domain = 'POINT'
+
+    #node Group Output
+    group_output_1 = voxelizemodifier.nodes.new("NodeGroupOutput")
+    group_output_1.name = "Group Output"
+    group_output_1.is_active_output = True
+    #voxelizemodifier outputs
+    #output Geometry
+    voxelizemodifier.outputs.new('NodeSocketGeometry', "Geometry")
+    voxelizemodifier.outputs[0].attribute_domain = 'POINT'
+
+    #node Group
+    group = voxelizemodifier.nodes.new("GeometryNodeGroup")
+    group.name = "Group"
+    group.node_tree = voxelize
+
+    #Set locations
+    group_input_1.location = (-319.47198486328125, -15.414009094238281)
+    group_output_1.location = (200.0, 0.0)
+    group.location = (-76.83906555175781, 40.01508331298828)
+
+    #Set dimensions
+    group_input_1.width, group_input_1.height = 140.0, 100.0
+    group_output_1.width, group_output_1.height = 140.0, 100.0
+    group.width, group.height = 197.96212768554688, 100.0
+
+    #initialize voxelizemodifier links
+    #group.Geometry -> group_output_1.Geometry
+    voxelizemodifier.links.new(group.outputs[0], group_output_1.inputs[0])
+    #group_input_1.Geometry -> group.Mesh
+    voxelizemodifier.links.new(group_input_1.outputs[0], group.inputs[0])
+    #group_input_1.Voxel Size -> group.Voxel Size
+    voxelizemodifier.links.new(group_input_1.outputs[1], group.inputs[1])
+    return voxelizemodifier
+
 
 def get_currently_added_modifier(obj):
     for m in reversed(obj.modifiers):
@@ -460,33 +514,31 @@ def get_currently_added_modifier(obj):
             return m
     return None
 
-def get_associated_nodegroup(object_modifier):
+def get_associated_nodegroup(node_group_name):
     for ng in bpy.data.node_groups:
-        if ng == object_modifier.node_group:
+        if ng.name == node_group_name:
             return ng
     return None
 
-def add_modifier_blender_3_5(obj, node_group_name):
-    node_name = 'VoxelizeModifier'
-
+def add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value):
     if obj is None:
         return
 
     bpy.ops.object.modifier_add(type='NODES')
 
-    vox_modifier = get_currently_added_modifier(obj)
-    vox_modifier.name = node_name # NodesModifier.name (same name for different objects but increments if in same object multiple vox modifiers
+    vox_modifier = obj.modifiers[-1]
+    vox_modifier.name = mod_node_group_name # NodesModifier.name (same name for different objects but increments if in same object multiple vox modifiers
     vox_modifier_name = vox_modifier.name
-    vox_modifier.node_group = bpy.data.node_groups[node_group_name]
-
-    vox_nodegroup = get_associated_nodegroup(vox_modifier)
-    vox_nodegroup.name = node_name # GeometryNodeTree.name (e.g. VoxelizeModifier.001)
-    vox_nodegroup_name = vox_nodegroup.name
+    vox_modifier.node_group = voxelizemodifier
+    vox_modifier["Input_1"] = default_value
+    voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_5(obj, min_value, max_value, default_value):
     node_group_name = "Voxelize"
     voxelize = voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value)
-    add_modifier_blender_3_5(obj, node_group_name)
+    mod_node_group_name = "VoxelizeModifier"
+    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, mod_node_group_name)
+    add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value)
 
 # example usage:
 # add_voxelizer_3_5(bpy.context.active_object, 0, 100, 0.4)

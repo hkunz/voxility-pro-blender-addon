@@ -487,7 +487,6 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name):
     voxel_size_socket_1.max_value = 1.0
     voxel_size_socket_1.attribute_domain = 'POINT'
 
-
     #node Group Input
     group_input_1 = voxelizemodifier.nodes.new("NodeGroupInput")
     group_input_1.name = "Group Input"
@@ -503,9 +502,6 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name):
     group_001.node_tree = voxelize
     #Socket_2
     group_001.inputs[1].default_value = 0.5
-
-
-
 
     #Set locations
     group_input_1.location = (561.7833862304688, -190.9309844970703)
@@ -524,12 +520,6 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name):
     voxelizemodifier.links.new(group_input_1.outputs[0], group_001.inputs[0])
     return voxelizemodifier
 
-def get_currently_added_modifier(obj):
-    for m in reversed(obj.modifiers):
-        if m.type == 'NODES':
-            return m
-    return None
-
 def get_associated_nodegroup(node_group_name):
     for ng in bpy.data.node_groups:
         if ng.name == node_group_name:
@@ -537,7 +527,6 @@ def get_associated_nodegroup(node_group_name):
     return None
 
 def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default_value):
-
     if obj is None:
         return
 
@@ -549,7 +538,6 @@ def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default
     vox_modifier.node_group = voxelizemodifier
     vox_modifier["Socket_2"] = default_value
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group.001'].inputs["Voxel Size"])
-    
 
 def add_voxelizer_4_0(obj, min_value, max_value, default_value):
     node_group_name = "Voxelize"
@@ -559,5 +547,4 @@ def add_voxelizer_4_0(obj, min_value, max_value, default_value):
     add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default_value)
 
 # example usage:
-add_voxelizer_4_0(bpy.context.active_object, 0, 100, 0.4)
-
+# add_voxelizer_4_0(bpy.context.active_object, 0, 100, 0.4)
