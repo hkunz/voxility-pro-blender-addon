@@ -453,7 +453,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     return voxelize
 
 #initialize voxelizemodifier node group
-def voxelizemodifier_node_group_3_5(voxelize, node_group_name):
+def voxelizemodifier_node_group_3_5(voxelize, node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
         return bpy.data.node_groups[node_group_name]
 
@@ -470,9 +470,9 @@ def voxelizemodifier_node_group_3_5(voxelize, node_group_name):
 
     #input Voxel Size
     voxelizemodifier.inputs.new('NodeSocketFloat', "Voxel Size")
-    voxelizemodifier.inputs[1].default_value = 0.4000000059604645
-    voxelizemodifier.inputs[1].min_value = 0.0
-    voxelizemodifier.inputs[1].max_value = 100.0
+    voxelizemodifier.inputs[1].default_value = default_value
+    voxelizemodifier.inputs[1].min_value = min_value
+    voxelizemodifier.inputs[1].max_value = max_value
     voxelizemodifier.inputs[1].attribute_domain = 'POINT'
 
     #node Group Output
@@ -539,7 +539,7 @@ def add_voxelizer_3_5(obj, min_value, max_value, default_value):
     node_group_name = "VoxilityVoxelize_" + suffix
     voxelize = voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value)
     mod_node_group_name = "VoxilityVoxelizeModifier_" + suffix
-    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, mod_node_group_name)
+    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, mod_node_group_name, min_value, max_value, default_value)
     add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value)
 
 # example usage:
