@@ -3,9 +3,11 @@ import bpy
 class BlenderVersionError(Exception):
     pass
 
-class VoxelizeOperator(bpy.types.Operator):
+class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_idname = "object.voxility_voxelize"
     bl_label = "Voxility Voxelize Object"
+    bl_description = "Voxelize or convert selected objects into a single voxel object"
+    bl_options = {'REGISTER'}
 
     min_value: bpy.props.FloatProperty(name="Min Value", default=0.0)
     max_value: bpy.props.FloatProperty(name="Max Value", default=100.0)
@@ -24,13 +26,17 @@ class VoxelizeOperator(bpy.types.Operator):
         
         return {'FINISHED'}
 
+    @classmethod
+    def poll(cls, context):
+        return context.active_object == None or context.active_object.type == 'MESH'
+
 def register():
-    bpy.utils.register_class(VoxelizeOperator)
+    bpy.utils.register_class(OBJECT_OT_OperatorVoxelize)
 
 def unregister():
-    bpy.utils.unregister_class(VoxelizeOperator)
+    bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelize)
 
 # example usage:
 # if __name__ == "__main__":
 #    register()
-#    bpy.ops.object.voxelize()
+#    bpy.ops.object.voxility_voxelize()

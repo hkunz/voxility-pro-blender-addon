@@ -1,6 +1,7 @@
 # Generated with https://github.com/BrendanParmer/NodeToPython/releases
 
 import bpy
+from voxility_pro.utils.utils import get_blender_version, get_addon_version
 
 def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
@@ -365,6 +366,8 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     group_input.width, group_input.height = 100.3353271484375, 100.0
 
     #initialize voxelize links
+    #store_named_attribute.Geometry -> join_geometry.Geometry
+    voxelize.links.new(store_named_attribute.outputs[0], join_geometry.inputs[0])
     #capture_attribute.Geometry -> join_geometry.Geometry
     voxelize.links.new(capture_attribute.outputs[0], join_geometry.inputs[0])
     #capture_attribute.Geometry -> sample_nearest_surface_001.Mesh
@@ -379,8 +382,6 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_001.inputs[6])
     #vector_math.Vector -> separate_xyz.Vector
     voxelize.links.new(vector_math.outputs[0], separate_xyz.inputs[0])
-    #store_named_attribute.Geometry -> join_geometry.Geometry
-    voxelize.links.new(store_named_attribute.outputs[0], join_geometry.inputs[0])
     #evaluate_on_domain.Value -> store_named_attribute.Value
     voxelize.links.new(evaluate_on_domain.outputs[2], store_named_attribute.inputs[3])
     #volume_to_mesh.Mesh -> set_position.Geometry
@@ -534,9 +535,10 @@ def add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_5(obj, min_value, max_value, default_value):
-    node_group_name = "Voxelize"
+    suffix = get_blender_version() + "_" + get_addon_version()
+    node_group_name = "VoxilityVoxelize_" + suffix
     voxelize = voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value)
-    mod_node_group_name = "VoxelizeModifier"
+    mod_node_group_name = "VoxilityVoxelizeModifier_" + suffix
     voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, mod_node_group_name)
     add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value)
 
