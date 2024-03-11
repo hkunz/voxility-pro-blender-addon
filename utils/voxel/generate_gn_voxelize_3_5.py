@@ -546,9 +546,6 @@ def add_voxelizer_3_5(obj, min_value, max_value, default_value):
     voxelize = voxelize_node_group_3_5(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
     voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
     add_modifier_blender_3_5(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
-    voxelizemodifier.inputs[1].default_value = default_value
-    voxelizemodifier.inputs[1].min_value = min_value
-    voxelizemodifier.inputs[1].max_value = max_value
 
 # example usage:
 # add_voxelizer_3_5(bpy.context.active_object, 0, 100, 0.4)

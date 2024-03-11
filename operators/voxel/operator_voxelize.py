@@ -22,16 +22,22 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
 
     def execute(self, context):
         v = bpy.app.version
-        if v >= (3,4,0) and v < (4,0,0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_3_5 import add_voxelizer_3_5
-            add_voxelizer_3_5(context.active_object, self.min_value, self.max_value, self.default_value)
-        elif v >= (4,0,0):
+        if v >= (4, 0, 0):
             from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0
             add_voxelizer_4_0(context.active_object, self.min_value, self.max_value, self.default_value)
+        elif v >= (3, 4, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_5 import add_voxelizer_3_5
+            add_voxelizer_3_5(context.active_object, self.min_value, self.max_value, self.default_value)
+        elif v >= (3, 3, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3
+            add_voxelizer_3_3(context.active_object, self.min_value, self.max_value, self.default_value)
         else:
-            raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.5 and above.")
-        
+            raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.3 and above.")
+   
         return {'FINISHED'}
+
+
+
 
     @classmethod
     def poll(cls, context):
