@@ -124,13 +124,13 @@ class FaceColorReader:
         m = materials[bm.faces[face_index].material_index]
         c = m[2]
         if c: # either direct color
-            return (round(c.r), round(c.g), round(c.b))
+            return (round(c.r), round(c.g), round(c.b), 255)
         else: # or the color in the image texture
             uv = bm.faces[face_index].loops[0][bm.loops.layers.uv[0]].uv
             px = int((m[3][0]-1) * uv.x)
             py = int((m[3][1]-1) * uv.y)
             pixel = 4 * (m[3][0] * py + px)
-            return (round(m[4][pixel]*255), round(m[4][pixel+1]*255), round(m[4][pixel+2]*255))
+            return (round(m[4][pixel]*255), round(m[4][pixel+1]*255), round(m[4][pixel+2]*255), 255)
         #TODO: get vertex colors
 
     def get_voxel_dimensions(self):
@@ -138,66 +138,31 @@ class FaceColorReader:
         max_x, max_y, max_z = round(self.max_values.x), round(self.max_values.y), round(self.max_values.z)
         return max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
 
-
-def test_write_qb(size_x, size_y, size_z, colors) -> None:
-    EMPTY_COLOR = (0, 0, 0, 0)
-
-    start = time.time()
-    data = [(*colors[x, y, z], 255) 
-                if colors.get((x,y,z)) else EMPTY_COLOR 
-                for z in range(size_z)
-                for y in range(size_y)
-                for x in range(size_x)]
-    print("HEYY === ", time.time() - start)
-
-    write(size_x, size_y, size_z, data)
-    
-
-def write(size_x, size_y, size_z, data):
-    file: str = "C:/ou.qb"
-    start = time.time()
-    layer: QbMatrix = QbMatrix("cube", size_x, size_y, size_z, data, (0, 0, 0))
-    qb: Qb = Qb()
-
-    qb.matrixList.append(layer)
-    qb.save(file)
-    print("Write time ========", time.time() - start)
+    def get_color_data(self):
+        max_x, max_y, max_z = self.get_voxel_dimensions()
+        empty = (0, 0, 0, 0)
+        data = [self.colors[x, y, z] if self.colors.get((x,y,z)) else empty 
+                for z in range(max_z)
+                for y in range(max_y)
+                for x in range(max_x)]
+        return data
 
 def test_read_and_write():
     start = time.time()
-    
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
     voxel_size = round(geometry_nodes_modifier["Socket_3"], 3)
     reader = FaceColorReader(obj, voxel_size)
     print("Read time ========", time.time() - start)
-
-    max_x, max_y, max_z = reader.get_voxel_dimensions()
+    file: str = "C:/out.qb"
     start = time.time()
-    colors = reader.colors
+    layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0))
+    qb: Qb = Qb()
+    qb.matrixList.append(layer)
+    start = time.time()
+    qb.save(file)
+    print("Write time ========", time.time() - start)
 
-    test_write_qb(max_x, max_y, max_z, colors)
-
-    
-
+s = time.time()
 test_read_and_write()
-
-
-
-
-def test_lemon():
-    size_x=4
-    size_y=4
-    size_z=4
-    #amount=10
-    #colors = generate(size_x, size_y, size_z, amount)
-    colors = {(2, 1, 0): (0.5498605976063163, 0.15785355756280972, 0.06738642483004531), (2, 0, 3): (0.44770916720010123, 0.12533987418453063, 0.7314108279878017), (1, 1, 3): (0.9121835620335241, 0.17995483722772, 0.3435748589736378), (1, 2, 1): (0.7741294241033942, 0.387267447465124, 0.5178432971673648), (1, 0, 3): (0.8940615518345553, 0.036730708410385726, 0.47701350324828107), (2, 0, 2): (0.5861547992102003, 0.3252095663155552, 0.429394337609752), (2, 2, 3): (0.5020412915301437, 0.9720496926315347, 0.6506084245229163), (2, 2, 1): (0.9261833304095134, 0.5130287107377194, 0.10950152665801305), (3, 2, 1): (0.04952230908734201, 0.7944893930962992, 0.08394754913473845), (0, 3, 0): (0.7580661850186802, 0.7489058297177904, 0.37813519984854316)}
-    print(len(colors))
-
-    import time
-    start = time.time()
-    test_write_qb(size_x, size_y, size_z, colors)
-    print("===2 time taken is", time.time() - start)
-    
-    
-#test_lemon()
+print("Total time ========", time.time() - s)

@@ -48,33 +48,35 @@ class Qb:
         file.write(bytes([c for color in matrix.data for c in color]))
 
 # Usage:
+def test_write_qb_file():
+    size_x=4
+    size_y=4
+    size_z=4
 
-def test_write_qb() -> None:
-    from mathutils import Color
-    from typing import List, Dict, Tuple
+    colors = {
+        (2, 1, 0): (140, 40, 17, 255),
+        (2, 0, 3): (114, 32, 186, 255),
+        (1, 1, 3): (233, 46, 88, 255),
+        (1, 2, 1): (197, 99, 132, 255),
+        (1, 0, 3): (228, 9, 122, 255),
+        (2, 0, 2): (149, 83, 110, 255),
+        (2, 2, 3): (128, 248, 166, 255),
+        (2, 2, 1): (236, 131, 28, 255),
+        (3, 2, 1): (13, 202, 21, 255),
+        (0, 3, 0): (193, 191, 96, 255)
+    }
 
     EMPTY_COLOR = (0, 0, 0, 0)
-    data: List[List[List[Tuple[int, int, int, int]]]] = []
-    colors: Dict[Tuple[int, int, int], Color] = {(-2, -1, -2): Color((0.0, 204.0, 0.0)), (-1, -1, -1): Color((0.0, 204.0, 0.0)), (-2, 0, -1): Color((0.0, 204.0, 0.0)), (-1, -1, -2): Color((0.0, 204.0, 0.0)), (-1, -1, 0): Color((204.0, 7.0, 2.0)), (0, -1, 1): Color((204.0, 7.0, 2.0)), (-2, 0, -2): Color((120.0, 116.0, 91.0)), (-1, 1, -2): Color((79.0, 77.0, 56.0)), (-1, 1, -1): Color((0.0, 204.0, 0.0)), (-1, 0, -2): Color((90.0, 86.0, 59.0)), (-1, 0, 0): Color((204.0, 7.0, 2.0)), (0, -1, -2): Color((0.0, 204.0, 0.0)), (0, -1, -1): Color((0.0, 204.0, 0.0)), (0, -1, 0): Color((204.0, 7.0, 2.0)), (0, 0, -2): Color((0.0, 204.0, 0.0)), (0, 0, -1): Color((0.0, 204.0, 0.0)), (0, 1, -2): Color((0.0, 204.0, 0.0)), (0, 0, 0): Color((204.0, 7.0, 2.0))}
-
-    for x in range(-3, 3 + 1):
-        layer: List[List[Tuple[int, int, int, int]]] = []
-        for y in range(-3, 3 + 1):
-            row: List[Tuple[int, int, int, int]] = []
-            for z in range(-3, 3 + 1):
-                color: Color = colors.get((x, y, z))
-                if color:
-                    row.append((int(color.r), int(color.g), int(color.b), 255))
-                else:
-                    row.append(EMPTY_COLOR)
-            layer.append(row)
-        data.append(layer)
+    data = [colors[x, y, z]
+                if colors.get((x,y,z)) else EMPTY_COLOR 
+                for z in range(size_z)
+                for y in range(size_y)
+                for x in range(size_x)]
 
     file: str = "C:/out.qb"
-    layer: QbMatrix = QbMatrix("cube", data, (0, 0, 0))
-
+    layer: QbMatrix = QbMatrix("cube", size_x, size_y, size_z, data, (0, 0, 0))
     qb: Qb = Qb()
     qb.matrixList.append(layer)
     qb.save(file)
 
-# test_write_qb()
+#test_write_qb_file()
