@@ -1,3 +1,58 @@
+import struct
+
+from mathutils import Color
+from typing import List, Dict, Tuple
+
+import random
+import time
+
+class QbMatrix:
+    def __init__(self, name: str, size_x, size_y, size_z, data, pos: Tuple[int, int, int]):
+        self.name = name
+        self.pos = pos
+        self.data = data
+        self.size_x = size_x
+        self.size_y = size_y
+        self.size_z = size_z
+
+class Qb:
+    def __init__(self) -> None:
+        self.version: int = 0x0101
+        self.colorFormat: int = 0
+        self.zAxisOrientation: int = 0
+        self.compressed: int = 0
+        self.visibilityMaskEncoded: int = 0
+        self.matrixList: List[QbMatrix] = []
+
+    def add_matrix(self, name: str, data, pos: Tuple[int, int, int]) -> None:
+        self.matrixList.append(QbMatrix(name, data, pos))
+
+    def save(self, filename: str) -> None:
+        with open(filename, "wb") as f: # type(f) = <class '_io.BufferedWriter'>
+            self.compressed = 0  # Compression saving not supported
+
+            f.write(struct.pack("I", self.version))
+            f.write(struct.pack("I", self.colorFormat))
+            f.write(struct.pack("I", self.zAxisOrientation))
+            f.write(struct.pack("I", self.compressed))
+            f.write(struct.pack("I", self.visibilityMaskEncoded))
+            f.write(struct.pack("I", len(self.matrixList)))
+
+            for matrix in self.matrixList: # QbMatrix
+                self.save_matrix(f, matrix)
+
+    def save_matrix(self, file: object, matrix: QbMatrix) -> None:
+        file.write(struct.pack("B", len(matrix.name)))
+        file.write(struct.pack(str(len(matrix.name.encode('ascii')))+"s", matrix.name.encode('ascii')))
+        size_x = matrix.size_x
+        size_y = matrix.size_y
+        size_z = matrix.size_z
+        file.write(struct.pack("III", size_x, size_y, size_z))
+        file.write(struct.pack("iii", matrix.pos[0], matrix.pos[1], matrix.pos[2]))
+
+        file.write(bytes([c for color in matrix.data for c in color]))
+
+
 import bpy
 import bmesh
 
@@ -84,60 +139,65 @@ class FaceColorReader:
         return max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
 
 
-# Example Usage:
-def test_write_qb_file():
-    size_x=4
-    size_y=4
-    size_z=4
-
-    colors = {
-        (2, 1, 0): (140, 40, 17),
-        (2, 0, 3): (114, 32, 186),
-        (1, 1, 3): (233, 46, 88),
-        (1, 2, 1): (197, 99, 132),
-        (1, 0, 3): (228, 9, 122),
-        (2, 0, 2): (149, 83, 110),
-        (2, 2, 3): (128, 248, 166),
-        (2, 2, 1): (236, 131, 28),
-        (3, 2, 1): (13, 202, 21),
-        (0, 3, 0): (193, 191, 96)
-    }
-
+def test_write_qb(size_x, size_y, size_z, colors) -> None:
     EMPTY_COLOR = (0, 0, 0, 0)
+
+    start = time.time()
     data = [(*colors[x, y, z], 255) 
                 if colors.get((x,y,z)) else EMPTY_COLOR 
                 for z in range(size_z)
                 for y in range(size_y)
                 for x in range(size_x)]
+    print("HEYY === ", time.time() - start)
 
-    file: str = "C:/out.qb"
+    write(size_x, size_y, size_z, data)
+    
+
+def write(size_x, size_y, size_z, data):
+    file: str = "C:/ou.qb"
+    start = time.time()
     layer: QbMatrix = QbMatrix("cube", size_x, size_y, size_z, data, (0, 0, 0))
     qb: Qb = Qb()
+
     qb.matrixList.append(layer)
     qb.save(file)
+    print("Write time ========", time.time() - start)
 
-#test_write_qb_file()
-
-def test_read_voxel_colors_and_write_qb_file():
+def test_read_and_write():
+    start = time.time()
+    
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
     voxel_size = round(geometry_nodes_modifier["Socket_3"], 3)
     reader = FaceColorReader(obj, voxel_size)
+    print("Read time ========", time.time() - start)
+
     max_x, max_y, max_z = reader.get_voxel_dimensions()
+    start = time.time()
     colors = reader.colors
 
-    EMPTY_COLOR = (0, 0, 0, 0)
+    test_write_qb(max_x, max_y, max_z, colors)
 
-    data = [(*colors[x, y, z], 255) 
-                if colors.get((x,y,z)) else EMPTY_COLOR 
-                for z in range(max_z)
-                for y in range(max_y)
-                for x in range(max_x)]
+    
 
-    file: str = "C:/out.qb"
-    layer: QbMatrix = QbMatrix("cube", max_x, max_y, max_z, data, (0, 0, 0))
-    qb: Qb = Qb()
-    qb.matrixList.append(layer)
-    qb.save(file)
+test_read_and_write()
 
-#test_read_voxel_colors_and_write_qb_file()
+
+
+
+def test_lemon():
+    size_x=4
+    size_y=4
+    size_z=4
+    #amount=10
+    #colors = generate(size_x, size_y, size_z, amount)
+    colors = {(2, 1, 0): (0.5498605976063163, 0.15785355756280972, 0.06738642483004531), (2, 0, 3): (0.44770916720010123, 0.12533987418453063, 0.7314108279878017), (1, 1, 3): (0.9121835620335241, 0.17995483722772, 0.3435748589736378), (1, 2, 1): (0.7741294241033942, 0.387267447465124, 0.5178432971673648), (1, 0, 3): (0.8940615518345553, 0.036730708410385726, 0.47701350324828107), (2, 0, 2): (0.5861547992102003, 0.3252095663155552, 0.429394337609752), (2, 2, 3): (0.5020412915301437, 0.9720496926315347, 0.6506084245229163), (2, 2, 1): (0.9261833304095134, 0.5130287107377194, 0.10950152665801305), (3, 2, 1): (0.04952230908734201, 0.7944893930962992, 0.08394754913473845), (0, 3, 0): (0.7580661850186802, 0.7489058297177904, 0.37813519984854316)}
+    print(len(colors))
+
+    import time
+    start = time.time()
+    test_write_qb(size_x, size_y, size_z, colors)
+    print("===2 time taken is", time.time() - start)
+    
+    
+#test_lemon()
