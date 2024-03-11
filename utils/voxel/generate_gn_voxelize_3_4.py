@@ -4,7 +4,7 @@ import bpy
 
 from voxility_pro.enums.name_constant import NameConstant
 
-def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value):
+def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
         return bpy.data.node_groups[node_group_name]
 
@@ -461,7 +461,7 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     return voxelize
 
 #initialize voxelizemodifier node group
-def voxelizemodifier_node_group_3_5(voxelize, node_group_name, min_value, max_value, default_value):
+def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
         return bpy.data.node_groups[node_group_name]
 
@@ -529,7 +529,7 @@ def get_associated_nodegroup(node_group_name):
             return ng
     return None
 
-def add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value):
+def add_modifier_blender_3_4(obj, voxelizemodifier, mod_node_group_name, default_value):
     if obj is None:
         return
 
@@ -542,10 +542,10 @@ def add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default
     vox_modifier["Input_1"] = default_value
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
-def add_voxelizer_3_5(obj, min_value, max_value, default_value):
-    voxelize = voxelize_node_group_3_5(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
-    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
-    add_modifier_blender_3_5(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
+def add_voxelizer_3_4(obj, min_value, max_value, default_value):
+    voxelize = voxelize_node_group_3_4(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
+    voxelizemodifier = voxelizemodifier_node_group_3_4(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
+    add_modifier_blender_3_4(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
 
 # example usage:
-# add_voxelizer_3_5(bpy.context.active_object, 0, 100, 0.4)
+# add_voxelizer_3_4(bpy.context.active_object, 0, 100, 0.4)
