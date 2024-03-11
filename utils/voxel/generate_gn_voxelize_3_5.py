@@ -1,7 +1,8 @@
 # Generated with https://github.com/BrendanParmer/NodeToPython/releases
 
 import bpy
-from voxility_pro.utils.utils import get_blender_version, get_addon_version
+
+from voxility_pro.enums.name_constant import NameConstant
 
 def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
@@ -237,20 +238,25 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     #node Store Named Attribute
     store_named_attribute = voxelize.nodes.new("GeometryNodeStoreNamedAttribute")
     store_named_attribute.name = "Store Named Attribute"
-    store_named_attribute.data_type = 'FLOAT2'
+
+    v = bpy.app.version
+    store_named_attribute.data_type = 'FLOAT2' if v >= (3,5,0) else 'FLOAT_VECTOR'
     store_named_attribute.domain = 'CORNER'
-    #Selection
-    store_named_attribute.inputs[1].default_value = True
-    #Name
-    store_named_attribute.inputs[2].default_value = "UVMap"
-    #Value_Float
-    store_named_attribute.inputs[4].default_value = 0.0
-    #Value_Color
-    store_named_attribute.inputs[5].default_value = (0.0, 0.0, 0.0, 0.0)
-    #Value_Bool
-    store_named_attribute.inputs[6].default_value = False
-    #Value_Int
-    store_named_attribute.inputs[7].default_value = 0
+    store_named_attribute_inputs = store_named_attribute.inputs
+
+    if v >= (3,5,0):
+        store_named_attribute_inputs[1].default_value = True #Selection
+        store_named_attribute_inputs[2].default_value = "UVMap" #Name
+        store_named_attribute_inputs[4].default_value = 0.0 #Value_Float
+        store_named_attribute_inputs[5].default_value = (0.0, 0.0, 0.0, 0.0) #Value_Color
+        store_named_attribute_inputs[6].default_value = False #Value_Bool
+        store_named_attribute_inputs[7].default_value = 0 #Value_Int
+    else:
+        store_named_attribute_inputs[1].default_value = "UVMap" #Name
+        store_named_attribute_inputs[3].default_value = 0.0 #Value_Float
+        store_named_attribute_inputs[4].default_value = (0.0, 0.0, 0.0, 0.0) #Value_Color
+        store_named_attribute_inputs[5].default_value = False #Value_Bool
+        store_named_attribute_inputs[6].default_value = 0 #Value_Int
 
     #node Sample Nearest Surface.001
     sample_nearest_surface_001 = voxelize.nodes.new("GeometryNodeSampleNearestSurface")
@@ -382,8 +388,10 @@ def voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value
     voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_001.inputs[6])
     #vector_math.Vector -> separate_xyz.Vector
     voxelize.links.new(vector_math.outputs[0], separate_xyz.inputs[0])
+    
     #evaluate_on_domain.Value -> store_named_attribute.Value
-    voxelize.links.new(evaluate_on_domain.outputs[2], store_named_attribute.inputs[3])
+    store_named_attribute_inputs_value_vector_index = 3 if v >= (3,5,0) else 2
+    voxelize.links.new(evaluate_on_domain.outputs[2], store_named_attribute.inputs[store_named_attribute_inputs_value_vector_index])
     #volume_to_mesh.Mesh -> set_position.Geometry
     voxelize.links.new(volume_to_mesh.outputs[0], set_position.inputs[0])
     #vector_math_003.Vector -> sample_nearest_surface.Sample Position
@@ -535,12 +543,12 @@ def add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_5(obj, min_value, max_value, default_value):
-    suffix = get_blender_version() + "_" + get_addon_version()
-    node_group_name = "VoxilityVoxelize_" + suffix
-    voxelize = voxelize_node_group_3_5(node_group_name, min_value, max_value, default_value)
-    mod_node_group_name = "VoxilityVoxelizeModifier_" + suffix
-    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, mod_node_group_name, min_value, max_value, default_value)
-    add_modifier_blender_3_5(obj, voxelizemodifier, mod_node_group_name, default_value)
+    voxelize = voxelize_node_group_3_5(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
+    voxelizemodifier = voxelizemodifier_node_group_3_5(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
+    add_modifier_blender_3_5(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
+    voxelizemodifier.inputs[1].default_value = default_value
+    voxelizemodifier.inputs[1].min_value = min_value
+    voxelizemodifier.inputs[1].max_value = max_value
 
 # example usage:
 # add_voxelizer_3_5(bpy.context.active_object, 0, 100, 0.4)

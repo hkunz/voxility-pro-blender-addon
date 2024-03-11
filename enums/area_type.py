@@ -5,6 +5,7 @@ from voxility_pro.enums.voxility_enum import VoxilityEnum
 class AreaType(VoxilityEnum):
     EMPTY = auto()
     VIEW_3D = auto()
+    UV = auto()
     IMAGE_EDITOR = auto()
     NODE_EDITOR = auto()
     SEQUENCE_EDITOR = auto()

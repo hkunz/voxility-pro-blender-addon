@@ -1,7 +1,8 @@
 # Generated with https://github.com/BrendanParmer/NodeToPython/releases
 
 import bpy
-from voxility_pro.utils.utils import get_blender_version, get_addon_version
+
+from voxility_pro.enums.name_constant import NameConstant
 
 def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value):
     if node_group_name in bpy.data.node_groups:
@@ -541,12 +542,12 @@ def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group.001'].inputs["Voxel Size"])
 
 def add_voxelizer_4_0(obj, min_value, max_value, default_value):
-    suffix = get_blender_version() + "_" + get_addon_version()
-    node_group_name = "VoxilityVoxelize_" + suffix
-    voxelize = voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value)
-    mod_node_group_name = "VoxilityVoxelizeModifier_" + suffix
-    voxelizemodifier = voxelizemodifier_node_group_4_0(voxelize, mod_node_group_name, min_value, max_value, default_value)
-    add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default_value)
+    voxelize = voxelize_node_group_4_0(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
+    voxelizemodifier = voxelizemodifier_node_group_4_0(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
+    add_modifier_blender_4_0(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
+    voxelizemodifier.inputs[1].default_value = default_value
+    voxelizemodifier.inputs[1].min_value = min_value
+    voxelizemodifier.inputs[1].max_value = max_value
 
 # example usage:
 # add_voxelizer_4_0(bpy.context.active_object, 0, 100, 0.4)
