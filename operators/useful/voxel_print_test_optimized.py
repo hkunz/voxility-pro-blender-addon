@@ -106,13 +106,12 @@ class FaceColorReader:
             c = base_color.default_value
             return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
         if link.from_node.type == 'TEX_IMAGE':
-            tex_node = p.inputs[0].links[0].from_node
-            image = tex_node.image
+            image = link.from_node.image
             return (image.size, image.pixels[:])
         if link.from_node.type == 'VERTEX_COLOR':
-            c = base_color.default_value
-            return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
-        return (0, 0, 0, 255) # unhandled or undefined linked node
+            c = link.from_node.color #base_color.default_value
+            return (self.bm.loops.layers.float_color[link.from_node.layer_name],)
+        return (0, 255, 0, 255) # unhandled or undefined linked node
 
     def get_face_color(self, face_index):
         f = self.bm.faces[face_index]
@@ -120,7 +119,7 @@ class FaceColorReader:
         tuple_len = len(m)
         if tuple_len == 4: # either direct color as tuple length 4
             return m
-        elif tuple_len == 2: # or the color in the image texture
+        if tuple_len == 2: # or the color in the image texture
             uv = f.loops[0][self.bm.loops.layers.uv[0]].uv
             size = m[0]
             px = int((size[0]-1) * uv.x)
@@ -128,7 +127,10 @@ class FaceColorReader:
             pixel = 4 * (size[0] * py + px)
             pxs = m[1]
             return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
-        #TODO: get vertex colors
+        if tuple_len == 1: # vertex color
+            color = f.loops[0][m[0]]
+            color_tuple = (round(color.x*255), round(color.y*255), round(color.z*255), 255)
+            return color_tuple
 
     def get_voxel_dimensions(self):
         min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
@@ -147,6 +149,7 @@ class FaceColorReader:
                 for y in range(min_y, max_y + 1)
                 for x in range(min_x, max_x + 1)]
         return data
+
 
 def test_read_and_write():
     start = time.time()

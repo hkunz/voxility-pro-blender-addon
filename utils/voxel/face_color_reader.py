@@ -2,7 +2,7 @@ import bpy
 import bmesh
 
 from math import sqrt
-from mathutils import Color, kdtree, Vector
+from mathutils import Vector
 
 class FaceColorReader:
     def __init__(self, object, voxel_size):
@@ -28,12 +28,10 @@ class FaceColorReader:
             displacement = -0.5 * normal * area
             voxel_center = center + displacement
 
-            # translate to integer and make it a tuple
             center_x, center_y, center_z = round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5)
             center = (center_x, center_y, center_z)
 
             if not center in self.colors:
-            
                 col = self.get_face_color(f.index)
                 self.colors[center] = col
                 
@@ -56,7 +54,7 @@ class FaceColorReader:
             return (image.size, image.pixels[:])
         if link.from_node.type == 'VERTEX_COLOR':
             c = base_color.default_value
-            return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
+            return (self.bm.loops.layers.float_color[link.from_node.layer_name],)
         return (0, 0, 0, 255) # unhandled or undefined linked node
 
     def get_face_color(self, face_index):
@@ -65,7 +63,7 @@ class FaceColorReader:
         tuple_len = len(m)
         if tuple_len == 4: # either direct color as tuple length 4
             return m
-        elif tuple_len == 2: # or the color in the image texture
+        if tuple_len == 2: # or the color in the image texture
             uv = f.loops[0][self.bm.loops.layers.uv[0]].uv
             size = m[0]
             px = int((size[0]-1) * uv.x)
@@ -73,7 +71,10 @@ class FaceColorReader:
             pixel = 4 * (size[0] * py + px)
             pxs = m[1]
             return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
-        #TODO: get vertex colors
+        if tuple_len == 1: # or vertex color
+            color = f.loops[0][m[0]]
+            color_tuple = (round(color.x*255), round(color.y*255), round(color.z*255), 255)
+            return color_tuple
 
     def get_voxel_dimensions(self):
         min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
