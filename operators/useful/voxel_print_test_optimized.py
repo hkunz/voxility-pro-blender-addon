@@ -61,97 +61,98 @@ from mathutils import Color, kdtree, Vector
 
 class FaceColorReader:
     def __init__(self, object, voxel_size):
+
         dg = bpy.context.evaluated_depsgraph_get()
         e = object.evaluated_get(dg)
 
-        bm = bmesh.new()
-        bm.from_object(object, dg)
-        bm.faces.ensure_lookup_table()
+        self.bm = bmesh.new()
+        self.bm.from_object(object, dg)
+        self.bm.faces.ensure_lookup_table()
 
-        materials = self.get_materials(e)
-        centers_kd = kdtree.KDTree(len(bm.faces)) # create a kd tree for fast distance comparison
+        self.materials = [self.get_material(m) for i, m in enumerate(e.data.materials) if m]
 
-        centers_voxel = []
+        self.colors = {}
+
         min_x, min_y, min_z = float('inf'), float('inf'), float('inf')
         max_x, max_y, max_z = -float('inf'), -float('inf'), -float('inf')
 
-        for f in bm.faces:
+        for f in self.bm.faces:
             center = f.calc_center_median()
             normal = f.normal
             area = sqrt(f.calc_area()) # as a face is a square, edge length is sqrt the surface
             displacement = -0.5 * normal * area
             voxel_center = center + displacement
-            voxel_center.x, voxel_center.y, voxel_center.z = (voxel_center.x / voxel_size - 0.5), (voxel_center.y / voxel_size - 0.5), (voxel_center.z / voxel_size - 0.5)
-            centers_voxel.append(voxel_center)
-            min_x, min_y, min_z = min(min_x, voxel_center.x), min(min_y, voxel_center.y), min(min_z, voxel_center.z)
-            max_x, max_y, max_z = max(max_x, voxel_center.x), max(max_y, voxel_center.y), max(max_z, voxel_center.z)
+
+            # translate to integer and make it a tuple
+            center_x, center_y, center_z = round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5)
+            center = (center_x, center_y, center_z)
+
+            if not center in self.colors:
+            
+                col = self.get_face_color(f.index)
+                self.colors[center] = col
+                
+                min_x, min_y, min_z = min(min_x, center_x), min(min_y, center_y), min(min_z, center_z)
+                max_x, max_y, max_z = max(max_x, center_x), max(max_y, center_y), max(max_z, center_z)
 
         self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
         self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
 
-        for i, f in enumerate(bm.faces):
-            centers_kd.insert(centers_voxel[i], i) # populate the tree
-
-        centers_kd.balance()
-
-        epsilon = 0.001
-        self.colors = {}
-
-        for i, c in enumerate(centers_voxel):
-            if not c:
-                continue
-            col = self.get_face_color(bm, materials, i)
-            self.colors[(round(c.x-min_x), round(c.y-min_y), round(c.z-min_z))] = col
-            # mark as processed
-            for _, fi, d in centers_kd.find_n(c, 6):
-                if d < epsilon:
-                    centers_voxel[fi] = None
-
-    def get_material(self, i, m):
+    def get_material(self, m):
         p = m.node_tree.nodes['Principled BSDF']
-        if len(p.inputs[0].links) == 0:
-            c = p.inputs[0].default_value
-            return (i, m, Color((round(c[0]*255), round(c[1]*255), round(c[2]*255))), None, None)
-        else:
+        base_color = p.inputs[0]
+        link = base_color.links[0] if len(base_color.links) else None
+        if not link: # nothing connected to Base Color socket
+            c = base_color.default_value
+            return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
+        if link.from_node.type == 'TEX_IMAGE':
             tex_node = p.inputs[0].links[0].from_node
             image = tex_node.image
-            return (i, m, None, image.size, image.pixels[:])
+            return (image.size, image.pixels[:])
+        if link.from_node.type == 'VERTEX_COLOR':
+            c = base_color.default_value
+            return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
+        return (0, 0, 0, 255) # unhandled or undefined linked node
 
-    def get_materials(self, obj):
-        return [self.get_material(i, m) for i, m in enumerate(obj.data.materials) if m]
-
-    def get_face_color(self, bm, materials, face_index):
-        m = materials[bm.faces[face_index].material_index]
-        c = m[2]
-        if c: # either direct color
-            return (round(c.r), round(c.g), round(c.b), 255)
-        else: # or the color in the image texture
-            uv = bm.faces[face_index].loops[0][bm.loops.layers.uv[0]].uv
-            px = int((m[3][0]-1) * uv.x)
-            py = int((m[3][1]-1) * uv.y)
-            pixel = 4 * (m[3][0] * py + px)
-            return (round(m[4][pixel]*255), round(m[4][pixel+1]*255), round(m[4][pixel+2]*255), 255)
+    def get_face_color(self, face_index):
+        f = self.bm.faces[face_index]
+        m = self.materials[f.material_index]
+        tuple_len = len(m)
+        if tuple_len == 4: # either direct color as tuple length 4
+            return m
+        elif tuple_len == 2: # or the color in the image texture
+            uv = f.loops[0][self.bm.loops.layers.uv[0]].uv
+            size = m[0]
+            px = int((size[0]-1) * uv.x)
+            py = int((size[1]-1) * uv.y)
+            pixel = 4 * (size[0] * py + px)
+            pxs = m[1]
+            return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
         #TODO: get vertex colors
 
     def get_voxel_dimensions(self):
-        min_x, min_y, min_z = round(self.min_values.x), round(self.min_values.y), round(self.min_values.z)
-        max_x, max_y, max_z = round(self.max_values.x), round(self.max_values.y), round(self.max_values.z)
+        min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
         return max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
 
+    def get_voxel_ranges(self):
+        min_x, min_y, min_z = round(self.min_values.x), round(self.min_values.y), round(self.min_values.z)
+        max_x, max_y, max_z = round(self.max_values.x), round(self.max_values.y), round(self.max_values.z)
+        return min_x, min_y, min_z, max_x, max_y, max_z
+
     def get_color_data(self):
-        max_x, max_y, max_z = self.get_voxel_dimensions()
+        min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
         empty = (0, 0, 0, 0)
         data = [self.colors[x, y, z] if self.colors.get((x,y,z)) else empty 
-                for z in range(max_z)
-                for y in range(max_y)
-                for x in range(max_x)]
+                for z in range(min_z, max_z + 1)
+                for y in range(min_y, max_y + 1)
+                for x in range(min_x, max_x + 1)]
         return data
 
 def test_read_and_write():
     start = time.time()
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
-    voxel_size = round(geometry_nodes_modifier["Socket_3"], 3)
+    voxel_size = round(geometry_nodes_modifier["Socket_2"], 3)
     reader = FaceColorReader(obj, voxel_size)
     print("Read time ========", time.time() - start)
     file: str = "C:/out.qb"
@@ -166,3 +167,4 @@ def test_read_and_write():
 s = time.time()
 test_read_and_write()
 print("Total time ========", time.time() - s)
+
