@@ -5,14 +5,22 @@ from math import sqrt
 from mathutils import Vector
 
 class FaceColorReader:
-    def __init__(self, object, voxel_size):
+    def __init__(self, object, voxel_size, uv_name="UVMap"):
 
         dg = bpy.context.evaluated_depsgraph_get()
         e = object.evaluated_get(dg)
 
+        self.object = object
+        self.uv_name = uv_name
         self.bm = bmesh.new()
         self.bm.from_object(object, dg)
         self.bm.faces.ensure_lookup_table()
+        uv_maps = object.data.uv_layers.keys()
+
+        if len(object.data.uv_layers) > 1:
+            print("Warning:", f"Multiple UV layers not supported {uv_maps}")
+        if self.uv_name not in uv_maps:
+            print("Warning:", f"\"{self.uv_name}\" not found in UV Maps")
 
         self.materials = [self.get_material(m) for i, m in enumerate(e.data.materials) if m]
 
@@ -54,7 +62,13 @@ class FaceColorReader:
             return (image.size, image.pixels[:])
         if link.from_node.type == 'VERTEX_COLOR':
             c = base_color.default_value
-            return (self.bm.loops.layers.float_color[link.from_node.layer_name],)
+            attr = link.from_node.layer_name
+            attributes = self.bm.loops.layers.float_color
+            if attr in attributes:
+                return (attributes[attr],)
+            else:
+                print(f"Warning: Multiple Color Attributes not supported: {self.object.data.color_attributes.keys()}")
+                return (0, 0, 0, 255)
         return (0, 0, 0, 255) # unhandled or undefined linked node
 
     def get_face_color(self, face_index):
@@ -64,7 +78,10 @@ class FaceColorReader:
         if tuple_len == 4: # either direct color as tuple length 4
             return m
         if tuple_len == 2: # or the color in the image texture
-            uv = f.loops[0][self.bm.loops.layers.uv[0]].uv
+            uvs = self.bm.loops.layers.uv # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
+            if not self.uv_name in uvs:
+                return (255, 192, 203) # pink for missing uvmap
+            uv = f.loops[0][uvs[self.uv_name]].uv # uvs[self.uv_name] returns a BMLayerItem which can be used as key
             size = m[0]
             px = int((size[0]-1) * uv.x)
             py = int((size[1]-1) * uv.y)
@@ -101,7 +118,7 @@ def test_read_voxel_colors_and_write_qb_file():
     s = time.time()
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
-    voxel_size = round(geometry_nodes_modifier["Socket_3"], 3)
+    voxel_size = round(geometry_nodes_modifier["Socket_2"], 3)
     reader = FaceColorReader(obj, voxel_size)
     print("Read time ========", time.time() - s)
     file: str = "C:/out.qb"
