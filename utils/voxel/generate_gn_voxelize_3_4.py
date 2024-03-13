@@ -169,11 +169,11 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
 # Modification 3: Use FLOAT2 if 3.5+ else FLOAT_VECTOR ### Manual Entry
 # ========================================================================================================== ### Manual Entry
     v = bpy.app.version ### Manual Entry
-    store_named_attribute.data_type = 'FLOAT2' if v >= (3,5,0) else 'FLOAT_VECTOR' ### Manual Entry
     store_named_attribute.domain = 'CORNER' ### Manual Entry
     store_named_attribute_inputs = store_named_attribute.inputs ### Manual Entry
     ### Manual Entry
     if v >= (3,5,0): ### Manual Entry
+        store_named_attribute.data_type = 'FLOAT2' ### Manual Entry
         store_named_attribute_inputs[1].default_value = True #Selection ### Manual Entry
         store_named_attribute_inputs[2].default_value = "UVMap" #Name ### Manual Entry
         store_named_attribute_inputs[4].default_value = 0.0 #Value_Float ### Manual Entry
@@ -181,6 +181,7 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
         store_named_attribute_inputs[6].default_value = False #Value_Bool ### Manual Entry
         store_named_attribute_inputs[7].default_value = 0 #Value_Int ### Manual Entry
     else: ### Manual Entry
+        store_named_attribute.data_type = 'FLOAT_VECTOR' ### Manual Entry
         store_named_attribute_inputs[1].default_value = "UVMap" #Name ### Manual Entry
         store_named_attribute_inputs[3].default_value = 0.0 #Value_Float ### Manual Entry
         store_named_attribute_inputs[4].default_value = (0.0, 0.0, 0.0, 0.0) #Value_Color ### Manual Entry
