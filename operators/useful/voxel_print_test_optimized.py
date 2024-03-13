@@ -60,7 +60,7 @@ from math import sqrt
 from mathutils import Vector
 
 class FaceColorReader:
-    def __init__(self, object, voxel_size, uv_name="UVMap"):
+    def __init__(self, object, voxel_size, uv_name):
 
         dg = bpy.context.evaluated_depsgraph_get()
         e = object.evaluated_get(dg)
@@ -126,17 +126,32 @@ class FaceColorReader:
                 return (0, 0, 0, 255)
         return (0, 0, 0, 255) # unhandled or undefined linked node
 
+    def get_face_uv(self, f):
+        uvs = self.bm.loops.layers.uv # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
+        if not self.uv_name in uvs:
+            return (255, 192, 203) # pink for missing uvmap
+        uv = f.loops[0][uvs[self.uv_name]].uv  # uvs[self.uv_name] returns a BMLayerItem which can be used as key
+        return uv
+
+    def get_face_uv_3_4(self, f):
+        uvs = self.bm.loops.layers.float_vector # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
+        if not self.uv_name in uvs:
+            return None
+        uv = f.loops[0][uvs[self.uv_name]] # uvs[self.uv_name] returns a BMLayerItem which can be used as key
+        return uv
+
     def get_face_color(self, face_index):
         f = self.bm.faces[face_index]
+        if f.material_index >= len(self.materials):
+            return (255, 192, 203, 255) # pink for deleted material (last material deleted)
         m = self.materials[f.material_index]
         tuple_len = len(m)
         if tuple_len == 4: # either direct color as tuple length 4
             return m
         if tuple_len == 2: # or the color in the image texture
-            uvs = self.bm.loops.layers.uv # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
-            if not self.uv_name in uvs:
-                return (255, 192, 203) # pink for missing uvmap
-            uv = f.loops[0][uvs[self.uv_name]].uv # uvs[self.uv_name] returns a BMLayerItem which can be used as key
+            uv = self.get_face_uv_3_4(f) if bpy.app.version <= (3, 4, 0) else self.get_face_uv(f)
+            if not uv:
+                return (255, 192, 203)
             size = m[0]
             px = int((size[0]-1) * uv.x)
             py = int((size[1]-1) * uv.y)
@@ -173,8 +188,9 @@ def test_read_voxel_colors_and_write_qb_file():
     s = time.time()
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
-    voxel_size = round(geometry_nodes_modifier["Socket_2"], 3)
-    reader = FaceColorReader(obj, voxel_size)
+    voxel_size_value = geometry_nodes_modifier["Input_1" if bpy.app.version >= (4,0,0) else "Socket_2"]
+    voxel_size = round(voxel_size_value, 3)
+    reader = FaceColorReader(obj, voxel_size, "UVMap")
     print("Read time ========", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()

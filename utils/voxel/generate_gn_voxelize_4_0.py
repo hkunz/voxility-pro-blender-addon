@@ -1,14 +1,27 @@
 # Generated with https://github.com/BrendanParmer/NodeToPython/releases
 
-import bpy
 
-from voxility_pro.enums.name_constant import NameConstant
 
-def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value):
-    if node_group_name in bpy.data.node_groups:
-        return bpy.data.node_groups[node_group_name]
 
-    voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 1: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+import bpy ### Manual Entry
+from voxility_pro.enums.name_constant import NameConstant ### Manual Entry
+### Manual Entry
+def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value): ### Manual Entry
+    if node_group_name in bpy.data.node_groups: ### Manual Entry
+        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    ### Manual Entry
+    voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 1: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
 
     #initialize voxelize nodes
     #voxelize interface
@@ -23,11 +36,26 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     #Socket Voxel Size
     voxel_size_socket = voxelize.interface.new_socket(name = "Voxel Size", in_out='INPUT', socket_type = 'NodeSocketFloat')
     voxel_size_socket.subtype = 'NONE'
-    voxel_size_socket.default_value = default_value
-    voxel_size_socket.min_value = min_value
-    voxel_size_socket.max_value = max_value
-    voxel_size_socket.attribute_domain = 'POINT'
 
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 2: Assign default_value, min_value, max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    voxel_size_socket.default_value = default_value ### Manual Entry
+    voxel_size_socket.min_value = min_value ### Manual Entry
+    voxel_size_socket.max_value = max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 2: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
+
+    voxel_size_socket.attribute_domain = 'POINT'
     #Socket UV Map
     uv_map_socket = voxelize.interface.new_socket(name = "UV Map", in_out='INPUT', socket_type = 'NodeSocketString')
     uv_map_socket.attribute_domain = 'POINT'
@@ -406,9 +434,6 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     #Value_Rotation
     evaluate_on_domain.inputs[5].default_value = (0.0, 0.0, 0.0)
 
-
-
-
     #Set locations
     mesh_to_volume.location = (-745.2174072265625, 211.2906951904297)
     separate_xyz.location = (-942.9451904296875, -75.49308013916016)
@@ -613,8 +638,26 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
     return voxelize
 
 #initialize voxelizemodifier node group
-def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_value, default_value):
-    voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
+
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 3: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
+    if node_group_name in bpy.data.node_groups: ### Manual Entry
+        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    ### Manual Entry
+    voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 3: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
 
     voxelizemodifier.is_modifier = True
 
@@ -631,9 +674,25 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
     #Socket Voxel Size
     voxel_size_socket_1 = voxelizemodifier.interface.new_socket(name = "Voxel Size", in_out='INPUT', socket_type = 'NodeSocketFloat')
     voxel_size_socket_1.subtype = 'NONE'
-    voxel_size_socket_1.default_value = default_value
-    voxel_size_socket_1.min_value = min_value
-    voxel_size_socket_1.max_value = max_value
+
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 4: Assign default_value, min_value, max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    voxel_size_socket_1.default_value = default_value ### Manual Entry
+    voxel_size_socket_1.min_value = min_value ### Manual Entry
+    voxel_size_socket_1.max_value = max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 4: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
+
     voxel_size_socket_1.attribute_domain = 'POINT'
 
     #Socket UV Map
@@ -686,6 +745,11 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
     return voxelizemodifier
 
 
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4.0 - 5: Add initialization code ### Manual Entry
+# ========================================================================================================== ### Manual Entry
 def get_associated_nodegroup(node_group_name):
     for ng in bpy.data.node_groups:
         if ng.name == node_group_name:
