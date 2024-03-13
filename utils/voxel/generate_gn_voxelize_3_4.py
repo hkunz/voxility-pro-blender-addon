@@ -254,13 +254,33 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
     store_named_attribute_001.name = "Store Named Attribute.001"
     store_named_attribute_001.data_type = 'FLOAT_COLOR'
     store_named_attribute_001.domain = 'CORNER'
-    #Value_Float
-    store_named_attribute_001.inputs[3].default_value = 0.0
-    #Value_Bool
-    store_named_attribute_001.inputs[5].default_value = False
-    #Value_Int
-    store_named_attribute_001.inputs[6].default_value = 0
-    
+
+
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 4: StoreNamedAttributeNode has changed in 3.5 ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    if v >= (3,5,0): ### Manual Entry
+        store_named_attribute_001.inputs[1].default_value = True #Selection ### Manual Entry
+        store_named_attribute_001.inputs[3].default_value = (0.0, 0.0, 0.0) #Value_Vector ### Manual Entry
+        store_named_attribute_001.inputs[6].default_value = False #Value Bool ### Manual Entry
+        store_named_attribute_001.inputs[7].default_value = 0 #Value Int ### Manual Entry
+    else: ### Manual Entry
+        store_named_attribute_001.inputs[3].default_value = 0.0 #Value_Float ### Manual Entry
+        store_named_attribute_001.inputs[5].default_value = False #Value_Bool ### Manual Entry
+        store_named_attribute_001.inputs[6].default_value = 0 #Value_Int ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 4: StoreNamedAttributeNode has changed in 3.5 ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
+
+
     #node Join Geometry.001
     join_geometry_001 = voxelize.nodes.new("GeometryNodeJoinGeometry")
     join_geometry_001.name = "Join Geometry.001"
@@ -547,12 +567,12 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
 
 
 # ========================================================================================================== ### Manual Entry
-# Modification 4: Index is shifted from 2 to 3 in the creating noodle link process (search voxelize.links.new)
+# Modification 5: Index is shifted from 2 to 3 in the creating noodle link process (search voxelize.links.new)
 # ========================================================================================================== ### Manual Entry
     iiiii = 3 if v >= (3,5,0) else 2 ### Manual Entry
     voxelize.links.new(evaluate_on_domain.outputs[2], store_named_attribute.inputs[iiiii]) ### Manual Entry
 # ========================================================================================================== ### Manual Entry
-# Modification 4: END ### Manual Entry
+# Modification 5: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 
 
@@ -623,7 +643,7 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
     #sample_nearest_surface_002.Value -> evaluate_on_domain_001.Value
     voxelize.links.new(sample_nearest_surface_002.outputs[3], evaluate_on_domain_001.inputs[2])
     #evaluate_on_domain_001.Value -> store_named_attribute_001.Value
-    voxelize.links.new(evaluate_on_domain_001.outputs[3], store_named_attribute_001.inputs[2])
+    #voxelize.links.new(evaluate_on_domain_001.outputs[3], store_named_attribute_001.inputs[2]) #manually deleted its in the below Modification 6
     #evaluate_on_domain_001.Value -> store_named_attribute_001.Value
     voxelize.links.new(evaluate_on_domain_001.outputs[3], store_named_attribute_001.inputs[4])
     #sample_nearest_surface_002.Value -> evaluate_on_domain_001.Value
@@ -638,10 +658,29 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
     voxelize.links.new(group_input_001.outputs[3], named_attribute_001.inputs[0])
     #group_input_003.UV Map -> named_attribute.Name
     voxelize.links.new(group_input_003.outputs[2], named_attribute.inputs[0])
-    #group_input_004.UV Map -> store_named_attribute.Name
-    voxelize.links.new(group_input_004.outputs[2], store_named_attribute.inputs[1])
-    #group_input_005.Vertex Colors -> store_named_attribute_001.Name
-    voxelize.links.new(group_input_005.outputs[3], store_named_attribute_001.inputs[1])
+
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 6: Index is shifted in the creating noodle link process ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    if v >= (3,5,0): ### Manual Entry
+        voxelize.links.new(group_input_004.outputs[2], store_named_attribute.inputs[2]) ### Manual Entry
+        voxelize.links.new(evaluate_on_domain_001.outputs[3], store_named_attribute_001.inputs[5]) ### Manual Entry
+        voxelize.links.new(group_input_005.outputs[3], store_named_attribute_001.inputs[2]) ### Manual Entry
+    else: ### Manual Entry
+        voxelize.links.new(evaluate_on_domain_001.outputs[3], store_named_attribute_001.inputs[2]) ### Manual Entry
+        voxelize.links.new(group_input_004.outputs[2], store_named_attribute.inputs[1]) ### Manual Entry
+        voxelize.links.new(group_input_005.outputs[3], store_named_attribute_001.inputs[1]) ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 6: Index is shifted in the creating noodle link process ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
     #group_input.Voxel Size -> math_003.Value
     voxelize.links.new(group_input.outputs[1], math_003.inputs[0])
     #capture_attribute.Attribute -> reroute_004.Input
@@ -656,6 +695,7 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
     voxelize.links.new(reroute_006.outputs[0], vector_math_002.inputs[3])
     #group_input_007.Voxel Size -> vector_math_001.Scale
     voxelize.links.new(group_input_007.outputs[1], vector_math_001.inputs[3])
+
     return voxelize
 
 
@@ -663,7 +703,7 @@ def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value
 
 
 # ========================================================================================================== ### Manual Entry
-# Modification 5: Function name change and parameters modification ### Manual Entry
+# Modification 7: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
     if node_group_name in bpy.data.node_groups: ### Manual Entry
@@ -671,7 +711,7 @@ def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_va
     ### Manual Entry
     voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
 # ========================================================================================================== ### Manual Entry
-# Modification 5: END ### Manual Entry
+# Modification 7: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 
 
@@ -694,13 +734,13 @@ def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_va
 
 
 # ========================================================================================================== ### Manual Entry
-# Modification 6: Assign default_value, min_value, max_value within voxelizemodifier_node_group ### Manual Entry
+# Modification 8: Assign default_value, min_value, max_value within voxelizemodifier_node_group ### Manual Entry
 # ========================================================================================================== ### Manual Entry
     voxelizemodifier.inputs[1].default_value = default_value ### Manual Entry
     voxelizemodifier.inputs[1].min_value = min_value ### Manual Entry
     voxelizemodifier.inputs[1].max_value = max_value ### Manual Entry
 # ========================================================================================================== ### Manual Entry
-# Modification 6: END ### Manual Entry
+# Modification 8: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 
 
