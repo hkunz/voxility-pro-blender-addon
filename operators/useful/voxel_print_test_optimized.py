@@ -162,14 +162,10 @@ class FaceColorReader:
             if not uv:
                 return (255, 192, 203, 255)
             size = m[0]
-            px = int((size[0]-1) * uv.x)
-            py = int((size[1]-1) * uv.y)
+            px = int((size[0]-1) * (uv.x%1))
+            py = int((size[1]-1) * (uv.y%1))
             pixel = 4 * (size[0] * py + px)
             pxs = m[1]
-            if (pixel >= len(pxs)):
-                print("Warning: UV is out of bounds, adjust UV to be inside texture or set texture to repeating")
-                #FIXME: when UV is out of image texture it's tuple index out of range error
-                return (0, 0, 0, 255)
             return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
         if tuple_len == 1: # or vertex color
             color = f.loops[0][m[0]]
