@@ -1,10 +1,6 @@
 import struct
 
-from mathutils import Color
 from typing import List, Dict, Tuple
-
-import random
-import time
 
 class QbMatrix:
     def __init__(self, name: str, size_x, size_y, size_z, data, pos: Tuple[int, int, int]):
@@ -104,8 +100,20 @@ class FaceColorReader:
         self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
         self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
 
+    def get_principled_bsdf(self, m):
+        nodes = m.node_tree.nodes
+        if "Principled BSDF" in nodes:
+            return nodes["Principled BSDF"]
+        for node in nodes:
+            if node.type == 'BSDF_PRINCIPLED':
+                return node
+        print(f"Warning: No Principled BSDF found in material \"{m.name}\"")
+        return None
+
     def get_material(self, m):
-        p = m.node_tree.nodes['Principled BSDF']
+        p = self.get_principled_bsdf(m)
+        if not p:
+            return (0, 0, 0, 255) # no principled bsdf found so return black
         base_color = p.inputs[0]
         link = base_color.links[0] if len(base_color.links) else None
         if not link: # nothing connected to Base Color socket

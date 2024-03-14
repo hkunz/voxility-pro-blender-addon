@@ -49,8 +49,20 @@ class FaceColorReader:
         self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
         self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
 
+    def get_principled_bsdf(self, m):
+        nodes = m.node_tree.nodes
+        if "Principled BSDF" in nodes:
+            return nodes["Principled BSDF"]
+        for node in nodes:
+            if node.type == 'BSDF_PRINCIPLED':
+                return node
+        print(f"Warning: No Principled BSDF found in material \"{m.name}\"")
+        return None
+
     def get_material(self, m):
-        p = m.node_tree.nodes['Principled BSDF']
+        p = self.get_principled_bsdf(m)
+        if not p:
+            return (0, 0, 0, 255) # no principled bsdf found so return black
         base_color = p.inputs[0]
         link = base_color.links[0] if len(base_color.links) else None
         if not link: # nothing connected to Base Color socket
@@ -133,8 +145,9 @@ def test_read_voxel_colors_and_write_qb_file():
     s = time.time()
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
-    voxel_size = round(geometry_nodes_modifier["Socket_2"], 3)
-    reader = FaceColorReader(obj, voxel_size)
+    voxel_size_value = geometry_nodes_modifier["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"]
+    voxel_size = round(voxel_size_value, 3)
+    reader = FaceColorReader(obj, voxel_size, "UVMap")
     print("Read time ========", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()
@@ -146,4 +159,4 @@ def test_read_voxel_colors_and_write_qb_file():
     print("Write time ========", time.time() - start)
     print("Total time ========", time.time() - s)
 
-#test_read_voxel_colors_and_write_qb_file()
+# test_read_voxel_colors_and_write_qb_file()
