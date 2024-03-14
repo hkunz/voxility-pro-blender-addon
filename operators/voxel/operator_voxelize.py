@@ -23,18 +23,16 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     def execute(self, context):
         v = bpy.app.version
         if v >= (4, 0, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 # type: ignore
-            add_voxelizer_4_0(context.active_object, self.min_value, self.max_value, self.default_value)
+            from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 as add_voxelizer # type: ignore
         elif v >= (3, 4, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 # type: ignore
-            add_voxelizer_3_4(context.active_object, self.min_value, self.max_value, self.default_value)
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 as add_voxelizer # type: ignore
         elif v >= (3, 3, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3 # type: ignore
-            add_voxelizer_3_3(context.active_object, self.min_value, self.max_value, self.default_value)
-        #elif v >= (3, 2, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3 as add_voxelizer # type: ignore
+        elif v >= (3, 1, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_1 import add_voxelizer_3_1 as add_voxelizer # type: ignore
         else:
             raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.3 and above.")
-   
+        add_voxelizer(context.active_object, self.min_value, self.max_value, self.default_value)
         return {'FINISHED'}
 
     @classmethod
@@ -295,4 +293,15 @@ def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_va
     voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 # Modification 3.3 - 3: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 4: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    voxelizemodifier.inputs[1].default_value = default_value
+    voxelizemodifier.inputs[1].min_value = min_value
+    voxelizemodifier.inputs[1].max_value = max_value
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 4: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry

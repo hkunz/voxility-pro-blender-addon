@@ -48,7 +48,7 @@ from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
 if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
-    from voxility_pro.ui.voxel_live_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+    from voxility_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 else:
     from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore

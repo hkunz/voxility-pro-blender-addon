@@ -662,9 +662,25 @@ def voxelizemodifier_node_group_3_3(voxelize, node_group_name, min_value, max_va
     
     #input Voxel Size
     voxelizemodifier.inputs.new('NodeSocketFloat', "Voxel Size")
-    voxelizemodifier.inputs[1].default_value = 0.4000000059604645
-    voxelizemodifier.inputs[1].min_value = 0.0
-    voxelizemodifier.inputs[1].max_value = 100.0
+
+
+
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 4: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    voxelizemodifier.inputs[1].default_value = default_value
+    voxelizemodifier.inputs[1].min_value = min_value
+    voxelizemodifier.inputs[1].max_value = max_value
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 4: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+
+
+
     voxelizemodifier.inputs[1].attribute_domain = 'POINT'
 
     #input UV Map
@@ -714,7 +730,7 @@ def voxelizemodifier_node_group_3_3(voxelize, node_group_name, min_value, max_va
 
 
 # ========================================================================================================== ### Manual Entry
-# Modification 4: Add initialization code ### Manual Entry
+# Modification 5: Add initialization code ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 
 def get_currently_added_modifier(obj):
