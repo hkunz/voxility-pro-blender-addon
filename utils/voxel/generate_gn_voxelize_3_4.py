@@ -818,6 +818,7 @@ def add_modifier_blender_3_4(obj, voxelizemodifier, mod_node_group_name, default
     if obj is None:
         return
 
+    v = bpy.app.version
     bpy.ops.object.modifier_add(type='NODES')
 
     vox_modifier = obj.modifiers[-1]
@@ -826,7 +827,7 @@ def add_modifier_blender_3_4(obj, voxelizemodifier, mod_node_group_name, default
     vox_modifier.node_group = voxelizemodifier
     vox_modifier["Input_1"] = default_value
     vox_modifier["Input_2"] = "UVMap" if not obj.data.uv_layers else obj.data.uv_layers[0].name
-    vox_modifier["Input_3"] = "Col" if not obj.data.color_attributes else obj.data.color_attributes[0].name
+    vox_modifier["Input_3"] = ("Col" if v <= (3,4,0) else "Attribute") if not obj.data.color_attributes else obj.data.color_attributes[0].name
     #voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_4(obj, min_value, max_value, default_value):

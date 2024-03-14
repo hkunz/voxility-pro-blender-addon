@@ -3,7 +3,7 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.enums.name_constant import NameConstant
+from voxility_pro.enums.name_constant import NameConstant # type: ignore
 
 class BlenderVersionError(Exception):
     pass
@@ -16,21 +16,22 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
 
     VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
 
-    min_value: bpy.props.FloatProperty(name="Min Value", default=0.0)
-    max_value: bpy.props.FloatProperty(name="Max Value", default=100.0)
-    default_value: bpy.props.FloatProperty(name="Default Value", default=0.4)
+    min_value: bpy.props.FloatProperty(name="Min Value", default=0.0) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+    max_value: bpy.props.FloatProperty(name="Max Value", default=100.0) # type: ignore
+    default_value: bpy.props.FloatProperty(name="Default Value", default=0.4) # type: ignore
 
     def execute(self, context):
         v = bpy.app.version
         if v >= (4, 0, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0
+            from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 # type: ignore
             add_voxelizer_4_0(context.active_object, self.min_value, self.max_value, self.default_value)
         elif v >= (3, 4, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 # type: ignore
             add_voxelizer_3_4(context.active_object, self.min_value, self.max_value, self.default_value)
-        elif v >= (3, 2, 0):
-            from voxility_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3
+        elif v >= (3, 3, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3 # type: ignore
             add_voxelizer_3_3(context.active_object, self.min_value, self.max_value, self.default_value)
+        #elif v >= (3, 2, 0):
         else:
             raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.3 and above.")
    
@@ -81,7 +82,7 @@ def unregister():
 # Modification 4.0 - 1: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
-from voxility_pro.enums.name_constant import NameConstant ### Manual Entry
+from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
  ### Manual Entry
 def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value): ### Manual Entry
     if node_group_name in bpy.data.node_groups: ### Manual Entry
@@ -134,7 +135,7 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
 # Modification 3.4 - 1: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
-from voxility_pro.enums.name_constant import NameConstant ### Manual Entry
+from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
  ### Manual Entry
 def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value): ### Manual Entry
     if node_group_name in bpy.data.node_groups: ### Manual Entry
@@ -253,4 +254,45 @@ def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_va
     voxelizemodifier.inputs[1].max_value = max_value ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 # Modification 3.4 - 8: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 1: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+import bpy ### Manual Entry
+from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
+ ### Manual Entry
+def voxelize_node_group_3_3(node_group_name, min_value, max_value, default_value): ### Manual Entry
+    if node_group_name in bpy.data.node_groups: ### Manual Entry
+        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    ### Manual Entry
+    voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 1: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+    voxel_size_socket = voxel_size_socket # NOTE: Useless line used to remove errors below
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 2: Assign default_value, min_value, max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+    voxelize.inputs[1].default_value = default_value ### Manual Entry
+    voxelize.inputs[1].min_value = min_value ### Manual Entry
+    voxelize.inputs[1].max_value = max_value ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 2: END ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+
+
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 3: Function name change and parameters modification ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
+    if node_group_name in bpy.data.node_groups: ### Manual Entry
+        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    ### Manual Entry
+    voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+# ========================================================================================================== ### Manual Entry
+# Modification 3.3 - 3: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry

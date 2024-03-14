@@ -132,16 +132,17 @@ class FaceColorReader:
             else:
                 print(f"Warning: Multiple Color Attributes not supported: {self.object.data.color_attributes.keys()}")
                 return (0, 0, 0, 255)
+        print(f"Warning: Unsupported node type \"{link.from_node.type}\" connected to Principled BSDF in material \"{m.name}\"")
         return (0, 0, 0, 255) # unhandled or undefined linked node
 
     def get_face_uv(self, f):
         uvs = self.bm.loops.layers.uv # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
         if not self.uv_name in uvs:
-            return (255, 192, 203) # pink for missing uvmap
+            return None
         uv = f.loops[0][uvs[self.uv_name]].uv  # uvs[self.uv_name] returns a BMLayerItem which can be used as key
         return uv
 
-    def get_face_uv_3_4(self, f):
+    def get_face_uv_deprecated(self, f):
         uvs = self.bm.loops.layers.float_vector # uvs.keys() = ['UVMap.001', 'UVMap'] note index zero starts at list bottom
         if not self.uv_name in uvs:
             return None
@@ -157,19 +158,25 @@ class FaceColorReader:
         if tuple_len == 4: # either direct color as tuple length 4
             return m
         if tuple_len == 2: # or the color in the image texture
-            uv = self.get_face_uv_3_4(f) if bpy.app.version <= (3, 4, 0) else self.get_face_uv(f)
+            uv = self.get_face_uv(f) if bpy.app.version > (3, 4, 0) else self.get_face_uv_deprecated(f)
             if not uv:
-                return (255, 192, 203)
+                return (255, 192, 203, 255)
             size = m[0]
             px = int((size[0]-1) * uv.x)
             py = int((size[1]-1) * uv.y)
             pixel = 4 * (size[0] * py + px)
             pxs = m[1]
+            if (pixel >= len(pxs)):
+                print("Warning: UV is out of bounds, adjust UV to be inside texture or set texture to repeating")
+                #FIXME: when UV is out of image texture it's tuple index out of range error
+                return (0, 0, 0, 255)
             return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
         if tuple_len == 1: # or vertex color
             color = f.loops[0][m[0]]
             color_tuple = (round(color.x*255), round(color.y*255), round(color.z*255), 255)
             return color_tuple
+        print(f"Warning: Unhandled tuple length: {tuple_len}")
+        return (0, 0, 0, 255)
 
     def get_voxel_dimensions(self):
         min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
@@ -202,8 +209,8 @@ def test_read_voxel_colors_and_write_qb_file():
     print("Read time ========", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()
-    layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0))
-    qb: Qb = Qb()
+    layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0)) # type: ignore
+    qb: Qb = Qb() # type: ignore
     qb.matrixList.append(layer)
     start = time.time()
     qb.save(file)
