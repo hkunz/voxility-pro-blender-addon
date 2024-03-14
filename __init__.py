@@ -42,14 +42,18 @@ import stat
 from pathlib import Path
 from typing import Union
 
-from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences
-from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size
-from voxility_pro.utils.temp_file_manager import TempFileManager
-from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations
-from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu
-from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup
-from voxility_pro.operators.voxel.operator_voxelize import register as register_gn_voxelizer, unregister as unregister_gn_voxelizer
-from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest
+from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
+from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
+from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size # type: ignore
+from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
+if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
+    from voxility_pro.ui.voxel_live_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+else:
+    from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
+from voxility_pro.operators.voxel.operator_voxelize import register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
+from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(__file__).parent / f"{exe}"
