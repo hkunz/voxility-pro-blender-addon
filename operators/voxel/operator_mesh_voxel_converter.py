@@ -107,7 +107,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         start_time: float = time.time()
         obj_path: str = vc_out_paths[0]
         self.import_obj(obj_path)
-        #TODO: should not need to scale it https://github.com/vengi-voxel/vengi/issues/401
+        #FIXME: should not need to scale it https://github.com/vengi-voxel/vengi/issues/401
         self.set_scale(orig_width / context.object.dimensions[0])
         duration: str = format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {obj_path} in {duration}")

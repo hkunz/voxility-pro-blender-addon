@@ -1,0 +1,7 @@
+1. Mention in documentation that for voxconvert you need the origin at the center
+2. Specify images of vertex color, texture node tree
+
+
+
+* export function using qb as the base
+* save orientation is rotated

@@ -6,13 +6,16 @@ import bpy_types
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
-from voxility_pro.translation.translations import get_translation
-from voxility_pro.utils.temp_file_manager import TempFileManager
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists
-from voxility_pro.utils.file_utils import check_filepath, get_file_size
-from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
+from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
+from voxility_pro.translation.translations import get_translation # type: ignore
+from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size # type: ignore
+from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
+from voxility_pro.utils.time_utils import format_duration # type: ignore
+from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
+from voxility_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
 
 class OperatorVoxelBaseExporter(OperatorVoxelBase):
     bl_description = "Operator Voxel Base Exporter"
@@ -45,11 +48,31 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     ) # type: ignore
 
     def draw(self, context: bpy_types.Context) -> None:
-        super().draw(context)
-        #self.layout.prop(self, "palette_file")
-        #self.layout.prop(self, "export_palette")
-        self.layout.prop(self, "surface_only")
-        self.layout.prop(self, "voxformat_scale")
+        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+            pass
+        else:
+            super().draw(context)
+            self.layout.prop(self, "surface_only")
+            self.layout.prop(self, "voxformat_scale")
+
+    def export_qb(self, qb_file: str, object: bpy.types.Object) -> str:
+        t = time.time()
+        voxel_size = get_voxelizer_voxel_size(object)
+        reader = VoxelColorReader(object, voxel_size, "UVMap")
+        duration = format_duration(time.time() - t)
+        print(f"Qb Read Time: {duration}")
+        self.report({'INFO'}, f"Reading voxel colors took {duration}")
+        tt = time.time()
+        layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0)) # type: ignore
+        qb: Qb = Qb()
+        qb.matrixList.append(layer)
+        qb.save(qb_file)
+        if self.voxel_type != "qb":
+            size = get_file_size(qb_file)
+            self.report({'INFO'}, f"{get_translation('info_generated_files')} {qb_file} ({size}) in {format_duration(time.time() - tt)}")
+        print("Qb Write Time:", format_duration(time.time() - tt))
+        print("Qb Read/Write Total Time:", format_duration(time.time() - t))
+        return qb_file
 
     def export_obj(self, obj_file: str) -> str:
         start_time = time.time()
@@ -68,20 +91,38 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         c.vc_surface_only = int(self.surface_only)
         return c
 
-    def execute(self, _:bpy_types.Context) -> set[str]:
+    def execute(self, context: bpy_types.Context) -> set[str]:
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}
 
+        duration: int = time.time()
         self.filepath = check_filepath(self.filepath, self.filename_ext)
         temp_dir: str = TempFileManager().create_temp_dir()
-        obj_file: str = os.path.join(temp_dir, 'temp.obj')
-        self.export_obj(obj_file)
-        self.setup_command(obj_file, [self.filepath])
-        self.execute_voxconvert()
-        self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(self.voxconvert_duration)}")
+        obj_file: str = None
+
+        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+            obj_file = os.path.join(temp_dir, 'temp.qb')
+            self.export_qb(self.filepath if self.voxel_type == "qb" else obj_file, context.active_object)
+        else:
+            obj_file = os.path.join(temp_dir, 'temp.obj')
+            self.export_obj(obj_file)
+
+        if not VoxilityFeature.GN_VOXELIZER_ACTIVE.value or VoxilityFeature.GN_VOXELIZER_ACTIVE.value and self.voxel_type != "qb":
+            self.setup_command(obj_file, [self.filepath])
+            self.execute_voxconvert()
+
+        duration = time.time() - duration
+        self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(duration)}")
         TempFileManager().delete_temp_dir(temp_dir)
         return {'FINISHED'}
+
+    @classmethod
+    def poll(cls, context: bpy_types.Context) -> bool:
+        active_object: bpy_types.Object = context.active_object
+        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and get_voxelizer_voxel_size(active_object) <= 0:
+            return False
+        return super().poll(context)
 
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         #self.voxformat_scale = 1.0

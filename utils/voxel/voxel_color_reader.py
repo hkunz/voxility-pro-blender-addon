@@ -4,7 +4,7 @@ import bmesh
 from math import sqrt
 from mathutils import Vector
 
-class FaceColorReader:
+class VoxelColorReader:
     def __init__(self, object, voxel_size, uv_name):
 
         dg = bpy.context.evaluated_depsgraph_get()
@@ -40,7 +40,7 @@ class FaceColorReader:
             center = (center_x, center_y, center_z)
 
             if not center in self.colors:
-                col = self.get_face_color(f.index)
+                col = self.get_voxel_color(f.index)
                 self.colors[center] = col
                 
                 min_x, min_y, min_z = min(min_x, center_x), min(min_y, center_y), min(min_z, center_z)
@@ -98,7 +98,7 @@ class FaceColorReader:
         uv = f.loops[0][uvs[self.uv_name]] # uvs[self.uv_name] returns a BMLayerItem which can be used as key
         return uv
 
-    def get_face_color(self, face_index):
+    def get_voxel_color(self, face_index):
         f = self.bm.faces[face_index]
         if f.material_index >= len(self.materials):
             return (255, 192, 203, 255) # pink for deleted material (last material deleted)
@@ -150,7 +150,7 @@ def test_read_voxel_colors_and_write_qb_file():
     geometry_nodes_modifier = obj.modifiers[-1]
     voxel_size_value = geometry_nodes_modifier["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"]
     voxel_size = round(voxel_size_value, 3)
-    reader = FaceColorReader(obj, voxel_size, "UVMap")
+    reader = VoxelColorReader(obj, voxel_size, "UVMap")
     print("Read time ========", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()

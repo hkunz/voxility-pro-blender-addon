@@ -3,8 +3,9 @@ import sys
 import traceback
 import bpy_types
 
-from types import TracebackType, ModuleType
-from typing import List, Optional, Type
+from types import ModuleType
+from typing import List
+from voxility_pro.enums.name_constant import NameConstant # type: ignore
 
 def check_mesh_exists() -> bool:
     o: bpy.types.Object
@@ -177,3 +178,14 @@ def select_objects(objects: List[bpy.types.Object], active_object: bpy.types.Obj
 def hide_objects_from_viewport(objects: List[bpy.types.Object], hide: bool=True) -> None:
     for ob in objects:
         ob.hide_set(hide)
+
+def get_voxelizer_voxel_size(active_object: bpy.types.Object):
+    VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
+    node_groups = bpy.data.node_groups
+    voxility_node_group = node_groups[VOXILITY_MODIFIER_NAME] if VOXILITY_MODIFIER_NAME in node_groups else None
+    if not voxility_node_group:
+        return 0
+    for m in reversed(active_object.modifiers):
+        if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
+            return round(m["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"], 3)
+    return 0
