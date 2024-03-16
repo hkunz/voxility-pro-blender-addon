@@ -92,6 +92,18 @@ class VoxelColorReader:
             r, g, b = linear_to_srgb(r), linear_to_srgb(g), linear_to_srgb(b)
         return (round(r*255), round(g*255), round(b*255), 255)
 
+    def get_socketed_image_texture(self, p):
+        tex_node = p.inputs[0].links[0].from_node
+        image = tex_node.image
+        return (image.size, image.pixels[:])
+
+    def get_socketed_vertex_colors(self, attr):
+        attributes = self.bm.loops.layers.float_color
+        if attr in attributes:
+            return (attributes[attr],)
+        print(f"Warning: Multiple Color Attributes not supported: {self.object.data.color_attributes.keys()}")
+        return (0, 0, 0, 255)
+
     def get_material(self, m):
         p = self.get_principled_bsdf(m)
         if not p:
@@ -101,18 +113,9 @@ class VoxelColorReader:
         if not link: # nothing connected to Base Color socket
             return self.get_unsocketed_base_color(base_color.default_value)
         if link.from_node.type == 'TEX_IMAGE':
-            tex_node = p.inputs[0].links[0].from_node
-            image = tex_node.image
-            return (image.size, image.pixels[:])
-        if link.from_node.type == 'VERTEX_COLOR':
-            c = base_color.default_value
-            attr = link.from_node.layer_name
-            attributes = self.bm.loops.layers.float_color
-            if attr in attributes:
-                return (attributes[attr],)
-            else:
-                print(f"Warning: Multiple Color Attributes not supported: {self.object.data.color_attributes.keys()}")
-                return (0, 0, 0, 255)
+            return self.get_socketed_image_texture(p)
+        if link.from_node.type == 'VERTEX_COLOR' or link.from_node.type == 'ATTRIBUTE':
+            return self.get_socketed_vertex_colors(link.from_node.layer_name if hasattr(link.from_node, 'layer_name') else link.from_node.attribute_name)
         print(f"Warning: Unsupported node type \"{link.from_node.type}\" connected to Principled BSDF in material \"{m.name}\"")
         return (0, 0, 0, 255) # unhandled or undefined linked node
 
