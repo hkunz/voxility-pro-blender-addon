@@ -84,13 +84,13 @@ class VoxelColorReader:
         print(f"Warning: No Principled BSDF found in material \"{m.name}\"")
         return None
 
-    def get_unsocketed_base_color(self, c):
-        r = c[0]
-        g = c[1]
-        b = c[2]
-        if self.color_space == VoxelColorReader.COLOR_SPACE_SRGB:
+    def get_color_space_display_color(self, r, g, b, check_space=True):
+        if check_space and self.color_space == VoxelColorReader.COLOR_SPACE_SRGB:
             r, g, b = linear_to_srgb(r), linear_to_srgb(g), linear_to_srgb(b)
         return (round(r*255), round(g*255), round(b*255), 255)
+
+    def get_unsocketed_base_color(self, c):
+        return self.get_color_space_display_color(c[0], c[1], c[2], False)
 
     def get_socketed_image_texture(self, p):
         tex_node = p.inputs[0].links[0].from_node
@@ -133,6 +133,18 @@ class VoxelColorReader:
         uv = f.loops[0][uvs[self.uv_name]] # uvs[self.uv_name] returns a BMLayerItem which can be used as key
         return uv
 
+    def get_voxel_color_texture(self, face, size, pxs):
+        uv = self.get_face_uv(face) if bpy.app.version > (3, 4, 0) else self.get_face_uv_deprecated(face)
+        if not uv:
+            return (255, 192, 203, 255)
+        px = int((size[0]-1) * (uv.x%1))
+        py = int((size[1]-1) * (uv.y%1))
+        pixel = 4 * (size[0] * py + px)
+        return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], False)
+
+    def get_voxel_color_vertex(self, color):
+        return self.get_color_space_display_color(color.x, color.y, color.z, False)
+
     def get_voxel_color(self, face_index):
         f = self.bm.faces[face_index]
         if f.material_index >= len(self.materials):
@@ -142,19 +154,9 @@ class VoxelColorReader:
         if tuple_len == 4: # either direct color as tuple length 4
             return m
         if tuple_len == 2: # or the color in the image texture
-            uv = self.get_face_uv(f) if bpy.app.version > (3, 4, 0) else self.get_face_uv_deprecated(f)
-            if not uv:
-                return (255, 192, 203, 255)
-            size = m[0]
-            px = int((size[0]-1) * (uv.x%1))
-            py = int((size[1]-1) * (uv.y%1))
-            pixel = 4 * (size[0] * py + px)
-            pxs = m[1]
-            return (round(pxs[pixel]*255), round(pxs[pixel+1]*255), round(pxs[pixel+2]*255), 255)
+            return self.get_voxel_color_texture(f, m[0], m[1])
         if tuple_len == 1: # or vertex color
-            color = f.loops[0][m[0]]
-            color_tuple = (round(color.x*255), round(color.y*255), round(color.z*255), 255)
-            return color_tuple
+            return self.get_voxel_color_vertex(f.loops[0][m[0]])
         print(f"Warning: Unhandled tuple length: {tuple_len}")
         return (0, 0, 0, 255)
 
