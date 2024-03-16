@@ -3,13 +3,26 @@ import bmesh
 
 from math import sqrt
 from mathutils import Vector
+from typing import Tuple
+
+from voxility_pro.utils.color_utils import linear_to_srgb # type: ignore
+
+Coordinate = Tuple[int, int, int]
 
 class VoxelColorReader:
-    def __init__(self, object, voxel_size, uv_name):
+    RIGHT_ANGLED_COORDINATE_SYSTEM = 0 #right-angled “Cartesian” coordinate system
+    LEFT_HANDED_COORDINATE_SYSTEM = 1
+
+    COLOR_SPACE_LINEAR = 0
+    COLOR_SPACE_SRGB = 1
+
+    def __init__(self, object, voxel_size, coordinate_system, color_space, uv_name):
 
         dg = bpy.context.evaluated_depsgraph_get()
         e = object.evaluated_get(dg)
 
+        self.color_space = color_space
+        self.coordinate_system = coordinate_system # We currently only read colors for QB files for qb_writer.py which uses LEFT_HANDED_COORDINATE_SYSTEM
         self.object = object
         self.uv_name = uv_name
         self.bm = bmesh.new()
@@ -36,7 +49,14 @@ class VoxelColorReader:
             displacement = -0.5 * normal * area
             voxel_center = center + displacement
 
-            center_x, center_y, center_z = round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5)
+            #Z > Y #Y > X #X > Z
+            #center_z, center_x, center_y = round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5)
+            cx = round(voxel_center.x / voxel_size - 0.5)
+            cy = round(voxel_center.y / voxel_size - 0.5)
+            cz = round(voxel_center.z / voxel_size - 0.5)
+
+            center_x, center_y, center_z = self.get_remapped_coordinates(cx, cy, cz)
+
             center = (center_x, center_y, center_z)
 
             if not center in self.colors:
@@ -49,6 +69,11 @@ class VoxelColorReader:
         self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
         self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
 
+    def get_remapped_coordinates(self, cx, cy, cz) -> Coordinate:
+        if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
+            return cy, cz, cx #Y > X #Z > Y #X > Z
+        return cx, cy, cz
+
     def get_principled_bsdf(self, m):
         nodes = m.node_tree.nodes
         if "Principled BSDF" in nodes:
@@ -59,6 +84,14 @@ class VoxelColorReader:
         print(f"Warning: No Principled BSDF found in material \"{m.name}\"")
         return None
 
+    def get_unsocketed_base_color(self, c):
+        r = c[0]
+        g = c[1]
+        b = c[2]
+        if self.color_space == VoxelColorReader.COLOR_SPACE_SRGB:
+            r, g, b = linear_to_srgb(r), linear_to_srgb(g), linear_to_srgb(b)
+        return (round(r*255), round(g*255), round(b*255), 255)
+
     def get_material(self, m):
         p = self.get_principled_bsdf(m)
         if not p:
@@ -66,8 +99,7 @@ class VoxelColorReader:
         base_color = p.inputs[0]
         link = base_color.links[0] if len(base_color.links) else None
         if not link: # nothing connected to Base Color socket
-            c = base_color.default_value
-            return (round(c[0]*255), round(c[1]*255), round(c[2]*255), 255)
+            return self.get_unsocketed_base_color(base_color.default_value)
         if link.from_node.type == 'TEX_IMAGE':
             tex_node = p.inputs[0].links[0].from_node
             image = tex_node.image
@@ -132,13 +164,15 @@ class VoxelColorReader:
         max_x, max_y, max_z = round(self.max_values.x), round(self.max_values.y), round(self.max_values.z)
         return min_x, min_y, min_z, max_x, max_y, max_z
 
-    def get_color_data(self):
+    def get_color_data(self): # Right-Handed Coordinate system
         min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
         empty = (0, 0, 0, 0)
-        data = [self.colors[x, y, z] if self.colors.get((x,y,z)) else empty 
-                for z in range(min_z, max_z + 1)
-                for y in range(min_y, max_y + 1)
-                for x in range(min_x, max_x + 1)]
+        data = [
+            self.colors[x, y, z] if self.colors.get((x,y,z)) else empty 
+            for z in range(min_z, max_z + 1)
+            for y in range(min_y, max_y + 1)
+            for x in range(min_x, max_x + 1)
+        ]
         return data
 
 
@@ -151,7 +185,7 @@ def test_read_voxel_colors_and_write_qb_file():
     voxel_size_value = geometry_nodes_modifier["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"]
     voxel_size = round(voxel_size_value, 3)
     reader = VoxelColorReader(obj, voxel_size, "UVMap")
-    print("Read time ========", time.time() - s)
+    print("Read time:", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()
     layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0)) # type: ignore

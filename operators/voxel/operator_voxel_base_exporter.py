@@ -58,7 +58,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def export_qb(self, qb_file: str, object: bpy.types.Object) -> str:
         t = time.time()
         voxel_size = get_voxelizer_voxel_size(object)
-        reader = VoxelColorReader(object, voxel_size, "UVMap")
+        reader = VoxelColorReader(object, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
         duration = format_duration(time.time() - t)
         print(f"Qb Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
@@ -71,7 +71,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             size = get_file_size(qb_file)
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {qb_file} ({size}) in {format_duration(time.time() - tt)}")
         print("Qb Write Time:", format_duration(time.time() - tt))
-        print("Qb Read/Write Total Time:", format_duration(time.time() - t))
+        print("Qb Total Time:", format_duration(time.time() - t))
         return qb_file
 
     def export_obj(self, obj_file: str) -> str:
