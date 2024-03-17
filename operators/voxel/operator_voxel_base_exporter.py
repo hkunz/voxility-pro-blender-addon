@@ -3,6 +3,7 @@ import os
 import time
 import bpy_types
 
+from mathutils import Vector
 from typing import List
 from abc import ABC, abstractmethod
 
@@ -10,7 +11,7 @@ from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size, get_mesh_center_distance, get_mesh_center_world # type: ignore
+from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size, get_mesh_center_distance, get_voxel_distance # type: ignore
 from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
@@ -55,21 +56,30 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             self.layout.prop(self, "surface_only")
             self.layout.prop(self, "voxformat_scale")
 
-    def export_qb_obj_layer(self, object: bpy.types.Object, ref: bpy.types.Object) -> QbMatrix:
+    def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
-        voxel_size = get_voxelizer_voxel_size(object)
-        reader = VoxelColorReader(object, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
+        voxel_size = get_voxelizer_voxel_size(obj)
+        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
         duration = format_duration(time.time() - t)
-        print(f"Qb Read Time: {duration}")
+        print(f"Qb {obj.name} Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
-        center = reader.get_object_center()
-        return QbMatrix(object.name, *reader.get_voxel_dimensions(), reader.get_color_data(), center)
+        return reader
 
-    def export_qb(self, qb_file: str, object: bpy.types.Object) -> str:
+    def export_qb(self, context, qb_file: str) -> str:
         t = time.time()
         qb: Qb = Qb()
-        layer = self.export_qb_obj_layer(object, None)
-        qb.matrixList.append(layer)
+        active_obj = context.active_object
+        reader = self.export_qb_get_reader(active_obj)
+        axis, up_amt = reader.get_up_axis_amount()
+        adjust = reader.get_object_center()
+        qb.matrixList.append(QbMatrix(active_obj.name, *reader.get_voxel_dimensions(), reader.get_color_data(), reader.get_object_center(axis)))
+        for obj in context.selected_objects:
+            if obj is active_obj:
+                continue
+            r = self.export_qb_get_reader(obj)
+            x, y, z = r.get_remapped_coordinates(*get_voxel_distance(get_mesh_center_distance(active_obj, obj), r.voxel_size))
+            pos = (x+adjust[0], y+adjust[1] - (up_amt if axis == "y" else 0), z+adjust[2])
+            qb.matrixList.append(QbMatrix(obj.name, *r.get_voxel_dimensions(), r.get_color_data(), pos))
         tt = time.time()
         qb.save(qb_file)
         if self.voxel_type != "qb":
@@ -108,7 +118,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
             obj_file = os.path.join(temp_dir, 'temp.qb')
-            self.export_qb(self.filepath if self.voxel_type == "qb" else obj_file, context.active_object)
+            self.export_qb(context, self.filepath if self.voxel_type == "qb" else obj_file)
         else:
             obj_file = os.path.join(temp_dir, 'temp.obj')
             self.export_obj(obj_file)

@@ -201,3 +201,6 @@ def get_mesh_center_distance(obj_A, obj_B) -> mathutils.Vector:
     center_A = get_mesh_center_world(obj_A)
     center_B = get_mesh_center_world(obj_B)
     return (center_B - center_A)
+
+def get_voxel_distance(meters: mathutils.Vector, meter_per_voxel) -> int:
+    return int(meters.x / meter_per_voxel), int(meters.y / meter_per_voxel), int(meters.z / meter_per_voxel)

@@ -21,6 +21,7 @@ class VoxelColorReader:
         dg = bpy.context.evaluated_depsgraph_get()
         e = object.evaluated_get(dg)
 
+        self.voxel_size = voxel_size
         self.color_space = color_space
         self.coordinate_system = coordinate_system # We currently only read colors for QB files for qb_writer.py which uses LEFT_HANDED_COORDINATE_SYSTEM
         self.object = object
@@ -58,19 +59,24 @@ class VoxelColorReader:
         self.max_x, self.max_y, self.max_z = (round(max_x), round(max_y), round(max_z))
         self.size_x, self.size_y, self.size_z = max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
 
+    def get_up_axis_amount(self):
+        if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
+            return "y", -round(self.size_y / 2)
+        return "z", -round(self.size_z / 2)
+
     def get_remapped_coordinates(self, cx, cy, cz) -> Coordinate:
         if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
             return cy, cz, cx #Y > X #Z > Y #X > Z
         return cx, cy, cz
 
-    def get_object_center(self):
+    def get_object_center(self, zero_axis=None):
         x = 0
         y = 0
         z = 0 # keep voxel object above the floor
         x, y, z = self.get_remapped_coordinates(x, y, z)
-        # only center along flat xz-plane and keep above +y (up axis)
-        x = -round(self.size_x / 2)
-        z = -round(self.size_z / 2)
+        if not zero_axis == "x": x = -round(self.size_x / 2)
+        if not zero_axis == "y": y = -round(self.size_y / 2)
+        if not zero_axis == "z": z = -round(self.size_z / 2)
         return (x, y, z)
 
     def get_principled_bsdf(self, m):
