@@ -77,9 +77,9 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             if obj is active_obj:
                 continue
             r = self.export_qb_get_reader(obj)
-            size_x, size_y, size_z = r.get_voxel_dimensions()
+            c = r.get_object_center()
             x, y, z = r.get_remapped_coordinates(*get_mesh_center_voxel_distance(active_obj, obj, r.voxel_size))
-            pos = (x-size_x, y-size_y - (up_amt-int(size_y/2) if axis == "y" else 0), z-size_z)
+            pos = (x+c[0], y+c[1] - (up_amt if axis == "y" else 0), z+c[2])
             qb.matrixList.append(QbMatrix(obj.name, *r.get_voxel_dimensions(), r.get_color_data(), pos))
         tt = time.time()
         qb.save(qb_file)
