@@ -63,7 +63,8 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         print(f"Qb Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
         tt = time.time()
-        layer: QbMatrix = QbMatrix("cube", *reader.get_voxel_dimensions(), reader.get_color_data(), (0, 0, 0)) # type: ignore
+        center = reader.get_object_center()
+        layer: QbMatrix = QbMatrix(object.name, *reader.get_voxel_dimensions(), reader.get_color_data(), center)
         qb: Qb = Qb()
         qb.matrixList.append(layer)
         qb.save(qb_file)

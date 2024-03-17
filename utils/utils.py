@@ -3,7 +3,7 @@ import re
 
 from typing import List, Callable, Any, Tuple
 
-from voxility_pro import bl_info
+from voxility_pro import bl_info # type: ignore
 
 def get_addon_module_name() -> str:
     return "voxility_pro"

@@ -10,7 +10,7 @@ from voxility_pro.utils.color_utils import linear_to_srgb # type: ignore
 Coordinate = Tuple[int, int, int]
 
 class VoxelColorReader:
-    RIGHT_ANGLED_COORDINATE_SYSTEM = 0 #right-angled “Cartesian” coordinate system
+    RIGHT_ANGLED_COORDINATE_SYSTEM = 0
     LEFT_HANDED_COORDINATE_SYSTEM = 1
 
     COLOR_SPACE_LINEAR = 0
@@ -28,6 +28,7 @@ class VoxelColorReader:
         self.bm = bmesh.new()
         self.bm.from_object(object, dg)
         self.bm.faces.ensure_lookup_table()
+        self.size_x, self.size_y, self.size_z = 0, 0, 0
         uv_maps = object.data.uv_layers.keys()
 
         if len(object.data.uv_layers) > 1:
@@ -36,7 +37,6 @@ class VoxelColorReader:
             print("Warning:", f"\"{self.uv_name}\" not found in UV Maps")
 
         self.materials = [self.get_material(m) for i, m in enumerate(e.data.materials) if m]
-
         self.colors = {}
 
         min_x, min_y, min_z = float('inf'), float('inf'), float('inf')
@@ -44,35 +44,31 @@ class VoxelColorReader:
 
         for f in self.bm.faces:
             center = f.calc_center_median()
-            normal = f.normal
-            area = sqrt(f.calc_area()) # as a face is a square, edge length is sqrt the surface
-            displacement = -0.5 * normal * area
-            voxel_center = center + displacement
-
-            #Z > Y #Y > X #X > Z
-            #center_z, center_x, center_y = round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5)
-            cx = round(voxel_center.x / voxel_size - 0.5)
-            cy = round(voxel_center.y / voxel_size - 0.5)
-            cz = round(voxel_center.z / voxel_size - 0.5)
-
-            center_x, center_y, center_z = self.get_remapped_coordinates(cx, cy, cz)
-
+            voxel_center = center + (-0.5 * f.normal * sqrt(f.calc_area()))
+            center_x, center_y, center_z = self.get_remapped_coordinates(round(voxel_center.x / voxel_size - 0.5), round(voxel_center.y / voxel_size - 0.5), round(voxel_center.z / voxel_size - 0.5))
             center = (center_x, center_y, center_z)
 
             if not center in self.colors:
                 col = self.get_voxel_color(f.index)
                 self.colors[center] = col
-                
                 min_x, min_y, min_z = min(min_x, center_x), min(min_y, center_y), min(min_z, center_z)
                 max_x, max_y, max_z = max(max_x, center_x), max(max_y, center_y), max(max_z, center_z)
 
-        self.min_values = Vector((round(min_x), round(min_y), round(min_z)))
-        self.max_values = Vector((round(max_x), round(max_y), round(max_z)))
+        self.min_x, self.min_y, self.min_z = (round(min_x), round(min_y), round(min_z))
+        self.max_x, self.max_y, self.max_z = (round(max_x), round(max_y), round(max_z))
+        self.size_x, self.size_y, self.size_z = max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
 
     def get_remapped_coordinates(self, cx, cy, cz) -> Coordinate:
         if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
             return cy, cz, cx #Y > X #Z > Y #X > Z
         return cx, cy, cz
+
+    def get_object_center(self):
+        x = 0
+        y = 0
+        z = 0
+        x, y, z = self.get_remapped_coordinates(x, y, z)
+        return (x, y, z)
 
     def get_principled_bsdf(self, m):
         nodes = m.node_tree.nodes
@@ -161,16 +157,11 @@ class VoxelColorReader:
         return (0, 0, 0, 255)
 
     def get_voxel_dimensions(self):
-        min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
-        return max_x-min_x+1, max_y-min_y+1, max_z-min_z+1
+        return self.size_x, self.size_y, self.size_z
 
-    def get_voxel_ranges(self):
-        min_x, min_y, min_z = round(self.min_values.x), round(self.min_values.y), round(self.min_values.z)
-        max_x, max_y, max_z = round(self.max_values.x), round(self.max_values.y), round(self.max_values.z)
-        return min_x, min_y, min_z, max_x, max_y, max_z
-
-    def get_color_data(self): # Right-Handed Coordinate system
-        min_x, min_y, min_z, max_x, max_y, max_z = self.get_voxel_ranges()
+    def get_color_data(self): # coordinate_system = RIGHT_ANGLED_COORDINATE_SYSTEM
+        min_x, min_y, min_z = self.min_x, self.min_y, self.min_z
+        max_x, max_y, max_z = self.max_x, self.max_y, self.max_z
         empty = (0, 0, 0, 0)
         data = [
             self.colors[x, y, z] if self.colors.get((x,y,z)) else empty 
