@@ -66,8 +66,11 @@ class VoxelColorReader:
     def get_object_center(self):
         x = 0
         y = 0
-        z = 0
+        z = 0 # keep voxel object above the floor
         x, y, z = self.get_remapped_coordinates(x, y, z)
+        # only center along flat xz-plane and keep above +y (up axis)
+        x = -round(self.size_x / 2)
+        z = -round(self.size_z / 2)
         return (x, y, z)
 
     def get_principled_bsdf(self, m):

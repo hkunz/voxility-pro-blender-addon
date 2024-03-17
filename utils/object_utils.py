@@ -2,6 +2,7 @@ import bpy
 import sys
 import traceback
 import bpy_types
+import mathutils
 
 from types import ModuleType
 from typing import List
@@ -189,3 +190,14 @@ def get_voxelizer_voxel_size(active_object: bpy.types.Object):
         if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
             return round(m["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"], 3)
     return 0
+
+def get_mesh_center_world(obj):
+    world_matrix = obj.matrix_world
+    vertices = [world_matrix @ v.co for v in obj.data.vertices]
+    center = sum(vertices, mathutils.Vector()) / len(vertices)
+    return center
+
+def get_mesh_center_distance(obj_A, obj_B) -> mathutils.Vector:
+    center_A = get_mesh_center_world(obj_A)
+    center_B = get_mesh_center_world(obj_B)
+    return (center_B - center_A)
