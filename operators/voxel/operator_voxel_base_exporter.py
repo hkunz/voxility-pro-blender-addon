@@ -11,7 +11,7 @@ from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size, get_mesh_center_distance, get_voxel_distance # type: ignore
+from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size, get_mesh_center_voxel_distance # type: ignore
 from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
@@ -77,8 +77,9 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             if obj is active_obj:
                 continue
             r = self.export_qb_get_reader(obj)
-            x, y, z = r.get_remapped_coordinates(*get_voxel_distance(get_mesh_center_distance(active_obj, obj), r.voxel_size))
-            pos = (x+adjust[0], y+adjust[1] - (up_amt if axis == "y" else 0), z+adjust[2])
+            size_x, size_y, size_z = r.get_voxel_dimensions()
+            x, y, z = r.get_remapped_coordinates(*get_mesh_center_voxel_distance(active_obj, obj, r.voxel_size))
+            pos = (x-size_x, y-size_y - (up_amt-int(size_y/2) if axis == "y" else 0), z-size_z)
             qb.matrixList.append(QbMatrix(obj.name, *r.get_voxel_dimensions(), r.get_color_data(), pos))
         tt = time.time()
         qb.save(qb_file)

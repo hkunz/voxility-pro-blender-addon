@@ -61,8 +61,8 @@ class VoxelColorReader:
 
     def get_up_axis_amount(self):
         if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
-            return "y", -round(self.size_y / 2)
-        return "z", -round(self.size_z / 2)
+            return "y", -int(self.size_y / 2)
+        return "z", -int(self.size_z / 2)
 
     def get_remapped_coordinates(self, cx, cy, cz) -> Coordinate:
         if self.coordinate_system == VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM:
@@ -74,9 +74,9 @@ class VoxelColorReader:
         y = 0
         z = 0 # keep voxel object above the floor
         x, y, z = self.get_remapped_coordinates(x, y, z)
-        if not zero_axis == "x": x = -round(self.size_x / 2)
-        if not zero_axis == "y": y = -round(self.size_y / 2)
-        if not zero_axis == "z": z = -round(self.size_z / 2)
+        if not zero_axis == "x": x = -int(self.size_x / 2)
+        if not zero_axis == "y": y = -int(self.size_y / 2)
+        if not zero_axis == "z": z = -int(self.size_z / 2)
         return (x, y, z)
 
     def get_principled_bsdf(self, m):

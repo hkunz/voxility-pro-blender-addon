@@ -192,15 +192,18 @@ def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     return 0
 
 def get_mesh_center_world(obj):
-    world_matrix = obj.matrix_world
-    vertices = [world_matrix @ v.co for v in obj.data.vertices]
-    center = sum(vertices, mathutils.Vector()) / len(vertices)
-    return center
+    vertices = [obj.matrix_world @ v.co for v in obj.data.vertices]
+    return sum(vertices, mathutils.Vector()) / len(vertices)
 
 def get_mesh_center_distance(obj_A, obj_B) -> mathutils.Vector:
     center_A = get_mesh_center_world(obj_A)
     center_B = get_mesh_center_world(obj_B)
     return (center_B - center_A)
 
+def get_mesh_center_voxel_distance(obj_A, obj_B, voxel_size) -> mathutils.Vector:
+    xa, ya, za = get_voxel_distance(get_mesh_center_world(obj_A), voxel_size)
+    xb, yb, zb = get_voxel_distance(get_mesh_center_world(obj_B), voxel_size)
+    return xb - xa, yb - ya, zb - za
+
 def get_voxel_distance(meters: mathutils.Vector, meter_per_voxel) -> int:
-    return int(meters.x / meter_per_voxel), int(meters.y / meter_per_voxel), int(meters.z / meter_per_voxel)
+    return round(meters.x / meter_per_voxel), round(meters.y / meter_per_voxel), round(meters.z / meter_per_voxel)
