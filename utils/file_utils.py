@@ -26,12 +26,12 @@ def get_voxconvert_filepath() -> str:
     exe_base_name: str = "voxconvert"
 
     if system == "darwin":
-        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
+        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", f"{system}*", f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
         check_exe_match(matching_files, voxconvert_version)
         return os.path.join(addon_root, matching_files[0]).replace(" ", "\ ")
 
     if system == "windows":
-        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", system, f"*{exe_base_name}*"))
+        matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", f"{system}*", f"*{exe_base_name}*"))
         check_exe_match(matching_files, voxconvert_version)
         return os.path.join(addon_root, matching_files[0])
 

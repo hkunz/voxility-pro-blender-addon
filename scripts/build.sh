@@ -33,6 +33,7 @@ zip_cmd=("zip" "-r" "${output_zip}" "${parent_folder}"/* \
   "--exclude" "${parent_folder}/**/useful/*" \
   "--exclude" "${parent_folder}/scripts/*" \
   "--exclude" "${parent_folder}/*.template.*" \
+  "--exclude" "${parent_folder}/*.TODO.*" \
   "--exclude" "${parent_folder}/$(basename "$0")"
 )
 
