@@ -11,7 +11,8 @@ from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists, get_voxelizer_voxel_size, get_mesh_center_voxel_distance # type: ignore
+from voxility_pro.utils.object_utils import export_obj, check_mesh_exists # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, get_mesh_center_voxel_distance # type: ignore
 from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
@@ -58,8 +59,8 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
-        voxel_size = get_voxelizer_voxel_size(obj)
-        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
+        voxel_size, uvmap, color = get_voxelizer_voxel_modifier_attributes(obj)
+        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, uvmap)
         duration = format_duration(time.time() - t)
         print(f"Qb {obj.name} Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
@@ -71,7 +72,6 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         active_obj = context.active_object
         reader = self.export_qb_get_reader(active_obj)
         axis, up_amt = reader.get_up_axis_amount()
-        adjust = reader.get_object_center()
         qb.matrixList.append(QbMatrix(active_obj.name, *reader.get_voxel_dimensions(), reader.get_color_data(), reader.get_object_center(axis)))
         for obj in context.selected_objects:
             if obj is active_obj:

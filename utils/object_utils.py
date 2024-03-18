@@ -2,11 +2,9 @@ import bpy
 import sys
 import traceback
 import bpy_types
-import mathutils
 
 from types import ModuleType
 from typing import List
-from voxility_pro.enums.name_constant import NameConstant # type: ignore
 
 def check_mesh_exists() -> bool:
     o: bpy.types.Object
@@ -179,36 +177,3 @@ def select_objects(objects: List[bpy.types.Object], active_object: bpy.types.Obj
 def hide_objects_from_viewport(objects: List[bpy.types.Object], hide: bool=True) -> None:
     for ob in objects:
         ob.hide_set(hide)
-
-def get_voxelizer_voxel_size(active_object: bpy.types.Object):
-    VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
-    node_groups = bpy.data.node_groups
-    voxility_node_group = node_groups[VOXILITY_MODIFIER_NAME] if VOXILITY_MODIFIER_NAME in node_groups else None
-    if not voxility_node_group:
-        return 0
-    for m in reversed(active_object.modifiers):
-        if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
-            return round(m["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"], 3)
-    return 0
-
-def get_mesh_center_of_mass_world(obj):
-    vertices = [obj.matrix_world @ v.co for v in obj.data.vertices]
-    return sum(vertices, mathutils.Vector()) / len(vertices)
-
-import numpy as np
-
-def get_mesh_center_world(obj):
-    vertices = np.array([obj.matrix_world @ v.co for v in obj.data.vertices])
-    min_coords = np.min(vertices, axis=0)
-    max_coords = np.max(vertices, axis=0)
-    bounding_box_center = (min_coords + max_coords) / 2.0
-    return bounding_box_center
-
-def get_mesh_center_voxel_distance(obj_A, obj_B, voxel_size) -> mathutils.Vector:
-    xa, ya, za = get_voxel_distance(get_mesh_center_world(obj_A), voxel_size)
-    xb, yb, zb = get_voxel_distance(get_mesh_center_world(obj_B), voxel_size)
-    return xb - xa, yb - ya, zb - za
-
-def get_voxel_distance(meters: np.ndarray, meter_per_voxel) -> int:
-    x, y, z = meters
-    return round(x / meter_per_voxel), round(y / meter_per_voxel), round(z / meter_per_voxel)
