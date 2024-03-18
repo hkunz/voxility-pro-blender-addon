@@ -3,13 +3,13 @@ import bpy_types
 
 from typing import Tuple, List
 
-from voxility_pro.operators.voxel.operator_mesh_voxel_converter import (
+from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_converter import (
     OBJECT_OT_MeshVoxelConvertOperator,
     register as register_mesh_voxel_operator,
     unregister as unregister_mesh_voxel_operator
 )
 
-from voxility_pro.operators.voxel.operator_mesh_voxel_save import (
+from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import (
     OBJECT_OT_MeshVoxelSaveOperator,
     register as register_mesh_voxel_save_operator,
     unregister as unregister_mesh_voxel_save_operator

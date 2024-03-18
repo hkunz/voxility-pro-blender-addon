@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "Voxility Pro: Voxel File Format Exchange",
-    "description": "Voxility enables the import and export of various voxel file formats through voxconvert-0.0.28-3c331", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Voxility enables the manipulation, import, and export of various voxel file formats through voxconvert-0.0.29", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 9),
     "blender": (2, 93, 0),
@@ -50,7 +50,7 @@ from voxility_pro.translation.translations import register as register_translati
 if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
     from voxility_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 else:
-    from voxility_pro.ui.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+    from voxility_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize import register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
