@@ -64,6 +64,10 @@ def on_depsgraph_update(scene) -> None:
         bpy.types.Scene.voxelize_list_update = False
         bpy.ops.voxelize_list.populate_list()
 
+def on_index_change(self, context):
+    obj = context.selected_objects[self.voxelize_list_index]
+    bpy.context.view_layer.objects.active = obj
+
 def register() -> None:
     bpy.utils.register_class(ListItem)
     bpy.utils.register_class(LIST_OT_PopulateList)
@@ -71,7 +75,7 @@ def register() -> None:
     bpy.utils.register_class(LIST_OT_NewItem)
     bpy.types.Scene.voxelize_list_update = False
     bpy.types.Scene.voxelize_list = bpy.props.CollectionProperty(type = ListItem)
-    bpy.types.Scene.voxelize_list_index = bpy.props.IntProperty(name = "Index for voxelize_list", default = 0)
+    bpy.types.Scene.voxelize_list_index = bpy.props.IntProperty(name = "Index for voxelize_list", default = 0, update=on_index_change)
     bpy.app.handlers.depsgraph_update_post.append(on_depsgraph_update)
 
 def unregister() -> None:
@@ -87,7 +91,6 @@ def unregister() -> None:
 
 # example usage:
 def selected_objects_list_example():
-
     from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list # type: ignore
     register_selected_objects_list()
     # inside bpy.types.Panel::draw:
