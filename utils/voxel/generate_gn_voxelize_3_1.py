@@ -1355,10 +1355,7 @@ def get_associated_nodegroup(node_group_name):
 def add_modifier_blender_3_1(obj, voxelizemodifier, mod_node_group_name, default_value):
     if obj is None:
         return
-
-    bpy.ops.object.modifier_add(type='NODES')
-
-    vox_modifier = obj.modifiers[-1]
+    vox_modifier = obj.modifiers.new(mod_node_group_name, 'NODES')
     vox_modifier.name = mod_node_group_name # NodesModifier.name (same name for different objects but increments if in same object multiple vox modifiers
     vox_modifier_name = vox_modifier.name
     vox_modifier.node_group = voxelizemodifier
