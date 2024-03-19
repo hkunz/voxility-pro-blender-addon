@@ -30,7 +30,16 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
             from voxility_pro.utils.voxel.generate_gn_voxelize_3_1 import add_voxelizer_3_1 as add_voxelizer # type: ignore
         else:
             raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.3 and above.")
-        add_voxelizer(context.active_object, self.min_value, self.max_value, self.default_value)
+        update = False
+        print("voxelize === ", context.selected_objects)
+        for obj in context.selected_objects:
+            if get_voxelizer_modifier(obj):
+                continue
+            print(f"obj {obj.name} has no voxelizer")
+            add_voxelizer(obj, self.min_value, self.max_value, self.default_value)
+            update = True
+        if update:
+            bpy.types.Scene.voxelize_list_update = True
         return {'FINISHED'}
 
     @classmethod
