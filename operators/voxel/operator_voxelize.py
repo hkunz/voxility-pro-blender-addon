@@ -3,7 +3,7 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.enums.name_constant import NameConstant # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
 
 class BlenderVersionError(Exception):
     pass
@@ -14,9 +14,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_description = "Voxelize or convert selected objects into a single voxel object"
     bl_options = {'REGISTER'}
 
-    VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
-
-    min_value: bpy.props.FloatProperty(name="Min Value", default=0.0) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+    min_value: bpy.props.FloatProperty(name="Min Value", default=0.05) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
     max_value: bpy.props.FloatProperty(name="Max Value", default=100.0) # type: ignore
     default_value: bpy.props.FloatProperty(name="Default Value", default=0.4) # type: ignore
 
@@ -37,16 +35,10 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        active_object: bpy_types.Object = context.active_object
-        node_groups = bpy.data.node_groups
-        voxility_node_group = node_groups[cls.VOXILITY_MODIFIER_NAME] if cls.VOXILITY_MODIFIER_NAME in node_groups else None
-
-        for m in reversed(active_object.modifiers):
-            if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
-                return False
-
+        active_object = context.active_object
+        m = get_voxelizer_modifier(active_object)
         selected_objects: List[bpy_types.Object] = context.selected_objects
-        if context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
+        if m or context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
             return False
         for o in selected_objects:
             if o.type != 'MESH' or not o.data.polygons:

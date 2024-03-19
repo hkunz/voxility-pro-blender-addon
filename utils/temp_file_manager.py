@@ -23,6 +23,9 @@ class TempFileManager:
         self._initialized = True
         print("Initialized", self)
 
+    def init(self) -> None:
+        pass
+
     def create_directory(self, directory) -> None:
         os.makedirs(name=directory, exist_ok=True)
 

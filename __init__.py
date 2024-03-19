@@ -46,6 +46,7 @@ from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
 from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
 if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
     from voxility_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
@@ -62,6 +63,7 @@ def add_executable_permission(exe: Union[str, Path]) -> Path:
     return app
 
 def register() -> None:
+    print("Addon Registration Begin ==============>")
     add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
     register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
@@ -69,8 +71,12 @@ def register() -> None:
     register_translations()
     register_sidebar_menu()
     register_generic_popup()
+    TempFileManager().init()
+    IconsManager().init()
+    print("Addon Registration Complete <==========\n")
 
 def unregister() -> None:
+    print("Addon Unregistration Begin ============>")
     unregister_preferences()
     bpy.utils.unregister_class(OperatorVoxconvertTest)
     unregister_gn_voxelizer()
@@ -78,3 +84,5 @@ def unregister() -> None:
     unregister_sidebar_menu()
     unregister_generic_popup()
     TempFileManager().cleanup()
+    IconsManager().cleanup()
+    print("Addon Unregistration Complete <========\n")

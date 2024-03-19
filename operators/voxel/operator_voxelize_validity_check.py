@@ -11,8 +11,6 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(bpy.types.Operator):
     bl_description = "Check for potential issues in the materials before voxel conversion"
     bl_options = {'REGISTER'}
 
-    VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
-
     temp: bpy.props.StringProperty(
         name="Temp String",
         description="Temp descrption",
@@ -24,12 +22,6 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         active_object: bpy_types.Object = context.active_object
-
-        #node_groups = bpy.data.node_groups
-        #voxility_node_group = node_groups[cls.VOXILITY_MODIFIER_NAME] if cls.VOXILITY_MODIFIER_NAME in node_groups else None
-        #for m in reversed(active_object.modifiers):
-        #    if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
-        #        return False
 
         selected_objects: List[bpy_types.Object] = context.selected_objects
         if context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
