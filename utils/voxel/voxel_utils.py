@@ -17,6 +17,15 @@ def get_voxelizer_modifier(active_object):
             return m
     return None
 
+def remove_all_voxelizier_modifiers(active_object):
+    m = get_voxelizer_modifier(active_object)
+    remove = False
+    while m:
+        active_object.modifiers.remove(m)
+        remove = True
+        m = get_voxelizer_modifier(active_object)
+    return remove
+
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
     if mod:

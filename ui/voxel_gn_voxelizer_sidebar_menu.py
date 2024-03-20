@@ -5,7 +5,8 @@ import time
 
 from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
-from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize # type: ignore
+from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
+from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
 
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import ( # type: ignore
@@ -69,7 +70,10 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             #box.enabled = False
 
         op = layout.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Validity Check")
-        op = layout.operator(OBJECT_OT_OperatorVoxelize.bl_idname, text="Voxelize")
+        if not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context):
+            op = layout.operator(OBJECT_OT_OperatorUnvoxelize.bl_idname, text="Unvoxelize")
+        else:
+            op = layout.operator(OBJECT_OT_OperatorVoxelize.bl_idname, text="Voxelize")
 
     def check_valid(self, active_object, selected_objects, selected_mesh_objects, selected_voxelized_objects):
         non_mesh = next((obj for obj in bpy.context.selected_objects if obj.type != 'MESH'), None)
@@ -90,6 +94,8 @@ def register() -> None:
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
+    register_gn_voxelizer()
+    register_gn_unvoxelizer()
     register_selected_objects_list()
     register_temp_cache_operator()
     register_all_temp_cache_operator()
@@ -99,6 +105,8 @@ def unregister() -> None:
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
+    unregister_gn_voxelizer()
+    unregister_gn_unvoxelizer()
     unregister_selected_objects_list()
     unregister_temp_cache_operator()
     unregister_all_temp_cache_operator()
