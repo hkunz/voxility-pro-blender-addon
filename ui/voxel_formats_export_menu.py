@@ -104,10 +104,12 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
     SELECTION_NONE:str = FORMATS[0][0]
 
     @staticmethod
-    def get_format_name(type):
+    def get_format_name(type, camel_notation=False):
         for tuple in VoxelFormatsExportMenu.FORMATS:
-            if type == tuple[0]:
-                return re.search(r"\((.*?)\)", tuple[1]).group(1)
+            if type != tuple[0]:
+                continue
+            name = re.search(r"\((.*?)\)", tuple[1]).group(1)
+            return name.replace(" ", "_").lower() if camel_notation else name
         return None
 
     def draw(self, _context: bpy_types.Context) -> None:

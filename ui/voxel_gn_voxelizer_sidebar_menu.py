@@ -22,7 +22,7 @@ def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[T
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
     export_format: bpy.props.EnumProperty(
-        name="Format",
+        name="Target",
         description="Select target voxel export format",
         items=my_settings_callback,
         #default="NONE", # cannot set a default when using dynamic EnumProperty
@@ -76,23 +76,17 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             ibox.label(text=error)
 
         if properties.multi_object_export and num_selected_mesh_objects > 0 and not error:
-            box = layout.row()
-            row = box.row()
-            box.scale_y = 1.0
-            row.template_list("MY_UL_List", "The_List", bpy.context.scene, "voxelize_list", bpy.context.scene, "voxelize_list_index", sort_lock=True)
+            ibox = layout.row().box()
+            ibox.template_list("MY_UL_List", "The_List", bpy.context.scene, "voxelize_list", bpy.context.scene, "voxelize_list_index", sort_lock=True)
 
-        if valid_selection:
-            layout.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Validity Check")
-
-        if not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context):
-            layout.operator(OBJECT_OT_OperatorUnvoxelize.bl_idname, text="Unvoxelize")
-        else:
-            layout.operator(OBJECT_OT_OperatorVoxelize.bl_idname, text="Voxelize")
+        unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
+        layout.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
 
         if not valid_selection:
             return
 
-        row = layout.box().row()
+        ebox = layout.box()
+        row = ebox.box().row()
         row.prop(
             context.scene, "expanded_export",
             icon="TRIA_DOWN" if context.scene.expanded_export else "TRIA_RIGHT",
@@ -104,12 +98,14 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         if not context.scene.expanded_export:
             return
 
-        layout.prop(properties, "export_format")
+        ebox.prop(properties, "export_format")
         format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
-        bl_idname = "export.voxility_" + VoxelFormatsExportMenu.get_format_name(properties.export_format).replace(" ", "_").lower() if format_selected else ""
+        bl_idname = f"export.voxility_{VoxelFormatsExportMenu.get_format_name(properties.export_format, True)}" if format_selected else ""
 
         button_text = "Export" + (" " + properties.export_format if bl_idname else "")
-        layout.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
+        btn = ebox.column()
+        btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
+        btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
 
 
     def check_valid(self, active_object, selected_objects, selected_mesh_objects, selected_voxelized_objects):
