@@ -12,7 +12,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_idname = "object.voxility_voxelize"
     bl_label = "Voxility Voxelize Object"
     bl_description = "Voxelize or convert selected objects into a single voxel object"
-    bl_options = {'REGISTER'}
+    bl_options = {'REGISTER','UNDO'}
 
     min_value: bpy.props.FloatProperty(name="Min Value", default=0.05) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
     max_value: bpy.props.FloatProperty(name="Max Value", default=100.0) # type: ignore

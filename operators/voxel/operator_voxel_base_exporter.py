@@ -23,7 +23,6 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     bl_idname = "export.voxility_export"
     bl_label = "Export"
     bl_description = "Operator Voxel Base Exporter"
-    bl_options = {'INTERNAL'}
 
     filter_glob: bpy.props.StringProperty(
         default="*.*",

@@ -7,13 +7,14 @@ import time
 
 from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter # type: ignore
+from voxility_pro.operators.voxel.operator_empty import OBJECT_OT_OperatorEmpty # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import get_addon_version # type: ignore
+from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
 
 def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[Tuple[str, str, str]]:
@@ -26,6 +27,12 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         items=my_settings_callback,
         #default="NONE", # cannot set a default when using dynamic EnumProperty
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+
+    multi_object_export: bpy.props.BoolProperty(
+        name="Edit Multiple Objects",
+        description="Enable voxelizing and exporting multiple objects per file",
+        default=False,
+    ) # type: ignore
 
 
 
@@ -51,18 +58,24 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         valid_selection = active_object and not error
 
         if valid_selection:
-            split = layout.split(factor=0.5)
-            split.label(text="Active Object:")
-            split_prop = split.split(factor=1)
-            split_prop.prop(active_object, "name", text="", expand=True)
-            split_prop.enabled = False
+            layout.prop(properties, "multi_object_export")
+            if properties.multi_object_export:
+                #split = layout.split(factor=0.5)
+                #split.label(text="Active Object:")
+                #split_prop = split.split(factor=1)
+                #split_prop.prop(active_object, "name", text="", expand=True)
+                #split_prop.enabled = False
+                pass
+            else:
+                voxelized = get_voxelizer_modifier(active_object)
+                ibox = layout.box().box()
+                ibox.label(text=active_object.name, icon=IconsManager.BUILTIN_ICON_VOXELIZED if voxelized else IconsManager.BUILTIN_ICON_MESH_DATA)
         else:
-            box = row.box()
-            box2 = box.box()
-            box2.alert = True
-            box2.label(text=error)
+            ibox = row.box().box()
+            ibox.alert = True
+            ibox.label(text=error)
 
-        if num_selected_mesh_objects > 0 and not error:
+        if properties.multi_object_export and num_selected_mesh_objects > 0 and not error:
             box = layout.row()
             row = box.row()
             box.scale_y = 1.0
@@ -75,27 +88,28 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             layout.operator(OBJECT_OT_OperatorUnvoxelize.bl_idname, text="Unvoxelize")
         else:
             layout.operator(OBJECT_OT_OperatorVoxelize.bl_idname, text="Voxelize")
-        
 
-        obj = context.object
-        if not obj or not obj.type == "MESH":
+        if not valid_selection:
             return
 
-        box = layout.box()
-        row = box.row()
-        row.prop(obj, "expanded_export",
-            icon="TRIA_DOWN" if obj.expanded_export else "TRIA_RIGHT",
+        row = layout.box().row()
+        row.prop(
+            context.scene, "expanded_export",
+            icon="TRIA_DOWN" if context.scene.expanded_export else "TRIA_RIGHT",
             icon_only=True, emboss=False
         )
+
         row.label(text="Export")
 
-        if obj.expanded_export:
-            bl_idname = ""
-            layout.prop(properties, "export_format")
-            format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
-            if format_selected:
-                bl_idname = "export.voxility_" + VoxelFormatsExportMenu.get_format_name(properties.export_format).replace(" ", "_").lower()
-            layout.operator(bl_idname if bl_idname else "export.voxility_export", text="Export" + (" " + properties.export_format if bl_idname else ""))
+        if not context.scene.expanded_export:
+            return
+
+        layout.prop(properties, "export_format")
+        format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
+        bl_idname = "export.voxility_" + VoxelFormatsExportMenu.get_format_name(properties.export_format).replace(" ", "_").lower() if format_selected else ""
+
+        button_text = "Export" + (" " + properties.export_format if bl_idname else "")
+        layout.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
 
 
     def check_valid(self, active_object, selected_objects, selected_mesh_objects, selected_voxelized_objects):
@@ -113,11 +127,11 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
 
 def register() -> None:
-    bpy.types.Object.expanded_export = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
+    bpy.types.Scene.expanded_export = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
-    bpy.utils.register_class(OperatorVoxelBaseExporter)
+    bpy.utils.register_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     register_gn_voxelizer()
     register_gn_unvoxelizer()
@@ -126,11 +140,11 @@ def register() -> None:
     register_all_temp_cache_operator()
 
 def unregister() -> None:
-    del bpy.types.Object.expanded_export
     bpy.utils.unregister_class(VoxilityProProperties)
+    del bpy.types.Scene.expanded_export
     del bpy.types.Scene.voxility_pro_properties
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
-    bpy.utils.unregister_class(OperatorVoxelBaseExporter)
+    bpy.utils.unregister_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     unregister_gn_voxelizer()
     unregister_gn_unvoxelizer()

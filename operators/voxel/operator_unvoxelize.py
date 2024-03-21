@@ -9,7 +9,7 @@ class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
     bl_idname = "object.voxility_unvoxelize"
     bl_label = "Voxility Unvoxelize Object"
     bl_description = "Unvoxelize or remove voxelization from selected objects"
-    bl_options = {'REGISTER'}
+    bl_options = {'REGISTER','UNDO'}
 
     def execute(self, context):
         update = False
