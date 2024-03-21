@@ -28,7 +28,7 @@ def remove_all_voxelizier_modifiers(active_object):
 
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
-    if mod:
+    if mod and active_object:
             return round(mod["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"], 3)
     return 0
 

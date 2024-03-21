@@ -44,6 +44,8 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         active_object = context.active_object
+        if not active_object:
+            return False
         m = get_voxelizer_modifier(active_object)
         selected_objects: List[bpy_types.Object] = context.selected_objects
         if m or context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:

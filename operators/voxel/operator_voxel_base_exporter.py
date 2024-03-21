@@ -20,7 +20,16 @@ from voxility_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
 
 class OperatorVoxelBaseExporter(OperatorVoxelBase):
+    bl_idname = "export.voxility_export"
+    bl_label = "Export"
     bl_description = "Operator Voxel Base Exporter"
+    bl_options = {'INTERNAL'}
+
+    filter_glob: bpy.props.StringProperty(
+        default="*.*",
+        options={'HIDDEN'},
+        maxlen=255,
+    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     voxformat_scale: bpy.props.FloatProperty(
         name="Voxformat Scale",
@@ -28,7 +37,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         default=1.0,
         min=0.0,
         max=100.0,
-    ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+    ) # type: ignore
 
     palette_file: bpy.props.StringProperty(
         name="Palette File",
@@ -136,8 +145,12 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     @classmethod
     def poll(cls, context: bpy_types.Context) -> bool:
         active_object: bpy_types.Object = context.active_object
-        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and get_voxelizer_voxel_size(active_object) <= 0:
+        if not cls.filename_ext or not active_object:
             return False
+        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+            for obj in context.selected_objects:
+                if get_voxelizer_voxel_size(obj) <= 0:
+                    return False
         return super().poll(context)
 
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:

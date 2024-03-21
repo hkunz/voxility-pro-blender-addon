@@ -129,6 +129,13 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
 
     SELECTION_NONE:str = FORMATS[0][0]
 
+    @staticmethod
+    def get_format_name(type):
+        for tuple in VoxelFormatsImportMenu.FORMATS:
+            if type == tuple[0]:
+                return re.search(r"\((.*?)\)", tuple[1]).group(1)
+        return None
+
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
