@@ -1,9 +1,7 @@
 import bpy
 import bpy_types
-import re
 
 from typing import List, Tuple
-import time
 
 from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
@@ -15,10 +13,39 @@ from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register 
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import get_addon_version # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import Voxel, get_voxelizer_modifier, set_voxelizer_voxel_size, get_voxelizer_voxel_size # type: ignore
 
-def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[Tuple[str, str, str]]:
+def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
+
+def on_voxel_size_change(self, context: bpy_types.Context):
+    if context.scene.no_voxel_size_update:
+        return
+    for obj in context.selected_objects:
+        vsize = get_voxelizer_voxel_size(obj)
+        tolerance = 0.001
+        if abs(vsize - self.voxel_size) < tolerance:
+            continue
+        set_voxelizer_voxel_size(obj, self.voxel_size)
+        obj.modifiers.update()
+        obj.update_tag()
+
+def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
+    properties: VoxilityProProperties = context.scene.voxility_pro_properties
+    properties.voxel_size = Voxel.DEFAULT_VALUE
+
+def on_object_selection_change(scene, depsgraph):
+    obj = bpy.context.active_object
+    if not obj or obj == OBJECT_OT_OperatorVoxelize.PREVIOUS_ACTIVE_OBJECT:
+        return
+    OBJECT_OT_OperatorVoxelize.PREVIOUS_ACTIVE_OBJECT = obj
+    voxel_size = get_voxelizer_voxel_size(obj)
+    if voxel_size <= 0:
+        return
+    properties: VoxilityProProperties = bpy.context.scene.voxility_pro_properties
+    bpy.context.scene.no_voxel_size_update = True # so we don't trigger on_voxel_size_change which sets all objects
+    properties.voxel_size = voxel_size
+    bpy.context.scene.no_voxel_size_update = False
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
     export_format: bpy.props.EnumProperty(
@@ -34,6 +61,14 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=False,
     ) # type: ignore
 
+    voxel_size: bpy.props.FloatProperty(
+        name="Voxel Size",
+        description="Voxel size in meters",
+        default=Voxel.DEFAULT_VALUE,
+        min=Voxel.DEFAULT_MIN,
+        max=Voxel.DEFAULT_MAX,
+        update=on_voxel_size_change
+    ) # type: ignore
 
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
@@ -53,9 +88,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         active_object = context.active_object if len(selected_mesh_objects) > 0 and context.active_object in selected_mesh_objects else None
         error = self.check_valid(active_object, selected_objects, selected_mesh_objects, selected_voxelized_objects)
-        row = layout.row()
 
         valid_selection = active_object and not error
+        voxelized = bool(get_voxelizer_modifier(active_object)) if active_object else False
 
         if valid_selection:
             layout.prop(properties, "multi_object_export")
@@ -67,11 +102,10 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
                 #split_prop.enabled = False
                 pass
             else:
-                voxelized = get_voxelizer_modifier(active_object)
                 ibox = layout.box().box()
                 ibox.label(text=active_object.name, icon=IconsManager.BUILTIN_ICON_VOXELIZED if voxelized else IconsManager.BUILTIN_ICON_MESH_DATA)
         else:
-            ibox = row.box().box()
+            ibox = layout.box().box()
             ibox.alert = True
             ibox.label(text=error)
 
@@ -84,6 +118,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         if not valid_selection:
             return
+
+        if voxelized:
+            layout.prop(properties, "voxel_size")
 
         ebox = layout.box()
         row = ebox.box().row()
@@ -126,6 +163,8 @@ def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.types.Scene.expanded_export = bpy.props.BoolProperty(default=False)
+    bpy.types.Scene.on_voxelize_button_click = on_voxelize_button_click
+    bpy.types.Scene.no_voxel_size_update = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     bpy.utils.register_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
@@ -134,11 +173,14 @@ def register() -> None:
     register_selected_objects_list()
     register_temp_cache_operator()
     register_all_temp_cache_operator()
+    bpy.app.handlers.depsgraph_update_post.append(on_object_selection_change)
 
 def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.expanded_export
     del bpy.types.Scene.voxility_pro_properties
+    del bpy.types.Scene.on_voxelize_button_click
+    del bpy.types.Scene.no_voxel_size_update
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     bpy.utils.unregister_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
@@ -147,3 +189,4 @@ def unregister() -> None:
     unregister_selected_objects_list()
     unregister_temp_cache_operator()
     unregister_all_temp_cache_operator()
+    bpy.app.handlers.depsgraph_update_post.clear()

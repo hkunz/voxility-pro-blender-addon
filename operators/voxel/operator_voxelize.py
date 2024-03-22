@@ -3,7 +3,7 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import Voxel, get_voxelizer_modifier # type: ignore
 
 class BlenderVersionError(Exception):
     pass
@@ -14,9 +14,11 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_description = "Voxelize or convert selected objects into a single voxel object"
     bl_options = {'REGISTER','UNDO'}
 
-    min_value: bpy.props.FloatProperty(name="Min Value", default=0.05) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
-    max_value: bpy.props.FloatProperty(name="Max Value", default=100.0) # type: ignore
-    default_value: bpy.props.FloatProperty(name="Default Value", default=0.4) # type: ignore
+    PREVIOUS_ACTIVE_OBJECT = None
+
+    min_value: bpy.props.FloatProperty(name="Min Value", default=Voxel.DEFAULT_MIN) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+    max_value: bpy.props.FloatProperty(name="Max Value", default=Voxel.DEFAULT_MAX) # type: ignore
+    default_value: bpy.props.FloatProperty(name="Default Value", default=Voxel.DEFAULT_VALUE) # type: ignore
 
     def execute(self, context):
         v = bpy.app.version
@@ -39,6 +41,8 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
             update = True
         if update:
             bpy.types.Scene.voxelize_list_update = True
+
+        context.scene.on_voxelize_button_click(context)
         return {'FINISHED'}
 
     @classmethod

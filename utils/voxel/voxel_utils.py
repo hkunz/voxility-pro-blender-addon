@@ -4,6 +4,11 @@ import mathutils
 
 from voxility_pro.enums.name_constant import NameConstant # type: ignore
 
+class Voxel:
+    DEFAULT_MIN = 0.01
+    DEFAULT_MAX = 100.0
+    DEFAULT_VALUE = 0.5
+
 def get_voxility_node_group():
     VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
     node_groups = bpy.data.node_groups
@@ -26,11 +31,21 @@ def remove_all_voxelizier_modifiers(active_object):
         m = get_voxelizer_modifier(active_object)
     return remove
 
+def get_voxelizer_voxel_size_attr_name():
+    return "Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"
+
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
     if mod and active_object:
-            return round(mod["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"], 3)
+        return round(mod[get_voxelizer_voxel_size_attr_name()], 3)
     return 0
+
+def set_voxelizer_voxel_size(obj, voxel_size):
+    mod = get_voxelizer_modifier(obj)
+    if not mod or not obj:
+        return False
+    mod[get_voxelizer_voxel_size_attr_name()] = voxel_size
+    return True
 
 def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
