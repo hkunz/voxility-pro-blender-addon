@@ -58,10 +58,10 @@ class SelectedObjectsList:
 
 
 def on_depsgraph_update(scene) -> None:
-    if bpy.types.Scene.voxelize_list_update or SelectedObjectsList.SELECTED_OBJECTS != bpy.context.selected_objects or SelectedObjectsList.ACTIVE_OBJECT != bpy.context.active_object:
+    if bpy.context.scene.voxelize_list_update or SelectedObjectsList.SELECTED_OBJECTS != bpy.context.selected_objects or SelectedObjectsList.ACTIVE_OBJECT != bpy.context.active_object:
         SelectedObjectsList.SELECTED_OBJECTS = bpy.context.selected_objects
         SelectedObjectsList.ACTIVE_OBJECT = bpy.context.active_object
-        bpy.types.Scene.voxelize_list_update = False
+        bpy.context.scene.voxelize_list_update = False
         bpy.ops.voxelize_list.populate_list()
 
 def on_index_change(self, context):
@@ -73,7 +73,7 @@ def register() -> None:
     bpy.utils.register_class(LIST_OT_PopulateList)
     bpy.utils.register_class(MY_UL_List)
     bpy.utils.register_class(LIST_OT_NewItem)
-    bpy.types.Scene.voxelize_list_update = False
+    bpy.types.Scene.voxelize_list_update = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.voxelize_list = bpy.props.CollectionProperty(type = ListItem)
     bpy.types.Scene.voxelize_list_index = bpy.props.IntProperty(name = "Index for voxelize_list", default = 0, update=on_index_change)
     bpy.app.handlers.depsgraph_update_post.append(on_depsgraph_update)
