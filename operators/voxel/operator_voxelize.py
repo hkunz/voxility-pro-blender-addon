@@ -11,7 +11,7 @@ class BlenderVersionError(Exception):
 class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_idname = "object.voxility_voxelize"
     bl_label = "Voxility Voxelize Object"
-    bl_description = "Voxelize or convert selected objects into a single voxel object"
+    bl_description = "Voxelize selected objects with colors, textures, and vertex colors"
     bl_options = {'REGISTER','UNDO'}
 
     PREVIOUS_ACTIVE_OBJECT = None

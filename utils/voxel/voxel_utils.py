@@ -34,6 +34,12 @@ def remove_all_voxelizier_modifiers(active_object):
 def get_voxelizer_voxel_size_attr_name():
     return "Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"
 
+def get_voxelizer_voxel_uv_attr_name():
+    return "Socket_3" if bpy.app.version >= (4,0,0) else "Input_2"
+
+def get_voxelizer_voxel_vertex_colors_attr_name():
+    return "Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"
+
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
     if mod and active_object:
@@ -41,10 +47,19 @@ def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     return 0
 
 def set_voxelizer_voxel_size(obj, voxel_size):
+    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_size_attr_name(), voxel_size)
+
+def set_voxelizer_voxel_vertex_colors(obj, vertex_colors):
+    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_vertex_colors_attr_name(), vertex_colors)
+
+def set_voxelizer_voxel_uvmap(obj, uvmap):
+    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_uv_attr_name(), uvmap)
+
+def set_voxelizer_voxel_attribute(obj, attr_name, value):
     mod = get_voxelizer_modifier(obj)
     if not mod or not obj:
         return False
-    mod[get_voxelizer_voxel_size_attr_name()] = voxel_size
+    mod[attr_name] = value
     return True
 
 def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
@@ -54,8 +69,8 @@ def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
     color = "Col"
     if mod:
             voxel_size = get_voxelizer_voxel_size(active_object)
-            uvmap = mod["Socket_3" if bpy.app.version >= (4,0,0) else "Input_2"]
-            color = mod["Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"]
+            uvmap = mod[get_voxelizer_voxel_uv_attr_name()]
+            color = mod[get_voxelizer_voxel_vertex_colors_attr_name()]
     return voxel_size, uvmap, color
 
 def get_mesh_center_of_mass_world(obj):

@@ -13,7 +13,7 @@ from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register 
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import get_addon_version # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import Voxel, get_voxelizer_modifier, set_voxelizer_voxel_size, get_voxelizer_voxel_size # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import Voxel, get_voxelizer_modifier, set_voxelizer_voxel_size, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, set_voxelizer_voxel_uvmap, set_voxelizer_voxel_vertex_colors # type: ignore
 
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
@@ -30,21 +30,38 @@ def on_voxel_size_change(self, context: bpy_types.Context):
         obj.modifiers.update()
         obj.update_tag()
 
+def on_uvmap_input_change(self, context: bpy_types.Context):
+    if context.scene.no_voxel_size_update:
+        return
+    set_voxelizer_voxel_uvmap(context.active_object, self.uvmap_attribute)
+
+def on_vertex_colors_input_change(self, context: bpy_types.Context):
+    if context.scene.no_voxel_size_update:
+        return
+    set_voxelizer_voxel_vertex_colors(context.active_object, self.vertex_colors_attribute)
+
 def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
     properties: VoxilityProProperties = context.scene.voxility_pro_properties
     properties.voxel_size = Voxel.DEFAULT_VALUE
+    update_object_selection(context)
 
-def on_object_selection_change(scene, depsgraph):
+def update_object_selection(context):
+    OBJECT_OT_OperatorVoxelize.PREVIOUS_ACTIVE_OBJECT = None
+    on_object_selection_change(context.scene)
+
+def on_object_selection_change(scene, depsgraph=None):
     obj = bpy.context.active_object
     if not obj or obj == OBJECT_OT_OperatorVoxelize.PREVIOUS_ACTIVE_OBJECT:
         return
     OBJECT_OT_OperatorVoxelize.PREVIOUS_ACTIVE_OBJECT = obj
-    voxel_size = get_voxelizer_voxel_size(obj)
-    if voxel_size <= 0:
-        return
+    voxel_size, uvmap, vertex_colors = get_voxelizer_voxel_modifier_attributes(obj)
     properties: VoxilityProProperties = bpy.context.scene.voxility_pro_properties
     bpy.context.scene.no_voxel_size_update = True # so we don't trigger on_voxel_size_change which sets all objects
+    if voxel_size <= 0.001:
+        return
     properties.voxel_size = voxel_size
+    properties.uvmap_attribute = uvmap
+    properties.vertex_colors_attribute = vertex_colors
     bpy.context.scene.no_voxel_size_update = False
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
@@ -70,6 +87,28 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         update=on_voxel_size_change
     ) # type: ignore
 
+    uvmap_attribute: bpy.props.StringProperty(
+        name="UV",
+        description="UVMap Attribute",
+        update=on_uvmap_input_change
+    ) # type: ignore
+
+    vertex_colors_attribute: bpy.props.StringProperty(
+        name="Color",
+        description="Vertex Colors Attribute",
+        update=on_vertex_colors_input_change
+    ) # type: ignore
+
+def iterate_through_all_material_bsdf(obj):
+    for slot in obj.material_slots:
+        material = slot.material
+        if material:
+            if material.use_nodes:
+                for node in material.node_tree.nodes:
+                    if node.type == 'BSDF_PRINCIPLED':
+                        print("Material:", material.name)
+                        print("Principled BSDF Node:", node)
+
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_label = f"Voxility Pro {get_addon_version()}"
@@ -93,7 +132,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         voxelized = bool(get_voxelizer_modifier(active_object)) if active_object else False
 
         if valid_selection:
-            layout.prop(properties, "multi_object_export")
+            layout.box().prop(properties, "multi_object_export")
             if properties.multi_object_export:
                 #split = layout.split(factor=0.5)
                 #split.label(text="Active Object:")
@@ -114,13 +153,23 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             ibox.template_list("MY_UL_List", "The_List", bpy.context.scene, "voxelize_list", bpy.context.scene, "voxelize_list_index", sort_lock=True)
 
         unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
-        layout.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
+        mbox = layout.box()
+        mbox.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
 
         if not valid_selection:
             return
 
         if voxelized:
-            layout.prop(properties, "voxel_size")
+            box = mbox.box()
+            r1 = box.row()
+            r1.prop(properties, "voxel_size")
+            col = box.column()
+            r2 = col.row()
+            r2.label(text="UV Map:")
+            r2.prop(properties, "uvmap_attribute", text="")
+            r3 = col.row()
+            r3.label(text="Vertex Colors:")
+            r3.prop(properties, "vertex_colors_attribute", text="")
 
         ebox = layout.box()
         row = ebox.box().row()
