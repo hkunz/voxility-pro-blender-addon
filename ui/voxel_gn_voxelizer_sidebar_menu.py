@@ -3,6 +3,7 @@ import bpy_types
 import time
 
 from typing import List, Tuple
+from bpy.app.handlers import persistent
 
 from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
@@ -29,8 +30,6 @@ def on_voxel_size_change(self, context: bpy_types.Context):
         if abs(vsize - self.voxel_size) < tolerance:
             continue
         set_voxelizer_voxel_size(obj, self.voxel_size)
-        obj.modifiers.update()
-        obj.update_tag()
 
 def on_uvmap_input_change(self, context: bpy_types.Context):
     if context.scene.no_voxel_size_update:
@@ -50,6 +49,7 @@ def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
     Voxel.PREVIOUS_ACTIVE_OBJECT = None
     on_object_selection_change(context, properties, context.active_object)
 
+@persistent
 def on_depsgraph_update(scene, depsgraph=None):
     context = bpy.context
     obj = context.active_object

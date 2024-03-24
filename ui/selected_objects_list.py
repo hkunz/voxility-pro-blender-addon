@@ -1,4 +1,5 @@
 import bpy
+from bpy.app.handlers import persistent
 
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
@@ -56,7 +57,7 @@ class SelectedObjectsList:
     ACTIVE_OBJECT=None
     SELECTED_OBJECTS = None
 
-
+@persistent
 def on_depsgraph_update(scene) -> None:
     if bpy.context.scene.voxelize_list_update or SelectedObjectsList.SELECTED_OBJECTS != bpy.context.selected_objects or SelectedObjectsList.ACTIVE_OBJECT != bpy.context.active_object:
         SelectedObjectsList.SELECTED_OBJECTS = bpy.context.selected_objects

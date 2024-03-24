@@ -65,8 +65,11 @@ def set_voxelizer_voxel_attribute(obj, attr_name, value):
     mod = get_voxelizer_modifier(obj)
     if not mod or not obj:
         return False
-    if value != mod[attr_name]:
-        mod[attr_name] = value
+    if value == mod[attr_name]:
+        return False
+    mod[attr_name] = value
+    obj.modifiers.update()
+    obj.update_tag()
     return True
 
 def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):

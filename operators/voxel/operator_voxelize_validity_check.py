@@ -18,10 +18,12 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(bpy.types.Operator):
 
     def execute(self, context):
         for obj in context.selected_objects:
+            print(f"Check for problems in materials in object \"{obj.name}\":")
             for slot in obj.material_slots:
                 material = slot.material
                 if material:
                     if material.use_nodes:
+                        print(f"       => {material.name}")
                         for node in material.node_tree.nodes:
                             if node.type == 'BSDF_PRINCIPLED':
                                 print("Material:", material.name)
