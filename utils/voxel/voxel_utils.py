@@ -8,6 +8,9 @@ class Voxel:
     DEFAULT_MIN = 0.01
     DEFAULT_MAX = 100.0
     DEFAULT_VALUE = 0.5
+    PREVIOUS_ACTIVE_OBJECT = None
+    PREVIOUS_UVMAP_ATTRIBUTE = None
+    PREVIOUS_COLOR_ATTRIBUTE = None
 
 def get_voxility_node_group():
     VOXILITY_MODIFIER_NAME = NameConstant.VOXILITY_MODIFIER_NAME.value
@@ -40,6 +43,9 @@ def get_voxelizer_voxel_uv_attr_name():
 def get_voxelizer_voxel_vertex_colors_attr_name():
     return "Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"
 
+def is_object_voxelized(active_object: bpy.types.Object):
+    return bool(get_voxelizer_modifier(active_object))
+
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
     if mod and active_object:
@@ -59,14 +65,15 @@ def set_voxelizer_voxel_attribute(obj, attr_name, value):
     mod = get_voxelizer_modifier(obj)
     if not mod or not obj:
         return False
-    mod[attr_name] = value
+    if value != mod[attr_name]:
+        mod[attr_name] = value
     return True
 
 def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
     voxel_size = 0
-    uvmap = "UVMap"
-    color = "Col"
+    uvmap = "" #"UVMap"
+    color = "" #"Col"
     if mod:
             voxel_size = get_voxelizer_voxel_size(active_object)
             uvmap = mod[get_voxelizer_voxel_uv_attr_name()]

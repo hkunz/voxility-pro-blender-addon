@@ -17,6 +17,15 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(bpy.types.Operator):
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     def execute(self, context):
+        for obj in context.selected_objects:
+            for slot in obj.material_slots:
+                material = slot.material
+                if material:
+                    if material.use_nodes:
+                        for node in material.node_tree.nodes:
+                            if node.type == 'BSDF_PRINCIPLED':
+                                print("Material:", material.name)
+                                print("Principled BSDF Node:", node)
         return {'FINISHED'}
 
     @classmethod

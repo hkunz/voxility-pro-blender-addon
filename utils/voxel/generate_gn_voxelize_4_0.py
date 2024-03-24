@@ -764,8 +764,10 @@ def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default
     vox_modifier_name = vox_modifier.name
     vox_modifier.node_group = voxelizemodifier
     vox_modifier["Socket_2"] = default_value
-    vox_modifier["Socket_3"] = "UVMap" if not obj.data.uv_layers else obj.data.uv_layers[0].name
-    vox_modifier["Socket_4"] = "Attribute" if not obj.data.color_attributes else obj.data.color_attributes[0].name
+    vox_modifier["Socket_3"] = "" if not obj.data.uv_layers else obj.data.uv_layers[0].name
+    vox_modifier["Socket_4"] = "" if not obj.data.color_attributes else obj.data.color_attributes[0].name
+    #vox_modifier["Socket_3"] = "UVMap" if not obj.data.uv_layers else obj.data.uv_layers[0].name
+    #vox_modifier["Socket_4"] = "Attribute" if not obj.data.color_attributes else obj.data.color_attributes[0].name
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group.001'].inputs["Voxel Size"])
 
 def add_voxelizer_4_0(obj, min_value, max_value, default_value):

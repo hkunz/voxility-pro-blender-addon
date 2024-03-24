@@ -753,8 +753,10 @@ def add_modifier_blender_3_3(obj, voxelizemodifier, mod_node_group_name, default
     vox_modifier_name = vox_modifier.name
     vox_modifier.node_group = voxelizemodifier
     vox_modifier["Input_1"] = default_value
-    vox_modifier["Input_2"] = "UVMap" if not obj.data.uv_layers else obj.data.uv_layers[0].name
-    vox_modifier["Input_3"] = "Col" if not obj.data.color_attributes else obj.data.color_attributes[0].name
+    vox_modifier["Input_2"] = "" if not obj.data.uv_layers else obj.data.uv_layers[0].name
+    vox_modifier["Input_3"] = "" if not obj.data.color_attributes else obj.data.color_attributes[0].name
+    #vox_modifier["Input_2"] = "UVMap" if not obj.data.uv_layers else obj.data.uv_layers[0].name
+    #vox_modifier["Input_3"] = "Col" if not obj.data.color_attributes else obj.data.color_attributes[0].name
     #voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_3(obj, min_value, max_value, default_value):

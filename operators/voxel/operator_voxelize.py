@@ -14,8 +14,6 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     bl_description = "Voxelize selected objects with colors, textures, and vertex colors"
     bl_options = {'REGISTER','UNDO'}
 
-    PREVIOUS_ACTIVE_OBJECT = None
-
     min_value: bpy.props.FloatProperty(name="Min Value", default=Voxel.DEFAULT_MIN) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
     max_value: bpy.props.FloatProperty(name="Max Value", default=Voxel.DEFAULT_MAX) # type: ignore
     default_value: bpy.props.FloatProperty(name="Default Value", default=Voxel.DEFAULT_VALUE) # type: ignore
