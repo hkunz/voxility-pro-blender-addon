@@ -44,7 +44,7 @@ def get_voxelizer_voxel_vertex_colors_attr_name():
     return "Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"
 
 def is_object_voxelized(active_object: bpy.types.Object):
-    return bool(get_voxelizer_modifier(active_object))
+    return bool(get_voxelizer_modifier(active_object)) if active_object else False
 
 def get_voxelizer_voxel_size(active_object: bpy.types.Object):
     mod = get_voxelizer_modifier(active_object)
