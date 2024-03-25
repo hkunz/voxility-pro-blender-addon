@@ -7,15 +7,16 @@ class OperatorGenericPopup(bpy.types.Operator):
     bl_description = "Generic Popup Operator for displaying a custom message"
     bl_options = {'INTERNAL'}
 
-    message: bpy.props.StringProperty(name="Message") # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
+    message: bpy.props.StringProperty(name="Message", default="") # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
     exec_message: str = None
+    width: int = 0
 
     @classmethod
     def poll(cls, context: bpy_types.Context) -> bool:
         return True
 
     def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=self.width) if self.width else context.window_manager.invoke_props_dialog(self)
 
     def draw(self, _: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
@@ -23,7 +24,8 @@ class OperatorGenericPopup(bpy.types.Operator):
         col.label(text=self.message)
 
     def execute(self, _: bpy_types.Context) -> set[str]:
-        self.report({'INFO'}, self.exec_message)
+        if self.exec_message:
+            self.report({'INFO'}, self.exec_message)
         return {'FINISHED'}
 
 def register() -> None:
