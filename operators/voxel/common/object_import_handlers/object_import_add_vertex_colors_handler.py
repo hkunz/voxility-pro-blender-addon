@@ -64,4 +64,4 @@ class ObjectImportAddVertexColorsHandler(IHandler):
 
     def execute_handler(self) -> None:
         self.add_vertex_colors()
-        self.color_attribute_convert()
+        self.color_attribute_convert() # voxconvert uses Domain 'Vertex' instead of 'Face Corner' thus we need this call

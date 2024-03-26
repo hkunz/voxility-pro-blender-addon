@@ -26,13 +26,13 @@ class VoxelError:
     ERROR_ONLY_ATTRIBUTE_NODE_VECTOR_SOCKET_ALLOWED_FOR_UVMAP_USE = 15
     ERROR_INVALID_ATTRIBUTE_NODE_OUTPUT_SOCKET_USED_FOR_UVMAP = 16
     ERROR_UVMAP_NODE_INPUT_REQUIRED_TO_IMAGE_TEXTURE = 17
-    ERROR_OBJECT_MISSING_COLOR_ATTRIBUTES = 19
-    ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_VOXILITY_PANEL = 20
-    ERROR_MUST_USE_COLOR_ATTRIBUTE_COLOR_SOCKET = 21
-    ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_ATTRIBUTE_NODE = 22
-    ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE = 23
-    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 24
-    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 25
+    ERROR_OBJECT_MISSING_COLOR_ATTRIBUTES = 18
+    ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_VOXILITY_PANEL = 19
+    ERROR_MUST_USE_COLOR_ATTRIBUTE_COLOR_SOCKET = 20
+    ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_ATTRIBUTE_NODE = 21
+    ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE = 22
+    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 23
+    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 24
 
     @staticmethod
     def get_error(e):
@@ -112,7 +112,8 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
         self.errors = self.get_errors(context)
         self.width = self.MIN_POPUP_WIDTH
         for o, e, p in self.errors:
-            self.width = int(max(self.width, (len(VoxelError.get_error(e)) + len(o.name))/self.MAX_ERROR_CHARS*self.MAX_POPUP_WIDTH)) + self.POPUP_WIDTH_PAD
+            self.width = int(max(self.width, (len(VoxelError.get_error(e)) + len(o.name))/self.MAX_ERROR_CHARS*self.MAX_POPUP_WIDTH))
+        self.width += self.POPUP_WIDTH_PAD
         return super().invoke(context, event)
 
     def execute(self, context):
@@ -130,11 +131,11 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
             return
 
         for i, tuple in enumerate(self.errors):
+            mat_name = tuple[0].name
             e = VoxelError.get_error(tuple[1])
             param = tuple[2]
             if param:
                 e = e.replace("PARAM", param)
-                mat_name = tuple[0].name
             err = f"{mat_name}: {e}"
             col.label(text=err)
 

@@ -15,6 +15,7 @@ class ObjectImportHandler:
         self.with_vertex_colors = with_vertex_colors
 
     def handle_object(self, obj) -> None:
+        obj.select_set(True)
         bpy.context.view_layer.objects.active = obj
         bpy.context.object.data.use_auto_smooth = False
         bpy.ops.object.shade_flat()
@@ -30,6 +31,8 @@ class ObjectImportHandler:
             ObjectImportLimitedDissolveHandler(obj).execute_handler()
 
     def on_object_import(self) -> None:
+        for obj in bpy.context.scene.objects:
+            obj.select_set(False)
         for obj in self.objects:
             if obj.type != 'MESH':
                 continue

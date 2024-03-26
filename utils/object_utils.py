@@ -2,6 +2,7 @@ import bpy
 import sys
 import traceback
 import bpy_types
+import bmesh
 
 from types import ModuleType
 from typing import List
@@ -15,6 +16,16 @@ def check_mesh_exists() -> bool:
 
 def deselect_all_objects() -> None:
     bpy.ops.object.select_all(action='DESELECT')
+
+def merge_vertices(object: bpy.types.Object, dist:float=0.0005):
+    ops: ModuleType = bpy.ops
+    ops.object.mode_set(mode='EDIT')
+    ops.mesh.select_all(action='SELECT')
+    mesh = object.data
+    bm = bmesh.from_edit_mesh(mesh)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=dist)
+    bmesh.update_edit_mesh(mesh)
+    ops.object.mode_set(mode='OBJECT')
 
 def auto_merge_vertices(object: bpy.types.Object) -> None:
     C: bpy_types.Context = bpy.context

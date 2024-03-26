@@ -78,9 +78,9 @@ def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
     uvmap = "" #"UVMap"
     color = "" #"Col"
     if mod:
-            voxel_size = get_voxelizer_voxel_size(active_object)
-            uvmap = mod[get_voxelizer_voxel_uv_attr_name()]
-            color = mod[get_voxelizer_voxel_vertex_colors_attr_name()]
+        voxel_size = get_voxelizer_voxel_size(active_object)
+        uvmap = mod[get_voxelizer_voxel_uv_attr_name()]
+        color = mod[get_voxelizer_voxel_vertex_colors_attr_name()]
     return voxel_size, uvmap, color
 
 def get_mesh_center_of_mass_world(obj):
