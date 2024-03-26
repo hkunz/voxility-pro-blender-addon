@@ -26,6 +26,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229
 
     def add_vertex_colors_context_callback(self, override: ContextExecuterOverride) -> None:
+
         self.set_active_node_tree(override.area)
         vc_type: str = 'ShaderNodeVertexColor'
         if override.legacy:
@@ -34,16 +35,22 @@ class ObjectImportAddVertexColorsHandler(IHandler):
             bpy.ops.node.add_node(use_transform=True, type=vc_type)
 
     def add_vertex_colors(self) -> None:
+        mat: Material = bpy.context.active_object.active_material
+        node_tree: ShaderNodeTree = mat.node_tree
+        bsdf: ShaderNodeBsdfPrincipled = node_tree.nodes.get('Principled BSDF')
+        links = bsdf.inputs[0].links
+        t = links[0].from_node.type if len(links) > 0 else ''
+        if t == 'VERTEX_COLOR' or t == 'ATTRIBUTE':
+            return
+
         ContextScriptExecuter(
             area_type=AreaType.NODE_EDITOR.name,
             ui_type=AreaUiType.ShaderNodeTree.name,
             script=self.add_vertex_colors_context_callback
         ).execute_script()
 
-        mat: Material = bpy.context.active_object.active_material
-        node_tree: ShaderNodeTree = mat.node_tree
-        bsdf: ShaderNodeBsdfPrincipled = node_tree.nodes.get('Principled BSDF')
         vc_node: ShaderNode = node_tree.nodes.get("Color Attribute") or node_tree.nodes.get("Vertex Color")
+        vc_node.name = "voxility_color_attribute"
 
         if not bsdf or not vc_node:
             print(f"Could not find BSDF node ({bsdf}) or vertex color node ({vc_node})")
