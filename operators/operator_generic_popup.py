@@ -1,5 +1,6 @@
 import bpy
 import bpy_types
+from typing import List
 
 class OperatorGenericPopup(bpy.types.Operator):
     bl_idname = "wm.voxility_generic_popup"
@@ -21,7 +22,9 @@ class OperatorGenericPopup(bpy.types.Operator):
     def draw(self, _: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         col: bpy.types.UILayout = layout.column()
-        col.label(text=self.message)
+        list: List = self.message.split('|')
+        for m in list:
+            col.label(text=m)
 
     def execute(self, _: bpy_types.Context) -> set[str]:
         if self.exec_message:

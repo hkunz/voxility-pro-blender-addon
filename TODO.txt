@@ -1,6 +1,9 @@
-1. Mention in documentation that for voxconvert you need the origin at the center
-2. Specify images of vertex color, texture node tree
-3. Limitation of validity check
+* Mention in documentation that for voxconvert you need the origin at the center
+* mention model needs to have volume closed/manifold. if you have flat non-manifold meshes you need to add thickness
+* consider adding a solidify modifier for and adjust thickness (going inward/outward positive/negative offset) to be bigger than voxel size 
+* mention ensure the dimensions of the object are not too small or too big based on voxel size
+* Specify images of vertex color, texture node tree
+* Limitation of validity check
 
 
 TODO:

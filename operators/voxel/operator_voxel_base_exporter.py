@@ -18,6 +18,7 @@ from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
 from voxility_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
 
 class OperatorVoxelBaseExporter(OperatorVoxelBase):
     bl_idname = "export.voxility_export"
@@ -115,7 +116,33 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         c.vc_surface_only = int(self.surface_only)
         return c
 
+    def check_valid_file_path_conversion(self, context, ext):
+        for i, tuple in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS):
+            if i <= 0:
+                continue
+            if ext == tuple[0].lower():
+                return True
+        return False
+
+    def create_success_popup(self, header, duration):
+        size = get_file_size(self.filepath)
+        fduration = format_duration(duration)
+        self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({size}) in {fduration}")
+        create_generic_popup(message=f"{header}|Created: {self.filepath}|Size: {size}|Duration: {fduration}|Check the Info Editor for more information.")
+
+    def execute_file_path_conversion(self, context):
+        start: int = time.time()
+        props = context.scene.voxility_pro_properties
+        self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.setup_command(props.file_to_convert_path, [self.filepath])
+        self.execute_voxconvert()
+        self.create_success_popup(f"Input file converted to '{self.filename_ext}'", time.time() - start)
+
     def execute(self, context: bpy_types.Context) -> set[str]:
+        if self.is_file_path_conversion(context):
+            self.execute_file_path_conversion(context)
+            return {'FINISHED'}
+
         if not check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}
@@ -136,14 +163,20 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             self.setup_command(obj_file, [self.filepath])
             self.execute_voxconvert()
 
-        duration = time.time() - duration
-        self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({get_file_size(self.filepath)}) in {format_duration(duration)}")
         TempFileManager().delete_temp_dir(temp_dir)
+        self.create_success_popup(f"Export to '{self.filename_ext}' successful", time.time() - duration)
         return {'FINISHED'}
+
+    @classmethod
+    def is_file_path_conversion(cls, context):
+        props = context.scene.voxility_pro_properties
+        return not context.selected_objects and os.path.isfile(props.file_to_convert_path) and props.export_format != props.SELECTION_NONE
 
     @classmethod
     def poll(cls, context: bpy_types.Context) -> bool:
         active_object: bpy_types.Object = context.active_object
+        if cls.is_file_path_conversion(context):
+            return True
         if not cls.filename_ext or not active_object:
             return False
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
@@ -153,5 +186,14 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         return super().poll(context)
 
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
-        #self.voxformat_scale = 1.0
+        if self.is_file_path_conversion(context):
+            props = context.scene.voxility_pro_properties
+            ext = os.path.splitext(props.file_to_convert_path)[1][1:]
+            if props.export_format.lower() == ext:
+                create_generic_popup(message=f"ERROR: cannot convert same format '{ext}' to '{ext}'")
+                return {'PASS_THROUGH'}
+            if self.check_valid_file_path_conversion(context, ext):
+                return super().invoke(context, event)
+            create_generic_popup(message="ERROR: ." + ext + " unsupported. Supported formats include:|" + '|'.join(t[1] for i, t in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS) if i > 0))
+            return {'PASS_THROUGH'}
         return super().invoke(context, event)

@@ -7,6 +7,7 @@ from bpy.app.handlers import persistent
 
 from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxility_pro.ui.voxel_formats_import_menu import VoxelFormatsImportMenu # type: ignore
 from voxility_pro.operators.voxel.operator_empty import OBJECT_OT_OperatorEmpty # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
@@ -92,6 +93,8 @@ def check_color_attributes_change(properties, obj):
     Voxel.PREVIOUS_COLOR_ATTRIBUTE = cname
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
+    IMPORT_FORMATS=VoxelFormatsImportMenu.FORMATS
+    SELECTION_NONE: bpy.props.StringProperty(default=VoxelFormatsExportMenu.SELECTION_NONE) # type: ignore
     export_format: bpy.props.EnumProperty(
         name="Target",
         description="Select target voxel export format",
@@ -126,6 +129,10 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         update=on_input_colorattr_change
     ) # type: ignore
 
+    file_to_convert_path: bpy.props.StringProperty(
+        name="File Path",
+        subtype='FILE_PATH'
+    ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
     bl_label = f"Voxility Pro {get_addon_version()}"
@@ -141,9 +148,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         valid_selection = active_object and not error
         voxelized = is_object_voxelized(active_object)
+        properties: VoxilityProProperties = context.scene.voxility_pro_properties
 
         if valid_selection:
-            properties: VoxilityProProperties = context.scene.voxility_pro_properties
             layout.box().prop(properties, "multi_object_export")
             if properties.multi_object_export:
                 ibox = layout.row().box()
@@ -164,6 +171,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             if voxelized:
                 self.draw_voxelizer_options(context, mbox)
             self.draw_export_options(context, layout)
+        elif not context.selected_objects:
+            layout.prop(properties, "file_to_convert_path", text="File Input")
+            self.add_export_button(context, layout)
 
     def check_valid(self, active_object, selected_mesh_objects):
         non_mesh = next((obj for obj in bpy.context.selected_objects if obj.type != 'MESH'), None)
@@ -208,17 +218,18 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         row.label(text="Export")
 
-        if not context.scene.expanded_export:
-            return
+        if context.scene.expanded_export:
+            self.add_export_button(context, ebox)
 
+    def add_export_button(self, context, layout, validity_check=False):
         properties: VoxilityProProperties = context.scene.voxility_pro_properties
-        ebox.prop(properties, "export_format")
+        layout.prop(properties, "export_format")
         format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
         bl_idname = f"export.voxility_{VoxelFormatsExportMenu.get_format_name(properties.export_format, True)}" if format_selected else ""
-
         button_text = "Export" + (" " + properties.export_format if bl_idname else "")
-        btn = ebox.column()
-        btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
+        btn = layout.column()
+        if validity_check:
+            btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
         btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
 
     @classmethod
