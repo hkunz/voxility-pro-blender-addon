@@ -41,6 +41,7 @@ import stat
 
 from pathlib import Path
 from typing import Union
+from bpy.app.handlers import persistent
 
 from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
@@ -61,6 +62,10 @@ def add_executable_permission(exe: Union[str, Path]) -> Path:
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
     return app
 
+@persistent
+def on_application_load(a, b):
+    print("Application load post handler ==============>", a, b)
+
 def register() -> None:
     print("Addon Registration Begin ==============>")
     add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
@@ -71,6 +76,7 @@ def register() -> None:
     register_generic_popup()
     TempFileManager().init()
     IconsManager().init()
+    bpy.app.handlers.load_post.append(on_application_load)
     print("Addon Registration Complete <==========\n")
 
 def unregister() -> None:
@@ -82,4 +88,5 @@ def unregister() -> None:
     unregister_generic_popup()
     TempFileManager().cleanup()
     IconsManager().cleanup()
+    bpy.app.handlers.load_post.clear()
     print("Addon Unregistration Complete <========\n")

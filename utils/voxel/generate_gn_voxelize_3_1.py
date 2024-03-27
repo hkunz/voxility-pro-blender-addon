@@ -113,12 +113,15 @@ def round_node_group_3_1():
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
 from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
+from voxility_pro.utils.voxel.voxel_utils import get_voxility_node_group # type: ignore ### Manual Entry
  ### Manual Entry
 def voxelize_node_group_3_1(node_group_name, min_value, max_value, default_value): ### Manual Entry
-    if node_group_name in bpy.data.node_groups: ### Manual Entry
-        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    voxelize = get_voxility_node_group(node_group_name) ### Manual Entry
+    if voxelize: ### Manual Entry
+        return voxelize ### Manual Entry
     ### Manual Entry
     voxelize = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+    voxelize[node_group_name] = 1 # add a custom id with key of the voxility group name ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 # Modification 3.1 - 1: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry
@@ -1257,10 +1260,12 @@ def voxelize_node_group_3_1(node_group_name, min_value, max_value, default_value
 # Modification 3.1 - 3: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 def voxelizemodifier_node_group_3_1(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
-    if node_group_name in bpy.data.node_groups: ### Manual Entry
-        return bpy.data.node_groups[node_group_name] ### Manual Entry
+    voxelizemodifier = get_voxility_node_group(node_group_name) ### Manual Entry
+    if voxelizemodifier: ### Manual Entry
+        return voxelizemodifier ### Manual Entry
     ### Manual Entry
     voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
+    voxelizemodifier[node_group_name] = 1 # add a custom id with key of the voxility modifier group name ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 # Modification 3.1 - 3: END ### Manual Entry
 # ========================================================================================================== ### Manual Entry

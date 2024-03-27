@@ -225,7 +225,6 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
     def poll(cls, context):
         return True
 
-
 def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
@@ -241,7 +240,6 @@ def register() -> None:
     register_temp_cache_operator()
     register_all_temp_cache_operator()
     bpy.app.handlers.depsgraph_update_post.append(on_depsgraph_update)
-
 
 def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)

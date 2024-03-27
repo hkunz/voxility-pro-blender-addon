@@ -16,6 +16,20 @@ def get_blender_version(prependv: bool=True, separator: str='.') -> str:
 def get_addon_version(prependv: bool=True, separator: str='.') -> str:
     return ('v' if prependv else '') + separator.join(map(str, bl_info['version']))
 
+def get_gn_voxelizer_version(): # version of generate_gn_voxelize_X_X.py
+    v: Tuple[int, int, int] = bpy.app.version
+    if v >= (4, 0, 0):
+        return '4_0'
+    elif v >= (3, 4, 0):
+        return '3_4'
+    elif v >= (3, 3, 0):
+        return '3_3'
+    elif v >= (3, 1, 0):
+        return '3_1'
+    else:
+        pass
+    return '2_93'
+
 def get_voxconvert_version() -> str:
     pattern = r' voxconvert-(\d+\.\d+\.\d+(?:-.*)?)$'
     match = re.search(pattern, bl_info["description"])

@@ -9,7 +9,7 @@ TODO:
 * delete old version voxility modifier
 
 BUGS:
-* Import vox/qb file with multiple objects create multipl vertex color nodes (no merge)
+
 
 DONE TASKS:
 
@@ -17,3 +17,6 @@ DONE TASKS:
 * save orientation is rotated
 * use origin of the object to save QBMatrix
 * multiple QBMatrix layers saving
+
+BUGS FIXED:
+* Import vox/qb file with multiple objects create multipl vertex color nodes (no merge)
