@@ -85,7 +85,7 @@ class VoxconvertCommandBuilder:
         if self.vc_export_palette:
             command.append("--export-palette")
 
-        if self.vc_surface_only:
+        if self.vc_surface_only or True:
             command.append("--surface-only")
 
         if self.vc_merge_vertices:
