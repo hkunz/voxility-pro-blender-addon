@@ -163,17 +163,16 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             ibox.alert = True
             ibox.label(text=error)
 
-        unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
-        mbox = layout.box()
-        mbox.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
-
-        if valid_selection:
+        if context.selected_objects:
+            unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
+            mbox = layout.box()
+            mbox.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
             if voxelized:
                 self.draw_voxelizer_options(context, mbox)
-            self.draw_export_options(context, layout)
+            if valid_selection:
+                self.draw_export_options(context, layout)
         elif not context.selected_objects:
-            layout.prop(properties, "file_to_convert_path", text="File Input")
-            self.add_export_button(context, layout)
+            self.draw_file_conversion_options(context, layout)
 
     def check_valid(self, active_object, selected_mesh_objects):
         non_mesh = next((obj for obj in bpy.context.selected_objects if obj.type != 'MESH'), None)
@@ -207,6 +206,22 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         else:
             r3.label(text="No Color Attribute")
 
+    def draw_file_conversion_options(self, context, layout):
+        ebox = layout.box()
+        row = ebox.box().row()
+        row.prop(
+            context.scene, "expanded_fileconvert",
+            icon="TRIA_DOWN" if context.scene.expanded_fileconvert else "TRIA_RIGHT",
+            icon_only=True, emboss=False
+        )
+
+        row.label(text="File Conversion")
+
+        if context.scene.expanded_fileconvert:
+            col = ebox.column()
+            col.prop(context.scene.voxility_pro_properties, "file_to_convert_path", text="File Input")
+            self.add_export_button(context, col)
+
     def draw_export_options(self, context, layout):
         ebox = layout.box()
         row = ebox.box().row()
@@ -219,7 +234,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         row.label(text="Export")
 
         if context.scene.expanded_export:
-            self.add_export_button(context, ebox)
+            self.add_export_button(context, ebox, True)
 
     def add_export_button(self, context, layout, validity_check=False):
         properties: VoxilityProProperties = context.scene.voxility_pro_properties
@@ -230,6 +245,8 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         btn = layout.column()
         if validity_check:
             btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
+        else:
+            btn.label(text="")
         btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
 
     @classmethod
@@ -240,6 +257,7 @@ def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
     bpy.types.Scene.expanded_export = bpy.props.BoolProperty(default=False)
+    bpy.types.Scene.expanded_fileconvert = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.on_voxelize_button_click = on_voxelize_button_click
     bpy.types.Scene.no_voxel_size_update = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
@@ -255,6 +273,7 @@ def register() -> None:
 def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.expanded_export
+    del bpy.types.Scene.expanded_fileconvert
     del bpy.types.Scene.voxility_pro_properties
     del bpy.types.Scene.on_voxelize_button_click
     del bpy.types.Scene.no_voxel_size_update
