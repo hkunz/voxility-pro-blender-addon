@@ -4,7 +4,8 @@ import bpy_types
 from typing import List
 
 from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import is_object_voxelized, get_voxelizer_voxel_modifier_attributes # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import is_object_voxelized, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes # type: ignore
+from voxility_pro.utils.number_utils import is_almost_equal, format_decimal_2 # type: ignore
 
 class VoxelError:
     ERROR_NONE = -1
@@ -31,8 +32,9 @@ class VoxelError:
     ERROR_MUST_USE_COLOR_ATTRIBUTE_COLOR_SOCKET = 20
     ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_ATTRIBUTE_NODE = 21
     ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE = 22
-    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 23
-    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 24
+    ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE = 23
+    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 24
+    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 25
 
     @staticmethod
     def get_error(e):
@@ -82,6 +84,8 @@ class VoxelError:
             return "Invalid Color Attribute name used in 'Color Attribute' node. You must use name specified in Voxility panel which is 'PARAM'"
         if e == VoxelError.ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE:
             return "Only 'Color' socket of 'Attribute' node allowed for Color Attribute use"
+        if e == VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE:
+            return "All selected objects must have the same voxel size as the active object which is PARAM"
         if e == VoxelError.WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED:
             return "Warning: Multiple UV Maps per object is not yet supported"
         if e == VoxelError.WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED:
@@ -141,8 +145,12 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
 
     def get_errors(self, context):
         errors = []
+        base_vox_size = get_voxelizer_voxel_size(context.active_object)
         for obj in context.selected_objects:
             num_mat = 0
+            vox_size, vox_uvmap, vox_colattr = get_voxelizer_voxel_modifier_attributes(obj)
+            if not is_almost_equal(base_vox_size, vox_size):
+                self.add_error(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, format_decimal_2(base_vox_size))
             for slot in obj.material_slots:
                 mat = slot.material
                 if not mat or not mat.use_nodes:
@@ -168,7 +176,6 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
                         bsdf_node = from_node
                         from_node = self.get_from_input_node(bsdf_node)
                         from_socket = self.get_from_input_socket(bsdf_node)
-                        _, vox_uvmap, vox_colattr = get_voxelizer_voxel_modifier_attributes(obj)
                         if not from_node:
                             pass # pass coz it's ok to use base color or direct color from Principled BSDF
                         elif from_node.type == 'TEX_IMAGE':

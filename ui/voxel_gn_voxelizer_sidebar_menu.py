@@ -16,19 +16,27 @@ from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register 
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import get_addon_version # type: ignore
 from voxility_pro.utils.material_utils import has_materials # type: ignore
+from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import Voxel, is_object_voxelized, get_voxelizer_modifier, set_voxelizer_voxel_size, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, set_voxelizer_voxel_uvmap, set_voxelizer_voxel_vertex_colors # type: ignore
 
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
+def validate_voxelsize_input(self, context):
+    if self.is_voxel_size_input_validation_running[0]: return
+    self.is_voxel_size_input_validation_running[0] = True
+    precision = 10 ** Voxel.SIZE_PRECISION
+    self.voxel_size = round(self.voxel_size * precision) / precision
+    self.is_voxel_size_input_validation_running[0] = False
+
 def on_input_voxelsize_change(self, context: bpy_types.Context):
+    validate_voxelsize_input(self, context)
     if context.scene.no_voxel_size_update:
         return
     for obj in context.selected_objects:
         vsize = get_voxelizer_voxel_size(obj)
-        tolerance = 0.001
-        if abs(vsize - self.voxel_size) < tolerance:
+        if is_almost_equal(vsize, self.voxel_size):
             continue
         set_voxelizer_voxel_size(obj, self.voxel_size)
 
@@ -67,7 +75,7 @@ def check_object_selection_change(context, properties, obj):
     Voxel.PREVIOUS_ACTIVE_OBJECT = obj
     voxel_size, uvmap, vertex_colors = get_voxelizer_voxel_modifier_attributes(obj)
     context.scene.no_voxel_size_update = True # so we don't trigger on_input_voxelsize_change which sets all objects
-    if voxel_size <= 0.001:
+    if is_almost_equal(voxel_size, 0):
         return
     properties.voxel_size = voxel_size
     properties.uvmap_attribute = uvmap
@@ -95,6 +103,8 @@ def check_color_attributes_change(properties, obj):
 class VoxilityProProperties(bpy.types.PropertyGroup):
     IMPORT_FORMATS=VoxelFormatsImportMenu.FORMATS
     SELECTION_NONE: bpy.props.StringProperty(default=VoxelFormatsExportMenu.SELECTION_NONE) # type: ignore
+    is_voxel_size_input_validation_running = [False] # workaround to blender bug where we cannot validate an input to a certain precision
+
     export_format: bpy.props.EnumProperty(
         name="Target",
         description="Select target voxel export format",
@@ -114,7 +124,9 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         default=Voxel.DEFAULT_VALUE,
         min=Voxel.DEFAULT_MIN,
         max=Voxel.DEFAULT_MAX,
-        update=on_input_voxelsize_change
+        precision=Voxel.SIZE_PRECISION,
+        update=on_input_voxelsize_change,
+        #set=validate_voxel_size # does not work. so we can only update in on_input_voxelsize_change
     ) # type: ignore
 
     uvmap_attribute: bpy.props.StringProperty(

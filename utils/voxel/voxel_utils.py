@@ -4,6 +4,7 @@ import mathutils
 from voxility_pro.enums.name_constant import NameConstant # type: ignore
 
 class Voxel:
+    SIZE_PRECISION= 2
     DEFAULT_MIN = 0.01
     DEFAULT_MAX = 100.0
     DEFAULT_VALUE = 0.5
