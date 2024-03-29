@@ -188,3 +188,9 @@ def select_objects(objects: List[bpy.types.Object], active_object: bpy.types.Obj
 def hide_objects_from_viewport(objects: List[bpy.types.Object], hide: bool=True) -> None:
     for ob in objects:
         ob.hide_set(hide)
+
+def is_almost_equal(float1, float2, tolerance=0.0001):
+    return abs(float1 - float2) < tolerance
+
+def is_scale_applied(obj):
+    return all(is_almost_equal(scale, 1.0) for scale in obj.scale)

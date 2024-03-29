@@ -4,7 +4,8 @@ import bpy_types
 from typing import List
 
 from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import is_object_voxelized, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes # type: ignore
+from voxility_pro.utils.object_utils import is_scale_applied # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal, format_decimal_2 # type: ignore
 
 class VoxelError:
@@ -33,8 +34,9 @@ class VoxelError:
     ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_ATTRIBUTE_NODE = 21
     ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE = 22
     ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE = 23
-    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 24
-    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 25
+    ERROR_ALL_SELECTED_OBJECT_MUST_HAVE_SCALE_OF_1 = 24
+    WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 25
+    WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 26
 
     @staticmethod
     def get_error(e):
@@ -86,6 +88,8 @@ class VoxelError:
             return "Only 'Color' socket of 'Attribute' node allowed for Color Attribute use"
         if e == VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE:
             return "All selected objects must have the same voxel size as the active object which is PARAM"
+        if e == VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_HAVE_SCALE_OF_1:
+            return "All selected objects must have Scale applied. Apply scale (Object > Apply > Scale) or manually set it back to 1.0"
         if e == VoxelError.WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED:
             return "Warning: Multiple UV Maps per object is not yet supported"
         if e == VoxelError.WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED:
@@ -150,7 +154,9 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
             num_mat = 0
             vox_size, vox_uvmap, vox_colattr = get_voxelizer_voxel_modifier_attributes(obj)
             if not is_almost_equal(base_vox_size, vox_size):
-                self.add_error(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, format_decimal_2(base_vox_size))
+                self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, format_decimal_2(base_vox_size))
+            if not is_scale_applied(obj):
+                self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_HAVE_SCALE_OF_1, format_decimal_2(base_vox_size))
             for slot in obj.material_slots:
                 mat = slot.material
                 if not mat or not mat.use_nodes:
@@ -184,7 +190,7 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
                                 self.add_error(mat, errors, VoxelError.ERROR_MUST_USE_IMAGE_TEXTURE_COLOR_SOCKET)
                             uvmaps = obj.data.uv_layers.keys()
                             if not uvmaps:
-                                self.add_error_obj(mat, errors, VoxelError.ERROR_OBJECT_MISSING_UVMAPS, obj.name)
+                                self.add_error_obj(obj, errors, VoxelError.ERROR_OBJECT_MISSING_UVMAPS, obj.name)
                             elif vox_uvmap not in obj.data.uv_layers:
                                     self.add_error(mat, errors, VoxelError.ERROR_INVALID_UVMAP_NAME_USED_IN_VOXILITY_PANEL, str(uvmaps))
                             if not tex_node.image:
@@ -214,7 +220,7 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
                             color_name = attr_node.attribute_name if is_attr_node else attr_node.layer_name
                             colors = obj.data.color_attributes.keys()
                             if not colors:
-                                self.add_error_obj(mat, errors, VoxelError.ERROR_OBJECT_MISSING_COLOR_ATTRIBUTES, obj.name)
+                                self.add_error_obj(obj, errors, VoxelError.ERROR_OBJECT_MISSING_COLOR_ATTRIBUTES, obj.name)
                             elif vox_colattr not in colors:
                                 self.add_error(mat, errors, VoxelError.ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_VOXILITY_PANEL, str(colors))
                             if is_attr_node and attr_node.attribute_type != 'GEOMETRY':
@@ -231,7 +237,7 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
 
 
             if (num_mat <= 0):
-                self.add_error(obj, errors, VoxelError.ERROR_NO_MATERIALS)
+                self.add_error_obj(obj, errors, VoxelError.ERROR_NO_MATERIALS)
 
         return errors
 
