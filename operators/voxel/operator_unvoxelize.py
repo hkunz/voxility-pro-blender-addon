@@ -15,6 +15,7 @@ class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
         update = False
         for obj in context.selected_objects:
             update = remove_all_voxelizier_modifiers(obj) or update
+            obj.voxelized = False
         if update:
             context.scene.voxelize_list_update = True
         return {'FINISHED'}

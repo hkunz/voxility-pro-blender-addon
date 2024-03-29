@@ -58,11 +58,21 @@ def get_voxelizer_voxel_vertex_colors_attr_name():
 def is_object_voxelized(active_object: bpy.types.Object):
     return bool(get_voxelizer_modifier(active_object)) if active_object else False
 
-def get_voxelizer_voxel_size(active_object: bpy.types.Object):
-    mod = get_voxelizer_modifier(active_object)
-    if mod and active_object:
-        return round(mod[get_voxelizer_voxel_size_attr_name()], 3)
-    return 0
+def get_voxelizer_voxel_size(obj: bpy.types.Object):
+    mod = get_voxelizer_modifier(obj)
+    if mod and obj:
+        return round(mod[get_voxelizer_voxel_size_attr_name()], Voxel.SIZE_PRECISION)
+    return get_object_edge_size(obj) if obj.voxelized else 0
+
+def lock_voxelized_object(obj):
+    obj.lock_location[0] = obj.lock_location[1] = obj.lock_location[2] = True
+    obj.lock_rotation[0] = obj.lock_rotation[1] = obj.lock_rotation[2] = True
+    obj.lock_scale[0] = obj.lock_scale[1] = obj.lock_scale[2] = True
+
+def get_object_edge_size(obj):
+    d= obj.data
+    e = d.edges[0]
+    return round((d.vertices[e.vertices[1]].co - d.vertices[e.vertices[0]].co).length, Voxel.SIZE_PRECISION)
 
 def set_voxelizer_voxel_size(obj, voxel_size):
     return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_size_attr_name(), voxel_size)
@@ -84,15 +94,18 @@ def set_voxelizer_voxel_attribute(obj, attr_name, value):
     obj.update_tag()
     return True
 
-def get_voxelizer_voxel_modifier_attributes(active_object: bpy.types.Object):
-    mod = get_voxelizer_modifier(active_object)
+def get_voxelizer_voxel_modifier_attributes(obj: bpy.types.Object):
+    mod = get_voxelizer_modifier(obj)
     voxel_size = 0
     uvmap = "" #"UVMap"
     color = "" #"Col"
+    voxel_size = get_voxelizer_voxel_size(obj)
     if mod:
-        voxel_size = get_voxelizer_voxel_size(active_object)
         uvmap = mod[get_voxelizer_voxel_uv_attr_name()]
         color = mod[get_voxelizer_voxel_vertex_colors_attr_name()]
+    elif obj.voxelized:
+        uvmap = obj.data.uv_layers[0].name if len(obj.data.uv_layers) else None
+        color = obj.data.color_attributes[0].name if len(obj.data.color_attributes) else None
     return voxel_size, uvmap, color
 
 def get_mesh_center_of_mass_world(obj):

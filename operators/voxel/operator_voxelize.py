@@ -36,6 +36,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
             if get_voxelizer_modifier(obj):
                 continue
             add_voxelizer(obj, self.min_value, self.max_value, self.default_value)
+            obj.voxelized = True
             update = True
         if update:
             context.scene.voxelize_list_update = True

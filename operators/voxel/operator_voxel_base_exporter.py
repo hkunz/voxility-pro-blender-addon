@@ -14,6 +14,7 @@ from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, get_mesh_center_voxel_distance # type: ignore
 from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
+from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
 from voxility_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
@@ -181,7 +182,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             return False
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
             for obj in context.selected_objects:
-                if get_voxelizer_voxel_size(obj) <= 0:
+                if is_almost_equal(get_voxelizer_voxel_size(obj), 0) and not obj.voxelized:
                     return False
         return super().poll(context)
 

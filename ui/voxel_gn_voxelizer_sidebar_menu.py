@@ -23,15 +23,11 @@ from voxility_pro.utils.voxel.voxel_utils import Voxel, is_object_voxelized, get
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
-def validate_voxelsize_input(self, context):
-    if self.is_voxel_size_input_validation_running[0]: return
-    self.is_voxel_size_input_validation_running[0] = True
-    precision = 10 ** Voxel.SIZE_PRECISION
-    self.voxel_size = round(self.voxel_size * precision) / precision
-    self.is_voxel_size_input_validation_running[0] = False
+def validate_voxelsize_input(self):
+    self["voxel_size"] = round(self.voxel_size, Voxel.SIZE_PRECISION)
 
 def on_input_voxelsize_change(self, context: bpy_types.Context):
-    validate_voxelsize_input(self, context)
+    validate_voxelsize_input(self)
     if context.scene.no_voxel_size_update:
         return
     for obj in context.selected_objects:
@@ -103,7 +99,6 @@ def check_color_attributes_change(properties, obj):
 class VoxilityProProperties(bpy.types.PropertyGroup):
     IMPORT_FORMATS=VoxelFormatsImportMenu.FORMATS
     SELECTION_NONE: bpy.props.StringProperty(default=VoxelFormatsExportMenu.SELECTION_NONE) # type: ignore
-    is_voxel_size_input_validation_running = [False] # workaround to blender bug where we cannot validate an input to a certain precision
 
     export_format: bpy.props.EnumProperty(
         name="Target",
@@ -159,7 +154,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         error = self.check_valid(active_object, selected_mesh_objects)
 
         valid_selection = active_object and not error
-        voxelized = is_object_voxelized(active_object)
+        voxelize_progress = is_object_voxelized(active_object)
         properties: VoxilityProProperties = context.scene.voxility_pro_properties
 
         if valid_selection:
@@ -169,7 +164,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
                 ibox.template_list("MY_UL_List", "The_List", bpy.context.scene, "voxelize_list", bpy.context.scene, "voxelize_list_index", sort_lock=True)
             else:
                 ibox = layout.box().box()
-                ibox.label(text=active_object.name, icon=IconsManager.BUILTIN_ICON_VOXELIZED if voxelized else IconsManager.BUILTIN_ICON_MESH_DATA)
+                ibox.label(text=active_object.name, icon=IconsManager.BUILTIN_ICON_VOXELIZED if voxelize_progress else IconsManager.BUILTIN_ICON_MESH_DATA)
         else:
             ibox = layout.box().box()
             ibox.alert = True
@@ -179,8 +174,9 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
             mbox = layout.box()
             mbox.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
-            if voxelized:
+            if voxelize_progress:
                 self.draw_voxelizer_options(context, properties, mbox)
+            if active_object.voxelized:
                 self.draw_export_options(context, properties, layout)
         elif not context.selected_objects:
             self.draw_file_conversion_options(context, properties, layout)
@@ -233,7 +229,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             ext = os.path.splitext(properties.file_to_convert_path)[1][1:].upper()
             to = properties.export_format
             button_text = "Convert Voxel File" if not ext or to == VoxelFormatsExportMenu.SELECTION_NONE else f"Convert {ext} to {to}"
-            self.add_export_button(properties, col, button_text, False)
+            self.add_export_button(context, properties, col, button_text, False)
 
     def draw_export_options(self, context, properties, layout):
         ebox = layout.box()
@@ -247,16 +243,16 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         row.label(text="Export")
 
         if context.scene.expanded_export:
-            self.add_export_button(properties, ebox)
+            self.add_export_button(context, properties, ebox)
 
-    def add_export_button(self, properties, layout, button_text=None, validity_check=True):
+    def add_export_button(self, context, properties, layout, button_text=None, validity_check=True):
         layout.prop(properties, "export_format")
         format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
         bl_idname = f"export.voxility_{VoxelFormatsExportMenu.get_format_name(properties.export_format, True)}" if format_selected else ""
         if not button_text:
             button_text = "Export" + (" " + properties.export_format if bl_idname else "")
         btn = layout.column()
-        if validity_check:
+        if validity_check or context.active_object.voxelized:
             btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
         else:
             btn.label(text="")
@@ -273,6 +269,7 @@ def register() -> None:
     bpy.types.Scene.expanded_fileconvert = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.on_voxelize_button_click = on_voxelize_button_click
     bpy.types.Scene.no_voxel_size_update = bpy.props.BoolProperty(default=False)
+    bpy.types.Object.voxelized = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     bpy.utils.register_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
