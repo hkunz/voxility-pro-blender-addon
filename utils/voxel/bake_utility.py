@@ -4,39 +4,42 @@ import mathutils
 
 
 class BakeUtility:
-    def __init__(self, context, data) -> None:
-        C = self.context = context
-        self.data = data
-        self.previous_selection = C.selected_objects[:]
-        self.previous_active_object = C.active_object
+    def __init__(self, context=None, data=None) -> None:
+        C = self.context = context if context else bpy.context
+        self.data = data if data else bpy.data
+        self.bake_images = None
         self.bake_image = None
+        self.processed_materials = None
+
+    @staticmethod
+    def setup() -> None:
+        s = bpy.context.scene
+        s.cycles.device = 'GPU'
+        s.render.engine = 'CYCLES'
+        s.cycles.use_adaptive_sampling = False
+        s.cycles.samples = 1
+        s.cycles.bake_type = 'DIFFUSE'
+        s.render.bake.use_pass_direct = False
+        s.render.bake.use_pass_indirect = False
+        s.render.bake.margin = 0
+        s.cycles.use_denoising = False
+
+    def bake(self, bake_objects):
         self.processed_materials = set()
+        self.bake_images = []
 
-    def setup(self) -> None:
-        C = self.context
-        C.scene.cycles.device = 'GPU'
-        C.scene.render.engine = 'CYCLES'
-        C.scene.cycles.use_adaptive_sampling = False
-        C.scene.cycles.samples = 1
-        C.scene.cycles.bake_type = 'DIFFUSE'
-        C.scene.render.bake.use_pass_direct = False
-        C.scene.render.bake.use_pass_indirect = False
-        C.scene.render.bake.margin = 0
-        C.scene.cycles.use_denoising = False
-
-    def bake(self):
-        C = self.context
-        bpy.ops.object.duplicate()
-        duplicated_objects = C.selected_objects[:]
-
-        for obj in duplicated_objects:
-            self.bake_object(obj)
+        for obj in bake_objects:
+            try:
+                self.bake_object(obj)
+            except Exception as e:
+                self.cleanup()
+                raise
+            finally:
+                self.cleanup_processed_materials()
 
     def bake_object(self, obj) -> None:
-        C = self.context
-        D = self.data
-        self.processed_materials.clear()
         obj.select_set(True)
+        C = self.context
         C.view_layer.objects.active = obj
 
         for m in obj.modifiers:
@@ -54,13 +57,17 @@ class BakeUtility:
         for uvname in prev_uvmap_names:
             obj.data.uv_layers.remove(obj.data.uv_layers[uvname])
 
-        #read_voxel_colors
-        #self.cleanup
+    def cleanup_processed_materials(self):
+        for mat in self.processed_materials:
+            mat.node_tree.nodes.remove(mat.node_tree.nodes[mat.name])
+        self.processed_materials.clear()
 
     def add_image_texture_for_baking(self, obj):
         D = self.data
         pixel_size = int(math.ceil(math.sqrt(len(obj.data.polygons))))
-        self.bake_image = D.images.new(f"Image.VoxilityBaking", pixel_size, pixel_size)
+        self.bake_image = D.images.new(f"Image.VoxilityBaking.{obj.name}", pixel_size, pixel_size)
+        self.bake_images.append(self.bake_image)
+        print(f"Created temporary bake image: {self.bake_image}")
 
         for slot in obj.material_slots:
             mat = slot.material
@@ -70,14 +77,17 @@ class BakeUtility:
             for n in nodes:
                 n.select = False
             tex_node = nodes.new(type='ShaderNodeTexImage')
+            self.processed_materials.add(mat)
             tex_node.image = self.bake_image
+            print("SET IMAGE TO BAKE ==============", tex_node.name, tex_node.image)
             tex_node.name = mat.name
             tex_node.select = True
             nodes.active = tex_node
-            self.processed_materials.add(mat)
 
     def create_uv_map_and_unwrap(self, obj):
-        obj.data.uv_layers.new(name="UVMap.VoxilityBaking")
+        uvmap = obj.data.uv_layers.new(name="UVMap.VoxilityBaking")
+        idx = obj.data.uv_layers.active_index = obj.data.uv_layers.find(uvmap.name)
+        obj.data.uv_layers[idx].active = True
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.ops.mesh.mark_seam(clear=False)
@@ -107,16 +117,37 @@ class BakeUtility:
         tex_node = nodes.new(type='ShaderNodeTexImage')
         tex_node.image = self.bake_image
         mat.node_tree.links.new(tex_node.outputs['Color'], nodes['Principled BSDF'].inputs['Base Color'])
-    
-    def cleanup(self, obj):
-        for mat in self.processed_materials:
-            mat.node_tree.nodes.remove(mat.node_tree.nodes[mat.name])
+
+    def cleanup(self):
         D = self.data
-        D.images.remove(self.bake_image)
+        for img in self.bake_images:
+            print(f"Remove temporary bake image: {img}")
+            D.images.remove(img)
+
+
+# usage:
+def bake_all_selected_objects():
+    from bpy import context as C
+    from bpy import data as D
+    previous_selection = C.selected_objects
+    previous_active_object = C.active_object
+    bpy.ops.object.duplicate(linked=False) # linked=False does not work if more than 1 object selected
+    bpy.ops.object.make_single_user(object=True, obdata=True) # so we need to manually make it single user
+    duplicated_objects = C.selected_objects
+
+    BakeUtility.setup()
+    b = BakeUtility()
+    b.bake(duplicated_objects)
+    # do stuff you need to do with the result before deleting and cleaning up
+    b.cleanup()
+
+    for obj in duplicated_objects[:]:
         D.objects.remove(obj)
 
-        for obj in self.previous_selection:
+    for obj in previous_selection:
             obj.select_set(True)
 
-        if self.previous_active_object:
-            self.context.view_layer.objects.active = self.previous_active_object
+    if previous_active_object:
+        C.view_layer.objects.active = previous_active_object
+
+bake_all_selected_objects()

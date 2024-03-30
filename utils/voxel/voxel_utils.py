@@ -17,12 +17,19 @@ def check_voxelizer_compatibility():
     p1 = NameConstant.VOXILITY_NODE_GROUP_NAME_PREFIX.value
     n2 = NameConstant.VOXILITY_MODIFIER_NAME.value
     p2 = NameConstant.VOXILITY_MODIFIER_NAME_PREFIX.value
+    compatible = True
     for g in bpy.data.node_groups[:]:
         for k in g.keys(): # VoxilityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxilityVoxelizeModifier_4_0_v1_0_12
             if (k.startswith(p1) and k != n1) or (k.startswith(p2) and k != n2):
                 print(f"WARNING: Removing incompatible node group '{k}'")
                 bpy.data.node_groups.remove(g)
+                compatible = False
                 break
+    if compatible:
+        return
+    for obj in bpy.data.objects:
+        if obj.type == 'MESH':
+            obj.voxelized = False
 
 def get_voxility_node_group(node_group_name):
     for ng in bpy.data.node_groups:
