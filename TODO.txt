@@ -23,3 +23,116 @@ DONE TASKS:
 
 BUGS FIXED:
 * Import vox/qb file with multiple objects create multipl vertex color nodes (no merge)
+
+
+
+
+
+import bpy
+import math
+import mathutils
+from bpy import context as C
+from bpy import data as D
+
+#if not C.selected_objects:
+#    return
+
+previous_selection = C.selected_objects[:]
+previous_active_object = C.active_object
+
+bpy.ops.object.duplicate()
+duplicated_objects = C.selected_objects[:]
+processed_materials = set()
+
+#for obj in previous_selection:
+#    obj.select_set(False) # already is deselected and duplicated objects get selected
+
+bpy.context.scene.cycles.device = 'GPU'
+bpy.context.scene.render.engine = 'CYCLES'
+bpy.context.scene.cycles.use_adaptive_sampling = False
+bpy.context.scene.cycles.samples = 1
+bpy.context.scene.cycles.bake_type = 'DIFFUSE'
+bpy.context.scene.render.bake.use_pass_direct = False
+bpy.context.scene.render.bake.use_pass_indirect = False
+bpy.context.scene.render.bake.margin = 0 # testing this
+bpy.context.scene.cycles.use_denoising = False
+
+for obj in duplicated_objects:
+    processed_materials.clear()
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+
+    for m in obj.modifiers:
+        bpy.ops.object.modifier_apply(modifier=m.name)
+
+    pixel_size = int(math.ceil(math.sqrt(len(obj.data.polygons))))
+    img_baking = D.images.new(f"Image.VoxilityBaking", pixel_size, pixel_size)
+
+    for slot in obj.material_slots:
+        mat = slot.material
+        if not mat or mat in processed_materials:
+            continue
+        nodes = mat.node_tree.nodes
+        for n in nodes:
+            n.select = False
+        tex_node = nodes.new(type='ShaderNodeTexImage')
+        tex_node.image = img_baking
+        tex_node.name = mat.name
+        tex_node.select = True
+        nodes.active = tex_node
+        processed_materials.add(mat)
+
+    prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
+    bpy.ops.mesh.uv_texture_add()
+    uvmap = obj.data.uv_layers[-1]
+    uvmap.name = "UVMap.VoxilityBaking"
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT') # automatically also does bpy.ops.uv.select_all(action='SELECT')
+    bpy.ops.mesh.mark_seam(clear=False)
+    bpy.ops.uv.unwrap(method='ANGLE_BASED', margin=0) # need context bpy.context.area.ui_type = 'UV'
+    bpy.ops.object.mode_set(mode='OBJECT')
+    bpy.ops.object.bake(type='DIFFUSE')
+
+    for poly in obj.data.polygons:
+        # Calculate the average UV coordinate of the face
+        avg_uv = mathutils.Vector((0.0, 0.0))
+        for loop_index in poly.loop_indices:
+            uv_coord = obj.data.uv_layers.active.data[loop_index].uv
+            avg_uv += uv_coord
+        avg_uv /= len(poly.loop_indices)
+        
+        # Move each UV coordinate towards the average UV coordinate (scaling inward)
+        for loop_index in poly.loop_indices:
+            uv_coord = obj.data.uv_layers.active.data[loop_index].uv
+            uv_coord += (avg_uv - uv_coord) * 1.0
+
+    obj.data.materials.clear()
+    mat = bpy.data.materials.new(name="VoxilityBakingMaterial")
+    obj.data.materials.append(mat)
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    tex_node = nodes.new(type='ShaderNodeTexImage')
+    tex_node.image = img_baking
+    mat.node_tree.links.new(tex_node.outputs['Color'], nodes['Principled BSDF'].inputs['Base Color'])
+
+    for uvname in prev_uvmap_names:
+        obj.data.uv_layers.remove(obj.data.uv_layers[uvname])
+    
+    #read_voxel_colors
+    
+    for mat in processed_materials:
+        mat.node_tree.nodes.remove(mat.node_tree.nodes[mat.name])
+
+    bpy.data.images.remove(img_baking)
+    bpy.data.objects.remove(obj)
+
+for obj in previous_selection:
+    obj.select_set(True)
+
+if previous_active_object:
+    C.view_layer.objects.active = previous_active_object
+
+
+
+
+
