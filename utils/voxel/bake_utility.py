@@ -10,6 +10,7 @@ class BakeUtility:
         self.bake_images = None
         self.bake_image = None
         self.processed_materials = None
+        self.prev_uvmap_names = None
 
     @staticmethod
     def setup() -> None:
@@ -24,11 +25,19 @@ class BakeUtility:
         s.render.bake.margin = 0
         s.cycles.use_denoising = False
 
+    def set_object_selected(self, obj, select):
+        obj.select_set(select)
+        self.context.view_layer.objects.active = obj if select else None
+
     def bake(self, bake_objects):
         self.processed_materials = set()
         self.bake_images = []
 
         for obj in bake_objects:
+            obj.select_set(False)
+
+        for obj in bake_objects:
+            self.set_object_selected(obj, True)
             try:
                 self.bake_object(obj)
             except Exception as e:
@@ -36,17 +45,14 @@ class BakeUtility:
                 raise
             finally:
                 self.cleanup_processed_materials()
+                self.set_object_selected(obj, False)
 
     def bake_object(self, obj) -> None:
-        obj.select_set(True)
-        C = self.context
-        C.view_layer.objects.active = obj
-
         for m in obj.modifiers:
             bpy.ops.object.modifier_apply(modifier=m.name)
 
         self.add_image_texture_for_baking(obj)
-        prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
+        self.prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
         self.create_uv_map_and_unwrap(obj)
 
         bpy.ops.object.bake(type='DIFFUSE')
@@ -54,7 +60,7 @@ class BakeUtility:
         self.scale_uv_faces_to_zero(obj)
         self.setup_new_material_with_baked_texture(obj)
 
-        for uvname in prev_uvmap_names:
+        for uvname in self.prev_uvmap_names:
             obj.data.uv_layers.remove(obj.data.uv_layers[uvname])
 
     def cleanup_processed_materials(self):
@@ -79,7 +85,6 @@ class BakeUtility:
             tex_node = nodes.new(type='ShaderNodeTexImage')
             self.processed_materials.add(mat)
             tex_node.image = self.bake_image
-            print("SET IMAGE TO BAKE ==============", tex_node.name, tex_node.image)
             tex_node.name = mat.name
             tex_node.select = True
             nodes.active = tex_node
@@ -135,11 +140,13 @@ def bake_all_selected_objects():
     bpy.ops.object.make_single_user(object=True, obdata=True) # so we need to manually make it single user
     duplicated_objects = C.selected_objects
 
+    # Important code start =====================
     BakeUtility.setup()
     b = BakeUtility()
     b.bake(duplicated_objects)
     # do stuff you need to do with the result before deleting and cleaning up
     b.cleanup()
+    # Important code end =====================
 
     for obj in duplicated_objects[:]:
         D.objects.remove(obj)
@@ -150,4 +157,4 @@ def bake_all_selected_objects():
     if previous_active_object:
         C.view_layer.objects.active = previous_active_object
 
-bake_all_selected_objects()
+#bake_all_selected_objects()
