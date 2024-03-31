@@ -9,6 +9,7 @@ from voxility_pro.ui.selected_objects_list import register as register_selected_
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
 from voxility_pro.ui.voxel_formats_import_menu import VoxelFormatsImportMenu # type: ignore
 from voxility_pro.operators.voxel.operator_empty import OBJECT_OT_OperatorEmpty # type: ignore
+from voxility_pro.operators.voxel.operator_bake import OBJECT_OT_OperatorBake, register as register_bake_utility, unregister as unregister_bake_utility # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
 from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
@@ -18,7 +19,7 @@ from voxility_pro.utils.utils import get_addon_version # type: ignore
 from voxility_pro.utils.material_utils import has_materials # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import Voxel, is_object_voxelized, get_voxelizer_modifier, set_voxelizer_voxel_size, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, set_voxelizer_voxel_uvmap, set_voxelizer_voxel_vertex_colors # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import Voxel, is_object_voxelized, set_voxelizer_voxel_size, get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, set_voxelizer_voxel_uvmap, set_voxelizer_voxel_vertex_colors # type: ignore
 
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
@@ -254,6 +255,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         btn = layout.column()
         if validity_check or context.active_object.voxelized:
             btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
+            btn.operator(OBJECT_OT_OperatorBake.bl_idname, text="Bake")
         else:
             btn.label(text="")
         btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
@@ -275,6 +277,7 @@ def register() -> None:
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     register_gn_voxelizer()
     register_gn_unvoxelizer()
+    register_bake_utility()
     register_selected_objects_list()
     register_temp_cache_operator()
     register_all_temp_cache_operator()
@@ -292,6 +295,7 @@ def unregister() -> None:
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     unregister_gn_voxelizer()
     unregister_gn_unvoxelizer()
+    unregister_bake_utility()
     unregister_selected_objects_list()
     unregister_temp_cache_operator()
     unregister_all_temp_cache_operator()

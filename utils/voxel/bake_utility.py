@@ -4,16 +4,31 @@ import mathutils
 
 
 class BakeUtility:
+    USER_SETTINGS={}
+
     def __init__(self, context=None, data=None) -> None:
-        C = self.context = context if context else bpy.context
+        self.context = context if context else bpy.context
         self.data = data if data else bpy.data
         self.bake_images = None
         self.bake_image = None
         self.processed_materials = None
         self.prev_uvmap_names = None
 
+    def store_previous_settings():
+        ps = BakeUtility.USER_SETTINGS
+        s = bpy.context.scene
+        ps['cycles_device'] = s.cycles.device
+        ps['render_engine'] = s.render.engine
+        ps['use_adaptive_sampling'] = s.cycles.use_adaptive_sampling
+        ps['samples'] = s.cycles.samples
+        ps['bake_type'] = s.cycles.bake_type
+        ps['use_pass_direct'] = s.render.bake.use_pass_direct
+        ps['use_pass_indirect'] = s.render.bake.use_pass_indirect
+        ps['margin'] = s.render.bake.margin
+        ps['use_denoising'] = s.cycles.use_denoising
+
     @staticmethod
-    def setup() -> None:
+    def settings_init() -> None:
         s = bpy.context.scene
         s.cycles.device = 'GPU'
         s.render.engine = 'CYCLES'
@@ -24,6 +39,20 @@ class BakeUtility:
         s.render.bake.use_pass_indirect = False
         s.render.bake.margin = 0
         s.cycles.use_denoising = False
+
+    @staticmethod
+    def settings_revert() -> None:
+        ps = BakeUtility.USER_SETTINGS
+        s = bpy.context.scene
+        s.cycles.device = ps['cycles_device']
+        s.render.engine = ps['render_engine']
+        s.cycles.use_adaptive_sampling = ps['use_adaptive_sampling']
+        s.cycles.samples = ps['samples']
+        s.cycles.bake_type = ps['bake_type']
+        s.render.bake.use_pass_direct = ps['use_pass_direct']
+        s.render.bake.use_pass_indirect = ps['use_pass_indirect']
+        s.render.bake.margin = ps['margin']
+        s.cycles.use_denoising = ps['use_denoising']
 
     def set_object_selected(self, obj, select):
         obj.select_set(select)
@@ -141,9 +170,10 @@ def bake_all_selected_objects():
     duplicated_objects = C.selected_objects
 
     # Important code start =====================
-    BakeUtility.setup()
+    BakeUtility.settings_init()
     b = BakeUtility()
     b.bake(duplicated_objects)
+    BakeUtility.settings_revert()
     # do stuff you need to do with the result before deleting and cleaning up
     b.cleanup()
     # Important code end =====================
