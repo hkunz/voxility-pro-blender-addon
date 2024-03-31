@@ -18,6 +18,13 @@ def check_exe_match(matches: List[str], voxconvert_version: str) -> None:
     if len(matches) == 0:
         raise VoxConvertExeMissingError(voxconvert_version)
 
+def get_voxconvert_exe_path() -> str:
+    system: str = platform.system().lower()
+    exe = get_voxconvert_filepath()
+    if not system == 'windows':
+        exe = exe.replace("\\", "")
+    return exe
+
 def get_voxconvert_filepath() -> str:
     addon_root: str = get_addon_root_dir()
     system: str = platform.system().lower()
@@ -28,7 +35,7 @@ def get_voxconvert_filepath() -> str:
     if system == "darwin":
         matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", f"{system}*", f"*{exe_base_name}*", "Contents", "MacOS", f"*{exe_base_name}*"))
         check_exe_match(matching_files, voxconvert_version)
-        return os.path.join(addon_root, matching_files[0]).replace(" ", "\ ")
+        return os.path.join(addon_root, matching_files[0])
 
     if system == "windows":
         matching_files: List[str] = glob.glob(os.path.join(addon_root, f"*{exe_base_dir}*", f"*{voxconvert_version}*", f"{system}*", f"*{exe_base_name}*"))

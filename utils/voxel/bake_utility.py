@@ -1,7 +1,7 @@
 import bpy
 import math
 import mathutils
-
+import sys
 
 class BakeUtility:
     USER_SETTINGS={}
@@ -13,8 +13,10 @@ class BakeUtility:
         self.bake_image = None
         self.processed_materials = None
         self.prev_uvmap_names = None
+        self.previous_selection = self.context.selected_objects
+        self.previous_active_object = self.context.active_object
 
-    def store_previous_settings():
+    def settings_store():
         ps = BakeUtility.USER_SETTINGS
         s = bpy.context.scene
         ps['cycles_device'] = s.cycles.device
@@ -73,8 +75,21 @@ class BakeUtility:
                 self.cleanup()
                 raise
             finally:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                if exc_type is not None:
+                    self.select_previous_objects()
+                else:
+                    self.set_object_selected(obj, False)
                 self.cleanup_processed_materials()
-                self.set_object_selected(obj, False)
+
+        self.select_previous_objects()
+
+    def select_previous_objects(self):
+        for obj in self.previous_selection:
+            obj.select_set(True)
+
+        if self.previous_active_object:
+            self.context.view_layer.objects.active = self.previous_active_object
 
     def bake_object(self, obj) -> None:
         for m in obj.modifiers:

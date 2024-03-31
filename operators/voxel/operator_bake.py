@@ -13,13 +13,19 @@ class OBJECT_OT_OperatorBake(bpy.types.Operator):
     def execute(self, context):
         required_engine = 'CYCLES'
         if context.scene.render.engine != required_engine:
-            create_generic_popup(message=f"The baking feature compatible with {required_engine} only.|Please switch 'Render Engine` to '{required_engine}'")
+            create_generic_popup(message=f"The baking feature is only compatible with {required_engine}|Please switch 'Render Engine' to '{required_engine}'")
             return {'CANCELLED'}
-        BakeUtility.settings_init()
+        BakeUtility.settings_store()
         b = BakeUtility()
-        b.bake(context.selected_objects)
-        BakeUtility.settings_revert()
-        #b.cleanup() # cannot delete the images generated because the object needs to be used for voxel color reading by user
+        try:
+            BakeUtility.settings_init()
+            bpy.ops.object.make_single_user(object=True, obdata=True)
+            b.bake(context.selected_objects)
+        except:
+            raise
+        finally:
+            BakeUtility.settings_revert()
+            #b.cleanup() # cannot delete the images generated because the object needs to be used for voxel color reading by user
         return {'FINISHED'}
 
     @classmethod
@@ -30,7 +36,7 @@ class OBJECT_OT_OperatorBake(bpy.types.Operator):
                 return False
         if not active_object or not active_object.voxelized:
             return False
-        return super().poll(context)
+        return True
 
 def register():
     bpy.utils.register_class(OBJECT_OT_OperatorBake)

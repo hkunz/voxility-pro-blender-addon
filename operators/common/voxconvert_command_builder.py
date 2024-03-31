@@ -47,7 +47,7 @@ class VoxconvertCommandBuilder:
             command.append('-Command')
             command.append(f'& "{exe}"')
         else:
-            command.append(exe)
+            command.append(exe.replace(" ", "\ "))
 
         if self.test:
             #command.append("--help")
