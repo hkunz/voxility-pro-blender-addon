@@ -3,8 +3,8 @@ import re
 import tempfile
 import shutil
 
-from voxility_pro.utils.utils import get_blender_version, get_addon_version
-from voxility_pro.utils.string_utils import randomize_string
+from voxility_pro.utils.utils import Utils # type: ignore
+from voxility_pro.utils.string_utils import StringUtils # type: ignore
 
 class TempFileManager:
 
@@ -31,7 +31,7 @@ class TempFileManager:
 
     def create_temp_parent_dir(self) -> None:
         appdata_local_temp_dir: str = tempfile.gettempdir() # C:/Users/<user>/AppData/Local/Temp/
-        TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"vx{get_addon_version()}-b{get_blender_version()}-tmp{randomize_string(5)}") # vxv1.0.8-bv4.0.1-tmpEGjov
+        TempFileManager.TEMP_PARENT_DIRECTORY: str = os.path.join(appdata_local_temp_dir, f"vx{Utils.get_addon_version()}-b{Utils.get_blender_version()}-tmp{StringUtils.randomize_string(5)}") # vxv1.0.8-bv4.0.1-tmpEGjov
         self.create_directory(TempFileManager.TEMP_PARENT_DIRECTORY)
         print(f"Created temporary parent directory: {TempFileManager.TEMP_PARENT_DIRECTORY}")
 
@@ -66,8 +66,8 @@ class TempFileManager:
         TempFileManager.TEMP_PARENT_DIRECTORY = None
 
     def clear_temp_directories(self, by_blender_version: bool=True, by_addon_version: bool=True) -> None:
-        addon_version: str = get_addon_version(False) if by_addon_version else '\d+\.\d+\.\d+'
-        blend_version: str = get_blender_version(False) if by_blender_version else '\d+\.\d+\.\d+'
+        addon_version: str = Utils.get_addon_version(False) if by_addon_version else '\d+\.\d+\.\d+'
+        blend_version: str = Utils.get_blender_version(False) if by_blender_version else '\d+\.\d+\.\d+'
         self.clear_all_temp_directories(blender_version=blend_version, addon_version=addon_version)
 
     def cleanup(self) -> None:

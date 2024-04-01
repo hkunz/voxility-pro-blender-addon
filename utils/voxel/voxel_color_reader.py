@@ -5,7 +5,7 @@ from math import sqrt
 from mathutils import Vector
 from typing import Tuple
 
-from voxility_pro.utils.color_utils import linear_to_srgb # type: ignore
+from voxility_pro.utils.color_utils import ColorUtils # type: ignore
 
 Coordinate = Tuple[int, int, int]
 
@@ -91,7 +91,7 @@ class VoxelColorReader:
 
     def get_color_space_display_color(self, r, g, b, check_space=True):
         if check_space and self.color_space == VoxelColorReader.COLOR_SPACE_SRGB:
-            r, g, b = linear_to_srgb(r), linear_to_srgb(g), linear_to_srgb(b)
+            r, g, b = ColorUtils.linear_to_srgb(r), ColorUtils.linear_to_srgb(g), ColorUtils.linear_to_srgb(b)
         return (round(r*255), round(g*255), round(b*255), 255)
 
     def get_unsocketed_base_color(self, c):

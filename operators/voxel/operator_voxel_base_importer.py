@@ -12,7 +12,7 @@ from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.time_utils import format_duration # type: ignore
+from voxility_pro.utils.time_utils import TimeUtils # type: ignore
 from voxility_pro.enums.version_type import VersionType # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
 
@@ -96,14 +96,14 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         success: bool = self.execute_voxconvert()
 
         if (success):
-            self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({FileUtils.get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
+            self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({FileUtils.get_file_size(out_filepath)}) in {TimeUtils.format_duration(self.voxconvert_duration)}")
         else:
             TempFileManager().delete_temp_dir(temp_dir)
             return {'CANCELLED'}
 
         start_time: float = time.time()
         self.import_obj(out_filepath)
-        duration: str = format_duration(self.voxconvert_duration + (start_time - time.time()))
+        duration: str = TimeUtils.format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {self.filepath} in {duration}")
 
         if self.voxformat_withcolor:

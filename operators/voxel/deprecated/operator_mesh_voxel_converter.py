@@ -13,7 +13,7 @@ from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.time_utils import format_duration # type: ignore
+from voxility_pro.utils.time_utils import TimeUtils # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
 
@@ -37,7 +37,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     def export_obj(self, obj_file: str) -> str:
         start_time: float = time.time()
         ObjectUtils.export_obj(obj_file)
-        duration: str = format_duration(time.time() - start_time)
+        duration: str = TimeUtils.format_duration(time.time() - start_time)
         size: str = FileUtils.get_file_size(obj_file)
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
@@ -100,7 +100,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
 
         if (success):
             for out_path in vc_out_paths:
-                self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_path} ({FileUtils.get_file_size(out_path)}) in {format_duration(self.voxconvert_duration)}")
+                self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_path} ({FileUtils.get_file_size(out_path)}) in {TimeUtils.format_duration(self.voxconvert_duration)}")
         else:
             return {'CANCELLED'}
 
@@ -109,9 +109,9 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         self.import_obj(obj_path)
         #FIXME: should not need to scale it https://github.com/vengi-voxel/vengi/issues/401
         self.set_scale(orig_width / context.object.dimensions[0])
-        duration: str = format_duration(self.voxconvert_duration + (start_time - time.time()))
+        duration: str = TimeUtils.format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {obj_path} in {duration}")
-        self.report({'INFO'}, f"Voxelized in {format_duration(time.time() - voxelize_duration)}")
+        self.report({'INFO'}, f"Voxelized in {TimeUtils.format_duration(time.time() - voxelize_duration)}")
         properties = context.scene.voxility_pro_properties # FIXME: if type is specified as VoxilityProProperties it get circular error
 
         if properties.hide_original_objects:

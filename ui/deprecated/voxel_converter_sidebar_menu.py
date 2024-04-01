@@ -26,8 +26,8 @@ from voxility_pro.operators.voxel.operator_clear_temp_cache import (
 )
 
 from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
-from voxility_pro.utils.utils import get_addon_version
-from voxility_pro.enums.version_type import VersionType
+from voxility_pro.utils.utils import Utils # type: ignore
+from voxility_pro.enums.version_type import VersionType # type: ignore
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
@@ -109,7 +109,7 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
     ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
-    bl_label = f"Voxility Pro {get_addon_version()}"
+    bl_label = f"Voxility Pro {Utils.get_addon_version()}"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'Voxility'

@@ -16,7 +16,7 @@ from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import get_addon_version # type: ignore
-from voxility_pro.utils.material_utils import has_materials # type: ignore
+from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
@@ -197,7 +197,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         r1 = box.row()
         r1.prop(properties, "voxel_size")
         col = box.column()
-        if not has_materials(active_object):
+        if not MaterialUtils.has_materials(active_object):
             col.label(text="Object has no Materials")
             return
         r2 = col.row()

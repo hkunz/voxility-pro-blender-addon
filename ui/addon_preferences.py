@@ -10,10 +10,10 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
-from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
-from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
-from voxility_pro.utils.utils import try_register_operator, try_unregister_operator, get_preferences_voxel_types, get_addon_module_name, get_voxconvert_version, get_voxconvert_author
+from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type # type: ignore
+from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type # type: ignore
+from voxility_pro.utils.utils import Utils # type: ignore
 
 def update_voxel_formats_preferences() -> None:
     addon: bpy.types.Addon = bpy.context.preferences.addons[VoxilityAddonPreferences.bl_idname]
@@ -29,14 +29,14 @@ def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
 
     if getattr(self, f"type_{vox_type}"):
         if exporter:
-            try_register_operator(exporter)
+            Utils.try_register_operator(exporter)
         if importer:
-            try_register_operator(importer)
+            Utils.try_register_operator(importer)
     else:
         if exporter:
-            try_unregister_operator(exporter)
+            Utils.try_unregister_operator(exporter)
         if importer:
-            try_unregister_operator(importer)
+            Utils.try_unregister_operator(importer)
 
     update_voxel_formats_preferences()
 
@@ -66,7 +66,7 @@ class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class VoxilityAddonPreferences(bpy.types.AddonPreferences):
-    bl_idname = get_addon_module_name() # __name__ if the class is defined inside __init__.py
+    bl_idname = Utils.get_addon_module_name() # __name__ if the class is defined inside __init__.py
 
     type_vox: bpy.props.BoolProperty(
         name="*.vox (MagicaVoxel)",
@@ -298,13 +298,13 @@ class VoxilityAddonPreferences(bpy.types.AddonPreferences):
         for i, prop_name in enumerate(self.CHECKBOXES):
             (col1 if i <= third else (col2 if i <= third2 else col3)).prop(self, prop_name)
         box = layout.box()
-        box.label(text=f"This addon is powered by vengi-voxconvert v{get_voxconvert_version()} by {get_voxconvert_author()}")
+        box.label(text=f"This addon is powered by vengi-voxconvert v{Utils.get_voxconvert_version()} by {Utils.get_voxconvert_author()}")
 
 def register() -> None:
     bpy.utils.register_class(VoxilityAddonPreferences)
     bpy.utils.register_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
-    enabled_vox_types: List[str] = get_preferences_voxel_types()
+    enabled_vox_types: List[str] = Utils.get_preferences_voxel_types()
     register_vox_export_menu(enabled_vox_types)
     register_vox_import_menu(enabled_vox_types)
     update_voxel_formats_preferences()

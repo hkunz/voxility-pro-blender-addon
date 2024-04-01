@@ -1,9 +1,9 @@
 import bpy
 
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_limited_dissolve_handler import ObjectImportLimitedDissolveHandler
-from voxility_pro.utils.string_utils import randomize_string
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler # type: ignore
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler # type: ignore
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_limited_dissolve_handler import ObjectImportLimitedDissolveHandler # type: ignore
+from voxility_pro.utils.string_utils import StringUtils # type: ignore
 
 class ObjectImportHandler:
     IMPORTED_OBJ_BASE_NAME = "Voxility"
@@ -19,7 +19,7 @@ class ObjectImportHandler:
         bpy.context.view_layer.objects.active = obj
         bpy.context.object.data.use_auto_smooth = False
         bpy.ops.object.shade_flat()
-        suffix = randomize_string()
+        suffix = StringUtils.randomize_string()
         obj.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
         obj.data.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
 

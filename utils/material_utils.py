@@ -1,7 +1,8 @@
-import bpy
+class MaterialUtils:
 
-def has_materials(obj):
-    for slot in obj.material_slots:
-        if slot.material:
-            return True
-    return False
+    @staticmethod
+    def has_materials(obj):
+        for slot in obj.material_slots:
+            if slot.material:
+                return True
+        return False

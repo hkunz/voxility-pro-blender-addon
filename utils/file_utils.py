@@ -5,7 +5,7 @@ import platform
 
 from typing import List
 
-from voxility_pro.utils.utils import get_voxconvert_version # type: ignore
+from voxility_pro.utils.utils import Utils # type: ignore
 from voxility_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError # type: ignore
 
 class FileUtils:
@@ -30,7 +30,7 @@ class FileUtils:
     def get_voxconvert_filepath() -> str:
         addon_root: str = FileUtils.get_addon_root_dir()
         system: str = FileUtils.get_system()
-        voxconvert_version: str = get_voxconvert_version()
+        voxconvert_version: str = Utils.get_voxconvert_version()
         exe_base_dir: str = "executable"
         exe_base_name: str = "voxconvert"
 
