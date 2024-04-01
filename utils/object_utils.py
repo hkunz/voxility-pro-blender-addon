@@ -8,6 +8,8 @@ from types import ModuleType
 from typing import List
 
 class ObjectUtils:
+
+    @staticmethod
     def check_mesh_exists() -> bool:
         o: bpy.types.Object
         for o in bpy.context.selected_objects:
@@ -15,9 +17,11 @@ class ObjectUtils:
                 return True
         return False
 
+    @staticmethod
     def deselect_all_objects() -> None:
         bpy.ops.object.select_all(action='DESELECT')
 
+    @staticmethod
     def merge_vertices(object: bpy.types.Object, dist:float=0.0005):
         ops: ModuleType = bpy.ops
         ops.object.mode_set(mode='EDIT')
@@ -28,6 +32,7 @@ class ObjectUtils:
         bmesh.update_edit_mesh(mesh)
         ops.object.mode_set(mode='OBJECT')
 
+    @staticmethod
     def auto_merge_vertices(object: bpy.types.Object) -> None:
         C: bpy_types.Context = bpy.context
         C.view_layer.objects.active = object
@@ -46,6 +51,7 @@ class ObjectUtils:
         s.use_mesh_automerge = merge
         s.use_mesh_automerge_and_split = split
 
+    @staticmethod
     def validate_mesh(object: bpy.types.Object=None) -> None:
         if object:
             object.data.validate()
@@ -54,6 +60,7 @@ class ObjectUtils:
             for m in bpy.data.meshes:
                 m.validate()
 
+    @staticmethod
     def import_obj(filepath: str) -> bool:
         print("\nImport:")
         success: bool = False
@@ -68,6 +75,7 @@ class ObjectUtils:
                 traceback.print_exception(exc_type, exc_value, exc_traceback)
         return success
 
+    @staticmethod
     def export_obj(filepath: str) -> None:
         print("\nExport:")
         try:
@@ -128,10 +136,12 @@ class ObjectUtils:
         return filepath
 
     # bpy.ops.import_scene.obj only works until blender version 3.6
+    @staticmethod
     def import_obj__deprecated(filepath: str) -> None:
         bpy.ops.import_scene.obj(filepath=filepath)
 
     # bpy.ops.export_scene.obj only works until blender version 3.6
+    @staticmethod
     def export_obj__deprecated(filepath: str) -> None:
         bpy.ops.export_scene.obj(
             filepath=filepath,
@@ -160,6 +170,7 @@ class ObjectUtils:
         )
         return filepath
 
+    @staticmethod
     def duplicate_objects(objects: List[bpy.types.Object]) -> None:
         C: bpy_types.Context = bpy.context
         duplicates: List[bpy.types.Object] = []
@@ -173,6 +184,7 @@ class ObjectUtils:
         for ob in duplicates:
             ob.select_set(True)
 
+    @staticmethod
     def duplicate_object(ob: bpy.types.Object) -> bpy.types.Object:
         copy:bpy.types.Object = ob.copy()
         copy.data = copy.data.copy()
@@ -181,17 +193,21 @@ class ObjectUtils:
         dg.update()
         return copy
 
+    @staticmethod
     def select_objects(objects: List[bpy.types.Object], active_object: bpy.types.Object) -> None:
         for ob in objects:
             ob.select_set(True)
         bpy.context.view_layer.objects.active = active_object
 
+    @staticmethod
     def hide_objects_from_viewport(objects: List[bpy.types.Object], hide: bool=True) -> None:
         for ob in objects:
             ob.hide_set(hide)
 
+    @staticmethod
     def is_almost_equal(float1, float2, tolerance=0.0001):
         return abs(float1 - float2) < tolerance
 
+    @staticmethod
     def is_scale_applied(obj):
         return all(ObjectUtils.is_almost_equal(scale, 1.0) for scale in obj.scale)
