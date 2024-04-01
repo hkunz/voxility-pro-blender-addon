@@ -10,9 +10,9 @@ import re
 
 from typing import List, Tuple
 
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxility_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError
-from voxility_pro.utils.utils import is_class_registered, try_register_operator, try_unregister_operator
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxility_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
+from voxility_pro.utils.utils import is_class_registered, try_register_operator, try_unregister_operator # type: ignore
 
 from voxility_pro.operators.voxel.exporters.operator_vox_exporter import EXPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.exporters.operator_qb_exporter import EXPORT_OT_qubicle_binary_exchange
@@ -115,7 +115,7 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
     def draw(self, _context: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
-            if is_class_registered(cls):
+            if Utils.is_class_registered(cls):
                 layout.operator(cls.bl_idname, text=f"{cls.voxel_name} ({cls.filename_ext})")
 
 def menu_vox_export_func_callback(self, _context: bpy_types.Context) -> None:
@@ -133,14 +133,14 @@ def get_voxel_exporter_by_type(voxel_type: str) -> OperatorVoxconvert:
 def register(enabled_types: List[str]) -> None:
     for cls in CLASSES:
         if any(type == cls.voxel_type for type in enabled_types):
-            try_register_operator(cls)
+            Utils.try_register_operator(cls)
     bpy.utils.register_class(VoxelFormatsExportMenu)
     #bpy.types.TOPBAR_MT_file_export.append(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.append(menu_VoxelFormatsExportMenu_func_callback)
 
 def unregister() -> None:
     for cls in CLASSES:
-        try_unregister_operator(cls)
+        Utils.try_unregister_operator(cls)
     bpy.utils.unregister_class(VoxelFormatsExportMenu)
     #bpy.types.TOPBAR_MT_file_export.remove(menu_vox_export_func_callback)
     bpy.types.TOPBAR_MT_file_export.remove(menu_VoxelFormatsExportMenu_func_callback)

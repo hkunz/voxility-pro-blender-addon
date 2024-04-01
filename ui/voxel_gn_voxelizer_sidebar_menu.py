@@ -15,7 +15,7 @@ from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorU
 from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
-from voxility_pro.utils.utils import get_addon_version # type: ignore
+from voxility_pro.utils.utils import Utils # type: ignore
 from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
@@ -143,7 +143,7 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
     ) # type: ignore
 
 class OBJECT_PT_voxility_pro(bpy.types.Panel):
-    bl_label = f"Voxility Pro {get_addon_version()}"
+    bl_label = f"Voxility Pro {Utils.get_addon_version()}"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'Voxility'
