@@ -12,7 +12,7 @@ from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase #
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, get_mesh_center_voxel_distance # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
@@ -69,7 +69,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
-        voxel_size, uvmap, color = get_voxelizer_voxel_modifier_attributes(obj)
+        voxel_size, uvmap, color = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
         reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, uvmap)
         duration = format_duration(time.time() - t)
         print(f"Qb {obj.name} Read Time: {duration}")
@@ -88,7 +88,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
                 continue
             r = self.export_qb_get_reader(obj)
             c = r.get_object_center()
-            x, y, z = r.get_remapped_coordinates(*get_mesh_center_voxel_distance(active_obj, obj, r.voxel_size))
+            x, y, z = r.get_remapped_coordinates(*VoxelUtils.get_mesh_center_voxel_distance(active_obj, obj, r.voxel_size))
             pos = (x+c[0], y+c[1] - (up_amt if axis == "y" else 0), z+c[2])
             qb.matrixList.append(QbMatrix(obj.name, *r.get_voxel_dimensions(), r.get_color_data(), pos))
         tt = time.time()
@@ -182,7 +182,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             return False
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
             for obj in context.selected_objects:
-                if is_almost_equal(get_voxelizer_voxel_size(obj), 0) and not obj.voxelized:
+                if is_almost_equal(VoxelUtils.get_voxelizer_voxel_size(obj), 0) and not obj.voxelized:
                     return False
         return super().poll(context)
 

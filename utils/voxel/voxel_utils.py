@@ -12,126 +12,148 @@ class Voxel:
     PREVIOUS_UVMAP_ATTRIBUTE = None
     PREVIOUS_COLOR_ATTRIBUTE = None
 
-def check_voxelizer_compatibility():
-    n1 = NameConstant.VOXILITY_NODE_GROUP_NAME.value
-    p1 = NameConstant.VOXILITY_NODE_GROUP_NAME_PREFIX.value
-    n2 = NameConstant.VOXILITY_MODIFIER_NAME.value
-    p2 = NameConstant.VOXILITY_MODIFIER_NAME_PREFIX.value
-    compatible = True
-    for g in bpy.data.node_groups[:]:
-        for k in g.keys(): # VoxilityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxilityVoxelizeModifier_4_0_v1_0_12
-            if (k.startswith(p1) and k != n1) or (k.startswith(p2) and k != n2):
-                print(f"WARNING: Removing incompatible node group '{k}'")
-                bpy.data.node_groups.remove(g)
-                compatible = False
-                break
-    if compatible:
-        return
-    for obj in bpy.data.objects:
-        if obj.type == 'MESH':
-            obj.voxelized = False
+class VoxelUtils:
 
-def get_voxility_node_group(node_group_name):
-    for ng in bpy.data.node_groups:
-        if node_group_name in ng: # check if it has key ng[node_group_name]:
-            return ng
-    return None
+    @staticmethod
+    def check_voxelizer_compatibility():
+        n1 = NameConstant.VOXILITY_NODE_GROUP_NAME.value
+        p1 = NameConstant.VOXILITY_NODE_GROUP_NAME_PREFIX.value
+        n2 = NameConstant.VOXILITY_MODIFIER_NAME.value
+        p2 = NameConstant.VOXILITY_MODIFIER_NAME_PREFIX.value
+        compatible = True
+        for g in bpy.data.node_groups[:]:
+            for k in g.keys(): # VoxilityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxilityVoxelizeModifier_4_0_v1_0_12
+                if (k.startswith(p1) and k != n1) or (k.startswith(p2) and k != n2):
+                    print(f"WARNING: Removing incompatible node group '{k}'")
+                    bpy.data.node_groups.remove(g)
+                    compatible = False
+                    break
+        if compatible:
+            return
+        for obj in bpy.data.objects:
+            if obj.type == 'MESH':
+                obj.voxelized = False
 
-def get_voxelizer_modifier(active_object):
-    voxility_node_group = get_voxility_node_group(NameConstant.VOXILITY_MODIFIER_NAME.value)
-    for m in reversed(active_object.modifiers):
-        if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
-            return m
-    return None
+    @staticmethod
+    def get_voxility_node_group(node_group_name):
+        for ng in bpy.data.node_groups:
+            if node_group_name in ng: # check if it has key ng[node_group_name]:
+                return ng
+        return None
 
-def remove_all_voxelizier_modifiers(active_object):
-    m = get_voxelizer_modifier(active_object)
-    remove = False
-    while m:
-        active_object.modifiers.remove(m)
-        remove = True
-        m = get_voxelizer_modifier(active_object)
-    return remove
+    @staticmethod
+    def get_voxelizer_modifier(active_object):
+        voxility_node_group = VoxelUtils.get_voxility_node_group(NameConstant.VOXILITY_MODIFIER_NAME.value)
+        for m in reversed(active_object.modifiers):
+            if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
+                return m
+        return None
 
-def get_voxelizer_voxel_size_attr_name():
-    return "Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"
+    @staticmethod
+    def remove_all_voxelizier_modifiers(active_object):
+        m = VoxelUtils.get_voxelizer_modifier(active_object)
+        remove = False
+        while m:
+            active_object.modifiers.remove(m)
+            remove = True
+            m = VoxelUtils.get_voxelizer_modifier(active_object)
+        return remove
 
-def get_voxelizer_voxel_uv_attr_name():
-    return "Socket_3" if bpy.app.version >= (4,0,0) else "Input_2"
+    @staticmethod
+    def get_voxelizer_voxel_size_attr_name():
+        return "Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"
 
-def get_voxelizer_voxel_vertex_colors_attr_name():
-    return "Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"
+    @staticmethod
+    def get_voxelizer_voxel_uv_attr_name():
+        return "Socket_3" if bpy.app.version >= (4,0,0) else "Input_2"
 
-def is_object_voxelized(active_object: bpy.types.Object):
-    return bool(get_voxelizer_modifier(active_object)) if active_object else False
+    @staticmethod
+    def get_voxelizer_voxel_vertex_colors_attr_name():
+        return "Socket_4" if bpy.app.version >= (4,0,0) else "Input_3"
 
-def get_voxelizer_voxel_size(obj: bpy.types.Object):
-    mod = get_voxelizer_modifier(obj)
-    if mod and obj:
-        return round(mod[get_voxelizer_voxel_size_attr_name()], Voxel.SIZE_PRECISION)
-    return get_object_edge_size(obj) if obj.voxelized else 0
+    @staticmethod
+    def is_object_voxelized(active_object: bpy.types.Object):
+        return bool(VoxelUtils.get_voxelizer_modifier(active_object)) if active_object else False
 
-def lock_voxelized_object(obj):
-    obj.lock_location[0] = obj.lock_location[1] = obj.lock_location[2] = True
-    obj.lock_rotation[0] = obj.lock_rotation[1] = obj.lock_rotation[2] = True
-    obj.lock_scale[0] = obj.lock_scale[1] = obj.lock_scale[2] = True
+    @staticmethod
+    def get_voxelizer_voxel_size(obj: bpy.types.Object):
+        mod = VoxelUtils.get_voxelizer_modifier(obj)
+        if mod and obj:
+            return round(mod[VoxelUtils.get_voxelizer_voxel_size_attr_name()], Voxel.SIZE_PRECISION)
+        return VoxelUtils.get_object_edge_size(obj) if obj.voxelized else 0
 
-def get_object_edge_size(obj):
-    d= obj.data
-    e = d.edges[0]
-    return round((d.vertices[e.vertices[1]].co - d.vertices[e.vertices[0]].co).length, Voxel.SIZE_PRECISION)
+    @staticmethod
+    def lock_voxelized_object(obj):
+        obj.lock_location[0] = obj.lock_location[1] = obj.lock_location[2] = True
+        obj.lock_rotation[0] = obj.lock_rotation[1] = obj.lock_rotation[2] = True
+        obj.lock_scale[0] = obj.lock_scale[1] = obj.lock_scale[2] = True
 
-def set_voxelizer_voxel_size(obj, voxel_size):
-    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_size_attr_name(), voxel_size)
+    @staticmethod
+    def get_object_edge_size(obj):
+        d= obj.data
+        e = d.edges[0]
+        return round((d.vertices[e.vertices[1]].co - d.vertices[e.vertices[0]].co).length, Voxel.SIZE_PRECISION)
 
-def set_voxelizer_voxel_vertex_colors(obj, vertex_colors):
-    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_vertex_colors_attr_name(), vertex_colors)
+    @staticmethod
+    def set_voxelizer_voxel_size(obj, voxel_size):
+        return VoxelUtils.set_voxelizer_voxel_attribute(obj, VoxelUtils.get_voxelizer_voxel_size_attr_name(), voxel_size)
 
-def set_voxelizer_voxel_uvmap(obj, uvmap):
-    return set_voxelizer_voxel_attribute(obj, get_voxelizer_voxel_uv_attr_name(), uvmap)
+    @staticmethod
+    def set_voxelizer_voxel_vertex_colors(obj, vertex_colors):
+        return VoxelUtils.set_voxelizer_voxel_attribute(obj, VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name(), vertex_colors)
 
-def set_voxelizer_voxel_attribute(obj, attr_name, value):
-    mod = get_voxelizer_modifier(obj)
-    if not mod or not obj:
-        return False
-    if value == mod[attr_name]:
-        return False
-    mod[attr_name] = value
-    obj.modifiers.update()
-    obj.update_tag()
-    return True
+    @staticmethod
+    def set_voxelizer_voxel_uvmap(obj, uvmap):
+        return VoxelUtils.set_voxelizer_voxel_attribute(obj, VoxelUtils.get_voxelizer_voxel_uv_attr_name(), uvmap)
 
-def get_voxelizer_voxel_modifier_attributes(obj: bpy.types.Object):
-    mod = get_voxelizer_modifier(obj)
-    voxel_size = 0
-    uvmap = "" #"UVMap"
-    color = "" #"Col"
-    voxel_size = get_voxelizer_voxel_size(obj)
-    if mod:
-        uvmap = mod[get_voxelizer_voxel_uv_attr_name()]
-        color = mod[get_voxelizer_voxel_vertex_colors_attr_name()]
-    elif obj.voxelized:
-        uvmap = obj.data.uv_layers[0].name if len(obj.data.uv_layers) else None
-        color = obj.data.color_attributes[0].name if len(obj.data.color_attributes) else None
-    return voxel_size, uvmap, color
+    @staticmethod
+    def set_voxelizer_voxel_attribute(obj, attr_name, value):
+        mod = VoxelUtils.get_voxelizer_modifier(obj)
+        if not mod or not obj:
+            return False
+        if value == mod[attr_name]:
+            return False
+        mod[attr_name] = value
+        obj.modifiers.update()
+        obj.update_tag()
+        return True
 
-def get_mesh_center_of_mass_world(obj):
-    vertices = [obj.matrix_world @ v.co for v in obj.data.vertices]
-    return sum(vertices, mathutils.Vector()) / len(vertices)
+    @staticmethod
+    def get_voxelizer_voxel_modifier_attributes(obj: bpy.types.Object):
+        mod = VoxelUtils.get_voxelizer_modifier(obj)
+        voxel_size = 0
+        uvmap = "" #"UVMap"
+        color = "" #"Col"
+        voxel_size = VoxelUtils.get_voxelizer_voxel_size(obj)
+        if mod:
+            uvmap = mod[VoxelUtils.get_voxelizer_voxel_uv_attr_name()]
+            color = mod[VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name()]
+        elif obj.voxelized:
+            uvmap = obj.data.uv_layers[0].name if len(obj.data.uv_layers) else None
+            color = obj.data.color_attributes[0].name if len(obj.data.color_attributes) else None
+        return voxel_size, uvmap, color
 
-def get_mesh_center_world(obj):
-    import numpy as np
-    vertices = np.array([obj.matrix_world @ v.co for v in obj.data.vertices])
-    min_coords = np.min(vertices, axis=0)
-    max_coords = np.max(vertices, axis=0)
-    bounding_box_center = (min_coords + max_coords) / 2.0
-    return bounding_box_center
+    @staticmethod
+    def get_mesh_center_of_mass_world(obj):
+        vertices = [obj.matrix_world @ v.co for v in obj.data.vertices]
+        return sum(vertices, mathutils.Vector()) / len(vertices)
 
-def get_mesh_center_voxel_distance(obj_A, obj_B, voxel_size) -> mathutils.Vector:
-    xa, ya, za = get_voxel_distance(get_mesh_center_world(obj_A), voxel_size)
-    xb, yb, zb = get_voxel_distance(get_mesh_center_world(obj_B), voxel_size)
-    return xb - xa, yb - ya, zb - za
+    @staticmethod
+    def get_mesh_center_world(obj):
+        import numpy as np
+        vertices = np.array([obj.matrix_world @ v.co for v in obj.data.vertices])
+        min_coords = np.min(vertices, axis=0)
+        max_coords = np.max(vertices, axis=0)
+        bounding_box_center = (min_coords + max_coords) / 2.0
+        return bounding_box_center
 
-def get_voxel_distance(meters, meter_per_voxel) -> int: # meters: np.ndarray
-    x, y, z = meters
-    return round(x / meter_per_voxel), round(y / meter_per_voxel), round(z / meter_per_voxel)
+    @staticmethod
+    def get_mesh_center_voxel_distance(obj_A, obj_B, voxel_size) -> mathutils.Vector:
+        xa, ya, za = VoxelUtils.get_voxel_distance(VoxelUtils.get_mesh_center_world(obj_A), voxel_size)
+        xb, yb, zb = VoxelUtils.get_voxel_distance(VoxelUtils.get_mesh_center_world(obj_B), voxel_size)
+        return xb - xa, yb - ya, zb - za
+
+    @staticmethod
+    def get_voxel_distance(meters, meter_per_voxel) -> int: # meters: np.ndarray
+        x, y, z = meters
+        return round(x / meter_per_voxel), round(y / meter_per_voxel), round(z / meter_per_voxel)

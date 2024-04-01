@@ -3,7 +3,7 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier, remove_all_voxelizier_modifiers # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 
 class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
     bl_idname = "object.voxility_unvoxelize"
@@ -14,7 +14,7 @@ class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
     def execute(self, context):
         update = False
         for obj in context.selected_objects:
-            update = remove_all_voxelizier_modifiers(obj) or update
+            update = VoxelUtils.remove_all_voxelizier_modifiers(obj) or update
             obj.voxelized = False
         if update:
             context.scene.voxelize_list_update = True
@@ -25,7 +25,7 @@ class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
         active_object = context.active_object
         if not active_object:
             return False
-        m = get_voxelizer_modifier(active_object)
+        m = VoxelUtils.get_voxelizer_modifier(active_object)
         selected_objects: List[bpy_types.Object] = context.selected_objects
         if not m or context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
             return False

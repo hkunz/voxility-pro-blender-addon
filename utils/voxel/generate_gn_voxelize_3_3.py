@@ -9,10 +9,10 @@
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
 from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
-from voxility_pro.utils.voxel.voxel_utils import get_voxility_node_group # type: ignore ### Manual Entry
+from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore ### Manual Entry
 ### Manual Entry
 def voxelize_node_group_3_3(node_group_name, min_value, max_value, default_value): ### Manual Entry
-    voxelize = get_voxility_node_group(node_group_name) ### Manual Entry
+    voxelize = VoxelUtils.get_voxility_node_group(node_group_name) ### Manual Entry
     if voxelize: ### Manual Entry
         return voxelize ### Manual Entry
     ### Manual Entry
@@ -642,7 +642,7 @@ def voxelize_node_group_3_3(node_group_name, min_value, max_value, default_value
 # Modification 3.3 - 3: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 def voxelizemodifier_node_group_3_3(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
-    voxelizemodifier = get_voxility_node_group(node_group_name) ### Manual Entry
+    voxelizemodifier = VoxelUtils.get_voxility_node_group(node_group_name) ### Manual Entry
     if voxelizemodifier: ### Manual Entry
         return voxelizemodifier ### Manual Entry
     ### Manual Entry

@@ -2,7 +2,7 @@ import bpy
 from bpy.app.handlers import persistent
 
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_modifier # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 
 class ListItem(bpy.types.PropertyGroup):
     name: bpy.props.StringProperty(
@@ -44,7 +44,7 @@ class LIST_OT_PopulateList(bpy.types.Operator):
         for i, obj in enumerate(bpy.context.selected_objects):
             item = context.scene.voxelize_list.add()
             item.name = obj.name
-            item.voxelized = "1" if get_voxelizer_modifier(obj) else ""
+            item.voxelized = "1" if VoxelUtils.get_voxelizer_modifier(obj) else ""
             if obj == bpy.context.active_object:
                 bpy.context.scene.voxelize_list_index = i
         return {'FINISHED'}

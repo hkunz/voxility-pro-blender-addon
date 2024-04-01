@@ -5,7 +5,7 @@ from typing import List
 
 from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
 from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes # type: ignore
+from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal, format_decimal_2 # type: ignore
 
 class VoxelError:
@@ -149,10 +149,10 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
 
     def get_errors(self, context):
         errors = []
-        base_vox_size = get_voxelizer_voxel_size(context.active_object)
+        base_vox_size = VoxelUtils.get_voxelizer_voxel_size(context.active_object)
         for obj in context.selected_objects:
             num_mat = 0
-            vox_size, vox_uvmap, vox_colattr = get_voxelizer_voxel_modifier_attributes(obj)
+            vox_size, vox_uvmap, vox_colattr = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
             if not is_almost_equal(base_vox_size, vox_size):
                 self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, format_decimal_2(base_vox_size))
             if not ObjectUtils.is_scale_applied(obj):
