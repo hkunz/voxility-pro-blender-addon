@@ -4,7 +4,7 @@ import bpy_types
 from typing import List
 
 from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
-from voxility_pro.utils.object_utils import is_scale_applied # type: ignore
+from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal, format_decimal_2 # type: ignore
 
@@ -155,7 +155,7 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
             vox_size, vox_uvmap, vox_colattr = get_voxelizer_voxel_modifier_attributes(obj)
             if not is_almost_equal(base_vox_size, vox_size):
                 self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, format_decimal_2(base_vox_size))
-            if not is_scale_applied(obj):
+            if not ObjectUtils.is_scale_applied(obj):
                 self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_HAVE_SCALE_OF_1, format_decimal_2(base_vox_size))
             for slot in obj.material_slots:
                 mat = slot.material

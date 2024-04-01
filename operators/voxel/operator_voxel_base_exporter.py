@@ -11,7 +11,7 @@ from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import export_obj, check_mesh_exists # type: ignore
+from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, get_mesh_center_voxel_distance # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
@@ -102,7 +102,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def export_obj(self, obj_file: str) -> str:
         start_time = time.time()
-        export_obj(obj_file)
+        ObjectUtils.export_obj(obj_file)
         duration = format_duration(time.time() - start_time)
         size = FileUtils.get_file_size(obj_file)
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
@@ -144,7 +144,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             self.execute_file_path_conversion(context)
             return {'FINISHED'}
 
-        if not check_mesh_exists():
+        if not ObjectUtils.check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_no_mesh_object_selected')}")
             return {'CANCELLED'}
 

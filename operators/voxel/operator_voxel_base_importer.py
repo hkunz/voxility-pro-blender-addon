@@ -11,7 +11,7 @@ from voxility_pro.operators.voxel.common.object_import_handlers.object_import_ha
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists # type: ignore
+from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.enums.version_type import VersionType # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
@@ -59,10 +59,10 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         super().draw(context)
 
     def import_obj(self, obj_file: str) -> bool:
-        deselect_all_objects()
-        import_obj(obj_file)
+        ObjectUtils.deselect_all_objects()
+        ObjectUtils.import_obj(obj_file)
 
-        if not check_mesh_exists():
+        if not ObjectUtils.check_mesh_exists():
             self.report({'ERROR'}, f"{get_translation('error_nothing_to_import')} {self.filepath}")
             return False
 

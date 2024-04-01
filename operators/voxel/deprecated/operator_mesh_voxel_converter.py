@@ -11,7 +11,7 @@ from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import OBJ
 from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
 from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport  # type: ignore
+from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
@@ -31,20 +31,20 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
     def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
-        duplicate_objects(objects)
+        ObjectUtils.duplicate_objects(objects)
         bpy.ops.object.join()
 
     def export_obj(self, obj_file: str) -> str:
         start_time: float = time.time()
-        export_obj(obj_file)
+        ObjectUtils.export_obj(obj_file)
         duration: str = format_duration(time.time() - start_time)
         size: str = FileUtils.get_file_size(obj_file)
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
     def import_obj(self, obj_file: str) -> bool:
-        deselect_all_objects()
-        import_obj(obj_file)
+        ObjectUtils.deselect_all_objects()
+        ObjectUtils.import_obj(obj_file)
         properties = bpy.context.scene.voxility_pro_properties
         ObjectImportHandler(
             objects = bpy.context.selected_objects,
@@ -92,7 +92,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         self.export_obj(vc_in_path)
         orig_width: float = context.object.dimensions[0]
         bpy.ops.object.delete(use_global=False)
-        select_objects(objects, active_object)
+        ObjectUtils.select_objects(objects, active_object)
         vc_out_paths = self.generate_output_paths(temp_dir)
         self.setup_command(vc_in_path, vc_out_paths)
         print("Target Voxel Format:", self.vox_target_format_ext)
@@ -115,7 +115,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         properties = context.scene.voxility_pro_properties # FIXME: if type is specified as VoxilityProProperties it get circular error
 
         if properties.hide_original_objects:
-            hide_objects_from_viewport(objects)
+            ObjectUtils.hide_objects_from_viewport(objects)
 
         OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = self.vox_target_format_ext
         OBJECT_OT_MeshVoxelSaveOperator.VOX_OUTPUT_PATH = vc_out_paths[1] if len(vc_out_paths) > 1 else None
