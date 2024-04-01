@@ -22,6 +22,7 @@ class ObjectImportHandler:
         suffix = StringUtils.randomize_string()
         obj.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
         obj.data.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
+        obj.voxelized = True
 
         if self.with_vertex_colors:
             ObjectImportAddVertexColorsHandler().execute_handler()

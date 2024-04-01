@@ -9,7 +9,7 @@
 TODO:
 * optimize per voxel not per face VoxelColorReader __init__:for f in self.bm.faces:
 * workaround move the UV coordinates for image texture to 0,0 then to center
-* Imported object should have 'voxelized' set to True
+
 
 
 BUGS:
@@ -22,6 +22,7 @@ DONE TASKS:
 * use origin of the object to save QBMatrix
 * multiple QBMatrix layers saving
 * delete old version voxility modifier
+* Imported object should have 'voxelized' set to True
 
 BUGS FIXED:
 * Import vox/qb file with multiple objects create multipl vertex color nodes (no merge)
