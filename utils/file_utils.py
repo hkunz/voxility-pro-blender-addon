@@ -18,16 +18,12 @@ def check_exe_match(matches: List[str], voxconvert_version: str) -> None:
     if len(matches) == 0:
         raise VoxConvertExeMissingError(voxconvert_version)
 
-def get_voxconvert_exe_path() -> str:
-    system: str = platform.system().lower()
-    exe = get_voxconvert_filepath()
-    if not system == 'windows':
-        exe = exe.replace("\\", "")
-    return exe
+def get_system() -> str:
+    return platform.system().lower()
 
 def get_voxconvert_filepath() -> str:
     addon_root: str = get_addon_root_dir()
-    system: str = platform.system().lower()
+    system: str = get_system()
     voxconvert_version: str = get_voxconvert_version()
     exe_base_dir: str = "executable"
     exe_base_name: str = "voxconvert"

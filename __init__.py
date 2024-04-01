@@ -45,7 +45,7 @@ from bpy.app.handlers import persistent
 
 from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
-from voxility_pro.utils.file_utils import get_voxconvert_exe_path, get_file_size # type: ignore
+from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import check_voxelizer_compatibility # type: ignore
@@ -70,7 +70,7 @@ def on_application_load(a, b):
 
 def register() -> None:
     print("Addon Registration Begin ==============>")
-    add_executable_permission(get_voxconvert_exe_path()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
+    add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
     register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
     register_translations()
