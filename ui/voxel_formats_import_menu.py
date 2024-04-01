@@ -12,7 +12,7 @@ from typing import List, Tuple
 
 from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
 from voxility_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
-from voxility_pro.utils.utils import is_class_registered, try_register_operator, try_unregister_operator # type: ignore
+from voxility_pro.utils.utils import Utils # type: ignore
 
 from voxility_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
 from voxility_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
