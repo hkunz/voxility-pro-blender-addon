@@ -2,7 +2,7 @@ import bpy
 import os
 import bpy.utils.previews
 
-from voxility_pro.utils.file_utils import get_addon_root_dir # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 
 
 class IconsManager:
@@ -40,7 +40,7 @@ class IconsManager:
 
     def register_icon(self, icon_name):
         filename = icon_name + ".png" # svg supported in version 4.0+
-        icon_path = os.path.join(get_addon_root_dir(), "resources", "icons", filename)
+        icon_path = os.path.join(FileUtils.get_addon_root_dir(), "resources", "icons", filename)
         return self.register_icon_path(icon_name, icon_path)
 
     def register_icon_path(self, icon_name, icon_path):

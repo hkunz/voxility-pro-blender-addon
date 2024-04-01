@@ -3,13 +3,13 @@ import os
 
 from typing import List
 
-from voxility_pro.utils.file_utils import get_addon_root_dir
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 
 LANG: str = 'en'
 loaded_translations: List = None
 
 def load_translations(language: str) -> None:
-    languages_folder = os.path.join(get_addon_root_dir(), "translation/languages")
+    languages_folder = os.path.join(FileUtils.get_addon_root_dir(), "translation/languages")
     translations_file = os.path.join(languages_folder, f"{language}.json")
     
     with open(translations_file, 'r', encoding='utf-8') as file:

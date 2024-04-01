@@ -6,16 +6,16 @@ from os import path as p
 from typing import List
 from mathutils import Vector
 
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import OBJECT_OT_MeshVoxelSaveOperator
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler
-from voxility_pro.translation.translations import get_translation
-from voxility_pro.utils.temp_file_manager import TempFileManager
-from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport
-from voxility_pro.utils.file_utils import get_file_size
-from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import OBJECT_OT_MeshVoxelSaveOperator # type: ignore
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
+from voxility_pro.translation.translations import get_translation # type: ignore
+from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxility_pro.utils.object_utils import export_obj, import_obj, deselect_all_objects, duplicate_objects, select_objects, hide_objects_from_viewport  # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
+from voxility_pro.utils.time_utils import format_duration # type: ignore
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
 
 class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     bl_idname = "object.voxility_mesh_voxel_convert"
@@ -38,7 +38,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         start_time: float = time.time()
         export_obj(obj_file)
         duration: str = format_duration(time.time() - start_time)
-        size: str = get_file_size(obj_file)
+        size: str = FileUtils.get_file_size(obj_file)
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
@@ -100,7 +100,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
 
         if (success):
             for out_path in vc_out_paths:
-                self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_path} ({get_file_size(out_path)}) in {format_duration(self.voxconvert_duration)}")
+                self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_path} ({FileUtils.get_file_size(out_path)}) in {format_duration(self.voxconvert_duration)}")
         else:
             return {'CANCELLED'}
 

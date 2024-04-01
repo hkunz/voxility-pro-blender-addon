@@ -6,15 +6,15 @@ import bpy_types
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler
-from voxility_pro.translation.translations import get_translation
-from voxility_pro.utils.temp_file_manager import TempFileManager
-from voxility_pro.utils.file_utils import check_filepath, get_file_size
-from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists
-from voxility_pro.utils.time_utils import format_duration
-from voxility_pro.enums.version_type import VersionType
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
+from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
+from voxility_pro.translation.translations import get_translation # type: ignore
+from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
+from voxility_pro.utils.object_utils import import_obj, deselect_all_objects, check_mesh_exists # type: ignore
+from voxility_pro.utils.time_utils import format_duration # type: ignore
+from voxility_pro.enums.version_type import VersionType # type: ignore
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
@@ -96,7 +96,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         success: bool = self.execute_voxconvert()
 
         if (success):
-            self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
+            self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({FileUtils.get_file_size(out_filepath)}) in {format_duration(self.voxconvert_duration)}")
         else:
             TempFileManager().delete_temp_dir(temp_dir)
             return {'CANCELLED'}
@@ -116,7 +116,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
     def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
         wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         self.vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
         if not self.vertex_color_support:
             self.voxformat_withcolor = False

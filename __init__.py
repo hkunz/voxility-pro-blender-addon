@@ -45,7 +45,7 @@ from bpy.app.handlers import persistent
 
 from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
 from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
-from voxility_pro.utils.file_utils import get_voxconvert_filepath, get_file_size # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import check_voxelizer_compatibility # type: ignore
@@ -59,7 +59,7 @@ from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxcon
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(f"{exe}")
-    print("Using voxconvert:", app, f"({get_file_size(app)})")
+    print("Using voxconvert:", app, f"({FileUtils.get_file_size(app)})")
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
     return app
 
@@ -70,7 +70,7 @@ def on_application_load(a, b):
 
 def register() -> None:
     print("Addon Registration Begin ==============>")
-    add_executable_permission(get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
+    add_executable_permission(FileUtils.get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
     register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
     register_translations()

@@ -13,7 +13,7 @@ from voxility_pro.translation.translations import get_translation # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.object_utils import export_obj, check_mesh_exists # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import get_voxelizer_voxel_size, get_voxelizer_voxel_modifier_attributes, get_mesh_center_voxel_distance # type: ignore
-from voxility_pro.utils.file_utils import check_filepath, get_file_size # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
 from voxility_pro.utils.time_utils import format_duration # type: ignore
 from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
@@ -94,7 +94,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         tt = time.time()
         qb.save(qb_file)
         if self.voxel_type != "qb":
-            size = get_file_size(qb_file)
+            size = FileUtils.get_file_size(qb_file)
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {qb_file} ({size}) in {format_duration(time.time() - tt)}")
         print("Qb Write Time:", format_duration(time.time() - tt))
         print("Qb Total Time:", format_duration(time.time() - t))
@@ -104,7 +104,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         start_time = time.time()
         export_obj(obj_file)
         duration = format_duration(time.time() - start_time)
-        size = get_file_size(obj_file)
+        size = FileUtils.get_file_size(obj_file)
         self.report({'INFO'}, f"{get_translation('info_generated_files')} {obj_file} ({size}) in {duration}")
         return obj_file
 
@@ -126,7 +126,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         return False
 
     def create_success_popup(self, header, duration):
-        size = get_file_size(self.filepath)
+        size = FileUtils.get_file_size(self.filepath)
         fduration = format_duration(duration)
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({size}) in {fduration}")
         create_generic_popup(message=f"{header}|Created: {self.filepath}|Size: {size}|Duration: {fduration}|Check the Info Editor for more information.")
@@ -134,7 +134,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def execute_file_path_conversion(self, context):
         start: int = time.time()
         props = context.scene.voxility_pro_properties
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         self.setup_command(props.file_to_convert_path, [self.filepath])
         self.execute_voxconvert()
         self.create_success_popup(f"Input file converted to '{self.filename_ext}'", time.time() - start)
@@ -149,7 +149,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             return {'CANCELLED'}
 
         duration: int = time.time()
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         temp_dir: str = TempFileManager().create_temp_dir()
         obj_file: str = None
 

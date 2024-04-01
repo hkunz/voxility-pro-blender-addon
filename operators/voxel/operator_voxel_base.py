@@ -4,9 +4,9 @@ import bpy_types
 from typing import List
 from bpy_extras.io_utils import ExportHelper
 
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxility_pro.utils.file_utils import check_filepath
+from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 
 class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     bl_description = "Operator Voxel Base"
@@ -43,5 +43,5 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
         wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
-        self.filepath = check_filepath(self.filepath, self.filename_ext)
+        self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         return {'RUNNING_MODAL'}

@@ -3,7 +3,7 @@ import re
 
 from typing import List
 
-from voxility_pro.utils.file_utils import get_voxconvert_filepath
+from voxility_pro.utils.file_utils import FileUtils # type: ignore
 
 class VoxconvertCommandBuilder:
     def __init__(self) -> None:
@@ -40,7 +40,7 @@ class VoxconvertCommandBuilder:
         self.vc_command = []
         command: List[str] = self.vc_command
         system: str = platform.system().lower()
-        exe: str = get_voxconvert_filepath()
+        exe: str = FileUtils.get_voxconvert_filepath()
 
         if system == "windows":
             command.append('powershell')
