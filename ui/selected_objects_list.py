@@ -59,10 +59,13 @@ class SelectedObjectsList:
 
 @persistent
 def on_depsgraph_update(scene) -> None:
-    if bpy.context.scene.voxelize_list_update or SelectedObjectsList.SELECTED_OBJECTS != bpy.context.selected_objects or SelectedObjectsList.ACTIVE_OBJECT != bpy.context.active_object:
-        SelectedObjectsList.SELECTED_OBJECTS = bpy.context.selected_objects
-        SelectedObjectsList.ACTIVE_OBJECT = bpy.context.active_object
-        bpy.context.scene.voxelize_list_update = False
+    context = bpy.context
+    if not hasattr(context, "active_object"): # context is different when baking image
+        return
+    if context.scene.voxelize_list_update or SelectedObjectsList.SELECTED_OBJECTS != context.selected_objects or SelectedObjectsList.ACTIVE_OBJECT != context.active_object:
+        SelectedObjectsList.SELECTED_OBJECTS = context.selected_objects
+        SelectedObjectsList.ACTIVE_OBJECT = context.active_object
+        context.scene.voxelize_list_update = False
         bpy.ops.voxelize_list.populate_list()
 
 def on_index_change(self, context):

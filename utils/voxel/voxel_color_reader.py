@@ -142,8 +142,8 @@ class VoxelColorReader:
         uv = self.get_face_uv(face) if bpy.app.version > (3, 4, 0) else self.get_face_uv_deprecated(face)
         if not uv:
             return (255, 192, 203, 255)
-        px = int((size[0]-1) * (uv.x%1))
-        py = int((size[1]-1) * (uv.y%1))
+        px = round((size[0]-1) * (uv.x%1))
+        py = round((size[1]-1) * (uv.y%1))
         pixel = 4 * (size[0] * py + px)
         return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], False)
 

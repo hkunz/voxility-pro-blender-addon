@@ -17,7 +17,7 @@ from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register 
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import Utils # type: ignore
 from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
-from voxility_pro.utils.number_utils import is_almost_equal # type: ignore
+from voxility_pro.utils.number_utils import NumberUtils # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
 
@@ -33,7 +33,7 @@ def on_input_voxelsize_change(self, context: bpy_types.Context):
         return
     for obj in context.selected_objects:
         vsize = VoxelUtils.get_voxelizer_voxel_size(obj)
-        if is_almost_equal(vsize, self.voxel_size):
+        if NumberUtils.is_almost_equal(vsize, self.voxel_size):
             continue
         VoxelUtils.set_voxelizer_voxel_size(obj, self.voxel_size)
 
@@ -58,6 +58,8 @@ def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
 @persistent
 def on_depsgraph_update(scene, depsgraph=None):
     context = bpy.context
+    if not hasattr(context, "active_object"): # context is different when baking image
+        return
     obj = context.active_object
     if not obj or not VoxelUtils.is_object_voxelized(obj):
         return
@@ -72,7 +74,7 @@ def check_object_selection_change(context, properties, obj):
     Voxel.PREVIOUS_ACTIVE_OBJECT = obj
     voxel_size, uvmap, vertex_colors = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
     context.scene.no_voxel_size_update = True # so we don't trigger on_input_voxelsize_change which sets all objects
-    if is_almost_equal(voxel_size, 0):
+    if NumberUtils.is_almost_equal(voxel_size, 0):
         return
     properties.voxel_size = voxel_size
     properties.uvmap_attribute = uvmap
