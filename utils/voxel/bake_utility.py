@@ -5,6 +5,8 @@ import sys
 
 class BakeUtility:
     USER_SETTINGS={}
+    IMAGE_TEXTURE_NODE_SUFFIX="_imagetex"
+    UVMAP_NODE_SUFFIX="_uv"
 
     def __init__(self, context=None, data=None) -> None:
         self.context = context if context else bpy.context
@@ -95,24 +97,27 @@ class BakeUtility:
         for m in obj.modifiers:
             bpy.ops.object.modifier_apply(modifier=m.name)
 
-        self.add_image_texture_for_baking(obj)
         self.prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
-        self.create_uv_map_and_unwrap(obj)
+        uvmap = self.create_uv_map_and_unwrap(obj)
+        self.add_image_texture_for_baking(obj, uvmap)
 
         bpy.ops.object.bake(type='DIFFUSE')
 
         self.scale_uv_faces_to_zero(obj)
-        self.setup_new_material_with_baked_texture(obj)
 
         for uvname in self.prev_uvmap_names:
             obj.data.uv_layers.remove(obj.data.uv_layers[uvname])
+        
+        self.setup_new_material_with_baked_texture(obj)
 
     def cleanup_processed_materials(self):
         for mat in self.processed_materials:
-            mat.node_tree.nodes.remove(mat.node_tree.nodes[mat.name])
+            nodes = mat.node_tree.nodes
+            nodes.remove(nodes[f"{mat.name}{BakeUtility.IMAGE_TEXTURE_NODE_SUFFIX}"])
+            nodes.remove(nodes[f"{mat.name}{BakeUtility.UVMAP_NODE_SUFFIX}"])
         self.processed_materials.clear()
 
-    def add_image_texture_for_baking(self, obj):
+    def add_image_texture_for_baking(self, obj, uvmap):
         D = self.data
         pixel_size = int(math.ceil(math.sqrt(len(obj.data.polygons))))
         self.bake_image = D.images.new(f"Image.VoxilityBaking.{obj.name}", pixel_size, pixel_size)
@@ -126,10 +131,8 @@ class BakeUtility:
             nodes = mat.node_tree.nodes
             for n in nodes:
                 n.select = False
-            tex_node = nodes.new(type='ShaderNodeTexImage')
+            tex_node = self.add_texture_node(mat, uvmap.name)
             self.processed_materials.add(mat)
-            tex_node.image = self.bake_image
-            tex_node.name = mat.name
             tex_node.select = True
             nodes.active = tex_node
 
@@ -142,6 +145,7 @@ class BakeUtility:
         bpy.ops.mesh.mark_seam(clear=False)
         bpy.ops.uv.unwrap(method='ANGLE_BASED', margin=0)
         bpy.ops.object.mode_set(mode='OBJECT')
+        return uvmap
 
     def scale_uv_faces_to_zero(self, obj):
         for poly in obj.data.polygons:
@@ -163,9 +167,21 @@ class BakeUtility:
         obj.data.materials.append(mat)
         mat.use_nodes = True
         nodes = mat.node_tree.nodes
-        tex_node = nodes.new(type='ShaderNodeTexImage')
-        tex_node.image = self.bake_image
+        tex_node = self.add_texture_node(mat, obj.data.uv_layers[0].name)
         mat.node_tree.links.new(tex_node.outputs['Color'], nodes['Principled BSDF'].inputs['Base Color'])
+
+    def add_texture_node(self, mat, uvname):
+        nodes = mat.node_tree.nodes
+        tex_node = nodes.new(type='ShaderNodeTexImage')
+        tex_node.name = f"{mat.name}{BakeUtility.IMAGE_TEXTURE_NODE_SUFFIX}"
+        tex_node.image = self.bake_image
+        tex_node.location = (-300,200)
+        uvmap_node = nodes.new(type='ShaderNodeUVMap')
+        uvmap_node.uv_map = uvname
+        uvmap_node.location = (-500,200)
+        uvmap_node.name = f"{mat.name}{BakeUtility.UVMAP_NODE_SUFFIX}"
+        mat.node_tree.links.new(uvmap_node.outputs['UV'], tex_node.inputs['Vector'])
+        return tex_node
 
     def cleanup(self):
         D = self.data
@@ -185,6 +201,7 @@ def bake_all_selected_objects():
     duplicated_objects = C.selected_objects
 
     # Important code start =====================
+    BakeUtility.settings_store()
     BakeUtility.settings_init()
     b = BakeUtility()
     b.bake(duplicated_objects)

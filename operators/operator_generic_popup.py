@@ -21,7 +21,7 @@ class OperatorGenericPopup(bpy.types.Operator):
 
     def draw(self, _: bpy_types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
-        col: bpy.types.UILayout = layout.column()
+        col: bpy.types.UILayout = layout.box().column()
         list: List = self.message.split('|')
         for m in list:
             col.label(text=m)

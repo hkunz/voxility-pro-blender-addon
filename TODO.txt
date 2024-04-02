@@ -13,7 +13,8 @@ TODO:
 
 
 BUGS:
-
+Bake getting darker colors with each bake. Try white it gets gray over time.
+Baking white and exporting to voxel becomes light pink
 
 DONE TASKS:
 

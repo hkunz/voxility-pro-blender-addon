@@ -135,9 +135,15 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
         col: bpy.types.UILayout = layout.column()
 
         if not self.errors:
-            col.label(text="No problems found")
+            cbox = col.box().column()
+            cbox.label(text="Object OK.", icon='CHECKMARK')
+            cbox.label(text="Select 'Target' and click 'Export'", icon='CHECKMARK')
             return
 
+        col.label(text="The following problems were detected:")
+        box = col.box()
+        box.alert = True
+        col = box.column()
         for i, tuple in enumerate(self.errors):
             mat_name = tuple[0].name
             e = VoxelError.get_error(tuple[1])
@@ -145,7 +151,10 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
             if param:
                 e = e.replace("PARAM", param)
             err = f"{mat_name}: {e}"
-            col.label(text=err)
+            col.label(text=err, icon='CANCEL')
+        cbox = layout.box().column()
+        cbox.label(text="Fix these problems or click 'Bake' to bake object and materials")
+        cbox.label(text="NOTE: Baking will apply all modifiers")
 
     def get_errors(self, context):
         errors = []

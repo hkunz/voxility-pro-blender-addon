@@ -255,7 +255,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         if not button_text:
             button_text = "Export" + (" " + properties.export_format if bl_idname else "")
         btn = layout.column()
-        if validity_check or context.active_object.voxelized:
+        if validity_check:
             btn.operator(OBJECT_OT_OperatorVoxelizeValidityCheck.bl_idname, text="Check for Problems")
             btn.operator(OBJECT_OT_OperatorBake.bl_idname, text="Bake")
         else:
