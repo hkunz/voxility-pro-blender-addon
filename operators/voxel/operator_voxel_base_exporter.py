@@ -70,7 +70,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
         voxel_size, uvmap, color = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
-        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, uvmap)
+        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_LINEAR, uvmap)
         duration = TimeUtils.format_duration(time.time() - t)
         print(f"Qb {obj.name} Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
