@@ -38,6 +38,9 @@ class VoxelError:
     WARNING_MULTIPLE_UV_MAPS_PER_OBJECT_NOT_SUPPORTED = 25
     WARNING_MULTIPLE_COLOR_ATTRIBUTES_PER_OBJECT_NOT_SUPPORTED = 26
 
+    def __init__(self):
+        self.bake_fix_option = False
+
     @staticmethod
     def get_error(e):
         if e == VoxelError.ERROR_NO_MATERIALS:
@@ -152,19 +155,24 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
                 e = e.replace("PARAM", param)
             err = f"{mat_name}: {e}"
             col.label(text=err, icon='CANCEL')
+        if not self.bake_fix_option:
+            return
         cbox = layout.box().column()
         cbox.label(text="Fix these problems or click 'Bake' to bake object and materials")
         cbox.label(text="NOTE: Baking will apply all modifiers")
 
     def get_errors(self, context):
         errors = []
+        self.bake_fix_option = True
         base_vox_size = VoxelUtils.get_voxelizer_voxel_size(context.active_object)
         for obj in context.selected_objects:
             num_mat = 0
             vox_size, vox_uvmap, vox_colattr = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
             if not NumberUtils.is_almost_equal(base_vox_size, vox_size):
+                self.bake_fix_option = False
                 self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE, NumberUtils.format_decimal_2(base_vox_size))
             if not ObjectUtils.is_scale_applied(obj):
+                self.bake_fix_option = False
                 self.add_error_obj(obj, errors, VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_HAVE_SCALE_OF_1, NumberUtils.format_decimal_2(base_vox_size))
             for slot in obj.material_slots:
                 mat = slot.material
@@ -246,6 +254,7 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
 
 
             if (num_mat <= 0):
+                self.bake_fix_option = False
                 self.add_error_obj(obj, errors, VoxelError.ERROR_NO_MATERIALS)
 
         return errors
