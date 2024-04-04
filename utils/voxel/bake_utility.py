@@ -98,8 +98,9 @@ class BakeUtility:
             bpy.ops.object.modifier_apply(modifier=m.name)
 
         self.prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
-        uvmap = self.create_uv_map_and_unwrap(obj)
-        self.add_image_texture_for_baking(obj, uvmap)
+        uvmapname = "UVMap.VoxilityBaking"
+        self.add_image_texture_for_baking(obj, uvmapname)
+        self.create_uv_map_and_unwrap(obj, uvmapname)
 
         bpy.ops.object.bake(type='DIFFUSE')
 
@@ -117,7 +118,7 @@ class BakeUtility:
             nodes.remove(nodes[f"{mat.name}{BakeUtility.UVMAP_NODE_SUFFIX}"])
         self.processed_materials.clear()
 
-    def add_image_texture_for_baking(self, obj, uvmap):
+    def add_image_texture_for_baking(self, obj, uvmapname):
         D = self.data
         pixel_size = int(math.ceil(math.sqrt(len(obj.data.polygons))))
         self.bake_image = D.images.new(f"Image.VoxilityBaking.{obj.name}", pixel_size, pixel_size)
@@ -131,13 +132,13 @@ class BakeUtility:
             nodes = mat.node_tree.nodes
             for n in nodes:
                 n.select = False
-            tex_node = self.add_texture_node(mat, uvmap.name)
+            tex_node = self.add_texture_node(mat, uvmapname)
             self.processed_materials.add(mat)
             tex_node.select = True
             nodes.active = tex_node
 
-    def create_uv_map_and_unwrap(self, obj):
-        uvmap = obj.data.uv_layers.new(name="UVMap.VoxilityBaking")
+    def create_uv_map_and_unwrap(self, obj, uvmapname):
+        uvmap = obj.data.uv_layers.new(name=uvmapname)
         idx = obj.data.uv_layers.active_index = obj.data.uv_layers.find(uvmap.name)
         obj.data.uv_layers[idx].active = True
         bpy.ops.object.mode_set(mode='EDIT')
