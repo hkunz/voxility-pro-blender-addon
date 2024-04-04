@@ -26,6 +26,17 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     bl_label = "Export"
     bl_description = "Operator Voxel Base Exporter"
 
+    SUPPORTED_INPUT_MESH_FORMATS=[
+        ("OBJ", "obj (Wavefront Object)"),
+        ("FBX", "fbx (Autodesk Filmbox)"),
+        ("GLTF", "gltf (GL Transmission Format)"),
+        ("PLY", "ply (Polygon File Format)"),
+        ("BSP", "bsp (Quake 1)"),
+        ("MD2", "md2 (Quake 2 Model)"),
+        ("STL", "stl (Standard Triangle Language)"),
+        ("BSP", "bsp (UFO:Alien Invasion)")
+    ]
+
     filter_glob: bpy.props.StringProperty(
         default="*.*",
         options={'HIDDEN'},
@@ -77,9 +88,21 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             else:
                 sub.enabled = True
             sub.prop(self, "surface_only") # surface_only=False will not work because we export QB surface voxels only, need fill option
+            self.draw_file_conversion_options(context, col)
         else:
-            col.ut.prop(self, "surface_only")
+            col.prop(self, "surface_only")
             col.prop(self, "voxformat_scale")
+
+    def draw_file_conversion_options(self, context, col):
+        if context.selected_objects:
+            return
+        props = context.scene.voxility_pro_properties
+        ext = FileUtils.get_file_extension(props.file_to_convert_path)
+        if self.is_object_format(ext):
+            col.prop(self, "voxformat_scale")
+
+    def is_object_format(self, ext) -> bool:
+        return ext == "obj"
 
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
@@ -133,6 +156,8 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         return c
 
     def check_valid_file_path_conversion(self, context, ext):
+        if any(ext.upper() in format_tuple[0] for format_tuple in self.SUPPORTED_INPUT_MESH_FORMATS):
+            return True
         for i, tuple in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS):
             if i <= 0:
                 continue
@@ -204,12 +229,12 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         if self.is_file_path_conversion(context):
             props = context.scene.voxility_pro_properties
-            ext = os.path.splitext(props.file_to_convert_path)[1][1:]
+            ext = FileUtils.get_file_extension(props.file_to_convert_path)
             if props.export_format.lower() == ext:
                 create_generic_popup(message=f"ERROR: cannot convert same format '{ext}' to '{ext}'")
                 return {'PASS_THROUGH'}
             if self.check_valid_file_path_conversion(context, ext):
                 return super().invoke(context, event)
-            create_generic_popup(message="ERROR: ." + ext + " unsupported. Supported formats include:|" + '|'.join(t[1] for i, t in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS) if i > 0))
+            create_generic_popup(message="ERROR: ." + ext + " unsupported. Supported formats include:|" + '|'.join(t[1] for i, t in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS) if i > 0) + '|' + '|'.join(t[1] for i, t in enumerate(self.SUPPORTED_INPUT_MESH_FORMATS)))
             return {'PASS_THROUGH'}
         return super().invoke(context, event)
