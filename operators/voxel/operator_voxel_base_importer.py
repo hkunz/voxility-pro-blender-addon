@@ -124,5 +124,5 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         return {'RUNNING_MODAL'}
 
     @classmethod
-    def poll(cls, _: bpy_types.Context) -> bool:
-        return True
+    def poll(cls, context: bpy_types.Context) -> bool:
+        return context.mode == 'OBJECT'
