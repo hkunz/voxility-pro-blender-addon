@@ -59,13 +59,27 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         default=False,
     ) # type: ignore
 
+    voxformat_fillhollow: bpy.props.BoolProperty(
+        name="Fill Hollow",
+        description=("Fill the inner parts of completely close objects"),
+        default=False,
+    ) # type: ignore
+
     def draw(self, context: bpy_types.Context) -> None:
+        super().draw(context)
+        col = self.options_panel
+        sub = col.row()
+        super().draw_elements(context)
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
-            pass # self.layout.prop(self, "surface_only") # surface_only will not work because we export QB surface voxels only, need fill option
+            if self.voxel_type == "qb":
+                self.surface_only = True
+                sub.enabled = False
+            else:
+                sub.enabled = True
+            sub.prop(self, "surface_only") # surface_only=False will not work because we export QB surface voxels only, need fill option
         else:
-            super().draw(context)
-            self.layout.prop(self, "surface_only")
-            self.layout.prop(self, "voxformat_scale")
+            col.ut.prop(self, "surface_only")
+            col.prop(self, "voxformat_scale")
 
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
@@ -115,6 +129,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         c.vc_palette_file = str(self.palette_file)
         c.vc_export_palette = self.export_palette
         c.vc_surface_only = int(self.surface_only)
+        c.vc_fillhollow = int(not self.surface_only)
         return c
 
     def check_valid_file_path_conversion(self, context, ext):

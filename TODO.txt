@@ -12,10 +12,12 @@ TODO:
 * Export options
 * Check supported formats 
 * Colors getting darker on Export check quantization in docu
+* Bug when doing file to file conversion when opening a path.
 
 BUGS:
 Bake getting darker colors with each bake. Try white it gets gray over time.
 Surface_Only not working because i export to QB only surface voxels. so i need option to FILL voxels
+Importing a vox object with Image Texture and then baking it, results in incorrect colors
 
 DONE TASKS:
 

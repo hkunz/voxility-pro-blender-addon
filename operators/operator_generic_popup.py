@@ -24,7 +24,12 @@ class OperatorGenericPopup(bpy.types.Operator):
         col: bpy.types.UILayout = layout.box().column()
         list: List = self.message.split('|')
         for m in list:
-            col.label(text=m)
+            ico_msg=m.split(',,')
+            if len(ico_msg) > 1:
+                col.alert = len(ico_msg) > 2 and int(ico_msg[2])
+                col.label(text=ico_msg[0], icon=ico_msg[1])
+            else:
+                col.label(text=m)
 
     def execute(self, _: bpy_types.Context) -> set[str]:
         if self.exec_message:

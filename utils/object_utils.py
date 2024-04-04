@@ -4,6 +4,8 @@ import traceback
 import bpy_types
 import bmesh
 
+from math import radians
+from mathutils import Euler, Matrix
 from types import ModuleType
 from typing import List
 
@@ -211,3 +213,12 @@ class ObjectUtils:
     @staticmethod
     def is_scale_applied(obj):
         return all(ObjectUtils.is_almost_equal(scale, 1.0) for scale in obj.scale)
+
+    @staticmethod # https://blender.stackexchange.com/questions/159538/how-to-apply-all-transformations-to-an-object-at-low-level
+    def apply_all_transforms(obj):
+        mb = obj.matrix_basis
+        if hasattr(obj.data, "transform"):
+            obj.data.transform(mb)
+        for c in obj.children:
+            c.matrix_local = mb @ c.matrix_local  
+        obj.matrix_basis.identity()

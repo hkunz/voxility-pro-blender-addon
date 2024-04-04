@@ -16,8 +16,8 @@ from voxility_pro.enums.area_type import AreaType
 from voxility_pro.enums.area_ui_type import AreaUiType
 
 class ObjectImportAddVertexColorsHandler(IHandler):
-    def __init__(self) -> None:
-        pass
+    def __init__(self, object) -> None:
+        self.object = object
 
     def set_active_node_tree(self, area: Area, material_index: int=0) -> None:
         C: bpy_types.Context = bpy.context

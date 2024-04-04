@@ -15,6 +15,7 @@ from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.time_utils import TimeUtils # type: ignore
 from voxility_pro.enums.version_type import VersionType # type: ignore
 from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
@@ -45,18 +46,20 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
 
     voxformat_mergequads: bpy.props.BoolProperty(
         name="Merge Quads",
-        description=("Merge similar quads"),
+        description=("Merge similar quads to optimize the mesh (will create N-Gons)"),
         default=False,
     ) # type: ignore
 
     def draw(self, context: bpy_types.Context) -> None:
-        self.layout.prop(self, "merge_vertices")
+        super().draw(context)
+        col = self.options_panel
+        col.prop(self, "merge_vertices")
         #self.layout.prop(self, "option_dissolve_limited") #FIXME https://blender.stackexchange.com/questions/310984/how-can-i-preserve-face-corner-colors-when-doing-a-limited-dissolve
-        col = self.layout.column()
         sub = col.row()
         sub.enabled = self.vertex_color_support
         sub.prop(self, "voxformat_withcolor")
-        super().draw(context)
+        col.prop(self, "voxformat_mergequads")
+        super().draw_elements(context)
 
     def import_obj(self, obj_file: str) -> bool:
         ObjectUtils.deselect_all_objects()
@@ -79,14 +82,24 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
+        c.vc_voxformat_fillhollow = 1 # try to see if it can remove the inner geometry in resulting .obj file
         c.vc_palette_file = ""
         c.vc_core_colorreduction = (self.voxel_type == "qb")
         return c
 
-    def execute(self, _context: bpy_types.Context) -> set[str]:
+    def notify_error(self):
+        msg = f"{get_translation('error_file_nonexistent')}"
+        dirname = os.path.dirname(self.filepath)
+        filename = os.path.basename(self.filepath)
+        if filename:
+            create_generic_popup(message=f"{msg},,CANCEL,,1|File: {filename}|Dir: {dirname}")
+        else:
+            create_generic_popup(message=f"No file specified,,CANCEL,,1")
+        self.report({'ERROR'}, f"{msg} {self.filepath}")
 
-        if not os.path.exists(self.filepath):
-            self.report({'ERROR'}, f"{get_translation('error_file_nonexistent')} {self.filepath}")
+    def execute(self, _context: bpy_types.Context) -> set[str]:
+        if not os.path.exists(self.filepath) or not os.path.isfile(self.filepath):
+            self.notify_error()
             return {'CANCELLED'}
 
         temp_dir: str = TempFileManager().create_temp_dir()

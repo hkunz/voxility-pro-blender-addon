@@ -23,6 +23,7 @@ class VoxconvertCommandBuilder:
         self.vc_voxformat_mergequads: int = 0
         self.vc_core_colorreduction: bool = False
         self.vc_force_overwrite: bool = True
+        self.vc_fillhollow: bool = False
 
         self.vc_command: List[str] = None
 
@@ -87,6 +88,11 @@ class VoxconvertCommandBuilder:
 
         if self.vc_surface_only:
             command.append("--surface-only")
+
+        if self.vc_fillhollow:
+            command.append("-set")
+            command.append("voxformat_fillhollow")
+            command.append("1")
 
         if self.vc_merge_vertices:
             pass #command.append("--merge") #https://github.com/vengi-voxel/vengi/issues/389

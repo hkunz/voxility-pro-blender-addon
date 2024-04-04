@@ -26,10 +26,14 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     ) # type: ignore
 
     voxformat_voxelizemode: bpy.props.BoolProperty(
-        name="Voxformat Voxelize Mode",
+        name="Faster but Low Quality", #name="Voxformat Voxelize Mode",
         description="Check for faster and less memory (lower quality) or Uncheck for high quality (slower)",
         default=False,
     ) # type: ignore
+
+    def __init__(self):
+        super().__init__()
+        self.options_panel = None
 
     def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
@@ -38,7 +42,11 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
         return c
 
     def draw(self, _context: bpy_types.Context) -> None:
-        self.layout.prop(self, "voxformat_voxelizemode")
+        self.options_panel = self.layout.box().column()
+
+    def draw_elements(self, _context):
+        pass
+        #self.options_panel.prop(self, "voxformat_voxelizemode")
 
     def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
         wm: bpy_types.WindowManager = context.window_manager
