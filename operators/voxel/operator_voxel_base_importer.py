@@ -50,6 +50,12 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         default=False,
     ) # type: ignore
 
+    voxformat_fillhollow: bpy.props.BoolProperty(
+        name="Fill Hollow",
+        description=("Fill the inner parts of completely close objects"),
+        default=True,
+    ) # type: ignore
+
     def draw(self, context: bpy_types.Context) -> None:
         super().draw(context)
         col = self.options_panel
@@ -59,6 +65,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         sub.enabled = self.vertex_color_support
         sub.prop(self, "voxformat_withcolor")
         col.prop(self, "voxformat_mergequads")
+        #col.prop(self, "voxformat_fillhollow")
         super().draw_elements(context)
 
     def import_obj(self, obj_file: str) -> bool:
@@ -82,9 +89,10 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = int(self.voxformat_withcolor)
         c.vc_voxformat_mergequads = int(self.voxformat_mergequads)
-        c.vc_voxformat_fillhollow = 1 # try to see if it can remove the inner geometry in resulting .obj file
+        c.vc_voxformat_fillhollow = int(self.voxformat_fillhollow)
         c.vc_palette_file = ""
         c.vc_core_colorreduction = (self.voxel_type == "qb")
+        c.vc_script = "fillhollow" if self.voxformat_fillhollow else None # need to fill or else we get internal faces
         return c
 
     def notify_error(self):

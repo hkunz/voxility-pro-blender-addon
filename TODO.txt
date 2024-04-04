@@ -10,9 +10,9 @@ TODO:
 * optimize per voxel not per face VoxelColorReader __init__:for f in self.bm.faces:
 * workaround move the UV coordinates for image texture to 0,0 then to center
 * Export options
-* Check supported formats 
+* Check supported formats maybe there are more loading/saving supports
 * Colors getting darker on Export check quantization in docu
-* Bug when doing file to file conversion when opening a path.
+* Bug when doing file to file conversion when opening a path. (don't know how to reproduce sometimes it does not work)
 
 BUGS:
 Bake getting darker colors with each bake. Try white it gets gray over time.

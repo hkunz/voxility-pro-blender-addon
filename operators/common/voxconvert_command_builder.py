@@ -23,7 +23,8 @@ class VoxconvertCommandBuilder:
         self.vc_voxformat_mergequads: int = 0
         self.vc_core_colorreduction: bool = False
         self.vc_force_overwrite: bool = True
-        self.vc_fillhollow: bool = False
+        self.vc_fillhollow: bool = False # actually this is useless, no effect. we use vc_script="fillhollow"
+        self.vc_script: str = None
 
         self.vc_command: List[str] = None
 
@@ -53,6 +54,10 @@ class VoxconvertCommandBuilder:
         if self.test:
             #command.append("--help")
             return command
+
+        if self.vc_script:
+            command.append("--script")
+            command.append(self.vc_script)
 
         command.append("-set")
         command.append("metric_flavor")

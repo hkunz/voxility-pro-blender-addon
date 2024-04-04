@@ -25,7 +25,7 @@ class ObjectImportHandler:
         suffix = StringUtils.randomize_string()
         obj.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
         obj.data.name = f"{ObjectImportHandler.IMPORTED_OBJ_BASE_NAME}_{suffix}"
-        #obj.voxelized = True #FIXME doing this will give option for user to export but then it's bugged because of the interior faces that voxconvert cannot remove
+        obj.voxelized = True
 
         if self.with_vertex_colors:
             ObjectImportAddVertexColorsHandler(obj).execute_handler()

@@ -153,6 +153,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         c.vc_export_palette = self.export_palette
         c.vc_surface_only = int(self.surface_only)
         c.vc_fillhollow = int(not self.surface_only)
+        c.vc_script = "fillhollow" if not self.surface_only else None
         return c
 
     def check_valid_file_path_conversion(self, context, ext):
