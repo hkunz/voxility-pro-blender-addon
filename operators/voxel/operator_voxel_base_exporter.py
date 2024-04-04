@@ -61,7 +61,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def draw(self, context: bpy_types.Context) -> None:
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
-            pass
+            pass # self.layout.prop(self, "surface_only") # surface_only will not work because we export QB surface voxels only, need fill option
         else:
             super().draw(context)
             self.layout.prop(self, "surface_only")
