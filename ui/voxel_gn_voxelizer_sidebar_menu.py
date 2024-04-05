@@ -161,8 +161,8 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         properties: VoxilityProProperties = context.scene.voxility_pro_properties
 
         if valid_selection:
-            layout.box().prop(properties, "multi_object_export")
-            if properties.multi_object_export:
+            # layout.box().prop(properties, "multi_object_export")
+            if len(selected_mesh_objects) > 1: # properties.multi_object_export
                 ibox = layout.row().box()
                 ibox.template_list("MY_UL_List", "The_List", bpy.context.scene, "voxelize_list", bpy.context.scene, "voxelize_list_index", sort_lock=True)
             else:
@@ -173,13 +173,13 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             ibox.alert = True
             ibox.label(text=error)
 
-        if context.selected_objects:
+        if selected_mesh_objects and valid_selection:
             unvox = not OBJECT_OT_OperatorVoxelize.poll(context) and OBJECT_OT_OperatorUnvoxelize.poll(context)
             mbox = layout.box()
             mbox.operator((OBJECT_OT_OperatorUnvoxelize if unvox else OBJECT_OT_OperatorVoxelize).bl_idname, text="Unvoxelize" if unvox else "Voxelize")
             if voxelize_progress:
                 self.draw_voxelizer_options(context, properties, mbox)
-            if active_object.voxelized:
+            if active_object and active_object.voxelized:
                 self.draw_export_options(context, properties, layout)
         elif not context.selected_objects:
             self.draw_file_conversion_options(context, properties, layout)
