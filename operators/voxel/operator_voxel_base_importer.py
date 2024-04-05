@@ -64,7 +64,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         sub = col.row()
         sub.enabled = self.vertex_color_support
         sub.prop(self, "voxformat_withcolor")
-        col.prop(self, "voxformat_mergequads")
+        #col.prop(self, "voxformat_mergequads") # cannot allow this option because everything has to be squarish in order for the Bake process to work
         #col.prop(self, "voxformat_fillhollow")
         super().draw_elements(context)
 
