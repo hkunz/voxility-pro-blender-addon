@@ -6,8 +6,9 @@ RESOURCES_DIR="resources/"
 DOCUMENTATION_DIR="${RESOURCES_DIR}documentation/"
 CSS_CONTENT="${DOCUMENTATION_DIR}/css/content.css"
 CONTENT_DIR="${DOCUMENTATION_DIR}/content/"
-DOCUMENT_CONTENT_TEMPLATE="${CONTENT_DIR}voxility-{type}-content-test.html"
-DOCUMENT_CONTENT_FINAL="${CONTENT_DIR}voxility-{type}-content-final.html"
+VERSION="latest/" # old/ or latest/
+DOCUMENT_CONTENT_TEMPLATE="${CONTENT_DIR}old/test/voxility-{type}-content.html"
+DOCUMENT_CONTENT_FINAL="${CONTENT_DIR}old/final/voxility-{type}-content.html"
 
 cleanup() {
     echo "Script interrupted. Cleaning up..."
