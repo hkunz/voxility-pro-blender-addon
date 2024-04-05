@@ -170,7 +170,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         size = FileUtils.get_file_size(self.filepath)
         fduration = TimeUtils.format_duration(duration)
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({size}) in {fduration}")
-        create_generic_popup(message=f"{header}|Created: {self.filepath}|Size: {size}|Duration: {fduration}|Check the Info Editor for more information.")
+        create_generic_popup(message=f"{header}|Directory: {os.path.dirname(self.filepath)}|Size: {size}|Duration: {fduration}|Check the Info Editor for more information.")
 
     def execute_file_path_conversion(self, context):
         start: int = time.time()
@@ -178,7 +178,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         self.setup_command(props.file_to_convert_path, [self.filepath])
         self.execute_voxconvert()
-        self.create_success_popup(f"Input file converted to '{self.filename_ext}'", time.time() - start)
+        self.create_success_popup(f"Input file converted to '{os.path.basename(self.filepath)}'", time.time() - start)
 
     def execute(self, context: bpy_types.Context) -> set[str]:
         if self.is_file_path_conversion(context):
@@ -206,7 +206,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             self.execute_voxconvert()
 
         TempFileManager().delete_temp_dir(temp_dir)
-        self.create_success_popup(f"Export to '{self.filename_ext}' successful", time.time() - duration)
+        self.create_success_popup(f"Export to '{os.path.basename(self.filepath)}' successful", time.time() - duration)
         return {'FINISHED'}
 
     @classmethod
