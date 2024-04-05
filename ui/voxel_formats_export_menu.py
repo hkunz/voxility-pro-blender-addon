@@ -35,7 +35,8 @@ from voxility_pro.operators.voxel.exporters.operator_kv6_exporter import EXPORT_
 from voxility_pro.operators.voxel.exporters.operator_kvx_exporter import EXPORT_OT_voxlap_voxel_model_format
 from voxility_pro.operators.voxel.exporters.operator_scn_exporter import EXPORT_OT_animatoon_3d_scene
 from voxility_pro.operators.voxel.exporters.operator_csv_exporter import EXPORT_OT_sproxel_csv
-from voxility_pro.operators.voxel.exporters.operator_sment_exporter import EXPORT_OT_starmade
+from voxility_pro.operators.voxel.exporters.operator_sment_exporter import EXPORT_OT_starmade_blueprint
+from voxility_pro.operators.voxel.exporters.operator_smtpl_exporter import EXPORT_OT_starmade_template
 from voxility_pro.operators.voxel.exporters.operator_gox_exporter import EXPORT_OT_goxel
 from voxility_pro.operators.voxel.exporters.operator_vmax_exporter import EXPORT_OT_voxel_max
 from voxility_pro.operators.voxel.exporters.operator_vbx_exporter import EXPORT_OT_voxel_builder

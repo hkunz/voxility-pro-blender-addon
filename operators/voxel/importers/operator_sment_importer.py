@@ -8,14 +8,14 @@ import bpy
 
 from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
-class IMPORT_OT_starmade(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_starmade"
+class IMPORT_OT_starmade_blueprint(OperatorVoxelBaseImporter):
+    bl_idname = "import.voxility_starmade_blueprint"
     bl_label = "Import SMENT"
-    bl_description = "Import StarMade format (.sment)"
+    bl_description = "Import StarMade Blueprint format (.sment)"
 
     filename_ext: str = ".sment"
     voxel_type: str = "sment"
-    voxel_name: str = "StarMade"
+    voxel_name: str = "StarMade Blueprint"
 
     filter_glob: bpy.props.StringProperty(
         default="*.sment",

@@ -35,7 +35,8 @@ from voxility_pro.operators.voxel.importers.operator_kv6_importer import IMPORT_
 from voxility_pro.operators.voxel.importers.operator_kvx_importer import IMPORT_OT_voxlap_voxel_model_format
 from voxility_pro.operators.voxel.importers.operator_scn_importer import IMPORT_OT_animatoon_3d_scene
 from voxility_pro.operators.voxel.importers.operator_csv_importer import IMPORT_OT_sproxel_csv
-from voxility_pro.operators.voxel.importers.operator_sment_importer import IMPORT_OT_starmade
+from voxility_pro.operators.voxel.importers.operator_sment_importer import IMPORT_OT_starmade_blueprint
+from voxility_pro.operators.voxel.importers.operator_smtpl_importer import IMPORT_OT_starmade_template
 from voxility_pro.operators.voxel.importers.operator_gox_importer import IMPORT_OT_goxel
 from voxility_pro.operators.voxel.importers.operator_vmax_importer import IMPORT_OT_voxel_max
 from voxility_pro.operators.voxel.importers.operator_vbx_importer import IMPORT_OT_voxel_builder
@@ -70,7 +71,7 @@ CLASSES: List[OperatorVoxconvert] = [
     IMPORT_OT_voxlap_voxel_model_format,
     IMPORT_OT_animatoon_3d_scene,
     IMPORT_OT_sproxel_csv,
-    IMPORT_OT_starmade,
+    IMPORT_OT_starmade_blueprint,
     IMPORT_OT_goxel,
     IMPORT_OT_voxel_max,
     IMPORT_OT_voxel_builder,
@@ -110,7 +111,7 @@ class VoxelFormatsImportMenu(bpy.types.Menu):
         ("KVX", "kvx (Voxlap Voxel model format)", "Target format: *.kvx"),
         ("SCN", "scn (Animatoon 3D Scene)", "Target format: *.scn"),
         ("CSV", "csv (Sproxel csv)", "Target format: *.csv"),
-        ("SMENT", "sment (StarMade)", "Target format: *.sment"),
+        ("SMENT", "sment (StarMade Blueprint)", "Target format: *.sment"),
         ("GOX", "gox (Goxel)", "Target format: *.gox"),
         ("VMAX", "vmax (Voxel Max)", "Target format: *.vmax"),
         ("VBX", "vbx (Voxel Builder)", "Target format: *.vbx"),

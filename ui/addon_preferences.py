@@ -195,7 +195,7 @@ class VoxilityAddonPreferences(bpy.types.AddonPreferences):
     ) # type: ignore
 
     type_sment: bpy.props.BoolProperty(
-        name="*.sment (StarMade)",
+        name="*.sment (StarMade Blueprint)",
         default=True,
         update=lambda self, context: update_bool_property(self, context, "sment")
     ) # type: ignore
@@ -293,10 +293,17 @@ class VoxilityAddonPreferences(bpy.types.AddonPreferences):
         col3 = split.column()
 
         num_boxes = len(self.CHECKBOXES)
-        third = int(num_boxes/3)
-        third2 = int(2*num_boxes/3)
-        for i, prop_name in enumerate(self.CHECKBOXES):
-            (col1 if i <= third else (col2 if i <= third2 else col3)).prop(self, prop_name)
+        boxes_per_column = num_boxes // 3
+        extra_boxes = num_boxes % 3
+
+        columns = [col1, col2, col3]
+        checkbox_index = 0
+        for i in range(3):
+            num_boxes_in_column = boxes_per_column + (1 if i < extra_boxes else 0)
+            for j in range(num_boxes_in_column):
+                columns[i].prop(self, self.CHECKBOXES[checkbox_index])
+                checkbox_index += 1
+
         box = layout.box()
         box.label(text=f"This addon is powered by vengi-voxconvert v{Utils.get_voxconvert_version()} by {Utils.get_voxconvert_author()}")
 

@@ -8,17 +8,17 @@ import bpy
 
 from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
-class EXPORT_OT_starmade_blueprint(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_starmade_blueprint"
-    bl_label = "Export SMENT"
-    bl_description = "Export selected objects to StarMade Blueprint format (.sment)"
+class EXPORT_OT_starmade_template(OperatorVoxelBaseExporter):
+    bl_idname = "export.voxility_starmade_template"
+    bl_label = "Export SMTPL"
+    bl_description = "Export selected objects to StarMade Template format (.smtpl)"
 
-    filename_ext: str = ".sment"
-    voxel_type: str = "sment"
-    voxel_name: str = "StarMade Blueprint"
+    filename_ext: str = ".smtpl"
+    voxel_type: str = "smtpl"
+    voxel_name: str = "StarMade Template"
 
     filter_glob: bpy.props.StringProperty(
-        default="*.sment",
+        default="*.smtpl",
         options={'HIDDEN'},
         maxlen=255,
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
