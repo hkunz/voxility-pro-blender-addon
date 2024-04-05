@@ -40,9 +40,11 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         bsdf: ShaderNodeBsdfPrincipled = node_tree.nodes.get('Principled BSDF')
         links = bsdf.inputs[0].links
         t = links[0].from_node.type if len(links) > 0 else ''
-        if t == 'VERTEX_COLOR' or t == 'ATTRIBUTE':
+        if t == 'TEX_IMAGE':
+            node_tree.nodes.remove(links[0].from_node)
+        elif t == 'VERTEX_COLOR' or t == 'ATTRIBUTE':
             return
-
+        mat.name = "VoxilityVertexColors"
         ContextScriptExecuter(
             area_type=AreaType.NODE_EDITOR.name,
             ui_type=AreaUiType.ShaderNodeTree.name,
@@ -58,6 +60,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
 
         node_tree.links.new(vc_node.outputs["Color"], bsdf.inputs["Base Color"])
         vc_node.layer_name = "Color"
+        vc_node.location = (-200, 200)
 
     def color_attribute_convert(self) -> None:
         ContextScriptExecuter(
