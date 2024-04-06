@@ -116,11 +116,11 @@
   <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
   Hence, we only support simple material definitions, either through the
   <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
-  node or basic color diffuse definitions via the
-  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
+  node or basic color <b>Diffuse</b> definitions via the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node's <b>Base Color</b> socket.
 </p>
 <p class="default-format">
-  No need to worry. Our integrated <b>Bake Feature</b> still enables you to use complex shaders to create model colors.
+  No need to worry. Our integrated <b>Bake Feature</b> still enables you to use complex shaders to create model <b>Diffuse</b> colors.
   Just click <span class="boxed-text">Bake</span> to consolidate shaders into a single
   <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
   for easy export.
@@ -408,9 +408,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   </thead>
 <tbody>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Voxelize Button</b></td><td class="padded-cell">Adds a voxelization <a href="https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/geometry_nodes.html" target="_blank">Geometry Nodes modifier</a> to the selected objects. Avoid directly modifying the modifier, as the addon automatically handles any necessary adjustments.</td></tr>
-  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Voxel Size</b></td><td class="padded-cell">The size or dimension of the voxels usually in meters</td></tr>
-  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>UV Map</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>UV Map</b> if any. Only one UV map is supported per object. See <a href="#addon-limitation" target="_blank">Limitations</a> section</td></tr>
-  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Vertex Colors</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>Color Attribute</b> if any. Only one Color Attribute is supported per object. See <a href="#addon-limitation" target="_blank">Limitations</a> section</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Voxel Size</b></td><td class="padded-cell">Change the size or dimension of the voxels usually in meters between 0.01 to 100. If you need more detail, scale the entire model and <a target="_blank" href="https://docs.blender.org/manual/en/latest/scene_layout/object/editing/apply.html">Apply</a> scale.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>UV Map</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>UV Map</b> if any. Only one UV map is supported per object. See <a href="#addon-limitation">Limitations</a> section</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Vertex Colors</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>Color Attribute</b> if any. Only one Color Attribute is supported per object. See <a href="#addon-limitation">Limitations</a> section</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Export Target</b></td><td class="padded-cell">Specify the desired voxel file format for export.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Check Problems</b></td><td class="padded-cell">Click to validate your voxel mesh prior to export.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Bake Button</b></td><td class="padded-cell">Optionally bake your object and colors or shaders into a single <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a> for exporting complex shaders not directly supported. Baking will flatten your object or apply all modifiers, so be sure to back up your object beforehand.</td></tr>
@@ -453,12 +453,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     <b>Export</b> to any <a href="#fileformats">supported voxel file format</a> of your choice
   </div>
 </div>
-<p class="default-format">Simply select all mesh objects and export. You will be presented with the <span class="blue-boxed-text">Export Dialog</span>
+<p class="default-format">Simply select all mesh objects and click <span class="boxed-text">Voxelize</span> button and then export.
+  You will be presented with the <span class="blue-boxed-text">Export Dialog</span>
   where you can select a location and input a file name.
-  You can also adjust the export options such as the <span class="boxed-text">Voxformat Scale</span> attribute,
-  which increases the voxel resolution of your output.
-  Hover your cursor over each option to unveil a tooltip providing an explanation for each property,
-  allowing for a comprehensive understanding of their respective functionalities.
   Press the <span class="boxed-text">Export</span> button to start the conversion process and save it to your chosen destination.
   This may take some time, so <b>please be patient.</b></p>
 <div class="image-container">
@@ -482,8 +479,6 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   depending on the complexity of your object and your computer specifications.
   Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
   Therefore, consider reducing the number of vertices through decimation before using certain features.
-  Begin with low <span class="white-boxed-text">Voxformat Scale</span> values like <b>1.0</b>
-  and gradually increase until you achieve the desired voxel resolution.
   While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
@@ -540,10 +535,10 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   <a href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank">Info Editor</a>.
 </p>
 <div class="image-container">
-  <img src="./images/sample-use-step-2-voxelize.png" alt="Scripting Tab Logging and Debugging">
+  <img src="./images/latest/voxility-logging.png" alt="Scripting Tab Logging and Debugging">
   <div class="image-description">
     Logs are in the <a href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank">Info Editor</a>
-    within Scripting Tab.
+    within <b>Scripting</b> Tab
   </div>
 </div>
 <div class="section-end"></div>
