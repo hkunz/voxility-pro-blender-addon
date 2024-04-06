@@ -68,7 +68,7 @@
   this addon provides a complete solution for incorporating voxel-based techniques into your projects.
 </p>
 <div class="image-container">
-  <img src="./images/sample-use-step-1-select-meshes-to-voxelize.png" alt="Voxility Pro N-Panel Voxelize Button">
+  <img src="./images/latest/voxility-voxelize-panel.png" alt="Voxility Pro N-Panel Voxelize Button">
   <div class="image-description">
     <span class="boxed-voxility">Voxility Pro</span> functions available in <b>N-Panel</b> and <b>Import</b> and <b>Export</b> submenus.
   </div>
@@ -101,39 +101,59 @@
 <tbody>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Mesh Voxelization</b></td><td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Texture Preservation</b></td><td class="padded-cell">Retain color information from textures during mesh-to-voxel conversion.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Bake Texture</b></td><td class="padded-cell">Bake any voxelized object with complex shaders into one texture for easy export.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Import / Export</b></td><td class="padded-cell">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Efficient Workflow</b></td><td class="padded-cell">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
   <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
 </tbody>
 </table>
 <div class="section-end"></div>
-<h6 class="outline-item-small-h6" id="limitations"><span class="outline-number-2sub">1.3.2</span> Limitations</h6>
+<h6 class="outline-item-small-h6" id="addon-limitation"><span class="outline-number-2sub">1.3.2</span> Limitations</h6>
 <p class="default-format">
   Most file formats don't support exporting complex textures,
   let alone full-blown material definitions or other application-specific features.
   For more detailed information on this limitation, please refer to
   <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
-  Hence, our addon can only support the conversion of meshes that utilize simple material definitions, either through the
+  Hence, we only support simple material definitions, either through the
   <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
   node or basic color diffuse definitions via the
   <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
-  This conversion process generates a new voxelized mesh. If <span class="boxed-text">Use Vertex Colors</span> is enabled,
-  the resulting mesh will incorporate vertex colors. Otherwise, the conversion will produce a new Image Texture instead.
-  Please note that applying another conversion to a previously voxelized mesh is not supported
-  if vertex colors are utilized. In such case, it is recommended to revert to the original mesh.
+</p>
+<p class="default-format">
+  No need to worry. Our integrated <b>Bake Feature</b> still enables you to use complex shaders to create model colors.
+  Just click <span class="boxed-text">Bake</span> to consolidate shaders into a single
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
+  for easy export.
+  Keep in mind, this process flattens your object by applying all modifiers, including the voxelization modifier, so ensure you back up your object beforehand.
+</p>
+<div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
+  <p style="color:#000;font-weight: normal; text-align: justify;">
+    Currently, the addon is restricted to utilizing only one <b>UV Map</b> and/or <b>Color Attribute</b> per object.
+    However, you still have the flexibility to employ multiple UV maps and Color Attributes and subsequently bake the outcome in order to successfully export the result.
+  </p>
+</div>
+<p class="default-format">
+  <span class="boxed-voxility">Voxility Pro</span> works best with
+  <a target="_blank" href="https://blender.stackexchange.com/questions/7910/what-is-non-manifold-geometry">manifold meshes</a>.
+  For optimal voxelization results, ensure that objects possess a volume or thickness equal to or greater than the voxel size.
+  For instance, a flat mesh lacking thickness will vanish during voxelization. To resolve this,
+  simply extrude it to provide the necessary thickness.
 </p>
 <div class="section-end"></div>
 <!-- =================================================================================================== -->
 <!-- 1.4 === Compatibility -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-h6"><span class="outline-number-1sub">1.4</span> Compatibility</h6>
-<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span class="boxed-text">Help</span><span class="arrow">&rArr;</span><span class="boxed-text">Manual</span></p>
+<p class="default-format"><span class="boxed-voxility">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>3.3</b> to <b>4.0</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span class="boxed-text">Help</span><span class="arrow">&rArr;</span><span class="boxed-text">Manual</span></p>
 <div class="image-container">
   <img class="image-step" src="./images/step-0-check-blender-version.png" alt="Check Blender Version">
   <div class="image-description">
     In this example, we're using Blender version <b>4.0</b>
   </div>
 </div>
+<p class="default-format">
+  However, if users choose to install it on lower versions up to <b>2.93</b>, an older version with limited functionality will be available, although with reduced support.
+</p>
 <div class="section-end"></div>
 <!-- =================================================================================================== -->
 <!-- 1.4.1 === Supported Voxel File Formats -->
@@ -205,7 +225,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Blender Version</b></td><td class="padded-cell">Voxility Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td></tr>
+    <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Blender Version</b></td><td class="padded-cell">Voxility Pro is fully compatible with Blender versions <b>3.3</b> through <b>4.0</b>, and onwards. However, if users choose to install it on lower versions up to <b>2.93</b>, an older version with limited functionality will be available, although with reduced support.</td></tr>
     <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Operating System</b></td><td class="padded-cell">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td></tr>
     <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Hardware Requirements</b></td><td class="padded-cell">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td></tr>
     <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
@@ -273,25 +293,7 @@
 <!-- 2.4.2 === Apple Mac OS Activation -->
 <!-- =================================================================================================== -->
 <h6 class="outline-item-small-h6"><span class="outline-number-2sub">2.4.2</span> Apple Mac OS Activation</h6>
-<p class="default-format">After you have installed the addon in Blender running on <b>Mac OS</b> you have to activate it. Due to <a
-href="https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip"
-target="_blank">this issue described here</a>, you have to manually set the third-party
-<b>vengi-voxconvert</b> binary file as executable. To do this, simply do:</p>
-<ul style="text-align: justify;">
-<li>Hold down the <span class="boxed-text">Command</span> key and press <span class="boxed-text">Spacebar</span> and type in <u><b>terminal</b></u> then press <span class="boxed-text">Enter</span> or open a <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> window using <a
-href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial</a></li>
-<li>Copy the following command text and paste into any text editor. Then modify the text to adjust to your
-  <b>Blender version</b> (e.g.<span class="yellow-boxed-text"><b>4.0</b></span>) and the <b>voxconvert version</b> (e.g.<span class="yellow-boxed-text"><b>0.0.29</b></span>):
-  <div class="console-window">
-    <div class="title-bar">Terminal</div>
-    <div class="console-body">
-        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
-    </div>
-  </div>
-</li>
-<li>Then copy-paste the new modified text into your <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> and press <span class="boxed-text">Enter</span></li>
-<li>Read the terminal console output and make sure there are no errors.</li>
-</ul>
+<p class="default-format">If you are running Blender on a <b>Mac</b> computer then you are all set. Please feel free to proceed to the <a href="#gettingstarted">Getting Started</a> section.</p>
 <!-- =================================================================================================== -->
 <!-- 2.4.3 === Linux Platform Activation -->
 <!-- =================================================================================================== -->
@@ -355,7 +357,10 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 </div>
 <div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
   <p style="color:#000;font-weight: normal; text-align: justify;">
-    <span class="blue-boxed-text">NOTE:</span> Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">save your preferences</a> using <span class="boxed-text">Save Preferences</span> button located in the lower left corner of the Preferences window, so you don't have to tick the checkboxes again the next time you open Blender.</p>
+    <span class="blue-boxed-text">NOTE:</span> Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">
+      save your preferences</a> using <span class="boxed-text">Save Preferences</span> button located in the lower left corner of the Preferences window,
+      so you don't have to tick the checkboxes again the next time you open Blender.
+  </p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 3.2 === User Interface Overview -->
@@ -363,9 +368,73 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <h6 class="outline-item-h6"><span class="outline-number-1sub">3.2</span> User Interface Overview</h6>
 <p class="default-format">In this section, we'll provide an overview of the user interface to familiarize you with the main components and features.</p>
 <!-- =================================================================================================== -->
-<!-- 3.2.1 === Export Voxel Format File -->
+<!-- 3.2.1 === Integrated Mesh Voxelization -->
 <!-- =================================================================================================== -->
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.1</span> Export Voxel Format File</h6>
+<h6 id="voxelizesection" class="outline-item-small-h6"><span class="outline-number-2sub">3.2.1</span> Voxility Pro Panel</h6>
+<p class="default-format">You can convert your textured mesh objects into voxel representation directly within Blender.
+  Simply position your mouse in the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/introduction.html">3D Viewport</a>
+  and press the <span class="boxed-text">N</span> key. This will prompt the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/sidebar.html">Sidebar</a>,
+  commonly known as the <span class="boxed-text">N-Panel</span> to appear. From there, you can easily locate and click on the
+  <span class="boxed-text">Voxility</span> tab button to open the <span class="boxed-voxility">Voxility Pro</span> addon panel.
+  You can then click the <span class="blue-boxed-text">Voxelize</span> button to convert your object to voxel mesh representation.
+
+<div class="image-container">
+  <img src="./images/latest/voxility-voxelize-panel.png" alt="Voxility Pro N-Panel Voxelize/Unvoxelize Button">
+  <div class="image-description">
+    Select the mesh object or objects and click the <span class="boxed-text">Voxelize/Unvoxelize</span> button. 
+  </div>
+</div>
+<p class="default-format">If your intention is to export the resulting voxel mesh,
+  you have the option to choose a <span class="boxed-text">Target</span> <a href="#fileformats">export voxel format</a>
+  from the dropdown menu situated within the expandable <b>Export</b> tab.
+  Hover your cursor over each option to unveil a tooltip providing an explanation for each property,
+  allowing for a comprehensive understanding of their respective functionalities.
+</p>
+<div class="text-gray-block"><p>
+  <span class="red-boxed-text">WARNING:</span> Before delving into larger projects,
+  it's recommended to start with smaller objects containing fewer vertices to familiarize yourself with the addon's functionality.
+  Processing time can vary significantly, ranging from seconds to several minutes,
+  depending on the complexity of your object and your computer specifications.
+  Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
+  Therefore, consider reducing the number of vertices through decimation before using certain features.
+  While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
+</div>
+<p class="default-format">
+  Below are the distinct functionalities provided by the addon panel:
+</p>
+<table class="default-table">
+  <thead class="table-header-type">
+    <tr style="color:#ffffff;"><th class="padded-cell">Function</th><th class="padded-cell">Description</th>
+  </thead>
+<tbody>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Voxelize Button</b></td><td class="padded-cell">Adds a voxelization <a href="https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/geometry_nodes.html" target="_blank">Geometry Nodes modifier</a> to the selected objects. Avoid directly modifying the modifier, as the addon automatically handles any necessary adjustments.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Voxel Size</b></td><td class="padded-cell">The size or dimension of the voxels usually in meters</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>UV Map</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>UV Map</b> if any. Only one UV map is supported per object. See <a href="#addon-limitation" target="_blank">Limitations</a> section</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Vertex Colors</b></td><td class="padded-cell"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>Color Attribute</b> if any. Only one Color Attribute is supported per object. See <a href="#addon-limitation" target="_blank">Limitations</a> section</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Export Target</b></td><td class="padded-cell">Specify the desired voxel file format for export.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Check Problems</b></td><td class="padded-cell">Click to validate your voxel mesh prior to export.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Bake Button</b></td><td class="padded-cell">Optionally bake your object and colors or shaders into a single <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a> for exporting complex shaders not directly supported. Baking will flatten your object or apply all modifiers, so be sure to back up your object beforehand.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Export Button</b></td><td class="padded-cell">Click to export your voxel mesh to the specified <b>Export Target</b></td></tr>
+  <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
+</tbody>
+</table>
+<div class="section-end"></div>
+<p class="default-format">
+  <span class="boxed-voxility">Voxility File Conversion</span> panel can be accessed by clicking anywhere within the 3D Viewport,
+  ensuring that no object is selected. Browse for an <b>Input File</b>, choose a <b>Target</b> format,
+  and then click the <span class="blue-boxed-text">Convert</span> button to select a location for saving the result.
+  <div class="image-container">
+    <img src="./images/latest/voxility-convert-format.png" alt="Voxility Pro N-Panel File Conversion Panel">
+    <div class="image-description">
+      Select a file of any <a href="#fileformats">supported voxel file format</a> and convert to a <b>Target</b> format
+    </div>
+  </div>
+</p>
+<div class="section-end"></div>
+<!-- =================================================================================================== -->
+<!-- 3.2.2 === Export Voxel Format File -->
+<!-- =================================================================================================== -->
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.2</span> Export Voxel Format File</h6>
 
 <p class="default-format">You have the flexibility to export your models to a diverse range of widely recognized and popular voxel file formats,
   including <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
@@ -381,7 +450,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <div class="image-container">
   <img class="image-step" src="./images/step-4-ui-export.png" alt="Voxility Pro Export Voxel Format File">
   <div class="image-description">
-    Export to any <a href="#fileformats">supported voxel file format</a> of your choice
+    <b>Export</b> to any <a href="#fileformats">supported voxel file format</a> of your choice
   </div>
 </div>
 <p class="default-format">Simply select all mesh objects and export. You will be presented with the <span class="blue-boxed-text">Export Dialog</span>
@@ -393,9 +462,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   Press the <span class="boxed-text">Export</span> button to start the conversion process and save it to your chosen destination.
   This may take some time, so <b>please be patient.</b></p>
 <div class="image-container">
-  <img class="image-step" src="./images/step-6-ui-export-dialog.png" alt="Voxility Pro Export Voxel Format Dialog">
+  <img class="image-step" src="./images/latest/voxility-export-dialog.png" alt="Voxility Pro Export Voxel Format Dialog">
   <div class="image-description">
-    In this example we are exporting to <span class="orange-boxed-text">.vox</span> file format
+    In this <b>Export Dialog</b> example we are exporting to <span class="orange-boxed-text">.vox</span> file format
   </div>
 </div>
 <p class="default-format">In the previous example we exported a <span class="orange-boxed-text">.vox</span> file which can be opened in <a target="_blank" href="https://ephtracy.github.io/">MagicaVoxel</a></p>
@@ -418,9 +487,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
-<!-- 3.2.2 === Import Voxel Format File -->
+<!-- 3.2.3 === Import Voxel Format File -->
 <!-- =================================================================================================== -->
-<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.2</span> Import Voxel Format File</h6>
+<h6 class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Import Voxel Format File</h6>
 <p class="default-format">You have the flexibility to import your models from a diverse range of widely recognized and popular voxel file formats,
   including <span class="partial-black-boxed-text">MagicaVoxel</span><span class="partial-orange-boxed-text">.vox</span>
   <span class="partial-black-boxed-text">Qubicle</span><span class="partial-orange-boxed-text">.qb</span>
@@ -445,9 +514,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   Press the <span class="boxed-text">Import</span> button to start the import process.
   This may take some time, so <b>please be patient.</b></p>
 <div class="image-container">
-  <img src="./images/step-7-ui-import-dialog.png" alt="Voxility Pro Import Voxel Format File">
+  <img src="./images/latest/voxility-import-dialog.png" alt="Voxility Pro Import Voxel Format File">
   <div class="image-description">
-    This is the <b>Import Dialog</b> where you can select a voxel file to import
+    In this <b>Import Dialog</b> example we are importing a <span class="orange-boxed-text">.vox</span> file
   </div>
 </div>
 <div class="text-gray-block">
@@ -458,53 +527,6 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     While the user interface may seem unresponsive or stalled, rest assured it is diligently processing.
     Please be patient while the process completes.
   </p>
-</div>
-<!-- =================================================================================================== -->
-<!-- 3.2.3 === Integrated Mesh Voxelization -->
-<!-- =================================================================================================== -->
-<h6 id="voxelizesection" class="outline-item-small-h6"><span class="outline-number-2sub">3.2.3</span> Integrated Mesh Voxelization</h6>
-<p class="default-format">You can also convert your textured mesh objects into voxel representation directly within Blender.
-  Simply position your mouse in the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/introduction.html">3D Viewport</a>
-  and press the <span class="boxed-text">N</span> key. 
-
-  This will prompt the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/sidebar.html">Sidebar</a>,
-  commonly known as the <span class="boxed-text">N-Panel</span>, to appear. From there, you can easily locate and click on the
-  <span class="boxed-text">Voxility</span> tab button to open the <span class="boxed-voxility">Voxility Pro</span> addon panel.
-
-<div class="image-container">
-  <img src="./images/sample-use-step-1-select-meshes-to-voxelize.png" alt="Voxility Pro N-Panel Voxelize Button">
-  <div class="image-description">
-    Select the mesh object or objects and click the <span class="boxed-text">Voxelize</span> button. 
-  </div>
-</div>
-<p class="default-format">If your intention is to export the resulting voxel mesh,
-  you have the option to choose a <span class="boxed-text">Target</span> <a href="#fileformats">export voxel format</a>
-  from the dropdown menu situated just below the <span class="boxed-text">Voxelize</span>
-  button before initiating the voxelization process.
-  This allows you to streamline the workflow by processing the selection only once.
-  Hover your cursor over each option to unveil a tooltip providing an explanation for each property, allowing for a comprehensive understanding of their respective functionalities.
-  This may take some time, so <b>please be patient.</b></p>
-  <p class="default-format">
-  Following the voxelization process, you will have the opportunity to conveniently save the resulting file by utilizing the
-  <span class="boxed-text">Save Target Format</span> button, which enables you to preserve your work with ease.
-</p>
-<div class="image-container">
-  <img src="./images/sample-use-step-3-save-target.png" alt="Voxility Pro N-Panel Save Button">
-  <div class="image-description">
-    Choose a <b>folder</b> where you want to save the resulting files.
-  </div>
-</div>
-<p class="default-format">
-</p>
-<div class="text-gray-block"><p>
-  <span class="red-boxed-text">WARNING:</span> Before delving into larger projects,
-  it's recommended to start with smaller objects containing fewer vertices to familiarize yourself with the addon's functionality.
-  Processing time can vary significantly, ranging from seconds to several minutes,
-  depending on the complexity of your object and your computer specifications.
-  Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
-  Therefore, consider reducing the number of vertices through decimation before using certain features.
-  Begin with low  <span class="white-boxed-text">Voxformat Scale</span> values like <b>1.0</b> and gradually increase until you achieve the desired voxel resolution.
-  While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 3.3 === Voxility Logging -->
