@@ -145,6 +145,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 def register() -> None:
     bpy.utils.register_class(VoxilityProProperties)
     bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
+    bpy.types.Object.voxelized = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     register_mesh_voxel_operator()
     register_mesh_voxel_save_operator()
@@ -154,6 +155,7 @@ def register() -> None:
 def unregister() -> None:
     bpy.utils.unregister_class(VoxilityProProperties)
     del bpy.types.Scene.voxility_pro_properties
+    del bpy.types.Object.voxelized
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     unregister_mesh_voxel_operator()
     unregister_mesh_voxel_save_operator()

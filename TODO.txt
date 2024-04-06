@@ -15,6 +15,7 @@ TODO:
 * Bug when doing file to file conversion when opening a path. (don't know how to reproduce sometimes it does not work)
 
 BUGS:
+!! Using old voxconverter to create qb file does not open in Qubicle but can be imported back into blender.
 Bake getting darker colors with each bake. Try white it gets gray over time.
 Surface_Only not working because i export to QB only surface voxels. so i need option to FILL voxels
 Importing a vox object with Image Texture and then baking it, results in incorrect colors
