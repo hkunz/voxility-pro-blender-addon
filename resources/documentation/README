@@ -21,10 +21,10 @@ METHOD 2:
 MODIFY DOCUMENTATION
 =============================================================================================
 
-* Edit "voxility-documentation-content-test.html" which is included in "voxility-documentation.html"
+* Edit "test/voxility-documentation-content.html" included in "voxility-documentation.html"
 * Test output via METHOD 2 with HTML document "voxility-documentation.html"
 * run script "generate-documentation-content-html.sh" from project root
-* copy contents from "voxility-documentation-content-final.html" to blendermarket.com documentation
+* copy contents from "final/voxility-documentation-content.html" to blendermarket.com docs
 
 =============================================================================================
 DOCUMENTATION CONTENT
