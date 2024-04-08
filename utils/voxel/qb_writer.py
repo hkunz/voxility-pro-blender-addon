@@ -46,7 +46,7 @@ class Qb:
         file.write(struct.pack("iii", matrix.pos[0], matrix.pos[1], matrix.pos[2]))
 
         if self.compressed == 1:
-            self.save_matrix_compressed(file, matrix)
+            self.save_matrix_compressed(file, matrix) # RLE compression is slower due to more loops/write operations and besides it doesn't work in Qubicle even if they claimed it does https://getqubicle.com/qubicle/documentation/docs/file/qb/#voxel-data
         else:
             self.save_matrix_uncompressed(file, matrix)
 

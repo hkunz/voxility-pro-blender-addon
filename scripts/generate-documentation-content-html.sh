@@ -26,7 +26,8 @@ generate_voxility_content_final_file() {
     replace_class_with_style_attribute $output_file
     modify_alternate_row_colors $output_file
 
-    sed -i -e '/<style/,/<\/style>/d' -e '/<!--.*-->/d' -e '/^\s*$/d' "$output_file"
+    # sed -i -e '/<style/,/<\/style>/d' -e '/<!--.*-->/d' -e '/^\s*$/d' "$output_file"
+    sed -i -e '/<style/,/<\/style>/d' -e '/^\s*$/d' "$output_file"
     sed -i "1i $(get_autogenerate_notice_html)" "$output_file"
     echo "Generated file: $output_file"
 }

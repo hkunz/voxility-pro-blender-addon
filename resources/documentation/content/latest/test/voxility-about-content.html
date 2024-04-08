@@ -17,7 +17,7 @@
   <span class="partial-black-boxed-text">Voxlap</span><span class="partial-orange-boxed-text">.vxl</span>
   and a plethora of <a href="#fileformats">many more voxel file formats</a>,
   ensuring compatibility with a wide range of voxel editors and game engines.
-  Additionally, this addon introduces an <b>integrated voxelization feature</b> for textured meshes,
+  Additionally, this addon introduces an <b>integrated voxelization panel</b> for textured meshes,
   allowing for streamlined voxelization directly within Blender. For more detailed information, please refer to the <b>Documentation</b>.
 </p>
 <div class="text-block">
@@ -55,6 +55,7 @@
 <tbody>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Mesh Voxelization</b></td><td class="padded-cell">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Texture Preservation</b></td><td class="padded-cell">Retain color information from textures during mesh-to-voxel conversion.</td></tr>
+  <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Bake Texture</b></td><td class="padded-cell">Bake any voxelized object with complex shaders into one Diffuse texture for easy export.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Import / Export</b></td><td class="padded-cell">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
   <tr class="default-alternate-color"><td class="padded-cell-no-wrap"><b>Efficient Workflow</b></td><td class="padded-cell">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
   <tr><td class="table-footer-type"></td><td class="table-footer-type"></td></tr>
@@ -143,18 +144,7 @@
 <div class="section-end"></div>
 <h4 class="outline-item-h4" id="fileformats"><span class="outline-number-main">About</span> Limitations</h4>
 <p class="default-format">
-  Most file formats don't support exporting complex textures,
-  let alone full-blown material definitions or other application-specific features.
-  For more detailed information on this limitation, please refer to
-  <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
-  Hence, our addon can only support the conversion of meshes that utilize simple material definitions, either through the
-  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
-  node or basic color diffuse definitions via the
-  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
-  This conversion process generates a new voxelized mesh. If <span class="boxed-text">Use Vertex Colors</span> is enabled,
-  the resulting mesh will incorporate vertex colors. Otherwise, the conversion will produce a new Image Texture instead.
-  Please note that applying another conversion to a previously voxelized mesh is not supported
-  if vertex colors are utilized. In such case, it is recommended to revert to the original mesh.
+  Please consult the <b>documentation</b> for details regarding the limitations of the addon.
 </p>
 <div class="section-end"></div>
 <h4 class="outline-item-h4" id="fileformats"><span class="outline-number-main">About</span> Final Considerations</h4>
