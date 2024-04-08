@@ -1,6 +1,5 @@
 import struct
-
-from typing import List, Dict, Tuple
+from typing import List, Tuple
 
 class QbMatrix:
     def __init__(self, name: str, size_x, size_y, size_z, data, pos: Tuple[int, int, int]):
@@ -25,7 +24,7 @@ class Qb:
 
     def save(self, filename: str) -> None:
         with open(filename, "wb") as f: # type(f) = <class '_io.BufferedWriter'>
-            self.compressed = 0  # Compression saving not supported
+            self.compressed = 0  # Use 1 to set compression to RLE
 
             f.write(struct.pack("I", self.version))
             f.write(struct.pack("I", self.colorFormat))
@@ -45,7 +44,43 @@ class Qb:
         size_z = matrix.size_z
         file.write(struct.pack("III", size_x, size_y, size_z))
         file.write(struct.pack("iii", matrix.pos[0], matrix.pos[1], matrix.pos[2]))
+
+        if self.compressed == 1:
+            self.save_matrix_compressed(file, matrix)
+        else:
+            self.save_matrix_uncompressed(file, matrix)
+
+    def save_matrix_uncompressed(self, file: object, matrix: QbMatrix) -> None:
         file.write(bytes([c for color in matrix.data for c in color]))
+
+    def save_matrix_compressed(self, file: object, matrix: QbMatrix) -> None:
+        size_x = matrix.size_x
+        size_y = matrix.size_y
+        size_z = matrix.size_z
+        data = matrix.data
+
+        def convert_color(color_tuple):
+            return (color_tuple[0] << 24) | (color_tuple[1] << 16) | (color_tuple[2] << 8) | color_tuple[3]
+
+        index = 0
+        while index < size_x * size_y * size_z:
+            count = 1
+            while (index + count) < (size_x * size_y * size_z) and data[index + count] == data[index]:
+                count += 1
+
+            color_data = convert_color(data[index])
+            if count > 3:
+                file.write(struct.pack("I", 2))  # CODEFLAG
+                file.write(struct.pack("I", count))
+                file.write(struct.pack("I", color_data))
+                index += count
+            else:
+                for _ in range(count):
+                    file.write(struct.pack("I", color_data))
+                    index += 1
+
+        file.write(struct.pack("I", 6))  # NEXTSLICEFLAG
+
 
 # Usage:
 def test_write_qb_file():
