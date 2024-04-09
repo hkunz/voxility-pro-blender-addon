@@ -74,7 +74,7 @@
   this addon provides a complete solution for incorporating voxel-based techniques into your projects.
 </p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxility Pro N-Panel Voxelize Button">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="https://markets-rails.s3.amazonaws.com/cache/cd22760e540978041414104673a01ff9.png" onerror="this.src='./images/latest/voxility-voxelize-panel.png';" alt="Voxility Pro N-Panel Voxelize Button">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> functions available in <b>N-Panel</b> and <b>Import</b> and <b>Export</b> submenus.
   </div>
@@ -107,39 +107,60 @@
 <tbody>
   <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Mesh Voxelization</b></td><td style="padding: 5px 25px;">Transform polygonal meshes into voxel-based representations with ease.</td></tr>
   <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Texture Preservation</b></td><td style="padding: 5px 25px;">Retain color information from textures during mesh-to-voxel conversion.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Import / Export</b></td><td style="padding: 5px 25px;">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Efficient Workflow</b></td><td style="padding: 5px 25px;">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Bake Texture</b></td><td style="padding: 5px 25px;">Bake any voxelized object with complex shaders into one Diffuse texture for easy export.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Import / Export</b></td><td style="padding: 5px 25px;">Seamlessly import and export voxel file formats for compatibility with various voxel editors and game engines.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Efficient Workflow</b></td><td style="padding: 5px 25px;">Intuitive tools and customizable settings streamline your voxel modeling workflow, enabling you to focus on your creative vision.</td></tr>
   <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
 </tbody>
 </table>
 <div style="margin-bottom: 30px;"></div>
-<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;" id="limitations"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.3.2</span> Limitations</h6>
+<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;" id="addon-limitation"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.3.2</span> Limitations</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
   Most file formats don't support exporting complex textures,
   let alone full-blown material definitions or other application-specific features.
   For more detailed information on this limitation, please refer to
   <a target="_blank" href="https://blender.stackexchange.com/questions/57531/fbx-export-why-there-are-no-materials-or-textures">this link</a>.
-  Hence, our addon can only support the conversion of meshes that utilize simple material definitions, either through the
+  Hence, we only support simple material definitions, either through the
   <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
-  node or basic color diffuse definitions via the
-  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node.
-  This conversion process generates a new voxelized mesh. If <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Use Vertex Colors</span> is enabled,
-  the resulting mesh will incorporate vertex colors. Otherwise, the conversion will produce a new Image Texture instead.
-  Please note that applying another conversion to a previously voxelized mesh is not supported
-  if vertex colors are utilized. In such case, it is recommended to revert to the original mesh.
+  node or basic color <b>Diffuse</b> definitions via the
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/principled.html">Principled BSDF</a> node's <b>Base Color</b> socket.
+</p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  No need to worry. Our integrated <b>Bake Feature</b> still enables you to use complex shaders to create model <b>Diffuse</b> colors.
+  Just click <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Bake</span> to consolidate shaders into a single
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a>
+  for easy export.
+  Keep in mind, this process flattens your object by applying all modifiers, including the voxelization modifier, so ensure you back up your object beforehand.
+</p>
+<div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
+  <p style="color:#000;font-weight: normal; text-align: justify;">
+    Currently, the addon is restricted to utilizing only one <b>UV Map</b> and/or <b>Color Attribute</b> per object.
+    However, you still have the flexibility to employ multiple UV maps and Color Attributes and subsequently bake the outcome in order to successfully export the result.
+  </p>
+</div>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> works best with
+  <a target="_blank" href="https://blender.stackexchange.com/questions/7910/what-is-non-manifold-geometry">manifold meshes</a>.
+  For optimal voxelization results, ensure that objects possess a volume or thickness equal to or greater than the voxel size.
+  For instance, a flat mesh lacking thickness will vanish during voxelization. To resolve this,
+  simply extrude it to provide the necessary thickness or consider using a
+  <a target="_blank" href="https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/solidify.html">Solidify modifier</a>.
 </p>
 <div style="margin-bottom: 30px;"></div>
 <!-- =================================================================================================== -->
 <!-- 1.4 === Compatibility -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.4</span> Compatibility</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Help</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Manual</span></p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>3.3</b> to <b>4.1</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Help</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Manual</span></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-0-check-blender-version.png';" alt="Check Blender Version">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="https://markets-rails.s3.amazonaws.com/cache/376c513e97ded3ba170f5da20a4cd072.png" onerror="this.src='./images/step-0-check-blender-version.png';" alt="Check Blender Version">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     In this example, we're using Blender version <b>4.0</b>
   </div>
 </div>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  However, if users choose to install it on lower versions up to <b>2.93</b>, an older version with limited functionality will be available, although with reduced support.
+</p>
 <div style="margin-bottom: 30px;"></div>
 <!-- =================================================================================================== -->
 <!-- 1.4.1 === Supported Voxel File Formats -->
@@ -156,38 +177,38 @@
     </tr>
   </thead>
   <tbody style="font-weight:bold; color:#646464">
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">MagicaVoxel</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Qubicle Binary Exchange</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qb</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Qubicle Binary Tree Exchange</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qbt</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Qubicle Exchange Format ASCII</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qef</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Qubicle Project</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qbcl</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Binvox command line voxelizer</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.binvox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">CubeWorld CubeMap</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.cub</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Minecraft Schematic</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.schematic</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Minecraft level dat</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.dat</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Minecraft Anvil Region</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.mca</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Minetest Template</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.mts</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Sandbox VoxEdit Collection</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxc</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Sandbox VoxEdit Hierarchy</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxr</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Sandbox VoxEdit Tilemap</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxt</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Sandbox VoxEdit Model</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">MagicaVoxel XRAW</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.xraw</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Tiberian Sun</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxl</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Voxlap Voxel Engine</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.kv6</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Voxlap Voxel model format</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.kvx</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Animatoon 3D Scene</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.scn</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Sproxel csv</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.csv</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">StarMade Blueprint</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.sment</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Goxel</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.gox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Voxel Max</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vmax</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Voxel Builder</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vbx</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Voxel3D</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.v3a</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Vengi</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vengi</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Nicks Voxel Model</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.nvm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Particubes</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.pcubes</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">CuBic Mesh</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.csm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Cubzh</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.3zh</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Cubzh World</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.b64</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">MagicaVoxel</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Qubicle Binary Exchange</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qb</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Qubicle Binary Tree Exchange</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qbt</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Qubicle Exchange Format ASCII</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qef</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Qubicle Project</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.qbcl</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Binvox command line voxelizer</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.binvox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">CubeWorld CubeMap</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.cub</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Minecraft Schematic</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.schematic</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Minecraft level dat</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.dat</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Minecraft Anvil Region</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.mca</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Minetest Template</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.mts</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Sandbox VoxEdit Collection</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxc</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Sandbox VoxEdit Hierarchy</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxr</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Sandbox VoxEdit Tilemap</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxt</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Sandbox VoxEdit Model</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">MagicaVoxel XRAW</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.xraw</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Tiberian Sun</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vxl</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Voxlap Voxel Engine</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.kv6</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Voxlap Voxel model format</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.kvx</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Animatoon 3D Scene</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.scn</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Sproxel csv</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.csv</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">StarMade Blueprint</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.sment</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Goxel</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.gox</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Voxel Max</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vmax</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Voxel Builder</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vbx</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Voxel3D</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.v3a</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Vengi</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vengi</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Nicks Voxel Model</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.nvm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Particubes</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.pcubes</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">CuBic Mesh</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.csm</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;">Cubzh</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.3zh</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b>✓</b></td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;">Cubzh World</td><td style="text-align: center;"><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.b64</span></td><td style="text-align: center;"><b>✓</b></td><td style="text-align: center;"><b> </b></td></tr>
     <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
   </tbody>
 </table>
@@ -211,9 +232,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Blender Version</b></td><td style="padding: 5px 25px;">Voxility Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td></tr>
-    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Operating System</b></td><td style="padding: 5px 25px;">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td></tr>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Hardware Requirements</b></td><td style="padding: 5px 25px;">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Blender Version</b></td><td style="padding: 5px 25px;">Voxility Pro is fully compatible with Blender versions <b>3.3</b> through <b>4.1</b>, and onwards. However, if users choose to install it on lower versions up to <b>2.93</b>, an older version with limited functionality will be available, although with reduced support.</td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Operating System</b></td><td style="padding: 5px 25px;">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td></tr>
+    <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Hardware Requirements</b></td><td style="padding: 5px 25px;">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td></tr>
     <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
   </tbody>
 </table>
@@ -255,7 +276,7 @@
     please follow the instructions provided below based on your respective <a target="_blank" href="https://en.wikipedia.org/wiki/Operating_system">Operating System</a>, and review the following information.
     Take note of the <b>voxconvert</b> version, which is an executable binary file used within this addon,
     because this information may be needed after addon installation depending on your Operating System.
-    Open <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Edit</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Preferences...</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Add-ons</span>
+    Open <span class="boxed-txt">Edit</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Preferences...</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Add-ons</span>
 </p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
   <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-0-preferences-install-addon-check.png';" alt="Check Addon Version and Voxconvert version">
@@ -280,25 +301,7 @@
 <!-- 2.4.2 === Apple Mac OS Activation -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">2.4.2</span> Apple Mac OS Activation</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">After you have installed the addon in Blender running on <b>Mac OS</b> you have to activate it. Due to <a
-href="https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip"
-target="_blank">this issue described here</a>, you have to manually set the third-party
-<b>vengi-voxconvert</b> binary file as executable. To do this, simply do:</p>
-<ul style="text-align: justify;">
-<li>Hold down the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Command</span> key and press <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Spacebar</span> and type in <u><b>terminal</b></u> then press <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Enter</span> or open a <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> window using <a
-href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial</a></li>
-<li>Copy the following command text and paste into any text editor. Then modify the text to adjust to your
-  <b>Blender version</b> (e.g.<span style="color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;"><b>4.0</b></span>) and the <b>voxconvert version</b> (e.g.<span style="color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;"><b>0.0.29</b></span>):
-  <div style="width: 100%; margin: 15px auto; border: 1px solid #9c9c9c; border-radius: 10px; overflow: hidden;">
-    <div style="background-color: #cfcfcf; color: rgb(26, 26, 26); padding: 5px 5px 5px 10px; font-weight: bold; user-select: none;">Terminal</div>
-    <div style="background-color: black; color: white; padding: 15px; font-family: 'Courier New', Courier, monospace; font-weight: normal; text-align: left;">
-        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
-    </div>
-  </div>
-</li>
-<li>Then copy-paste the new modified text into your <a target="_blank" href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a> and press <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Enter</span></li>
-<li>Read the terminal console output and make sure there are no errors.</li>
-</ul>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">If you are running Blender on a <b>Mac</b> computer then you are all set. Please feel free to proceed to the <a href="#gettingstarted">Getting Started</a> section.</p>
 <!-- =================================================================================================== -->
 <!-- 2.4.3 === Linux Platform Activation -->
 <!-- =================================================================================================== -->
@@ -362,7 +365,10 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 </div>
 <div style="background-color: #e0e0e0; padding: 15px 15px 5px 15px; border-radius: 10px;margin-bottom: 20px;">
   <p style="color:#000;font-weight: normal; text-align: justify;">
-    <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">NOTE:</span> Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">save your preferences</a> using <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Save Preferences</span> button located in the lower left corner of the Preferences window, so you don't have to tick the checkboxes again the next time you open Blender.</p>
+    <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">NOTE:</span> Don't forget to <a href="https://docs.blender.org/manual/en/latest/editors/preferences/introduction.html#managing-preferences" target="_blank">
+      save your preferences</a> using <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Save Preferences</span> button located in the lower left corner of the Preferences window,
+      so you don't have to tick the checkboxes again the next time you open Blender.
+  </p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 3.2 === User Interface Overview -->
@@ -370,9 +376,72 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2</span> User Interface Overview</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">In this section, we'll provide an overview of the user interface to familiarize you with the main components and features.</p>
 <!-- =================================================================================================== -->
-<!-- 3.2.1 === Export Voxel Format File -->
+<!-- 3.2.1 === Integrated Mesh Voxelization -->
 <!-- =================================================================================================== -->
-<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.1</span> Export Voxel Format File</h6>
+<h6 id="voxelizesection" style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.1</span> Voxility Pro Panel</h6>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">You can convert your textured mesh objects into voxel representation directly within Blender.
+  Simply position your mouse in the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/introduction.html">3D Viewport</a>
+  and press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N</span> key. This will prompt the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/sidebar.html">Sidebar</a>,
+  commonly known as the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N-Panel</span> to appear. From there, you can easily locate and click on the
+  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxility</span> tab button to open the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon panel.
+  You can then click the <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize</span> button to convert your object to voxel mesh representation.
+<div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="https://markets-rails.s3.amazonaws.com/cache/cd22760e540978041414104673a01ff9.png" onerror="this.src='./images/latest/voxility-voxelize-panel.png';" alt="Voxility Pro N-Panel Voxelize/Unvoxelize Button">
+  <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
+    Select the mesh object or objects and click the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize/Unvoxelize</span> button. 
+  </div>
+</div>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">If your intention is to export the resulting voxel mesh,
+  you have the option to choose a <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Target</span> <a href="#fileformats">export voxel format</a>
+  from the dropdown menu situated within the expandable <b>Export</b> tab.
+  Hover your cursor over each option to unveil a tooltip providing an explanation for each property,
+  allowing for a comprehensive understanding of their respective functionalities.
+</p>
+<div style="border: 3px solid #ff4800; color:#fff; font-weight: normal; background-color: #333333; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px; text-align: justify;"><p>
+  <span style="color:white; font-weight: bold; background-color: #ff4800; padding: 0px 5px 0px 5px; border-radius: 5px;">WARNING:</span> Before delving into larger projects,
+  it's recommended to start with smaller objects containing fewer vertices to familiarize yourself with the addon's functionality.
+  Processing time can vary significantly, ranging from seconds to several minutes,
+  depending on the complexity of your object and your computer specifications.
+  Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
+  Therefore, consider reducing the number of vertices through decimation before using certain features.
+  While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
+</div>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  Below are the distinct functionalities provided by the addon panel:
+</p>
+<table style="border-collapse: separate; border: 4px; width: 100%; padding: 0px;">
+  <thead style="background-color: #292929;">
+    <tr style="color:#ffffff;"><th style="padding: 5px 25px;">Function</th><th style="padding: 5px 25px;">Description</th>
+  </thead>
+<tbody>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Voxelize Button</b></td><td style="padding: 5px 25px;">Adds a voxelization <a href="https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/geometry_nodes.html" target="_blank">Geometry Nodes modifier</a> to the selected objects. Avoid directly modifying the modifier, as the addon automatically handles any necessary adjustments.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Voxel Size</b></td><td style="padding: 5px 25px;">Change the size or dimension of the voxels usually in meters between 0.01 to 100. If you need more detail, scale the entire model and <a target="_blank" href="https://docs.blender.org/manual/en/latest/scene_layout/object/editing/apply.html">Apply</a> scale.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>UV Map</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>UV Map</b> if any. Only one UV map is supported per object. See <a href="#addon-limitation">Limitations</a> section</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Vertex Colors</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/controls/pivot_point/active_element.html">Active Object</a>'s <b>Color Attribute</b> if any. Only one Color Attribute is supported per object. See <a href="#addon-limitation">Limitations</a> section</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Export Target</b></td><td style="padding: 5px 25px;">Specify the desired voxel file format for export.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Check Problems</b></td><td style="padding: 5px 25px;">Click to validate your voxel mesh prior to export.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Bake Button</b></td><td style="padding: 5px 25px;">Optionally bake your object and colors or shaders into a single <a target="_blank" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/textures/image.html">Image Texture</a> for exporting complex shaders not directly supported. Baking will flatten your object or apply all modifiers, so be sure to back up your object beforehand.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Export Button</b></td><td style="padding: 5px 25px;">Click to export your voxel mesh to the specified <b>Export Target</b></td></tr>
+  <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
+</tbody>
+</table>
+<div style="margin-bottom: 30px;"></div>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
+  <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility File Conversion</span> panel can be accessed by clicking anywhere within the 3D Viewport,
+  ensuring that no object is selected. Browse for an <b>Input File</b>, choose a <b>Target</b> format,
+  and then click the <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Convert</span> button to select a location for saving the result.
+  <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
+    <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/latest/voxility-convert-format.png';" alt="Voxility Pro N-Panel File Conversion Panel">
+    <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
+      Select a file of any <a href="#fileformats">supported voxel file format</a> and convert to a <b>Target</b> format
+    </div>
+  </div>
+</p>
+<div style="margin-bottom: 30px;"></div>
+<!-- =================================================================================================== -->
+<!-- 3.2.2 === Export Voxel Format File -->
+<!-- =================================================================================================== -->
+<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.2</span> Export Voxel Format File</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">You have the flexibility to export your models to a diverse range of widely recognized and popular voxel file formats,
   including <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">MagicaVoxel</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.vox</span>
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Qubicle</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.qb</span>
@@ -387,21 +456,18 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
   <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-4-ui-export.png';" alt="Voxility Pro Export Voxel Format File">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    Export to any <a href="#fileformats">supported voxel file format</a> of your choice
+    <b>Export</b> to any <a href="#fileformats">supported voxel file format</a> of your choice
   </div>
 </div>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">Simply select all mesh objects and export. You will be presented with the <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Export Dialog</span>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">Simply select all mesh objects and click <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize</span> button and then export.
+  You will be presented with the <span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Export Dialog</span>
   where you can select a location and input a file name.
-  You can also adjust the export options such as the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxformat Scale</span> attribute,
-  which increases the voxel resolution of your output.
-  Hover your cursor over each option to unveil a tooltip providing an explanation for each property,
-  allowing for a comprehensive understanding of their respective functionalities.
   Press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Export</span> button to start the conversion process and save it to your chosen destination.
   This may take some time, so <b>please be patient.</b></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-6-ui-export-dialog.png';" alt="Voxility Pro Export Voxel Format Dialog">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/latest/voxility-export-dialog.png';" alt="Voxility Pro Export Voxel Format Dialog">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    In this example we are exporting to <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file format
+    In this <b>Export Dialog</b> example we are exporting to <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file format
   </div>
 </div>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">In the previous example we exported a <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file which can be opened in <a target="_blank" href="https://ephtracy.github.io/">MagicaVoxel</a></p>
@@ -419,14 +485,12 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   depending on the complexity of your object and your computer specifications.
   Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
   Therefore, consider reducing the number of vertices through decimation before using certain features.
-  Begin with low <span style="color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 0px 8px; border-radius: 5px;">Voxformat Scale</span> values like <b>1.0</b>
-  and gradually increase until you achieve the desired voxel resolution.
   While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
-<!-- 3.2.2 === Import Voxel Format File -->
+<!-- 3.2.3 === Import Voxel Format File -->
 <!-- =================================================================================================== -->
-<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.2</span> Import Voxel Format File</h6>
+<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.3</span> Import Voxel Format File</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">You have the flexibility to import your models from a diverse range of widely recognized and popular voxel file formats,
   including <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">MagicaVoxel</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.vox</span>
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Qubicle</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.qb</span>
@@ -451,9 +515,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   Press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Import</span> button to start the import process.
   This may take some time, so <b>please be patient.</b></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-7-ui-import-dialog.png';" alt="Voxility Pro Import Voxel Format File">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/latest/voxility-import-dialog.png';" alt="Voxility Pro Import Voxel Format File">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    This is the <b>Import Dialog</b> where you can select a voxel file to import
+    In this <b>Import Dialog</b> example we are importing a <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file
   </div>
 </div>
 <div style="border: 3px solid #ff4800; color:#fff; font-weight: normal; background-color: #333333; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px; text-align: justify;">
@@ -464,51 +528,6 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     While the user interface may seem unresponsive or stalled, rest assured it is diligently processing.
     Please be patient while the process completes.
   </p>
-</div>
-<!-- =================================================================================================== -->
-<!-- 3.2.3 === Integrated Mesh Voxelization -->
-<!-- =================================================================================================== -->
-<h6 id="voxelizesection" style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.2.3</span> Integrated Mesh Voxelization</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">You can also convert your textured mesh objects into voxel representation directly within Blender.
-  Simply position your mouse in the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/introduction.html">3D Viewport</a>
-  and press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N</span> key. 
-  This will prompt the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/sidebar.html">Sidebar</a>,
-  commonly known as the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N-Panel</span>, to appear. From there, you can easily locate and click on the
-  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxility</span> tab button to open the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon panel.
-<div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxility Pro N-Panel Voxelize Button">
-  <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    Select the mesh object or objects and click the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize</span> button. 
-  </div>
-</div>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">If your intention is to export the resulting voxel mesh,
-  you have the option to choose a <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Target</span> <a href="#fileformats">export voxel format</a>
-  from the dropdown menu situated just below the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize</span>
-  button before initiating the voxelization process.
-  This allows you to streamline the workflow by processing the selection only once.
-  Hover your cursor over each option to unveil a tooltip providing an explanation for each property, allowing for a comprehensive understanding of their respective functionalities.
-  This may take some time, so <b>please be patient.</b></p>
-  <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
-  Following the voxelization process, you will have the opportunity to conveniently save the resulting file by utilizing the
-  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Save Target Format</span> button, which enables you to preserve your work with ease.
-</p>
-<div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-3-save-target.png';" alt="Voxility Pro N-Panel Save Button">
-  <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    Choose a <b>folder</b> where you want to save the resulting files.
-  </div>
-</div>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
-</p>
-<div style="border: 3px solid #ff4800; color:#fff; font-weight: normal; background-color: #333333; padding: 20px 20px 10px 20px; border-radius: 10px;margin-bottom: 20px; text-align: justify;"><p>
-  <span style="color:white; font-weight: bold; background-color: #ff4800; padding: 0px 5px 0px 5px; border-radius: 5px;">WARNING:</span> Before delving into larger projects,
-  it's recommended to start with smaller objects containing fewer vertices to familiarize yourself with the addon's functionality.
-  Processing time can vary significantly, ranging from seconds to several minutes,
-  depending on the complexity of your object and your computer specifications.
-  Objects with large dimensions, as well as higher vertex and face counts, tend to be more complex.
-  Therefore, consider reducing the number of vertices through decimation before using certain features.
-  Begin with low  <span style="color:#000000; font-weight: bold; background-color: #fff; padding: 0px 8px 0px 8px; border-radius: 5px;">Voxformat Scale</span> values like <b>1.0</b> and gradually increase until you achieve the desired voxel resolution.
-  While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
 <!-- 3.3 === Voxility Logging -->
@@ -522,10 +541,10 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   <a href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank">Info Editor</a>.
 </p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-2-voxelize.png';" alt="Scripting Tab Logging and Debugging">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/latest/voxility-logging.png';" alt="Scripting Tab Logging and Debugging">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Logs are in the <a href="https://docs.blender.org/manual/en/latest/editors/info_editor.html" target="_blank">Info Editor</a>
-    within Scripting Tab.
+    within <b>Scripting</b> Tab
   </div>
 </div>
 <div style="margin-bottom: 30px;"></div>
@@ -576,16 +595,16 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     <tr style="color:#ffffff;"><th style="padding: 5px 25px;">Term</th><th style="padding: 5px 25px;">Description</th>
   </thead>
 <tbody>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Voxel</b></td><td style="padding: 5px 25px;">Volumetric pixel used in 3D modeling and computer graphics to represent volumetric data.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Voxelization</b></td><td style="padding: 5px 25px;">Process of converting a mesh or other 3D data into a voxel representation.</td></tr>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Addon</b></td><td style="padding: 5px 25px;">Piece of software that extends the functionality of Blender, designed to enhance and streamline various aspects of the Blender workflow.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Texture</b></td><td style="padding: 5px 25px;">Surface appearance of an object when it's rendered. It includes characteristics such as color, roughness, reflectivity, and bumpiness, etc.</td></tr>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>VOX File</b></td><td style="padding: 5px 25px;">Simple binary format used to store voxel data. It consists of a header section followed by the voxel data, which is typically encoded using run-length encoding (RLE) or other compression techniques to reduce file size.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>MagicaVoxel</b></td><td style="padding: 5px 25px;">Voxel modeling software that uses its own proprietary file format (.VOX) for saving voxel models.</td></tr>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Qubicle</b></td><td style="padding: 5px 25px;">Voxel modeling software that uses its own file format (.QB) for saving voxel models.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Executable</b></td><td style="padding: 5px 25px;">External program or script that can be run by Blender as a separate process.</td></tr>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Terminal or Console</b></td><td style="padding: 5px 25px;">Provides a command-line interface where users can type commands directly to interact with the operating system and run various programs or utilities.</td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>ZIP File</b></td><td style="padding: 5px 25px;">Compressed archive that contains script and one or more assets. Users can install these addons by importing the zip file directly into Blender's addon manager, simplifying the installation process.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Voxel</b></td><td style="padding: 5px 25px;">Volumetric pixel used in 3D modeling and computer graphics to represent volumetric data.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Voxelization</b></td><td style="padding: 5px 25px;">Process of converting a mesh or other 3D data into a voxel representation.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Addon</b></td><td style="padding: 5px 25px;">Piece of software that extends the functionality of Blender, designed to enhance and streamline various aspects of the Blender workflow.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Texture</b></td><td style="padding: 5px 25px;">Surface appearance of an object when it's rendered. It includes characteristics such as color, roughness, reflectivity, and bumpiness, etc.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>VOX File</b></td><td style="padding: 5px 25px;">Simple binary format used to store voxel data. It consists of a header section followed by the voxel data, which is typically encoded using run-length encoding (RLE) or other compression techniques to reduce file size.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>MagicaVoxel</b></td><td style="padding: 5px 25px;">Voxel modeling software that uses its own proprietary file format (.VOX) for saving voxel models.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Qubicle</b></td><td style="padding: 5px 25px;">Voxel modeling software that uses its own file format (.QB) for saving voxel models.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Executable</b></td><td style="padding: 5px 25px;">External program or script that can be run by Blender as a separate process.</td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Terminal or Console</b></td><td style="padding: 5px 25px;">Provides a command-line interface where users can type commands directly to interact with the operating system and run various programs or utilities.</td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>ZIP File</b></td><td style="padding: 5px 25px;">Compressed archive that contains script and one or more assets. Users can install these addons by importing the zip file directly into Blender's addon manager, simplifying the installation process.</td></tr>
   <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
 </tbody>
 </table>
@@ -601,8 +620,8 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
     <tr style="color:#ffffff;"><th style="padding: 5px 25px;">Resource</th><th style="padding: 5px 25px;">Resource Link</th>
   </thead>
 <tbody>
-  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Voxconvert Documentation</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://vengi-voxel.github.io/vengi/voxconvert/Index/">https://vengi-voxel.github.io/vengi/voxconvert/Index/</a></td></tr>
-  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Voxconvert Tutorial</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://www.youtube.com/watch?v=Erstqc5uSxU">https://www.youtube.com/watch?v=Erstqc5uSxU</a></td></tr>
+  <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px;"><b>Voxconvert Documentation</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://vengi-voxel.github.io/vengi/voxconvert/Index/">https://vengi-voxel.github.io/vengi/voxconvert/Index/</a></td></tr>
+  <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px;"><b>Voxconvert Tutorial</b></td><td style="padding: 5px 25px;"><a target="_blank" href="https://www.youtube.com/watch?v=Erstqc5uSxU">https://www.youtube.com/watch?v=Erstqc5uSxU</a></td></tr>
 </tbody>
 </table>
 <div style="margin-bottom: 30px;"></div>
