@@ -20,7 +20,9 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
 
     def execute(self, context):
         v = bpy.app.version
-        if v >= (4, 0, 0):
+        if v >= (4, 1, 0):
+            from voxility_pro.utils.voxel.generate_gn_voxelize_4_1 import add_voxelizer_4_1 as add_voxelizer # type: ignore
+        elif v >= (4, 0, 0):
             from voxility_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 as add_voxelizer # type: ignore
         elif v >= (3, 4, 0):
             from voxility_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 as add_voxelizer # type: ignore
@@ -80,6 +82,9 @@ def unregister():
 # NOTE: 2. Name the nodes "Voxelize" and "VoxelizeModifier" then use Node2Python
 # NOTE: 3. After Node2Python copy/paste, we need to modify the script with the following:
 
+# ========================================================================================================== ### Manual Entry
+# Modification 4.1 - 0: Same as 4.0
+# ========================================================================================================== ### Manual Entry
 
 # ========================================================================================================== ### Manual Entry
 # Modification 4.0 - 1: Function name change and parameters modification ### Manual Entry
