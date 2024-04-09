@@ -37,6 +37,11 @@ zip_cmd=("zip" "-r" "${output_zip}" "${parent_folder}"/* \
   "--exclude" "${parent_folder}/$(basename "$0")"
 )
 
+voxelizer_active=$(grep -oP 'GN_VOXELIZER_ACTIVE = False' "${parent_folder}/enums/voxility_feature.py")
+if [ -n "$voxelizer_active" ]; then
+    zip_cmd+=("--exclude" "${parent_folder}/**/generate_gn_*") # exclude GN files if GN_VOXELIZER_ACTIVE=False
+fi
+
 mapfile -t exclude_pycache < <(find "${parent_folder}" -type d -name "__pycache__")
 mapfile -t exclude_executables < <(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
 exclude_paths=("${exclude_executables[@]}" "${exclude_pycache[@]}")
