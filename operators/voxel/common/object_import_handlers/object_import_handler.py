@@ -19,7 +19,8 @@ class ObjectImportHandler:
     def handle_object(self, obj) -> None:
         obj.select_set(True)
         bpy.context.view_layer.objects.active = obj
-        bpy.context.object.data.use_auto_smooth = False
+        if hasattr(obj.data, 'use_auto_smooth'):
+            obj.data.use_auto_smooth = False # attribute does not exists in 4.1
         bpy.ops.object.shade_flat()
         ObjectUtils.apply_all_transforms(obj)
         suffix = StringUtils.randomize_string()
