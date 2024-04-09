@@ -37,9 +37,10 @@ zip_cmd=("zip" "-r" "${output_zip}" "${parent_folder}"/* \
   "--exclude" "${parent_folder}/$(basename "$0")"
 )
 
+mapfile -t exclude_gn_vox < <(find "${parent_folder}" -type f -name "*generate_gn*")
 mapfile -t exclude_pycache < <(find "${parent_folder}" -type d -name "__pycache__")
 mapfile -t exclude_executables < <(find "${parent_folder}/voxconvert-executable" -mindepth 1 -maxdepth 1 -type d -not -name "${voxconvert_version}")
-exclude_paths=("${exclude_executables[@]}" "${exclude_pycache[@]}")
+exclude_paths=("${exclude_executables[@]}" "${exclude_pycache[@]}" "${exclude_gn_vox[@]}")
 
 for path in "${exclude_paths[@]}"; do
   zip_cmd+=("--exclude" "$path/*")
