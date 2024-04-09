@@ -8,6 +8,10 @@
 		<data>
 		57btZNH3PA74sMwG3HrwGzjNF+Y=
 		</data>
+		<key>Resources/scripts/animate.lua</key>
+		<data>
+		xGdi2VRa/MkTwtXrbgipYFgda1I=
+		</data>
 		<key>Resources/scripts/cover.lua</key>
 		<data>
 		SrtbCpun69Lfn0X/KJyScsQk/5A=
@@ -107,16 +111,23 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			AebvAK4x8Kmydu0Sv2+CJbCaII0=
+			YI2UXDIlVHX9bl+KQYBWUkPIobw=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"01e6ef00ae31f0a9b276ed12bf6f8225b09a208d"</string>
+			<string>cdhash H"608d945c32255475fd6e5f8a4180565243c8a1bc"</string>
 		</dict>
 		<key>Resources/scripts/align.lua</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			cwc/OvKOBIcGtBYNmnWK1bAR7z7uc8OwpudUVguq+GU=
+			</data>
+		</dict>
+		<key>Resources/scripts/animate.lua</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AnTjyiZDbUsdzArU9WDJlIyKUPQaQgvkXzRqEKX6U+A=
 			</data>
 		</dict>
 		<key>Resources/scripts/cover.lua</key>
