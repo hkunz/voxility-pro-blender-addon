@@ -27,7 +27,7 @@ MODIFY DOCUMENTATION
 * copy contents from "final/voxility-documentation-content.html" to blendermarket.com docs
 
 =============================================================================================
-DOCUMENTATION TO PDF CONVERSION
+DOCUMENTATION TO PDF CONVERSION (https://html2pdf.com or https://pdfcrowd.com)
 =============================================================================================
 
 Open voxility-documentation-simple.html
