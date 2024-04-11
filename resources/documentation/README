@@ -27,6 +27,15 @@ MODIFY DOCUMENTATION
 * copy contents from "final/voxility-documentation-content.html" to blendermarket.com docs
 
 =============================================================================================
+DOCUMENTATION TO PDF CONVERSION
+=============================================================================================
+
+Open voxility-documentation-simple.html
+Replace <link rel="stylesheet" href="./css/content.css"> with actual css contents
+Replace <div w3-include-html...</div> with actual html contents
+Copy everything to https://pdfcrowd.com/ under "Convert HTML Code" and then click convert
+
+=============================================================================================
 DOCUMENTATION CONTENT
 =============================================================================================
 
