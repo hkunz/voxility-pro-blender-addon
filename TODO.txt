@@ -1,20 +1,6 @@
 After Publishing:
-* Edit the About Limitations to refer to documentation
 * check links if they redirect correctly like the various formats links
-* Change the voxconvert credits to say it can achieve similar results although limited
-* In About/Features change: Click Voxelize and Save Target Format in any supported voxel file format.
 * Add more voxel showcase
-* Under addon activation there is a text missing under the image
-* fix typo onBlender 
-* Make "Voxility File Conversion" panel a subsection 3.2.2
-
-* Mention in documentation that for voxconvert you need the origin at the center
-* mention model needs to have volume closed/manifold. if you have flat non-manifold meshes you need to add thickness
-* consider adding a solidify modifier for and adjust thickness (going inward/outward positive/negative offset) to be bigger than voxel size 
-* mention ensure the dimensions of the object are not too small or too big based on voxel size
-* Specify images of vertex color, texture node tree
-* Limitation of validity check
-
 
 TODO:
 * optimize per voxel not per face VoxelColorReader __init__:for f in self.bm.faces:
@@ -43,3 +29,9 @@ BUGS FIXED:
 * Import vox/qb file with multiple objects create multipl vertex color nodes (no merge)
 
 
+Remove History of EXE file:
+
+git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch path/to/exe' HEAD
+dann musst du aber force-pushen
+dann git-lfs für die exe dateien
+*.exe filter=lfs diff=lfs merge=lfs -text in .gitattributes im root deines git repos einfügen
