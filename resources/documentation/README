@@ -34,6 +34,9 @@ Open voxility-documentation-simple.html
 Replace <div w3-include-html...</div> with actual final html/css contents
 Copy everything to https://pdfcrowd.com/ under "Convert HTML Code" and then click convert
 
+COMMAND LINE:
+wkhtmltopdf --page-size A4 --margin-top 10mm --margin-bottom 10mm --margin-left 10mm --margin-right 10mm voxility-documentation-simple.html output.pdf
+
 =============================================================================================
 DOCUMENTATION CONTENT
 =============================================================================================
