@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOC_DIR="resources/documentation/"
-PDF_OUT="${DOC_DIR}voxility-documentation.pdf"
+PDF_OUT="${DOC_DIR}voxility-pro-documentation.pdf"
 DEFAULT_DOC="${DOC_DIR}content/latest/final/voxility-documentation-content.html"
 
 if [ -z "$1" ]; then
