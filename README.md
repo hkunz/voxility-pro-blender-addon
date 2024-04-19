@@ -2,11 +2,13 @@
 # Voxility Pro: Voxel File Format Exchange
 ============================================================================
 
-Voxility Pro is a Blender addon enables the import and export of various voxel file formats through vengi's voxconvert
+Voxility Pro: Voxel File Format Exchange is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, it empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.
 
-Unlock the creative potential of your Blender 3D designs by seamlessly and instantly exporting them from Blender to various popular voxel formats (see resources/supported-voxel-formats.txt for all supported formats), compatible with MagicaVoxel, VoxEdit, Qubicle, Minecraft, and many more. Introducing the Voxility Pro, a powerful and intuitive addon that simplifies the process of exporting your intricate Blender creations into a format perfect for voxel-based art.
+Voxility Pro supports seamless import and export of various popular textured voxel file formats, including MagicaVoxel.vox Qubicle.qb Voxlap.vxl and a plethora of many more voxel file formats, ensuring compatibility with a wide range of voxel editors and game engines. Additionally, this addon introduces an integrated voxelization feature for textured meshes, allowing for streamlined voxelization directly within Blender.
 
-This addon is powered by the free, open-source and multi-platform voxel editor Vengi Voxel more info at https://github.com/vengi-voxel/vengi
+Documentation: https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs
+
+Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by Martin Gerhardy as part of Vengi Voxel (https://github.com/vengi-voxel/vengi) — an open-source and multi-platform voxel editor — Voxility Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.
 
 ============================================================================
 # Building vengi-voxconvert.exe on Windows 11
@@ -36,15 +38,7 @@ This addon is powered by the free, open-source and multi-platform voxel editor V
 ============================================================================
 
 Bug: https://github.com/actions/runner-images/issues/8891 regarding clang_rt.asan_static_runtime_thunk-x86_64.lib
-
 PowerShell ISE: Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC" -Name
-
 Download LLVM from https://github.com/llvm/llvm-project/releases/
-
 https://devblogs.microsoft.com/cppblog/addresssanitizer-asan-for-windows-with-msvc/
-
-ERROR: The code execution cannot proceed because clang_rt.asan_dynamic-x86_64.dll was not found. Reinstalling the program may fix this problem.
-
-
-
 Bleeding Edge vengi-voxconvert: https://github.com/vengi-voxel/vengi/actions/workflows/main.yml
