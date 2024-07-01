@@ -6,6 +6,7 @@ from mathutils import Vector
 from typing import Tuple
 
 from voxility_pro.utils.color_utils import ColorUtils # type: ignore
+from voxility_pro.exceptions.color_read_error import ColorReadError # type: ignore
 
 Coordinate = Tuple[int, int, int]
 
@@ -145,6 +146,8 @@ class VoxelColorReader:
         px = round((size[0]-1) * (uv.x%1))
         py = round((size[1]-1) * (uv.y%1))
         pixel = 4 * (size[0] * py + px)
+        if not pxs:
+            raise ColorReadError(ColorReadError.MISSING_TEXTURE)
         return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], False)
 
     def get_voxel_color_vertex(self, color):
