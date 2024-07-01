@@ -29,9 +29,9 @@ bl_info = {
     "blender": (2, 93, 0),
     "location": "N-Panel > Voxility | File > Import-Export > Voxility Voxel Formats",
     "warning": "",
-    "doc_url": "https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs",
-    "wiki_url": "https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs",
-    "tracker_url": "https://blendermarket.com/products/vox-exporter-for-magicavoxel-and-voxedit/docs",
+    "doc_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
+    "wiki_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
+    "tracker_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
     "support": "COMMUNITY",
     "category": "Import-Export",
 }
