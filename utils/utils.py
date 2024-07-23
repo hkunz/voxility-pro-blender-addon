@@ -21,10 +21,13 @@ class Utils:
     def get_addon_version(prependv: bool=True, separator: str='.') -> str:
         return ('v' if prependv else '') + separator.join(map(str, bl_info['version']))
 
+    # Also update version in operator_voxelize.py::execute
     @staticmethod
     def get_gn_voxelizer_version(): # version of generate_gn_voxelize_X_X.py
         v: Tuple[int, int, int] = bpy.app.version
-        if v >= (4, 0, 0):
+        if v >= (4, 1, 0):
+            return '4_1'
+        elif v >= (4, 0, 0):
             return '4_0'
         elif v >= (3, 4, 0):
             return '3_4'

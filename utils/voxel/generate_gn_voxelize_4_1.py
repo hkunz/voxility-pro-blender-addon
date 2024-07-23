@@ -260,14 +260,35 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #Selection
     store_named_attribute.inputs[1].default_value = True
     
-    #node Capture Attribute
-    capture_attribute = voxelize.nodes.new("GeometryNodeCaptureAttribute")
-    capture_attribute.name = "Capture Attribute"
-    capture_attribute.data_type = 'BOOLEAN'
-    capture_attribute.domain = 'POINT'
-    #Value
-    capture_attribute.inputs[1].default_value = True
-    
+    # ========================================================================================================== ### Manual Entry
+    # Modification 4.1 - 1.A: Function name change and parameters modification ### Manual Entry
+    # ========================================================================================================== ### Manual Entry
+    v = bpy.app.version ### Manual Entry
+    store_named_attribute_002_manual = None
+    input_named_attribute = None
+    capture_attribute = None
+    if v >= (4,2,0): ### Manual Entry
+        store_named_attribute_002_manual = voxelize.nodes.new("GeometryNodeStoreNamedAttribute") ### Manual Entry
+        store_named_attribute_002_manual.name = "Store Named Attribute.002.manual" ### Manual Entry
+        store_named_attribute_002_manual.data_type = 'BOOLEAN' ### Manual Entry
+        store_named_attribute_002_manual.domain = 'POINT' ### Manual Entry
+        stored_name_attr_name = 'Voxility_Delete_Orig_Geo' ### Manual Entry
+        store_named_attribute_002_manual.inputs[2].default_value = stored_name_attr_name ### Manual Entry
+        store_named_attribute_002_manual.inputs[3].default_value = True
+
+        input_named_attribute = voxelize.nodes.new("GeometryNodeInputNamedAttribute")
+        input_named_attribute.data_type = 'BOOLEAN'
+        input_named_attribute.inputs[0].default_value = stored_name_attr_name
+    else: ### Manual Entry
+        capture_attribute = voxelize.nodes.new("GeometryNodeCaptureAttribute")
+        capture_attribute.name = "Capture Attribute"
+        capture_attribute.data_type = 'BOOLEAN'
+        capture_attribute.domain = 'POINT'
+        capture_attribute.inputs[1].default_value = True
+    # ========================================================================================================== ### Manual Entry
+    # Modification 4.1 - 1.A: END ### Manual Entry
+    # ========================================================================================================== ### Manual Entry
+
     #node Sample Nearest Surface
     sample_nearest_surface = voxelize.nodes.new("GeometryNodeSampleNearestSurface")
     sample_nearest_surface.name = "Sample Nearest Surface"
@@ -378,7 +399,12 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     set_position.location = (-381.73687744140625, 178.91636657714844)
     group_input_004.location = (-194.91915893554688, 57.143165588378906)
     store_named_attribute.location = (-63.93571853637695, 177.4740447998047)
-    capture_attribute.location = (-56.58012008666992, -36.664119720458984)
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        store_named_attribute_002_manual.location = (-57, -37) ### Manual Entry
+        input_named_attribute.location = (-57, -130) ### Manual Entry
+    else: ### Manual Entry
+        capture_attribute.location = (-56.58012008666992, -36.664119720458984)
     sample_nearest_surface.location = (-391.6164855957031, -58.722633361816406)
     material_index.location = (-68.06128692626953, -290.96160888671875)
     group_input_005.location = (-30.275577545166016, -354.1745300292969)
@@ -423,7 +449,13 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     set_position.width, set_position.height = 140.0, 100.0
     group_input_004.width, group_input_004.height = 100.3353271484375, 100.0
     store_named_attribute.width, store_named_attribute.height = 152.31634521484375, 100.0
-    capture_attribute.width, capture_attribute.height = 140.0, 100.0
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        pass
+        #store_named_attribute_002_manual.width, store_named_attribute_002_manual.height = 140.0, 100.0 ### Manual Entry
+        #input_named_attribute.width, input_named_attribute.height = 140.0, 100.0 ### Manual Entry
+    else: ### Manual Entry
+        capture_attribute.width, capture_attribute.height = 140.0, 100.0
     sample_nearest_surface.width, sample_nearest_surface.height = 156.54263305664062, 100.0
     material_index.width, material_index.height = 140.0, 100.0
     group_input_005.width, group_input_005.height = 100.3353271484375, 100.0
@@ -439,8 +471,11 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     evaluate_on_domain.width, evaluate_on_domain.height = 137.21780395507812, 100.0
     
     #initialize voxilityvoxelize links
-    #capture_attribute.Geometry -> sample_nearest_surface_001.Mesh
-    voxelize.links.new(capture_attribute.outputs[0], sample_nearest_surface_001.inputs[0])
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        voxelize.links.new(store_named_attribute_002_manual.outputs[0], sample_nearest_surface_001.inputs[0]) ### Manual Entry
+    else:
+        voxelize.links.new(capture_attribute.outputs[0], sample_nearest_surface_001.inputs[0])
     #separate_xyz.X -> math.Value
     voxelize.links.new(separate_xyz.outputs[0], math.inputs[0])
     #sample_nearest_surface_001.Value -> set_material_index.Material Index
@@ -517,8 +552,11 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     voxelize.links.new(sample_nearest_surface_002.outputs[0], evaluate_on_domain_001.inputs[0])
     #store_named_attribute_001.Geometry -> join_geometry_001.Geometry
     voxelize.links.new(store_named_attribute_001.outputs[0], join_geometry_001.inputs[0])
-    #capture_attribute.Geometry -> join_geometry_001.Geometry
-    voxelize.links.new(capture_attribute.outputs[0], join_geometry_001.inputs[0])
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        voxelize.links.new(store_named_attribute_002_manual.outputs[0], join_geometry_001.inputs[0]) ### Manual Entry
+    else: ### Manual Entry
+        voxelize.links.new(capture_attribute.outputs[0], join_geometry_001.inputs[0])
     #store_named_attribute.Geometry -> store_named_attribute_001.Geometry
     voxelize.links.new(store_named_attribute.outputs[0], store_named_attribute_001.inputs[0])
     #group_input_001.Vertex Colors -> named_attribute_001.Name
@@ -531,13 +569,15 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     voxelize.links.new(group_input_005.outputs[3], store_named_attribute_001.inputs[2])
     #group_input.Voxel Size -> math_003.Value
     voxelize.links.new(group_input.outputs[1], math_003.inputs[0])
-    #capture_attribute.Attribute -> reroute_004.Input
-    voxelize.links.new(capture_attribute.outputs[1], reroute_004.inputs[0])
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        voxelize.links.new(input_named_attribute.outputs[0], reroute_004.inputs[0]) ### Manual Entry
+        voxelize.links.new(group_input_006.outputs[0], store_named_attribute_002_manual.inputs[0]) ### Manual Entry
+    else: ### Manual Entry
+        voxelize.links.new(capture_attribute.outputs[1], reroute_004.inputs[0])
+        voxelize.links.new(group_input_006.outputs[0], capture_attribute.inputs[0])
     #reroute_004.Output -> delete_geometry.Selection
     voxelize.links.new(reroute_004.outputs[0], delete_geometry.inputs[1])
-    #group_input_006.Mesh -> capture_attribute.Geometry
-    voxelize.links.new(group_input_006.outputs[0], capture_attribute.inputs[0])
-    #reroute.Output -> reroute_006.Input
     voxelize.links.new(reroute.outputs[0], reroute_006.inputs[0])
     #reroute_006.Output -> vector_math_002.Scale
     voxelize.links.new(reroute_006.outputs[0], vector_math_002.inputs[3])

@@ -18,6 +18,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     max_value: bpy.props.FloatProperty(name="Max Value", default=Voxel.DEFAULT_MAX) # type: ignore
     default_value: bpy.props.FloatProperty(name="Default Value", default=Voxel.DEFAULT_VALUE) # type: ignore
 
+    # Don't forget to update utils.py::get_gn_voxelizer_version as well with the versions
     def execute(self, context):
         v = bpy.app.version
         if v >= (4, 1, 0):
