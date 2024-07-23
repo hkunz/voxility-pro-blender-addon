@@ -37,6 +37,7 @@ Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by M
 # SOME LINKS AND INFO
 =================================================================
 
+Documentaion Debugging VSCode & Blender: https://github.com/hkunz/blender-addon-template
 Bug: https://github.com/actions/runner-images/issues/8891 regarding clang_rt.asan_static_runtime_thunk-x86_64.lib
 PowerShell ISE: Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC" -Name
 Download LLVM from https://github.com/llvm/llvm-project/releases/
