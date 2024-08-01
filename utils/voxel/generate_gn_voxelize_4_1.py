@@ -263,9 +263,14 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Capture Attribute
     capture_attribute = voxelize.nodes.new("GeometryNodeCaptureAttribute")
     capture_attribute.name = "Capture Attribute"
-    capture_attribute.data_type = 'BOOLEAN'
     capture_attribute.domain = 'POINT'
-    #Value
+
+    v = bpy.app.version ### Manual Entry
+    if v >= (4,2,0): ### Manual Entry
+        capture_attribute.capture_items.new('BOOLEAN', 'Is Orig Mesh') ### Manual Entry
+    else: ### Manual Entry
+        capture_attribute.data_type = 'BOOLEAN' ### Manual Entry
+
     capture_attribute.inputs[1].default_value = True
     
     #node Sample Nearest Surface
