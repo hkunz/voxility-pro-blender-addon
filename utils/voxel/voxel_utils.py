@@ -21,6 +21,7 @@ class VoxelUtils:
         n2 = NameConstant.VOXILITY_MODIFIER_NAME.value
         p2 = NameConstant.VOXILITY_MODIFIER_NAME_PREFIX.value
         compatible = True
+        # Check both node groups for compatibility just to make sure because user could have manually edited the name of one of them
         for g in bpy.data.node_groups[:]:
             for k in g.keys(): # VoxilityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxilityVoxelizeModifier_4_0_v1_0_12
                 if (k.startswith(p1) and k != n1) or (k.startswith(p2) and k != n2):
@@ -30,6 +31,14 @@ class VoxelUtils:
                     break
         if compatible:
             return
+
+        # Remove any additional included node groups of the voxility addon feature
+        for g in bpy.data.node_groups[:]:
+            if not g.name.startswith(NameConstant.VOXILITY_EXTENDED_NODE_GROUP_PREFIX.value):
+                continue
+            bpy.data.node_groups.remove(g)
+            break
+
         for obj in bpy.data.objects:
             if obj.type == 'MESH':
                 obj.voxelized = False
