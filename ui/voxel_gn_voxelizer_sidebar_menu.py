@@ -212,6 +212,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         box = layout.box()
         r1 = box.row()
         r1.prop(properties, "voxel_size")
+        #self.add_layout_gn_prop(r1, VoxelUtils.get_voxelizer_modifier(active_object), VoxelUtils.get_voxelizer_voxel_size_attr_name())
         col = box.column()
         if not MaterialUtils.has_materials(active_object):
             col.label(text="Object has no Materials")
