@@ -38,34 +38,16 @@ IDNAME_TYPE = {
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
-def validate_voxelsize_input(self):
-    self["voxel_size"] = round(self.voxel_size, Voxel.SIZE_PRECISION)
-
-def on_input_voxelsize_change(self, context: bpy_types.Context):
-    validate_voxelsize_input(self)
-    if context.scene.no_voxel_size_update:
-        return
-    for obj in context.selected_objects:
-        vsize = VoxelUtils.get_voxelizer_voxel_size(obj)
-        if NumberUtils.is_almost_equal(vsize, self.voxel_size):
-            continue
-        VoxelUtils.set_voxelizer_voxel_size(obj, self.voxel_size)
-
 def on_input_uvmap_change(self, context: bpy_types.Context):
-    if context.scene.no_voxel_size_update:
-        return
     obj = context.active_object
     VoxelUtils.set_voxelizer_voxel_uvmap(obj, self.uvmap_attribute)
 
 def on_input_colorattr_change(self, context: bpy_types.Context):
-    if context.scene.no_voxel_size_update:
-        return
     obj = context.active_object
     VoxelUtils.set_voxelizer_voxel_vertex_colors(obj, self.color_attribute)
 
 def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
     properties: VoxilityProProperties = context.scene.voxility_pro_properties
-    properties.voxel_size = Voxel.DEFAULT_VALUE
     Voxel.PREVIOUS_ACTIVE_OBJECT = None
     check_object_selection_change(context, properties, context.active_object)
 
@@ -87,13 +69,8 @@ def check_object_selection_change(context, properties, obj):
         return
     Voxel.PREVIOUS_ACTIVE_OBJECT = obj
     voxel_size, uvmap, vertex_colors = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
-    context.scene.no_voxel_size_update = True # so we don't trigger on_input_voxelsize_change which sets all objects
-    if NumberUtils.is_almost_equal(voxel_size, 0):
-        return
-    properties.voxel_size = voxel_size
     properties.uvmap_attribute = uvmap
     properties.color_attribute = vertex_colors
-    context.scene.no_voxel_size_update = False
 
 def check_uv_map_change(properties, obj):
     uvmaps = obj.data.uv_layers
@@ -128,17 +105,6 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         name="Edit Multiple Objects",
         description="Enable voxelizing and exporting multiple objects per file",
         default=False,
-    ) # type: ignore
-
-    voxel_size: bpy.props.FloatProperty(
-        name="Voxel Size",
-        description="Voxel size in meters",
-        default=Voxel.DEFAULT_VALUE,
-        min=Voxel.DEFAULT_MIN,
-        max=Voxel.DEFAULT_MAX,
-        precision=Voxel.SIZE_PRECISION,
-        update=on_input_voxelsize_change,
-        #set=validate_voxel_size # does not work. so we can only update in on_input_voxelsize_change
     ) # type: ignore
 
     uvmap_attribute: bpy.props.StringProperty(
@@ -211,8 +177,8 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         active_object = context.active_object
         box = layout.box()
         r1 = box.row()
-        r1.prop(properties, "voxel_size")
-        #self.add_layout_gn_prop(r1, VoxelUtils.get_voxelizer_modifier(active_object), VoxelUtils.get_voxelizer_voxel_size_attr_name())
+        #r1.prop(properties, "voxel_size")
+        self.add_layout_gn_prop(r1, VoxelUtils.get_voxelizer_modifier(active_object), VoxelUtils.get_voxelizer_voxel_size_attr_name())
         col = box.column()
         if not MaterialUtils.has_materials(active_object):
             col.label(text="Object has no Materials")
@@ -304,7 +270,6 @@ def register() -> None:
     bpy.types.Scene.expanded_export = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.expanded_fileconvert = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.on_voxelize_button_click = on_voxelize_button_click
-    bpy.types.Scene.no_voxel_size_update = bpy.props.BoolProperty(default=False)
     bpy.types.Object.voxelized = bpy.props.BoolProperty(default=False)
     bpy.utils.register_class(OBJECT_PT_voxility_pro)
     bpy.utils.register_class(OBJECT_OT_OperatorEmpty)
@@ -323,7 +288,6 @@ def unregister() -> None:
     del bpy.types.Scene.expanded_fileconvert
     del bpy.types.Scene.voxility_pro_properties
     del bpy.types.Scene.on_voxelize_button_click
-    del bpy.types.Scene.no_voxel_size_update
     bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
     bpy.utils.unregister_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
