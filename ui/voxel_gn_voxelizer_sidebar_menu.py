@@ -38,14 +38,6 @@ IDNAME_TYPE = {
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
-def on_input_uvmap_change(self, context: bpy_types.Context):
-    obj = context.active_object
-    VoxelUtils.set_voxelizer_voxel_uvmap(obj, self.uvmap_attribute)
-
-def on_input_colorattr_change(self, context: bpy_types.Context):
-    obj = context.active_object
-    VoxelUtils.set_voxelizer_voxel_vertex_colors(obj, self.color_attribute)
-
 def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
     properties: VoxilityProProperties = context.scene.voxility_pro_properties
     Voxel.PREVIOUS_ACTIVE_OBJECT = None
@@ -61,34 +53,11 @@ def on_depsgraph_update(scene, depsgraph=None):
         return
     properties: VoxilityProProperties = context.scene.voxility_pro_properties
     check_object_selection_change(context, properties, obj)
-    check_uv_map_change(properties, obj)
-    check_color_attributes_change(properties, obj)
 
 def check_object_selection_change(context, properties, obj):
     if Voxel.PREVIOUS_ACTIVE_OBJECT == obj:
         return
     Voxel.PREVIOUS_ACTIVE_OBJECT = obj
-    voxel_size, uvmap, vertex_colors = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
-    properties.uvmap_attribute = uvmap
-    properties.color_attribute = vertex_colors
-
-def check_uv_map_change(properties, obj):
-    uvmaps = obj.data.uv_layers
-    uvname = uvmaps[0].name if len(uvmaps) == 1 else ""
-    if Voxel.PREVIOUS_UVMAP_ATTRIBUTE == uvname:
-        return
-    if not len(uvmaps) > 1:
-        properties.uvmap_attribute = uvname
-    Voxel.PREVIOUS_UVMAP_ATTRIBUTE = uvname
-
-def check_color_attributes_change(properties, obj):
-    cattr = obj.data.color_attributes
-    cname = cattr[0].name if len(cattr) == 1 else ""
-    if Voxel.PREVIOUS_COLOR_ATTRIBUTE == cname:
-        return
-    if not len(cattr) > 1:
-        properties.color_attribute = cname
-    Voxel.PREVIOUS_COLOR_ATTRIBUTE = cname
 
 class VoxilityProProperties(bpy.types.PropertyGroup):
     IMPORT_FORMATS=VoxelFormatsImportMenu.FORMATS
@@ -105,18 +74,6 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         name="Edit Multiple Objects",
         description="Enable voxelizing and exporting multiple objects per file",
         default=False,
-    ) # type: ignore
-
-    uvmap_attribute: bpy.props.StringProperty(
-        name="UV",
-        description="UVMap Attribute",
-        update=on_input_uvmap_change
-    ) # type: ignore
-
-    color_attribute: bpy.props.StringProperty(
-        name="Color",
-        description="Vertex Colors Attribute",
-        update=on_input_colorattr_change
     ) # type: ignore
 
     file_to_convert_path: bpy.props.StringProperty(
@@ -175,24 +132,27 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
     def draw_voxelizer_options(self, context, properties, layout: bpy.types.UILayout):
         active_object = context.active_object
+        modifier = VoxelUtils.get_voxelizer_modifier(active_object)
         box = layout.box()
         r1 = box.row()
         #r1.prop(properties, "voxel_size")
-        self.add_layout_gn_prop(r1, VoxelUtils.get_voxelizer_modifier(active_object), VoxelUtils.get_voxelizer_voxel_size_attr_name())
+        self.add_layout_gn_prop(r1, modifier, VoxelUtils.get_voxelizer_voxel_size_attr_name())
         col = box.column()
         if not MaterialUtils.has_materials(active_object):
             col.label(text="Object has no Materials")
             return
         r2 = col.row()
         if len(active_object.data.uv_layers) > 0:
-            r2.label(text="UV Map:")
-            r2.prop(properties, "uvmap_attribute", text="")
+            #r2.label(text="UV Map:")
+            #r2.prop(properties, "uvmap_attribute", text="")
+            self.add_layout_gn_prop(r2, modifier, VoxelUtils.get_voxelizer_voxel_uv_attr_name())
         else:
             r2.label(text="No UV Map")
         r3 = col.row()
         if len(active_object.data.color_attributes) > 0:
-            r3.label(text="Vertex Colors:")
-            r3.prop(properties, "color_attribute", text="")
+            #r3.label(text="Vertex Colors:")
+            #r3.prop(properties, "color_attribute", text="")
+            self.add_layout_gn_prop(r3, modifier, VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name())
         else:
             r3.label(text="No Color Attribute")
 

@@ -9,8 +9,6 @@ class Voxel:
     DEFAULT_MAX = 100.0
     DEFAULT_VALUE = 0.5
     PREVIOUS_ACTIVE_OBJECT = None
-    PREVIOUS_UVMAP_ATTRIBUTE = None
-    PREVIOUS_COLOR_ATTRIBUTE = None
 
 class VoxelUtils:
 
