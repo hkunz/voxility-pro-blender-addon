@@ -10,6 +10,7 @@
 import bpy ### Manual Entry
 from voxility_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
 from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore ### Manual Entry
+from voxility_pro.utils.node_groups.generate_gn_constrain_value import voxilityconstraininput_node_group # type: ignore ### Manual Entry
 ### Manual Entry
 def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value): ### Manual Entry
     voxelize = VoxelUtils.get_voxility_node_group(node_group_name) ### Manual Entry
@@ -649,13 +650,20 @@ def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value
 # ========================================================================================================== ### Manual Entry
 # Modification 4.0 - 3: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
-def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_value, default_value): ### Manual Entry
+def voxelizemodifier_node_group_4_0(voxelize, node_group_name, voxilityconstraininput, min_value, max_value, default_value, voxel_size_precision): ### Manual Entry
     voxelizemodifier = VoxelUtils.get_voxility_node_group(node_group_name) ### Manual Entry
     if voxelizemodifier: ### Manual Entry
         return voxelizemodifier ### Manual Entry
     ### Manual Entry
     voxelizemodifier = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name) ### Manual Entry
     voxelizemodifier[node_group_name] = 1 # add a custom id with key of the voxility modifier group name ### Manual Entry
+
+    constrain_node = voxelizemodifier.nodes.new('GeometryNodeGroup')
+    constrain_node.node_tree = bpy.data.node_groups[voxilityconstraininput.name]
+    constrain_node.inputs[1].default_value = min_value
+    constrain_node.inputs[2].default_value = max_value
+    constrain_node.inputs[3].default_value = voxel_size_precision
+    constrain_node.location = (500,0)
 # ========================================================================================================== ### Manual Entry
 # Modification 4.0 - 3: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
@@ -728,7 +736,7 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
 
     #Set locations
     group_output_1.location = (1087.428466796875, -143.74620056152344)
-    group_input_1.location = (561.7833862304688, -190.9309844970703)
+    group_input_1.location = (260, -200)
     group_001.location = (776.3731079101562, -143.63876342773438)
 
     #Set dimensions
@@ -736,17 +744,13 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
     group_input_1.width, group_input_1.height = 140.0, 100.0
     group_001.width, group_001.height = 234.54656982421875, 100.0
 
-    #initialize voxelizemodifier links
-    #group_001.Geometry -> group_output_1.Geometry
     voxelizemodifier.links.new(group_001.outputs[0], group_output_1.inputs[0])
-    #group_input_1.Geometry -> group_001.Mesh
     voxelizemodifier.links.new(group_input_1.outputs[0], group_001.inputs[0])
-    #group_input_1.Voxel Size -> group_001.Voxel Size
-    voxelizemodifier.links.new(group_input_1.outputs[1], group_001.inputs[1])
-    #group_input_1.Vertex Colors -> group_001.Vertex Colors
     voxelizemodifier.links.new(group_input_1.outputs[3], group_001.inputs[3])
-    #group_input_1.UV Map -> group_001.UV Map
     voxelizemodifier.links.new(group_input_1.outputs[2], group_001.inputs[2])
+    #voxelizemodifier.links.new(group_input_1.outputs[1], group_001.inputs[1])
+    voxelizemodifier.links.new(group_input_1.outputs[1], constrain_node.inputs[0])
+    voxelizemodifier.links.new(constrain_node.outputs[0], group_001.inputs[1])
     return voxelizemodifier
 
 
@@ -775,9 +779,10 @@ def add_modifier_blender_4_0(obj, voxelizemodifier, mod_node_group_name, default
     #vox_modifier["Socket_4"] = "Attribute" if not obj.data.color_attributes else obj.data.color_attributes[0].name
     voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group.001'].inputs["Voxel Size"])
 
-def add_voxelizer_4_0(obj, min_value, max_value, default_value):
+def add_voxelizer_4_0(obj, min_value, max_value, default_value, voxel_size_precision):
+    voxilityconstraininput = voxilityconstraininput_node_group()
     voxelize = voxelize_node_group_4_0(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
-    voxelizemodifier = voxelizemodifier_node_group_4_0(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, min_value, max_value, default_value)
+    voxelizemodifier = voxelizemodifier_node_group_4_0(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, voxilityconstraininput, min_value, max_value, default_value, voxel_size_precision)
     add_modifier_blender_4_0(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
 
 # example usage:

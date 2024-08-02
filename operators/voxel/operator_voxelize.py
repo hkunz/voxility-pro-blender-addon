@@ -17,6 +17,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     min_value: bpy.props.FloatProperty(name="Min Value", default=Voxel.DEFAULT_MIN) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
     max_value: bpy.props.FloatProperty(name="Max Value", default=Voxel.DEFAULT_MAX) # type: ignore
     default_value: bpy.props.FloatProperty(name="Default Value", default=Voxel.DEFAULT_VALUE) # type: ignore
+    voxel_size_precision: bpy.props.IntProperty(name="Voxel Size Precision", default=Voxel.SIZE_PRECISION) # type: ignore
 
     # Don't forget to update utils.py::get_gn_voxelizer_version as well with the versions
     def execute(self, context):
@@ -38,7 +39,7 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
         for obj in context.selected_objects:
             if VoxelUtils.get_voxelizer_modifier(obj):
                 continue
-            add_voxelizer(obj, self.min_value, self.max_value, self.default_value)
+            add_voxelizer(obj, self.min_value, self.max_value, self.default_value, self.voxel_size_precision)
             obj.voxelized = True
             update = True
         if update:
