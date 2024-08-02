@@ -222,3 +222,8 @@ class ObjectUtils:
         for c in obj.children:
             c.matrix_local = mb @ c.matrix_local  
         obj.matrix_basis.identity()
+
+    @staticmethod
+    def get_modifier_prop_name(modifier, prop_id): # modifier = context.object.modifiers[modifier_name]
+        tree = modifier.node_group.interface.items_tree if bpy.app.version >= (4,0,0) else modifier.node_group.inputs
+        return next(rna.name for rna in tree if rna.identifier == prop_id) # prop_id ex: "Socket_2"
