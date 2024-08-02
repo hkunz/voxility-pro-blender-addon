@@ -1,12 +1,10 @@
 import bpy
 
-def voxilityconstraininput_node_group():
+def voxilityconstraininput_node_group(node_group_name):
 
-	node_group_name = 'VoxilityConstrainInput'
-
-	for node_group in list(bpy.data.node_groups):
-		if node_group.name.startswith(node_group_name):
-			bpy.data.node_groups.remove(node_group)
+	for node_group in bpy.data.node_groups[:]:
+		if node_group.name == node_group_name:
+			return node_group
 
 	voxilityconstraininput = bpy.data.node_groups.new(type = 'GeometryNodeTree', name = node_group_name)
 

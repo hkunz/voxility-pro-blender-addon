@@ -771,7 +771,7 @@ def add_modifier_blender_3_3(obj, voxelizemodifier, mod_node_group_name, default
     #voxelizemodifier.links.new(voxelizemodifier.nodes["Group Input"].outputs["Voxel Size"], voxelizemodifier.nodes['Group'].inputs["Voxel Size"])
 
 def add_voxelizer_3_3(obj, min_value, max_value, default_value, voxel_size_precision):
-    voxilityconstraininput = voxilityconstraininput_node_group()
+    voxilityconstraininput = voxilityconstraininput_node_group(NameConstant.VOXILITY_NODE_GROUP_CONSTRAIN_INPUT.value)
     voxelize = voxelize_node_group_3_3(NameConstant.VOXILITY_NODE_GROUP_NAME.value, min_value, max_value, default_value)
     voxelizemodifier = voxelizemodifier_node_group_3_3(voxelize, NameConstant.VOXILITY_MODIFIER_NAME.value, voxilityconstraininput, min_value, max_value, default_value, voxel_size_precision)
     add_modifier_blender_3_3(obj, voxelizemodifier, NameConstant.VOXILITY_MODIFIER_NAME.value, default_value)
