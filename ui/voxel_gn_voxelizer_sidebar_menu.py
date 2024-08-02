@@ -262,6 +262,23 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             btn.label(text="")
         btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
 
+    def add_layout_gn_prop(self, layout, modifier, prop_id):
+        name = ObjectUtils.get_modifier_prop_name(modifier, prop_id)
+        layout.prop(data=modifier, property=f'["{prop_id}"]', text=name)
+
+    def add_layout_gn_prop_pointer(self, layout, md, rna):
+        if rna.bl_socket_idname == "NodeSocketGeometry":
+            return
+        if rna.bl_socket_idname in IDNAME_ICONS:
+            layout.prop_search(md, f'["{rna.identifier}"]',
+                search_data = bpy.data,
+                search_property = IDNAME_TYPE[rna.bl_socket_idname],
+                icon = IDNAME_ICONS[rna.bl_socket_idname],
+                text = "My " + rna.name
+            )
+        else:
+            layout.prop(md, f'["{rna.identifier}"]', text=rna.name)
+
     @classmethod
     def poll(cls, context):
         return True
