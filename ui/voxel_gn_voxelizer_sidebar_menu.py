@@ -16,10 +16,24 @@ from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT
 from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
 from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
 from voxility_pro.utils.utils import Utils # type: ignore
+from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
 from voxility_pro.utils.number_utils import NumberUtils # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
+
+IDNAME_ICONS = {
+    "NodeSocketMaterial": "MATERIAL_DATA",
+    "NodeSocketCollection": "OUTLINER_COLLECTION",
+    "NodeSocketTexture": "TEXTURE_DATA",
+    "NodeSocketImage": "IMAGE_DATA",
+}
+IDNAME_TYPE = {
+    "NodeSocketMaterial": "materials",
+    "NodeSocketCollection": "collections",
+    "NodeSocketTexture": "textures",
+    "NodeSocketImage": "images",
+}
 
 def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
