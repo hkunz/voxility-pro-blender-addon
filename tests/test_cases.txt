@@ -1,2 +1,5 @@
+* Make sure the node setup looks the same to previous version, also check the socket input/outputs are not shifted
 * Make sure all sides of all voxels have the same material
   Create a UV Sphere with 16 segments & 8 Rings and add to lower half another material then voxelize and rotate mesh on Y axis and observe
+* Check a cube with 3 materials, using attribute/vertex colors, using texture, and simple base color material and voxelize
+* Check selecting multiple voxelized objects and export them together
