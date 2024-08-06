@@ -1,6 +1,4 @@
-=================================================================
 # Voxility Pro: Voxel File Format Exchange
-=================================================================
 
 Voxility Pro: Voxel File Format Exchange is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, it empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.
 
@@ -10,9 +8,7 @@ Documentation: https://blendermarket.com/products/voxility-pro-voxel-file-format
 
 Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by Martin Gerhardy as part of Vengi Voxel (https://github.com/vengi-voxel/vengi) — an open-source and multi-platform voxel editor — Voxility Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.
 
-=================================================================
 # Building vengi-voxconvert.exe on Windows 11
-=================================================================
 
 * Install CMake from https://cmake.org/download/
 * Win+R > type "sysdm.cpl" > Advanced > Environment Variables...
@@ -33,13 +29,12 @@ Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by M
 * Open Makefile and change "ON" to "OFF" in -DUSE_SANITIZERS=OFF
 * Type "make" to configure and build or build specific targets like "make voxedit" or "make voxconvert"
 
-=================================================================
-# SOME LINKS AND INFO
-=================================================================
+# Some Links & Info
 
-Documentaion Debugging VSCode & Blender: https://github.com/hkunz/blender-addon-template
-Bug: https://github.com/actions/runner-images/issues/8891 regarding clang_rt.asan_static_runtime_thunk-x86_64.lib
-PowerShell ISE: Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC" -Name
-Download LLVM from https://github.com/llvm/llvm-project/releases/
-https://devblogs.microsoft.com/cppblog/addresssanitizer-asan-for-windows-with-msvc/
-Bleeding Edge vengi-voxconvert: https://github.com/vengi-voxel/vengi/actions/workflows/main.yml
+
+* Documentaion Debugging VSCode & Blender: https://github.com/hkunz/blender-addon-template
+* Bug: https://github.com/actions/runner-images/issues/8891 regarding clang_rt.asan_static_runtime_thunk-x86_64.lib
+* PowerShell ISE: Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC" -Name
+* Download LLVM from https://github.com/llvm/llvm-project/releases/
+* https://devblogs.microsoft.com/cppblog/addresssanitizer-asan-for-windows-with-msvc/
+* Bleeding Edge vengi-voxconvert: https://github.com/vengi-voxel/vengi/actions/workflows/main.yml
