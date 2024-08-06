@@ -454,7 +454,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #math.Value -> combine_xyz.X
     voxelize.links.new(math.outputs[0], combine_xyz.inputs[0])
     #vector_math_003.Vector -> sample_nearest_surface_001.Sample Position
-    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_001.inputs[2])
+    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_001.inputs[3 if v >= (4,2,0) else 2])
     #vector_math.Vector -> separate_xyz.Vector
     voxelize.links.new(vector_math.outputs[0], separate_xyz.inputs[0])
     #evaluate_on_domain.Value -> store_named_attribute.Value
@@ -462,7 +462,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #volume_to_mesh.Mesh -> set_position.Geometry
     voxelize.links.new(volume_to_mesh.outputs[0], set_position.inputs[0])
     #vector_math_003.Vector -> sample_nearest_surface.Sample Position
-    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface.inputs[2])
+    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface.inputs[3 if v >= (4,2,0) else 2])
     #vector_math_002.Vector -> vector_math_003.Vector
     voxelize.links.new(vector_math_002.outputs[0], vector_math_003.inputs[1])
     #delete_geometry.Geometry -> merge_by_distance.Geometry
@@ -514,7 +514,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #named_attribute_001.Attribute -> sample_nearest_surface_002.Value
     voxelize.links.new(named_attribute_001.outputs[0], sample_nearest_surface_002.inputs[1])
     #vector_math_003.Vector -> sample_nearest_surface_002.Sample Position
-    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_002.inputs[2])
+    voxelize.links.new(vector_math_003.outputs[0], sample_nearest_surface_002.inputs[3 if v >= (4,2,0) else 2])
     #group_input_002.Mesh -> sample_nearest_surface_002.Mesh
     voxelize.links.new(group_input_002.outputs[0], sample_nearest_surface_002.inputs[0])
     #evaluate_on_domain_001.Value -> store_named_attribute_001.Value
