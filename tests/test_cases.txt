@@ -1,0 +1,2 @@
+* Make sure all sides of all voxels have the same material
+  Create a UV Sphere with 16 segments & 8 Rings and add to lower half another material then voxelize and rotate mesh on Y axis and observe
