@@ -38,10 +38,11 @@ class OperatorVoxconvert(bpy.types.Operator):
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
             subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
+            #raise subprocess.CalledProcessError(returncode=1, cmd=cmd, stderr="Simulated error")
         except subprocess.CalledProcessError as e:
             success = False
-            print(f"Error: Command exited with return code {e.returncode}")
-            print(f"Standard Error: {e.stderr}")
+            self.report({'ERROR'}, f"Error: Command exited with return code {e.returncode}")
+            self.report({'ERROR'}, f"Standard Error: {e.stderr}")
             if not c.test:
                 self.report({'ERROR'}, f"Error processing file: {c.get_input_filepath()}")
         self.voxconvert_duration = time.time() - start_time
