@@ -37,7 +37,7 @@ class OperatorVoxconvert(bpy.types.Operator):
         print("\nExecute voxconvert command: ", command_str, '\n' + c.get_formatted_args())
         self.report({'INFO'}, f"{get_translation('info_execute_command')} {command_str}")
         try:
-            subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
+            subprocess.run(cmd, shell=True, check=True, capture_output=False, text=True)
             #raise subprocess.CalledProcessError(returncode=1, cmd=cmd, stderr="Simulated error")
         except subprocess.CalledProcessError as e:
             success = False
