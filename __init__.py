@@ -48,12 +48,14 @@ from voxility_pro.ui.addon_preferences import register as register_preferences, 
 from voxility_pro.utils.file_utils import FileUtils # type: ignore
 from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager # type: ignore
+from voxility_pro.utils.system_utils import SystemUtils # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
 if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
     from voxility_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 else:
     from voxility_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+from voxility_pro.operators.installation.darwin.operator_macos_install_rosetta2 import WEB_OT_OperatorInstallMacRosetta2 # type: ignore
 from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
 from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
 
@@ -73,6 +75,8 @@ def register() -> None:
     add_executable_permission(FileUtils.get_voxconvert_filepath()) #https://blender.stackexchange.com/questions/310144/mac-executable-binary-within-addon-zip-loses-execute-permission-when-addon-zip
     register_preferences()
     bpy.utils.register_class(OperatorVoxconvertTest)
+    if SystemUtils.is_darwin():
+        bpy.utils.register_class(WEB_OT_OperatorInstallMacRosetta2)
     register_translations()
     register_sidebar_menu()
     register_generic_popup()
@@ -85,6 +89,8 @@ def unregister() -> None:
     print("Addon Unregistration Begin ============>")
     unregister_preferences()
     bpy.utils.unregister_class(OperatorVoxconvertTest)
+    if SystemUtils.is_darwin():
+        bpy.utils.unregister_class(WEB_OT_OperatorInstallMacRosetta2)
     unregister_translations()
     unregister_sidebar_menu()
     unregister_generic_popup()
