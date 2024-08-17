@@ -51,7 +51,7 @@ class VoxconvertCommandBuilder:
             command.append(exe.replace(" ", "\ "))
 
         if self.test:
-            #command.append("--help")
+            command.append("--version")
             return command
 
         if self.vc_script:

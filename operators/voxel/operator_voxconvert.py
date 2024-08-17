@@ -28,20 +28,23 @@ class OperatorVoxconvert(bpy.types.Operator):
         c.vc_output_paths = outputs
         return c
 
-    def get_script_args(self):
-        props = bpy.context.scene.userinterface_props
-        output_directory = props.output_directory.strip()
-        return 
-
-    def get_command(self, system, c):
+    def get_script_args(self, system, c):
         command: List[str] = c.get_command()
         command_str: str = c.get_command_str()
         print("exec command: ", command_str)
-        if system != "windows":
-            system = "unix"
         args = ["-command", command[0], "-command_str", command_str] if system == "windows" else [command[0], command_str]
+        return args
+
+    def get_script_path(self, system):
         file = "voxconvert.ps1" if system == "windows" else "voxconvert.zsh"
         script_path = os.path.join(FileUtils.get_addon_root_dir(), f"scripts/voxconvert/{system}/{file}")
+        return script_path
+
+    def get_command(self, system, c):
+        if system != "windows":
+            system = "unix"
+        args = self.get_script_args(system, c)
+        script_path = self.get_script_path(system)
         cmd = ["powershell", "-File", script_path] if system == "windows" else ["zsh", script_path]
         return cmd + list(args)
 
