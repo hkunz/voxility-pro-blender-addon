@@ -18,7 +18,6 @@ from voxility_pro.operators.voxel.operator_clear_temp_cache import register as r
 from voxility_pro.utils.utils import Utils # type: ignore
 from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
 from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
-from voxility_pro.utils.number_utils import NumberUtils # type: ignore
 from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
 from voxility_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
 
