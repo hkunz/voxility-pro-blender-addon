@@ -38,15 +38,14 @@ class VoxconvertCommandBuilder:
     # windows: exe_path arg1 arg2 argn
     # ====================================================================
 
-    def build_command(self) -> List[str]:
+    def build_command(self, system) -> List[str]:
         self.vc_command = []
         command: List[str] = self.vc_command
-        system: str = platform.system().lower()
-        exe: str = FileUtils.get_voxconvert_filepath()
+        exe: str = FileUtils.get_voxconvert_filepath(system)
 
         if system == "windows":
-            command.append('powershell')
-            command.append('-Command')
+            #command.append('powershell')
+            #command.append('-Command')
             command.append(f'& "{exe}"')
         else:
             command.append(exe.replace(" ", "\ "))
@@ -128,4 +127,4 @@ class VoxconvertCommandBuilder:
         command_str: str = self.get_command_str()
         vox_index: int = command_str.find("vox")
         split_args: List[str] = re.split(r' (?=-|--)', command_str[vox_index:])
-        return "\nArguments:\n" + '\n'.join(split_args[1:])
+        return '\n'.join(split_args[1:])

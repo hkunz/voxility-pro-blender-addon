@@ -170,15 +170,24 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         size = FileUtils.get_file_size(self.filepath)
         fduration = TimeUtils.format_duration(duration)
         self.report({'INFO'}, f"{get_translation('info_vox_file_created')} {self.filepath} ({size}) in {fduration}")
-        create_generic_popup(message=f"{header}|Directory: {os.path.dirname(self.filepath)}|Size: {size}|Duration: {fduration}|Check the Info Editor for more information.")
+        create_generic_popup(message=f"{header},,INFO|Directory: {os.path.dirname(self.filepath)},,TRIA_RIGHT|Size: {size},,TRIA_RIGHT|Duration: {fduration},,TRIA_RIGHT|Check the Info Editor for more information.,,TRIA_RIGHT")
+
+    def create_error_popup(self, header, duration):
+        size = FileUtils.get_file_size(self.filepath)
+        fduration = TimeUtils.format_duration(duration)
+        self.report({'ERROR'}, f"Error creating {self.filepath} ({size}) in {fduration}")
+        create_generic_popup(message=f"{header},,CANCEL,,1|Directory: {os.path.dirname(self.filepath)},,TRIA_RIGHT|Duration: {fduration},,TRIA_RIGHT|Check the Info Editor for more information.,,TRIA_RIGHT")
 
     def execute_file_path_conversion(self, context):
         start: int = time.time()
         props = context.scene.voxility_pro_properties
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         self.setup_command(props.file_to_convert_path, [self.filepath])
-        self.execute_voxconvert()
-        self.create_success_popup(f"Input file converted to '{os.path.basename(self.filepath)}'", time.time() - start)
+        success = self.execute_voxconvert()
+        if success:
+            self.create_success_popup(f"Input file converted to '{os.path.basename(self.filepath)}'", time.time() - start)
+        else:
+            self.create_error_popup(f"File conversion failed", time.time() - start)
 
     def execute(self, context: bpy_types.Context) -> set[str]:
         if self.is_file_path_conversion(context):
@@ -193,6 +202,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         temp_dir: str = TempFileManager().create_temp_dir()
         obj_file: str = None
+        success = True
 
         if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
             obj_file = os.path.join(temp_dir, 'temp.qb')
@@ -203,10 +213,13 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
         if not VoxilityFeature.GN_VOXELIZER_ACTIVE.value or VoxilityFeature.GN_VOXELIZER_ACTIVE.value and self.voxel_type != "qb":
             self.setup_command(obj_file, [self.filepath])
-            self.execute_voxconvert()
+            success = self.execute_voxconvert()
 
         TempFileManager().delete_temp_dir(temp_dir)
-        self.create_success_popup(f"Export to '{os.path.basename(self.filepath)}' successful", time.time() - duration)
+        if success:
+            self.create_success_popup(f"Export to '{os.path.basename(self.filepath)}' successful", time.time() - duration)
+        else:
+            self.create_error_popup(f"Export to '{os.path.basename(self.filepath)}' failed", time.time() - duration)
         return {'FINISHED'}
 
     @classmethod

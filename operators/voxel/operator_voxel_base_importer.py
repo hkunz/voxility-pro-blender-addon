@@ -120,6 +120,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
             self.report({'INFO'}, f"{get_translation('info_generated_files')} {out_filepath} ({FileUtils.get_file_size(out_filepath)}) in {TimeUtils.format_duration(self.voxconvert_duration)}")
         else:
             TempFileManager().delete_temp_dir(temp_dir)
+            self.report({'ERROR'}, f"Import failed: {self.filepath} in {duration}")
             return {'CANCELLED'}
 
         start_time: float = time.time()

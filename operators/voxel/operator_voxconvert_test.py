@@ -18,8 +18,11 @@ class OperatorVoxconvertTest(OperatorVoxconvert):
 
     def execute(self, _: bpy_types.Context) -> set[str]:
         self.setup_command(None, None)
-        self.execute_voxconvert()
-        self.report({'INFO'}, f"Voxconvert Test Success")
+        success = self.execute_voxconvert()
+        if success:
+            self.report({'INFO'}, f"Voxconvert Test Success")
+        else:
+            self.report({'ERROR'}, f"Voxconvert Test Failed")
         return {'FINISHED'}
 
     @classmethod

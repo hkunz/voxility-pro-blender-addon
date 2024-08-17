@@ -27,9 +27,9 @@ class FileUtils:
         return platform.system().lower()
 
     @staticmethod
-    def get_voxconvert_filepath() -> str:
+    def get_voxconvert_filepath(system=None) -> str:
         addon_root: str = FileUtils.get_addon_root_dir()
-        system: str = FileUtils.get_system()
+        system: str = FileUtils.get_system() if system is None else system
         voxconvert_version: str = Utils.get_voxconvert_version()
         exe_base_dir: str = "executable"
         exe_base_name: str = "voxconvert"
