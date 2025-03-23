@@ -96,5 +96,5 @@ def unregister() -> None:
     unregister_generic_popup()
     TempFileManager().cleanup()
     IconsManager().cleanup()
-    bpy.app.handlers.load_post.clear()
+    bpy.app.handlers.load_post.remove(on_application_load)
     print("Addon Unregistration Complete <========\n")

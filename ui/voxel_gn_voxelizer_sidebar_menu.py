@@ -256,4 +256,4 @@ def unregister() -> None:
     unregister_selected_objects_list()
     unregister_temp_cache_operator()
     unregister_all_temp_cache_operator()
-    bpy.app.handlers.depsgraph_update_post.clear()
+    bpy.app.handlers.depsgraph_update_post.remove(on_depsgraph_update)

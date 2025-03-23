@@ -90,7 +90,7 @@ def unregister() -> None:
     del bpy.types.Scene.voxelize_list_update
     del bpy.types.Scene.voxelize_list
     del bpy.types.Scene.voxelize_list_index
-    bpy.app.handlers.depsgraph_update_post.clear()
+    bpy.app.handlers.depsgraph_update_post.remove(on_depsgraph_update)
 
 
 # example usage:
