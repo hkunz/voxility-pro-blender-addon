@@ -116,9 +116,6 @@ class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
         description="Temp descrption",
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
-    def __init__(self):
-        self.errors = None
-
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         self.errors = self.get_errors(context)
         self.width = self.MIN_POPUP_WIDTH
