@@ -17,11 +17,6 @@ class OperatorVoxconvert(bpy.types.Operator):
     bl_options = {'INTERNAL', 'UNDO'}
     filename_ext: str = ""
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.voxconvert_duration: int = 0
-        self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
-
     def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
         c: VoxconvertCommandBuilder = self.command_builder
         c.vc_input_path = input
@@ -77,6 +72,10 @@ class OperatorVoxconvert(bpy.types.Operator):
         self.report({'ERROR'}, f"Standard Error: {e.stderr}")
         if not c.test:
             self.report({'ERROR'}, f"Error processing file: {c.get_input_filepath()}")
+
+    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
+        self.voxconvert_duration: int = 0
+        self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
 
     @abstractmethod
     def execute(_self, _context: bpy_types.Context) -> set[str]:

@@ -31,10 +31,6 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
         default=False,
     ) # type: ignore
 
-    def __init__(self):
-        super().__init__()
-        self.options_panel = None
-
     def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_voxelizemode = int(self.voxformat_voxelizemode)
@@ -48,7 +44,9 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
         pass
         #self.options_panel.prop(self, "voxformat_voxelizemode")
 
-    def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
+        super().invoke(context, event)
+        self.options_panel = None
         wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
