@@ -148,7 +148,7 @@ class VoxelColorReader:
         pixel = 4 * (size[0] * py + px)
         if not pxs:
             raise ColorReadError(ColorReadError.MISSING_TEXTURE)
-        return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], True)
+        return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], False)
 
     def get_voxel_color_vertex(self, color):
         return self.get_color_space_display_color(color.x, color.y, color.z, True)
