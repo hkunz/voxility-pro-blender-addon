@@ -23,7 +23,7 @@
 
 bl_info = {
     "name": "Voxelity Pro: Voxel File Format Exchange",
-    "description": "Voxelity enables the manipulation, import, and export of various voxel file formats through voxconvert-0.0.29", # voxconvert-X.X.X is parsed out in utils.py
+    "description": "Voxelity enables the manipulation, import, and export of various voxel file formats through voxconvert-0.0.36", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 15),
     "blender": (2, 93, 0),
@@ -61,7 +61,7 @@ from voxelity_pro.operators.voxel.operator_voxconvert_test import OperatorVoxcon
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(f"{exe}")
-    print("Using voxconvert:", app, f"({FileUtils.get_file_size(app)})")
+    print("✅ Using voxconvert:", app, f"({FileUtils.get_file_size(app)})")
     app.chmod(app.stat().st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
     return app
 

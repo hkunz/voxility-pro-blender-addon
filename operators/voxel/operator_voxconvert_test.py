@@ -1,8 +1,8 @@
 import bpy
-import bpy_types
 
 from typing import List
 
+from voxelity_pro.utils.utils import Utils
 from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 
@@ -20,8 +20,9 @@ class OperatorVoxconvertTest(OperatorVoxconvert):
     def execute(self, _: bpy.types.Context) -> set[str]:
         self.setup_command(None, None)
         success = self.execute_voxconvert()
+        voxconvert_version: str = Utils.get_voxconvert_version()
         if success:
-            self.report({'INFO'}, f"Voxconvert Test Success")
+            self.report({'INFO'}, f"Voxconvert Test Success ({voxconvert_version})")
         else:
             self.report({'ERROR'}, f"Voxconvert Test Failed")
         return {'FINISHED'}
