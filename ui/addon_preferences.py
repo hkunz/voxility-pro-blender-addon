@@ -5,14 +5,15 @@
 # ============================================================================
 
 import bpy
+import bpy_types
 
 from bpy.types import UILayout
 from typing import List
 
-from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
-from voxelity_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type
-from voxelity_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type
-from voxelity_pro.utils.utils import Utils
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type # type: ignore
+from voxelity_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
 
 def update_voxel_formats_preferences() -> None:
     addon: bpy.types.Addon = bpy.context.preferences.addons[VoxelityAddonPreferences.bl_idname]

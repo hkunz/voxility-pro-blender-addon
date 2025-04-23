@@ -8,7 +8,7 @@ Qubicle Exchange Format ASCII   | qef         | X       | X      |            | 
 Qubicle Project                 | qbcl        | X       | X      | X          | X       |            |
 Binvox command line voxelizer   | binvox      | X       | X      |            |         |            |
 CubeWorld CubeMap               | cub         | X       | X      |            |         |            |
-Minecraft Schematic             | schematic   | X       |        |            |         |            |
+Minecraft Schematic             | schematic   | X       | X      |            |         |            |
 Minecraft level dat             | dat         | X       |        |            |         |            |
 Minecraft Anvil Region          | mca         | X       |        | X          |         |            |
 Minetest Template               | mts         | X       |        | X          |         |            |

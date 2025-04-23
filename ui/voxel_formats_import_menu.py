@@ -5,13 +5,14 @@
 # ============================================================================
 
 import bpy
+import bpy_types
 import re
 
 from typing import List, Tuple
 
-from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxelity_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError
-from voxelity_pro.utils.utils import Utils
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
 
 from voxelity_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
 from voxelity_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange

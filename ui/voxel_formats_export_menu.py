@@ -5,13 +5,14 @@
 # ============================================================================
 
 import bpy
+import bpy_types
 import re
 
 from typing import List, Tuple
 
-from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
-from voxelity_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError
-from voxelity_pro.utils.utils import Utils
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
 
 from voxelity_pro.operators.voxel.exporters.operator_vox_exporter import EXPORT_OT_magicavoxel
 from voxelity_pro.operators.voxel.exporters.operator_qb_exporter import EXPORT_OT_qubicle_binary_exchange
@@ -56,6 +57,7 @@ CLASSES: List[OperatorVoxconvert] = [
     EXPORT_OT_qubicle_project,
     EXPORT_OT_binvox_command_line_voxelizer,
     EXPORT_OT_cubeworld_cubemap,
+    EXPORT_OT_minecraft_schematic,
     EXPORT_OT_sandbox_voxedit_hierarchy,
     EXPORT_OT_sandbox_voxedit_model,
     EXPORT_OT_magicavoxel_xraw,
@@ -83,6 +85,7 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
         ("QBCL", "qbcl (Qubicle Project)", "Target format: *.qbcl"),
         ("BINVOX", "binvox (Binvox command line voxelizer)", "Target format: *.binvox"),
         ("CUB", "cub (CubeWorld CubeMap)", "Target format: *.cub"),
+        ("SCHEMATIC", "schematic (Minecraft Schematic)", "Target format: *.schematic"),
         ("VXR", "vxr (Sandbox VoxEdit Hierarchy)", "Target format: *.vxr"),
         ("VXM", "vxm (Sandbox VoxEdit Model)", "Target format: *.vxm"),
         ("XRAW", "xraw (MagicaVoxel XRAW)", "Target format: *.xraw"),
