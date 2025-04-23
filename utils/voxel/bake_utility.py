@@ -169,7 +169,13 @@ class BakeUtility:
         mat.use_nodes = True
         nodes = mat.node_tree.nodes
         tex_node = self.add_texture_node(mat, obj.data.uv_layers[0].name)
-        mat.node_tree.links.new(tex_node.outputs['Color'], nodes['Principled BSDF'].inputs['Base Color'])
+        bsdf = nodes['Principled BSDF']
+        mat.node_tree.links.new(tex_node.outputs['Color'], bsdf.inputs['Base Color'])
+        if 'Specular IOR Level' in bsdf.inputs:
+            bsdf.inputs['Specular IOR Level'].default_value = 0.0
+        if 'Specular' in bsdf.inputs:
+            bsdf.inputs['Specular'].default_value = 0.0
+        bsdf.inputs['Roughness'].default_value = 1.0
 
     def add_texture_node(self, mat, uvname):
         nodes = mat.node_tree.nodes
