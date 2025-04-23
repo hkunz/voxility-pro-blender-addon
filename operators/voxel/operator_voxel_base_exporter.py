@@ -106,7 +106,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def export_qb_get_reader(self, obj: bpy.types.Object) -> VoxelColorReader:
         t = time.time()
         voxel_size, uvmap, color = VoxelUtils.get_voxelizer_voxel_modifier_attributes(obj)
-        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_LINEAR, uvmap)
+        reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, uvmap)
         duration = TimeUtils.format_duration(time.time() - t)
         print(f"Qb {obj.name} Read Time: {duration}")
         self.report({'INFO'}, f"Reading voxel colors took {duration}")
@@ -228,7 +228,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     @classmethod
     def poll(cls, context: bpy.types.Context) -> bool:
-        active_object: bpy_types.Object = context.active_object
+        active_object: bpy.types.Object = context.active_object
         if cls.is_file_path_conversion(context):
             return True
         if not cls.filename_ext or not active_object:

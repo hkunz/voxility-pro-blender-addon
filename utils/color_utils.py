@@ -5,4 +5,4 @@ class ColorUtils:
         if color_value <= 0.0031308:
             return 12.92 * color_value
         else:
-            return 1.055 * color_value ** (1 / 2.4) - 0.055
+            return 1.055 * (color_value ** (1.0 / 2.4)) - 0.055

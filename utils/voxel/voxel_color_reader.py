@@ -96,7 +96,7 @@ class VoxelColorReader:
         return (round(r*255), round(g*255), round(b*255), 255)
 
     def get_unsocketed_base_color(self, c):
-        return self.get_color_space_display_color(c[0], c[1], c[2], False)
+        return self.get_color_space_display_color(c[0], c[1], c[2], True)
 
     def get_socketed_image_texture(self, p):
         tex_node = p.inputs[0].links[0].from_node
@@ -148,10 +148,10 @@ class VoxelColorReader:
         pixel = 4 * (size[0] * py + px)
         if not pxs:
             raise ColorReadError(ColorReadError.MISSING_TEXTURE)
-        return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], False)
+        return self.get_color_space_display_color(pxs[pixel], pxs[pixel+1], pxs[pixel+2], True)
 
     def get_voxel_color_vertex(self, color):
-        return self.get_color_space_display_color(color.x, color.y, color.z, False)
+        return self.get_color_space_display_color(color.x, color.y, color.z, True)
 
     def get_voxel_color(self, face_index):
         f = self.bm.faces[face_index]
@@ -192,7 +192,7 @@ def test_read_voxel_colors_and_write_qb_file():
     geometry_nodes_modifier = obj.modifiers[-1]
     voxel_size_value = geometry_nodes_modifier["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"]
     voxel_size = round(voxel_size_value, 3)
-    reader = VoxelColorReader(obj, voxel_size, "UVMap")
+    reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
     print("Read time:", time.time() - s)
     file: str = "C:/out.qb"
     start = time.time()
