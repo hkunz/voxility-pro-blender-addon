@@ -1,3 +1,4 @@
+import bpy
 import bpy_types
 
 from typing import List
@@ -16,7 +17,7 @@ class OperatorVoxconvertTest(OperatorVoxconvert):
         c.test = True
         return c
 
-    def execute(self, _: bpy_types.Context) -> set[str]:
+    def execute(self, _: bpy.types.Context) -> set[str]:
         self.setup_command(None, None)
         success = self.execute_voxconvert()
         if success:
@@ -24,6 +25,10 @@ class OperatorVoxconvertTest(OperatorVoxconvert):
         else:
             self.report({'ERROR'}, f"Voxconvert Test Failed")
         return {'FINISHED'}
+
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> set[str]:
+        super().invoke(context, event)
+        return self.execute(context)
 
     @classmethod
     def poll(cls, _: bpy_types.Context) -> bool:

@@ -31,7 +31,7 @@ class OperatorGenericPopup(bpy.types.Operator):
             else:
                 col.label(text=m)
 
-    def execute(self, _: bpy_types.Context) -> set[str]:
+    def execute(self, _: bpy.types.Context) -> set[str]:
         if self.exec_message:
             self.report({'INFO'}, self.exec_message)
         return {'FINISHED'}

@@ -112,7 +112,6 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
 
         temp_dir: str = TempFileManager().create_temp_dir()
         out_filepath: str = os.path.join(temp_dir, 'temp.obj')
-
         self.setup_command(self.filepath, [out_filepath])
         success: bool = self.execute_voxconvert()
 
@@ -136,6 +135,8 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         return {'FINISHED'}
 
     def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
+        self.voxconvert_duration: int = 0
+        self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
         wm: bpy_types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)

@@ -40,7 +40,7 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
         sub.enabled = False
         sub.prop(self, "option_overwrite")
 
-    def execute(self, _: bpy_types.Context) -> set[str]:
+    def execute(self, _: bpy.types.Context) -> set[str]:
         temp_dir = os.path.dirname(OBJECT_OT_MeshVoxelSaveOperator.VOX_OUTPUT_PATH)
         print("Temporary contents in temp directory:", temp_dir)
         print("Save contents to destination directory:", self.directory)

@@ -1,12 +1,10 @@
 import bpy
 import time
 import subprocess
-import platform
 import bpy_types
 import os
 
 from typing import List
-from abc import ABC, abstractmethod
 
 from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
 from voxelity_pro.translation.translations import get_translation
@@ -76,10 +74,10 @@ class OperatorVoxconvert(bpy.types.Operator):
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         self.voxconvert_duration: int = 0
         self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
+        return {'FINISHED'}
 
-    @abstractmethod
-    def execute(_self, _context: bpy_types.Context) -> set[str]:
-        pass
+    def execute(self, context: bpy.types.Context) -> set[str]:
+        raise NotImplementedError("Subclasses must implement the execute() method")
 
     @classmethod
     def poll(cls, context: bpy_types.Context) -> bool:
