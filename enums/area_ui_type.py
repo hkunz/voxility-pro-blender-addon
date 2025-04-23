@@ -1,8 +1,8 @@
 from enum import auto
 
-from voxility_pro.enums.voxility_enum import VoxilityEnum
+from voxelity_pro.enums.voxelity_enum import VoxelityEnum
 
-class AreaUiType(VoxilityEnum):
+class AreaUiType(VoxelityEnum):
     VIEW_3D = auto()
     IMAGE_EDITOR = auto()
     UV = auto()

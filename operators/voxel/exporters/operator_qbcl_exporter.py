@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_qubicle_project(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_qubicle_project"
+    bl_idname = "export.voxelity_qubicle_project"
     bl_label = "Export QBCL"
     bl_description = "Export selected objects to Qubicle Project format (.qbcl)"
 

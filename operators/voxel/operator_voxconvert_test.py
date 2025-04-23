@@ -2,11 +2,11 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
 
 class OperatorVoxconvertTest(OperatorVoxconvert):
-    bl_idname = "export.voxility_voxconvert_test"
+    bl_idname = "export.voxelity_voxconvert_test"
     bl_label = "Voxconvert Test"
     bl_description = "Operator Voxconvert Test"
     bl_options = {'REGISTER'}

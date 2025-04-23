@@ -10,43 +10,43 @@ import re
 
 from typing import List, Tuple
 
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
-from voxility_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
-from voxility_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.exceptions.unknown_voxel_type_error import UnknownVoxelTypeError # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
 
-from voxility_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
-from voxility_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
-from voxility_pro.operators.voxel.importers.operator_qbt_importer import IMPORT_OT_qubicle_binary_tree_exchange
-from voxility_pro.operators.voxel.importers.operator_qef_importer import IMPORT_OT_qubicle_exchange_format_ascii
-from voxility_pro.operators.voxel.importers.operator_qbcl_importer import IMPORT_OT_qubicle_project
-from voxility_pro.operators.voxel.importers.operator_binvox_importer import IMPORT_OT_binvox_command_line_voxelizer
-from voxility_pro.operators.voxel.importers.operator_cub_importer import IMPORT_OT_cubeworld_cubemap
-from voxility_pro.operators.voxel.importers.operator_schematic_importer import IMPORT_OT_minecraft_schematic
-from voxility_pro.operators.voxel.importers.operator_dat_importer import IMPORT_OT_minecraft_level_dat
-from voxility_pro.operators.voxel.importers.operator_mca_importer import IMPORT_OT_minecraft_anvil_region
-from voxility_pro.operators.voxel.importers.operator_mts_importer import IMPORT_OT_minetest_template
-from voxility_pro.operators.voxel.importers.operator_vxc_importer import IMPORT_OT_sandbox_voxedit_collection
-from voxility_pro.operators.voxel.importers.operator_vxr_importer import IMPORT_OT_sandbox_voxedit_hierarchy
-from voxility_pro.operators.voxel.importers.operator_vxt_importer import IMPORT_OT_sandbox_voxedit_tilemap
-from voxility_pro.operators.voxel.importers.operator_vxm_importer import IMPORT_OT_sandbox_voxedit_model
-from voxility_pro.operators.voxel.importers.operator_xraw_importer import IMPORT_OT_magicavoxel_xraw
-from voxility_pro.operators.voxel.importers.operator_vxl_importer import IMPORT_OT_tiberian_sun
-from voxility_pro.operators.voxel.importers.operator_kv6_importer import IMPORT_OT_voxlap_voxel_engine
-from voxility_pro.operators.voxel.importers.operator_kvx_importer import IMPORT_OT_voxlap_voxel_model_format
-from voxility_pro.operators.voxel.importers.operator_scn_importer import IMPORT_OT_animatoon_3d_scene
-from voxility_pro.operators.voxel.importers.operator_csv_importer import IMPORT_OT_sproxel_csv
-from voxility_pro.operators.voxel.importers.operator_sment_importer import IMPORT_OT_starmade_blueprint
-from voxility_pro.operators.voxel.importers.operator_smtpl_importer import IMPORT_OT_starmade_template
-from voxility_pro.operators.voxel.importers.operator_gox_importer import IMPORT_OT_goxel
-from voxility_pro.operators.voxel.importers.operator_vmax_importer import IMPORT_OT_voxel_max
-from voxility_pro.operators.voxel.importers.operator_vbx_importer import IMPORT_OT_voxel_builder
-from voxility_pro.operators.voxel.importers.operator_v3a_importer import IMPORT_OT_voxel3d
-from voxility_pro.operators.voxel.importers.operator_vengi_importer import IMPORT_OT_vengi
-from voxility_pro.operators.voxel.importers.operator_nvm_importer import IMPORT_OT_nicks_voxel_model
-from voxility_pro.operators.voxel.importers.operator_pcubes_importer import IMPORT_OT_particubes
-from voxility_pro.operators.voxel.importers.operator_csm_importer import IMPORT_OT_cubic_mesh
-from voxility_pro.operators.voxel.importers.operator_3zh_importer import IMPORT_OT_cubzh
-from voxility_pro.operators.voxel.importers.operator_b64_importer import IMPORT_OT_cubzh_world
+from voxelity_pro.operators.voxel.importers.operator_vox_importer import IMPORT_OT_magicavoxel
+from voxelity_pro.operators.voxel.importers.operator_qb_importer import IMPORT_OT_qubicle_binary_exchange
+from voxelity_pro.operators.voxel.importers.operator_qbt_importer import IMPORT_OT_qubicle_binary_tree_exchange
+from voxelity_pro.operators.voxel.importers.operator_qef_importer import IMPORT_OT_qubicle_exchange_format_ascii
+from voxelity_pro.operators.voxel.importers.operator_qbcl_importer import IMPORT_OT_qubicle_project
+from voxelity_pro.operators.voxel.importers.operator_binvox_importer import IMPORT_OT_binvox_command_line_voxelizer
+from voxelity_pro.operators.voxel.importers.operator_cub_importer import IMPORT_OT_cubeworld_cubemap
+from voxelity_pro.operators.voxel.importers.operator_schematic_importer import IMPORT_OT_minecraft_schematic
+from voxelity_pro.operators.voxel.importers.operator_dat_importer import IMPORT_OT_minecraft_level_dat
+from voxelity_pro.operators.voxel.importers.operator_mca_importer import IMPORT_OT_minecraft_anvil_region
+from voxelity_pro.operators.voxel.importers.operator_mts_importer import IMPORT_OT_minetest_template
+from voxelity_pro.operators.voxel.importers.operator_vxc_importer import IMPORT_OT_sandbox_voxedit_collection
+from voxelity_pro.operators.voxel.importers.operator_vxr_importer import IMPORT_OT_sandbox_voxedit_hierarchy
+from voxelity_pro.operators.voxel.importers.operator_vxt_importer import IMPORT_OT_sandbox_voxedit_tilemap
+from voxelity_pro.operators.voxel.importers.operator_vxm_importer import IMPORT_OT_sandbox_voxedit_model
+from voxelity_pro.operators.voxel.importers.operator_xraw_importer import IMPORT_OT_magicavoxel_xraw
+from voxelity_pro.operators.voxel.importers.operator_vxl_importer import IMPORT_OT_tiberian_sun
+from voxelity_pro.operators.voxel.importers.operator_kv6_importer import IMPORT_OT_voxlap_voxel_engine
+from voxelity_pro.operators.voxel.importers.operator_kvx_importer import IMPORT_OT_voxlap_voxel_model_format
+from voxelity_pro.operators.voxel.importers.operator_scn_importer import IMPORT_OT_animatoon_3d_scene
+from voxelity_pro.operators.voxel.importers.operator_csv_importer import IMPORT_OT_sproxel_csv
+from voxelity_pro.operators.voxel.importers.operator_sment_importer import IMPORT_OT_starmade_blueprint
+from voxelity_pro.operators.voxel.importers.operator_smtpl_importer import IMPORT_OT_starmade_template
+from voxelity_pro.operators.voxel.importers.operator_gox_importer import IMPORT_OT_goxel
+from voxelity_pro.operators.voxel.importers.operator_vmax_importer import IMPORT_OT_voxel_max
+from voxelity_pro.operators.voxel.importers.operator_vbx_importer import IMPORT_OT_voxel_builder
+from voxelity_pro.operators.voxel.importers.operator_v3a_importer import IMPORT_OT_voxel3d
+from voxelity_pro.operators.voxel.importers.operator_vengi_importer import IMPORT_OT_vengi
+from voxelity_pro.operators.voxel.importers.operator_nvm_importer import IMPORT_OT_nicks_voxel_model
+from voxelity_pro.operators.voxel.importers.operator_pcubes_importer import IMPORT_OT_particubes
+from voxelity_pro.operators.voxel.importers.operator_csm_importer import IMPORT_OT_cubic_mesh
+from voxelity_pro.operators.voxel.importers.operator_3zh_importer import IMPORT_OT_cubzh
+from voxelity_pro.operators.voxel.importers.operator_b64_importer import IMPORT_OT_cubzh_world
 
 
 CLASSES: List[OperatorVoxconvert] = [
@@ -149,7 +149,7 @@ def menu_vox_import_func_callback(self, _context: bpy_types.Context) -> None:
     self.layout.operator(IMPORT_OT_magicavoxel.bl_idname)
 
 def menu_VoxelFormatsImportMenu_func_callback(self, _context: bpy_types.Context) -> None:
-    self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxility Voxel Formats")
+    self.layout.menu(VoxelFormatsImportMenu.bl_idname, text="Voxelity Voxel Formats")
 
 def get_voxel_importer_by_type(voxel_type: str) -> OperatorVoxconvert:
     for cls in CLASSES:

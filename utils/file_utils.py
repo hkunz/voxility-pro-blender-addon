@@ -5,14 +5,14 @@ import platform
 
 from typing import List
 
-from voxility_pro.utils.utils import Utils # type: ignore
-from voxility_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError # type: ignore
 
 class FileUtils:
 
     @staticmethod
     def get_addon_root_dir() -> str:
-        # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\voxility_pro\utils.py
+        # __file__ = C:\Users\<user>\AppData\Roaming\Blender Foundation\Blender\4.0\scripts\addons\voxelity_pro\utils.py
         script_directory: str = os.path.dirname(os.path.abspath(__file__))
         addon_directory: str = os.path.dirname(script_directory)
         return addon_directory

@@ -6,7 +6,7 @@ You can start a local server to test the html file
 
 METHOD 1:
 
-* Navigate: cd voxility_pro/resources/documentation/
+* Navigate: cd voxelity_pro/resources/documentation/
 * Execute: python3 -m http.server
 * Browser: https://http://localhost:8000
 
@@ -15,27 +15,27 @@ METHOD 2:
 * Install Live Server extension on VSCode
 * Open HTML file in VSCode
 * Run Ctrl + Shift + P > "Live Server: Open with Live Server"
-* http://127.0.0.1:5500/resources/documentation/voxility-documentation.html
+* http://127.0.0.1:5500/resources/documentation/voxelity-documentation.html
 
 =============================================================================================
 MODIFY DOCUMENTATION
 =============================================================================================
 
-* Edit "test/voxility-documentation-content.html" included in "voxility-documentation.html"
-* Test output via METHOD 2 with HTML document "voxility-documentation.html"
+* Edit "test/voxelity-documentation-content.html" included in "voxelity-documentation.html"
+* Test output via METHOD 2 with HTML document "voxelity-documentation.html"
 * run script "generate-documentation-content-html.sh" from project root
-* copy contents from "final/voxility-documentation-content.html" to blendermarket.com docs
+* copy contents from "final/voxelity-documentation-content.html" to blendermarket.com docs
 
 =============================================================================================
 DOCUMENTATION TO PDF CONVERSION (https://html2pdf.com or https://pdfcrowd.com)
 =============================================================================================
 
-Open voxility-documentation-simple.html
+Open voxelity-documentation-simple.html
 Replace <div w3-include-html...</div> with actual final html/css contents
 Copy everything to https://pdfcrowd.com/ under "Convert HTML Code" and then click convert
 
 COMMAND LINE:
-wkhtmltopdf --page-size A4 --margin-top 10mm --margin-bottom 10mm --margin-left 10mm --margin-right 10mm voxility-documentation-simple.html output.pdf
+wkhtmltopdf --page-size A4 --margin-top 10mm --margin-bottom 10mm --margin-left 10mm --margin-right 10mm voxelity-documentation-simple.html output.pdf
 
 =============================================================================================
 DOCUMENTATION CONTENT
@@ -56,7 +56,7 @@ DOCUMENTATION CONTENT
 3. Getting Started
 3.1 Configuration Options
 3.2 User Interface Overview
-3.3 Voxility Logging
+3.3 Voxelity Logging
 
 4. Troubleshooting
 4.1 Common Issues

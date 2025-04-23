@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_voxel_max(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_voxel_max"
+    bl_idname = "import.voxelity_voxel_max"
     bl_label = "Import VMAX"
     bl_description = "Import Voxel Max format (.vmax)"
 

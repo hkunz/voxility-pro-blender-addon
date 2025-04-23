@@ -4,9 +4,9 @@ import bpy_types
 from typing import List
 from bpy_extras.io_utils import ExportHelper
 
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
 
 class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     bl_description = "Operator Voxel Base"

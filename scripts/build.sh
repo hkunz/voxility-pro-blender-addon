@@ -1,9 +1,9 @@
 #!/bin/bash
 
-voxility_pro_version=$(grep -oP '"version": \(\K\d+,\s*\d+,\s*\d+' __init__.py | tr -d ' \n' | sed 's/,/./g')
+voxelity_pro_version=$(grep -oP '"version": \(\K\d+,\s*\d+,\s*\d+' __init__.py | tr -d ' \n' | sed 's/,/./g')
 voxconvert_version=$(cat "__init__.py" | grep -oP 'voxconvert-\K[0-9]+\.[0-9]+\.[0-9]+(?:-.*)?(?=")')
 
-echo "Voxility Pro version: ${voxility_pro_version}"
+echo "Voxelity Pro version: ${voxelity_pro_version}"
 echo "Vengi-voxconvert version: ${voxconvert_version}"
 
 parent_folder=$(basename "$(pwd)")
@@ -37,7 +37,7 @@ zip_cmd=("zip" "-r" "${output_zip}" "${parent_folder}"/* \
   "--exclude" "${parent_folder}/$(basename "$0")"
 )
 
-voxelizer_active=$(grep -oP 'GN_VOXELIZER_ACTIVE = False' "${parent_folder}/enums/voxility_feature.py")
+voxelizer_active=$(grep -oP 'GN_VOXELIZER_ACTIVE = False' "${parent_folder}/enums/voxelity_feature.py")
 if [ -n "$voxelizer_active" ]; then
     zip_cmd+=("--exclude" "${parent_folder}/**/generate_gn_*") # exclude GN files if GN_VOXELIZER_ACTIVE=False
 fi

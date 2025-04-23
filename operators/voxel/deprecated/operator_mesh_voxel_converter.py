@@ -6,20 +6,20 @@ from os import path as p
 from typing import List
 from mathutils import Vector
 
-from voxility_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
-from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import OBJECT_OT_MeshVoxelSaveOperator # type: ignore
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
-from voxility_pro.translation.translations import get_translation # type: ignore
-from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.time_utils import TimeUtils # type: ignore
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.operators.voxel.deprecated.operator_mesh_voxel_save import OBJECT_OT_MeshVoxelSaveOperator # type: ignore
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
+from voxelity_pro.translation.translations import get_translation # type: ignore
+from voxelity_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.utils.time_utils import TimeUtils # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
 
 class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
-    bl_idname = "object.voxility_mesh_voxel_convert"
-    bl_label = "Voxility Pro Mesh-Voxel Convert"
+    bl_idname = "object.voxelity_mesh_voxel_convert"
+    bl_label = "Voxelity Pro Mesh-Voxel Convert"
     bl_description = "Voxelize or convert selected objects into a single voxel object"
 
     TEMP_DIR: str = None
@@ -45,7 +45,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     def import_obj(self, obj_file: str) -> bool:
         ObjectUtils.deselect_all_objects()
         ObjectUtils.import_obj(obj_file)
-        properties = bpy.context.scene.voxility_pro_properties
+        properties = bpy.context.scene.voxelity_pro_properties
         ObjectImportHandler(
             objects = bpy.context.selected_objects,
             merge_vertices = properties.merge_vertices,
@@ -61,7 +61,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     def setup_command(self, input: str, outputs: List[str]) -> VoxconvertCommandBuilder:
         c: VoxconvertCommandBuilder = super().setup_command(input, outputs)
         c.vc_voxformat_withcolor = 1
-        properties = bpy.context.scene.voxility_pro_properties
+        properties = bpy.context.scene.voxelity_pro_properties
         c.vc_voxformat_scale = float(properties.voxformat_scale)
         c.vc_surface_only = int(properties.surface_only)
         c.vc_voxformat_voxelizemode = int(properties.voxformat_voxelizemode)
@@ -112,7 +112,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         duration: str = TimeUtils.format_duration(self.voxconvert_duration + (start_time - time.time()))
         self.report({'INFO'}, f"{get_translation('info_vox_data_imported')} {obj_path} in {duration}")
         self.report({'INFO'}, f"Voxelized in {TimeUtils.format_duration(time.time() - voxelize_duration)}")
-        properties = context.scene.voxility_pro_properties # FIXME: if type is specified as VoxilityProProperties it get circular error
+        properties = context.scene.voxelity_pro_properties # FIXME: if type is specified as VoxelityProProperties it get circular error
 
         if properties.hide_original_objects:
             ObjectUtils.hide_objects_from_viewport(objects)

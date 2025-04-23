@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_cubzh(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_cubzh"
+    bl_idname = "import.voxelity_cubzh"
     bl_label = "Import 3ZH"
     bl_description = "Import Cubzh format (.3zh)"
 

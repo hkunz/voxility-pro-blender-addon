@@ -3,31 +3,31 @@ import bpy_types
 
 from typing import Tuple, List
 
-from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_converter import (
+from voxelity_pro.operators.voxel.deprecated.operator_mesh_voxel_converter import (
     OBJECT_OT_MeshVoxelConvertOperator,
     register as register_mesh_voxel_operator,
     unregister as unregister_mesh_voxel_operator
 )
 
-from voxility_pro.operators.voxel.deprecated.operator_mesh_voxel_save import (
+from voxelity_pro.operators.voxel.deprecated.operator_mesh_voxel_save import (
     OBJECT_OT_MeshVoxelSaveOperator,
     register as register_mesh_voxel_save_operator,
     unregister as unregister_mesh_voxel_save_operator
 )
 
-from voxility_pro.operators.voxel.operator_clear_all_temp_cache import (
+from voxelity_pro.operators.voxel.operator_clear_all_temp_cache import (
     register as register_all_temp_cache_operator,
     unregister as unregister_all_temp_cache_operator,
 )
 
-from voxility_pro.operators.voxel.operator_clear_temp_cache import (
+from voxelity_pro.operators.voxel.operator_clear_temp_cache import (
     register as register_temp_cache_operator,
     unregister as unregister_temp_cache_operator,
 )
 
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
-from voxility_pro.utils.utils import Utils # type: ignore
-from voxility_pro.enums.version_type import VersionType # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
+from voxelity_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.enums.version_type import VersionType # type: ignore
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 
@@ -37,7 +37,7 @@ def get_blender_support_text() -> str:
 def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
-class VoxilityProProperties(bpy.types.PropertyGroup):
+class VoxelityProProperties(bpy.types.PropertyGroup):
     option_dissolve_limited: bpy.props.BoolProperty(
         name="Apply Limited Dissolve",
         description="Simplify mesh by dissolving vertices and edges separating flat regions.",
@@ -108,15 +108,15 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         #default="NONE", # cannot set a default when using dynamic EnumProperty
     ) # type: ignore
 
-class OBJECT_PT_voxility_pro(bpy.types.Panel):
-    bl_label = f"Voxility Pro {Utils.get_addon_version()}"
+class OBJECT_PT_voxelity_pro(bpy.types.Panel):
+    bl_label = f"Voxelity Pro {Utils.get_addon_version()}"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'Voxility'
+    bl_category = 'Voxelity'
 
     def draw(self, context) -> None:
         layout: bpy.types.UILayout = self.layout
-        properties: VoxilityProProperties = context.scene.voxility_pro_properties
+        properties: VoxelityProProperties = context.scene.voxelity_pro_properties
 
         vertex_color_support = bpy.app.version >= VERTEX_COLORS_SUPPORT_BLENDER_VERSION
         col: bpy.types.UILayout = layout.column()
@@ -132,7 +132,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         layout.prop(properties, "hide_original_objects")
 
         op = layout.operator(OBJECT_OT_MeshVoxelConvertOperator.bl_idname, text="Voxelize")
-        op.vox_target_format_ext = properties.export_format # <bpy_struct, OBJECT_OT_voxility_mesh_voxel_convert at 0x0000021AE2D89BC8> <class 'bpy.types.OBJECT_OT_voxility_mesh_voxel_convert'>
+        op.vox_target_format_ext = properties.export_format # <bpy_struct, OBJECT_OT_voxelity_mesh_voxel_convert at 0x0000021AE2D89BC8> <class 'bpy.types.OBJECT_OT_voxelity_mesh_voxel_convert'>
 
         layout.prop(properties, "export_format")
 
@@ -143,20 +143,20 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_CURRENT_SELECTION = properties.export_format
 
 def register() -> None:
-    bpy.utils.register_class(VoxilityProProperties)
-    bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
+    bpy.utils.register_class(VoxelityProProperties)
+    bpy.types.Scene.voxelity_pro_properties = bpy.props.PointerProperty(type=VoxelityProProperties)
     bpy.types.Object.voxelized = bpy.props.BoolProperty(default=False)
-    bpy.utils.register_class(OBJECT_PT_voxility_pro)
+    bpy.utils.register_class(OBJECT_PT_voxelity_pro)
     register_mesh_voxel_operator()
     register_mesh_voxel_save_operator()
     register_temp_cache_operator()
     register_all_temp_cache_operator()
 
 def unregister() -> None:
-    bpy.utils.unregister_class(VoxilityProProperties)
-    del bpy.types.Scene.voxility_pro_properties
+    bpy.utils.unregister_class(VoxelityProProperties)
+    del bpy.types.Scene.voxelity_pro_properties
     del bpy.types.Object.voxelized
-    bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
+    bpy.utils.unregister_class(OBJECT_PT_voxelity_pro)
     unregister_mesh_voxel_operator()
     unregister_mesh_voxel_save_operator()
     unregister_temp_cache_operator()

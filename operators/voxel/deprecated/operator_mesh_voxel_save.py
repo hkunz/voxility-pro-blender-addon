@@ -6,10 +6,10 @@ import shutil
 from os import path as p
 from typing import List
 
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
 
 class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
-    bl_idname = "object.voxility_mesh_voxel_save"
+    bl_idname = "object.voxelity_mesh_voxel_save"
     bl_label = "Save"
     bl_description = "Save the voxelized mesh as specified in target voxel format"
 

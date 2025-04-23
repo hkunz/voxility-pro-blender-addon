@@ -9,11 +9,11 @@ from bpy.types import (
     ShaderNode,
 )
 
-from voxility_pro.operators.common.handler_interface import IHandler
-from voxility_pro.operators.common.context.context_script_executer import ContextScriptExecuter
-from voxility_pro.operators.common.context.context_executer_override import ContextExecuterOverride
-from voxility_pro.enums.area_type import AreaType
-from voxility_pro.enums.area_ui_type import AreaUiType
+from voxelity_pro.operators.common.handler_interface import IHandler
+from voxelity_pro.operators.common.context.context_script_executer import ContextScriptExecuter
+from voxelity_pro.operators.common.context.context_executer_override import ContextExecuterOverride
+from voxelity_pro.enums.area_type import AreaType
+from voxelity_pro.enums.area_ui_type import AreaUiType
 
 class ObjectImportAddVertexColorsHandler(IHandler):
     def __init__(self, object) -> None:
@@ -44,7 +44,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
             node_tree.nodes.remove(links[0].from_node)
         elif t == 'VERTEX_COLOR' or t == 'ATTRIBUTE':
             return
-        mat.name = "VoxilityVertexColors"
+        mat.name = "VoxelityVertexColors"
         ContextScriptExecuter(
             area_type=AreaType.NODE_EDITOR.name,
             ui_type=AreaUiType.ShaderNodeTree.name,
@@ -52,7 +52,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         ).execute_script()
 
         vc_node: ShaderNode = node_tree.nodes.get("Color Attribute") or node_tree.nodes.get("Vertex Color")
-        vc_node.name = "voxility_color_attribute"
+        vc_node.name = "voxelity_color_attribute"
 
         if not bsdf or not vc_node:
             print(f"Could not find BSDF node ({bsdf}) or vertex color node ({vc_node})")

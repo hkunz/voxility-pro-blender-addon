@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_starmade_template(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_starmade_template"
+    bl_idname = "import.voxelity_starmade_template"
     bl_label = "Import SMTPL"
     bl_description = "Import StarMade Template format (.smtpl)"
 

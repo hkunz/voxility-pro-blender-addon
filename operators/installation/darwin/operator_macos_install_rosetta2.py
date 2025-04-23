@@ -1,12 +1,12 @@
 import bpy
 import os
 
-from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
-from voxility_pro.operators.installation.operator_script_base import OperatorScriptBase # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
+from voxelity_pro.operators.installation.operator_script_base import OperatorScriptBase # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
 
 class WEB_OT_OperatorInstallMacRosetta2(OperatorScriptBase):
-    bl_idname = "voxility_pro.install_macos_rosetta2"
+    bl_idname = "voxelity_pro.install_macos_rosetta2"
     bl_label = "Install Rosetta 2"
     bl_description = "Install Rosetta 2 on MacOS to be able to run x86_64 binaries on arm64 architecture"
     bl_options = {'REGISTER'}

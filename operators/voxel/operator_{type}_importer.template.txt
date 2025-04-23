@@ -1,9 +1,9 @@
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_{{code_name}}(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_{{code_name}}"
+    bl_idname = "import.voxelity_{{code_name}}"
     bl_label = "Import {{TYPE}}"
     bl_description = "Import {{name}} format (.{{type}})"
 

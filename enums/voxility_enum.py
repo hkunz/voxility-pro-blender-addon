@@ -1,4 +1,4 @@
 from enum import Enum
 
-class VoxilityEnum(Enum):
+class VoxelityEnum(Enum):
     pass

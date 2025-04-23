@@ -22,7 +22,7 @@ DONE TASKS:
 * save orientation is rotated
 * use origin of the object to save QBMatrix
 * multiple QBMatrix layers saving
-* delete old version voxility modifier
+* delete old version voxelity modifier
 * Imported object should have 'voxelized' set to True
 
 BUGS FIXED:

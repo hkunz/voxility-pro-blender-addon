@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_vengi(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_vengi"
+    bl_idname = "import.voxelity_vengi"
     bl_label = "Import VENGI"
     bl_description = "Import Vengi format (.vengi)"
 

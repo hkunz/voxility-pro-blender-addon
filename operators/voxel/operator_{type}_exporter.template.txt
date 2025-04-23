@@ -1,9 +1,9 @@
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_{{code_name}}(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_{{code_name}}"
+    bl_idname = "export.voxelity_{{code_name}}"
     bl_label = "Export {{TYPE}}"
     bl_description = "Export selected objects to {{name}} format (.{{type}})"
 

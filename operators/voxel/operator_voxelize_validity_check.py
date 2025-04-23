@@ -3,10 +3,10 @@ import bpy_types
 
 from typing import List
 
-from voxility_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
-from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
-from voxility_pro.utils.number_utils import NumberUtils # type: ignore
+from voxelity_pro.operators.operator_generic_popup import OperatorGenericPopup # type: ignore
+from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
+from voxelity_pro.utils.number_utils import NumberUtils # type: ignore
 
 class VoxelError:
     ERROR_NONE = -1
@@ -70,9 +70,9 @@ class VoxelError:
         if e == VoxelError.ERROR_MISSING_UVMAP_NODE_INPUT_TO_IMAGE_TEXTURE:
             return "Missing 'UV Map' node to 'Vector' socket of 'Image Texture' node"
         if e == VoxelError.ERROR_INVALID_UVMAP_NAME_USED_IN_VOXILITY_PANEL:
-            return "Invalid 'UV Map' name specified in Voxility panel. Possible values are: PARAM"
+            return "Invalid 'UV Map' name specified in Voxelity panel. Possible values are: PARAM"
         if e == VoxelError.ERROR_INVALID_UVMAP_NAME_USED_IN_UVMAP_NODE:
-            return "Invalid UV Map name used in 'UV Map' node. You must use name specified in Voxility panel which is 'PARAM'"
+            return "Invalid UV Map name used in 'UV Map' node. You must use name specified in Voxelity panel which is 'PARAM'"
         if e == VoxelError.ERROR_ONLY_ATTRIBUTE_NODE_GEOMETRY_TYPE_ALLOWED:
             return "Invalid attribute type 'PARAM' used in 'Attribute' node. You must use 'GEOMETRY'"
         if e == VoxelError.ERROR_ONLY_ATTRIBUTE_NODE_VECTOR_SOCKET_ALLOWED_FOR_UVMAP_USE:
@@ -82,11 +82,11 @@ class VoxelError:
         if e == VoxelError.ERROR_OBJECT_MISSING_COLOR_ATTRIBUTES:
             return "Object 'PARAM' has no Color Attributes"
         if e == VoxelError.ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_VOXILITY_PANEL:
-            return "Invalid 'Color Attribute' name specified in Voxility panel. Possible values are: PARAM"
+            return "Invalid 'Color Attribute' name specified in Voxelity panel. Possible values are: PARAM"
         if e == VoxelError.ERROR_MUST_USE_COLOR_ATTRIBUTE_COLOR_SOCKET:
             return "Only 'Color' socket of 'Color Attribute' node allowed to 'Base Color' socket of 'Principled BSDF'"
         if e == VoxelError.ERROR_INVALID_COLOR_ATTRIBUTE_NAME_USED_IN_ATTRIBUTE_NODE:
-            return "Invalid Color Attribute name used in 'Color Attribute' node. You must use name specified in Voxility panel which is 'PARAM'"
+            return "Invalid Color Attribute name used in 'Color Attribute' node. You must use name specified in Voxelity panel which is 'PARAM'"
         if e == VoxelError.ERROR_ONLY_ATTRIBUTE_NODE_COLOR_SOCKET_ALLOWED_FOR_COLOR_ATTRIBUTE_USE:
             return "Only 'Color' socket of 'Attribute' node allowed for Color Attribute use"
         if e == VoxelError.ERROR_ALL_SELECTED_OBJECT_MUST_USE_SAME_VOXEL_SIZE:
@@ -100,8 +100,8 @@ class VoxelError:
         return "Undefined Error"
 
 class OBJECT_OT_OperatorVoxelizeValidityCheck(OperatorGenericPopup):
-    bl_idname = "object.voxility_voxelize_validity_check"
-    bl_label = "Voxility Voxelize Validity Check"
+    bl_idname = "object.voxelity_voxelize_validity_check"
+    bl_label = "Voxelity Voxelize Validity Check"
     bl_description = "Check for potential issues in the materials before voxel conversion"
     bl_options = {'REGISTER'}
 
@@ -298,4 +298,4 @@ def unregister():
 # example usage:
 # if __name__ == "__main__":
 #    register()
-#    bpy.ops.object.voxility_voxelize_validity_check()
+#    bpy.ops.object.voxelity_voxelize_validity_check()

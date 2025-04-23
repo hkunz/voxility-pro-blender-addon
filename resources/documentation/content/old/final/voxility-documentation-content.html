@@ -27,7 +27,7 @@
 3.2.1 Export Voxel Format File
 3.2.2 Import Voxel Format File
 3.2.3 Integrated Mesh Voxelization
-3.3 Voxility Logging
+3.3 Voxelity Logging
 4 Troubleshooting
 4.1 Common Issues
 5 Support and Community
@@ -41,12 +41,12 @@
 <!-- 1 === Introduction -->
 <!-- =================================================================================================== -->
 <h4 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 25px 2px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1</span> Introduction</h4>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro: Voxel File Format Exchange</span>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro: Voxel File Format Exchange</span>
   is a comprehensive <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/preferences/addons.html">Blender addon</a>
   designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration,
   it empowers artists and designers to unleash their creativity and explore new dimensions of voxel
   modeling within the familiar Blender environment.</p>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> supports seamless import and export of
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> supports seamless import and export of
   various popular textured voxel file formats, including
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">MagicaVoxel</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.vox</span>
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">Qubicle</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 7px 1px 7px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">.qb</span>
@@ -60,7 +60,7 @@
   <p>Powered by <b>vengi-voxconvert</b>, a cutting-edge voxel conversion tool developed by
     <a href="https://github.com/mgerhardy"><b>Martin Gerhardy</b></a> as part of
     <a href="https://github.com/vengi-voxel/vengi"><b>Vengi Voxel</b></a> — an open-source and multi-platform voxel editor —
-    <b>Voxility Pro</b> brings unparalleled voxel conversion capabilities directly to Blender,
+    <b>Voxelity Pro</b> brings unparalleled voxel conversion capabilities directly to Blender,
     enhancing your workflow and expanding your creative possibilities.
   </p>
 </div>
@@ -68,22 +68,22 @@
 <!-- 1.1 === Overview -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.1</span> Overview</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> offers a robust set of tools and functionalities
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> offers a robust set of tools and functionalities
   tailored specifically for voxel modeling enthusiasts. From integrated <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">Mesh Voxelization</span>
   to <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">Import</span> and <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">Export</span> capabilities,
   this addon provides a complete solution for incorporating voxel-based techniques into your projects.
 </p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxility Pro N-Panel Voxelize Button">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxelity Pro N-Panel Voxelize Button">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> functions available in <b>N-Panel</b> and <b>Import</b> and <b>Export</b> submenus.
+    <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> functions available in <b>N-Panel</b> and <b>Import</b> and <b>Export</b> submenus.
   </div>
 </div>
 <!-- =================================================================================================== -->
 <!-- 1.2 === Purpose -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.2</span> Purpose</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">The primary goal of <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">The primary goal of <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span>
   is to simplify the process of working with voxel data in Blender while preserving the fidelity of your original models.
   One of its standout features is the ability to convert meshes with textures into voxel-type meshes.
   These voxel meshes can be exported to various formats such as
@@ -98,7 +98,7 @@
 <!-- 1.3 === Functionality -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.3</span> Functionality</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> boasts a range of powerful functionalities.</p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> boasts a range of powerful functionalities.</p>
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;" id="functionalities"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.3.1</span> Functionalities</h6>
 <table style="border-collapse: separate; border: 4px; width: 100%; padding: 0px;">
   <thead style="background-color: #292929;">
@@ -133,7 +133,7 @@
 <!-- 1.4 === Compatibility -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.4</span> Compatibility</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Help</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Manual</span></p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> is compatible with <b>Blender</b> versions <b>2.93</b> to <b>4.0</b> and above, running on Microsoft Windows, Mac OS, or Linux Platforms, ensuring broad accessibility for Blender users. You can easily identify the version of Blender you're using by accessing menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Help</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Manual</span></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
   <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-0-check-blender-version.png';" alt="Check Blender Version">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
@@ -145,7 +145,7 @@
 <!-- 1.4.1 === Supported Voxel File Formats -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 8px 10px 5px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;" id="fileformats"><span style="background-color: #000; color:#fff; padding: 0px 15px 0px 15px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">1.4.1</span> Supported Voxel File Formats</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> supports a wide range of formats, and we are continually adding more support. Currently, the following types are supported, indicated by a checkmark for their corresponding import or export format.</p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;"><span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> supports a wide range of formats, and we are continually adding more support. Currently, the following types are supported, indicated by a checkmark for their corresponding import or export format.</p>
 <table style="border-collapse: separate; border: 4px; width: 100%; padding: 0px;">
   <thead style="background-color: #292929;">
     <tr style="color:#ffffff;">
@@ -211,7 +211,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Blender Version</b></td><td style="padding: 5px 25px;">Voxility Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td></tr>
+    <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Blender Version</b></td><td style="padding: 5px 25px;">Voxelity Pro is compatible with Blender <b>2.93</b> up to <b>4.0</b> and later versions.</td></tr>
     <tr style="background-color: #dfdfdf;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Operating System</b></td><td style="padding: 5px 25px;">Supported on <b>Windows</b>, <b>Mac OS</b>, and <b>Linux</b> platforms.</td></tr>
     <tr style="background-color: #f1f1f1;"><td style="padding: 5px 25px; white-space: nowrap;"><b>Hardware Requirements</b></td><td style="padding: 5px 25px;">Your system should meet the minimum hardware specifications recommended for running Blender smoothly.</td></tr>
     <tr><td style="background-color: #555555; height:10px;"></td><td style="background-color: #555555; height:10px;"></td></tr>
@@ -223,7 +223,7 @@
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">2.2</span> Addon Download</h6>
 <ul style="list-style: disc">
-  <li>Locate the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon product page.</li>
+  <li>Locate the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> addon product page.</li>
   <li>Click on the <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">Purchase</span> or <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">Download</span> button to obtain the addon.</li>
   <li>Complete the payment process if required.</li>
   <li>Once the download is complete, you will receive a <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.zip</span> file containing the addon.</li>
@@ -233,7 +233,7 @@
 <!-- 2.3 === Addon Installation -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">2.3</span> Addon Installation</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">After downloading the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon and launching Blender on your system, you can install it by following these instructions:</p>
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">After downloading the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> addon and launching Blender on your system, you can install it by following these instructions:</p>
 <ul style="list-style: disc">
   <li>Go to menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Edit</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Preferences...</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Add-ons</span></li>
   <li>At the top right of the window, click on the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Install...</span> button.</li>
@@ -242,16 +242,16 @@
   <li>Enable the addon by checking the checkbox as shown below.</li>
 </ul>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-1-preferences-install-addon.png';" alt="Voxility Pro Installation">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-1-preferences-install-addon.png';" alt="Voxelity Pro Installation">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    The <b>Voxility Pro</b> addon is now successfully installed in Blender
+    The <b>Voxelity Pro</b> addon is now successfully installed in Blender
   </div>
 </div>
 <!-- =================================================================================================== -->
 <!-- 2.4 === Addon Activation -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">2.4</span> Addon Activation</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">To activate the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon and unlock its full range of features,
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">To activate the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> addon and unlock its full range of features,
     please follow the instructions provided below based on your respective <a target="_blank" href="https://en.wikipedia.org/wiki/Operating_system">Operating System</a>, and review the following information.
     Take note of the <b>voxconvert</b> version, which is an executable binary file used within this addon,
     because this information may be needed after addon installation depending on your Operating System.
@@ -260,7 +260,7 @@
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
   <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-0-preferences-install-addon-check.png';" alt="Check Addon Version and Voxconvert version">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
-    In this example, <b>Voxility Pro</b> version is <span style="color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;"><b>1.0.12</b></span> and
+    In this example, <b>Voxelity Pro</b> version is <span style="color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;"><b>1.0.12</b></span> and
     the <b>voxconvert </b>version is <span style="color:rgb(0, 0, 0); background-color: #ff0; padding: 0px 5px 0px 5px; border-radius: 5px;"><b>0.0.29</b></span>
   </div>
 </div>
@@ -292,7 +292,7 @@ href="https://www.youtube.com/watch?v=U8qQup7_nuo" target="_blank">this tutorial
   <div style="width: 100%; margin: 15px auto; border: 1px solid #9c9c9c; border-radius: 10px; overflow: hidden;">
     <div style="background-color: #cfcfcf; color: rgb(26, 26, 26); padding: 5px 5px 5px 10px; font-weight: bold; user-select: none;">Terminal</div>
     <div style="background-color: black; color: white; padding: 15px; font-family: 'Courier New', Courier, monospace; font-weight: normal; text-align: left;">
-        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
+        cd; cd Library/Application\ Support/Blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxelity_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/darwin/vengi-voxconvert.app/Contents/MacOS/; chmod +x vengi-voxconvert
     </div>
   </div>
 </li>
@@ -313,7 +313,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <div style="width: 100%; margin: 15px auto; border: 1px solid #9c9c9c; border-radius: 10px; overflow: hidden;">
   <div style="background-color: #cfcfcf; color: rgb(26, 26, 26); padding: 5px 5px 5px 10px; font-weight: bold; user-select: none;">Linux Console</div>
   <div style="background-color: black; color: white; padding: 15px; font-family: 'Courier New', Courier, monospace; font-weight: normal; text-align: left;">
-    cd ~/.config/blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxility_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/linux/
+    cd ~/.config/blender/<span style="color: #000; background-color: rgb(255, 255, 0);">4.0</span>/scripts/addons/voxelity_pro/voxconvert-executable/<span style="color: #000; background-color: rgb(255, 255, 0);">0.0.29</span>/linux/
   </div>
 </div>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">Make sure the path is correct and there are no errors. Then copy the following commands line by line and paste each line into terminal and press <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Enter</span>.
@@ -348,14 +348,14 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <h6 id='configsection' style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.1</span> Configuration Options</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">Enhance the addon by navigating to menu <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Edit</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Preferences...</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #5289ff; padding: 0px 7px 1px 7px; border-radius: 5px;">Add-ons</span> and searching for <u><b>VOXILITY</b></u>. Then, click the small arrow located to the left of the addon name and checkbox. This action will unveil a plethora of configuration options, allowing you to personalize your experience and tailor the application to meet your unique requirements.</p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-2-preferences-expand.png';" alt="Voxility Pro Configuration Options">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-2-preferences-expand.png';" alt="Voxelity Pro Configuration Options">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     By default every voxel format is checked. Uncheck irrelevant items.
   </div>
 </div>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">Select the checkboxes corresponding to the voxel file formats you'll use. This streamlines the voxel formats list by hiding irrelevant choices during object import/export, preventing clutter and ensuring a smoother workflow. Observe that the import list and export list (<b>supported</b> export formats only) now exclusively presents the options you've configured.</p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-3-preferences-relevant-file-types.png';" alt="Voxility Pro Configuration Customization">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-3-preferences-relevant-file-types.png';" alt="Voxelity Pro Configuration Customization">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Here we have only a few options checked which hides irrelevant formats.
   </div>
@@ -380,12 +380,12 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   and <a href="#fileformats">many more voxel file formats</a>
   by accessing the export options through menu
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">File</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Export</span><span
-  style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxility Voxel Formats</span><span
+  style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelity Voxel Formats</span><span
   style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.*</span>
   and selecting a voxel format of your choice. You can streamline this export list by filtering out
   only the relevant options through the <a href="#configsection">Configuration Options</a>.</p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-4-ui-export.png';" alt="Voxility Pro Export Voxel Format File">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-4-ui-export.png';" alt="Voxelity Pro Export Voxel Format File">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Export to any <a href="#fileformats">supported voxel file format</a> of your choice
   </div>
@@ -399,7 +399,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   Press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Export</span> button to start the conversion process and save it to your chosen destination.
   This may take some time, so <b>please be patient.</b></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-6-ui-export-dialog.png';" alt="Voxility Pro Export Voxel Format Dialog">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-6-ui-export-dialog.png';" alt="Voxelity Pro Export Voxel Format Dialog">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     In this example we are exporting to <span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.vox</span> file format
   </div>
@@ -434,12 +434,12 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   as well as <a href="#fileformats">numerous other voxel file formats</a>
   by accessing the import options through menu
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">File</span><span style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Import</span><span
-  style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxility Voxel Formats</span><span
+  style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelity Voxel Formats</span><span
   style="font-weight:bold; margin:5px; color: #616161;">&rArr;</span><span style="color:white; font-weight: bold; background-color: #ff8000; padding: 0px 5px 0px 5px; border-radius: 5px;">.*</span>
   and selecting a supported voxel file. You can streamline this import list by filtering out
   only the relevant options through the <a href="#configsection">Configuration Options</a>.</p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-5-ui-import.png';" alt="Voxility Pro Import Voxel Format File">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-5-ui-import.png';" alt="Voxelity Pro Import Voxel Format File">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Import any <a href="#fileformats">supported voxel file format</a> of your choice
   </div>
@@ -451,7 +451,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   Press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Import</span> button to start the import process.
   This may take some time, so <b>please be patient.</b></p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-7-ui-import-dialog.png';" alt="Voxility Pro Import Voxel Format File">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/step-7-ui-import-dialog.png';" alt="Voxelity Pro Import Voxel Format File">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     This is the <b>Import Dialog</b> where you can select a voxel file to import
   </div>
@@ -474,9 +474,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   and press the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N</span> key. 
   This will prompt the <a target="_blank" href="https://docs.blender.org/manual/en/latest/editors/3dview/sidebar.html">Sidebar</a>,
   commonly known as the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">N-Panel</span>, to appear. From there, you can easily locate and click on the
-  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxility</span> tab button to open the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> addon panel.
+  <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelity</span> tab button to open the <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> addon panel.
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxility Pro N-Panel Voxelize Button">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-1-select-meshes-to-voxelize.png';" alt="Voxelity Pro N-Panel Voxelize Button">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Select the mesh object or objects and click the <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Voxelize</span> button. 
   </div>
@@ -493,7 +493,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   <span style="color:white; font-weight: bold; background-color: #444444; padding: 0px 7px 1px 7px; border-radius: 5px;">Save Target Format</span> button, which enables you to preserve your work with ease.
 </p>
 <div style="display: flex; flex-direction: column; position: relative; border-radius: 7px; overflow: hidden; margin-bottom: 15px;">
-  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-3-save-target.png';" alt="Voxility Pro N-Panel Save Button">
+  <img style="display: block; margin-bottom: -1px; max-width: 100%;" src="a" onerror="this.src='./images/sample-use-step-3-save-target.png';" alt="Voxelity Pro N-Panel Save Button">
   <div style="background-color: black; color: white; padding: 3px 10px 3px 10px; margin-top: auto; font-weight: normal; border-bottom: 1px solid #808080; text-align: left;">
     Choose a <b>folder</b> where you want to save the resulting files.
   </div>
@@ -511,9 +511,9 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
   While the interface may appear unresponsive, rest assured it is processing. Please be patient while the process completes.</p>
 </div>
 <!-- =================================================================================================== -->
-<!-- 3.3 === Voxility Logging -->
+<!-- 3.3 === Voxelity Logging -->
 <!-- =================================================================================================== -->
-<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.3</span> Voxility Logging</h6>
+<h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">3.3</span> Voxelity Logging</h6>
 <p>It is recommended to switch to the <a
   href="https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html"
   target="_blank">Scripting workspace</a> tab so you can see the processing
@@ -539,7 +539,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <!-- 4.1 === Common Issues -->
 <!-- =================================================================================================== -->
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">4.1</span> Common Issues</h6>
-<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">At this early stage, with <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span> being newly released,
+<p style="text-align: justify; padding-left: 5px; padding-right: 5px;">At this early stage, with <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span> being newly released,
   we're pleased to inform you that there haven't been any common issues reported thus far.
   However, for any questions or concerns, please feel free to reach out to us via
   <a target="_blank" href="https://blendermarket.com/creators/harrymckenzie">Blender Market</a>,
@@ -612,7 +612,7 @@ target="_blank">open the Linux Console or Terminal</a> and copy-paste the follow
 <h6 style="font-family: Verdana, Geneva, sans-serif; font-weight: bold; background-color: #5289ff; color: #ffffff; padding: 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;"><span style="background-color: #000; color:#fff; padding: 2px 15px 2px 10px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">6.3</span> Version History</h6>
 <p style="text-align: justify; padding-left: 5px; padding-right: 5px;">
   Previously known as <b>MagicaVoxel Vox Exporter</b>, this addon initially offered only basic export functionality for <b>MagicaVoxel</b> only.
-  Renamed as <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxility Pro</span>
+  Renamed as <span style="color:white; font-weight: bold; background-color: #7c7c7c; padding: 0px 8px 1px 8px; border-radius: 5px;">Voxelity Pro</span>
   we have significantly expanded its capabilities to include both import and export functions for <a href="#fileformats">various formats</a>.
   Additionally, we've introduced a dedicated panel within Blender that facilitates in-app voxelization
   — a feature designed to enhance your voxel modeling experience.

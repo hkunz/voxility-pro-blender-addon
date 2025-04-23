@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_sandbox_voxedit_collection(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_sandbox_voxedit_collection"
+    bl_idname = "import.voxelity_sandbox_voxedit_collection"
     bl_label = "Import VXC"
     bl_description = "Import Sandbox VoxEdit Collection format (.vxc)"
 

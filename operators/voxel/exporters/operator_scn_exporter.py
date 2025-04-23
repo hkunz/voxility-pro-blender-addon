@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_animatoon_3d_scene(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_animatoon_3d_scene"
+    bl_idname = "export.voxelity_animatoon_3d_scene"
     bl_label = "Export SCN"
     bl_description = "Export selected objects to Animatoon 3D Scene format (.scn)"
 

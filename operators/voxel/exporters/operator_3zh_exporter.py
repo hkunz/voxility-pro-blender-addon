@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_cubzh(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_cubzh"
+    bl_idname = "export.voxelity_cubzh"
     bl_label = "Export 3ZH"
     bl_description = "Export selected objects to Cubzh format (.3zh)"
 

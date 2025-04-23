@@ -5,21 +5,21 @@ import os
 from typing import List, Tuple
 from bpy.app.handlers import persistent
 
-from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
-from voxility_pro.ui.voxel_formats_import_menu import VoxelFormatsImportMenu # type: ignore
-from voxility_pro.operators.voxel.operator_empty import OBJECT_OT_OperatorEmpty # type: ignore
-from voxility_pro.operators.voxel.operator_bake import OBJECT_OT_OperatorBake, register as register_bake_utility, unregister as unregister_bake_utility # type: ignore
-from voxility_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
-from voxility_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
-from voxility_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
-from voxility_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
-from voxility_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
-from voxility_pro.utils.utils import Utils # type: ignore
-from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.material_utils import MaterialUtils # type: ignore
-from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
+from voxelity_pro.ui.selected_objects_list import register as register_selected_objects_list, unregister as unregister_selected_objects_list # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxelity_pro.ui.voxel_formats_import_menu import VoxelFormatsImportMenu # type: ignore
+from voxelity_pro.operators.voxel.operator_empty import OBJECT_OT_OperatorEmpty # type: ignore
+from voxelity_pro.operators.voxel.operator_bake import OBJECT_OT_OperatorBake, register as register_bake_utility, unregister as unregister_bake_utility # type: ignore
+from voxelity_pro.operators.voxel.operator_voxelize import OBJECT_OT_OperatorVoxelize, register as register_gn_voxelizer, unregister as unregister_gn_voxelizer # type: ignore
+from voxelity_pro.operators.voxel.operator_unvoxelize import OBJECT_OT_OperatorUnvoxelize, register as register_gn_unvoxelizer, unregister as unregister_gn_unvoxelizer # type: ignore
+from voxelity_pro.operators.voxel.operator_voxelize_validity_check import OBJECT_OT_OperatorVoxelizeValidityCheck # type: ignore
+from voxelity_pro.operators.voxel.operator_clear_all_temp_cache import register as register_all_temp_cache_operator, unregister as unregister_all_temp_cache_operator # type: ignore
+from voxelity_pro.operators.voxel.operator_clear_temp_cache import register as register_temp_cache_operator, unregister as unregister_temp_cache_operator # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.utils.material_utils import MaterialUtils # type: ignore
+from voxelity_pro.utils.icons_manager import IconsManager  # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
 
 IDNAME_ICONS = {
     "NodeSocketMaterial": "MATERIAL_DATA",
@@ -38,7 +38,7 @@ def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> L
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
 def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
-    properties: VoxilityProProperties = context.scene.voxility_pro_properties
+    properties: VoxelityProProperties = context.scene.voxelity_pro_properties
     Voxel.PREVIOUS_ACTIVE_OBJECT = None
     check_object_selection_change(context, properties, context.active_object)
 
@@ -50,7 +50,7 @@ def on_depsgraph_update(scene, depsgraph=None):
     obj = context.active_object
     if not obj or not VoxelUtils.is_object_voxelized(obj):
         return
-    properties: VoxilityProProperties = context.scene.voxility_pro_properties
+    properties: VoxelityProProperties = context.scene.voxelity_pro_properties
     check_object_selection_change(context, properties, obj)
 
 def check_object_selection_change(context, properties, obj):
@@ -58,7 +58,7 @@ def check_object_selection_change(context, properties, obj):
         return
     Voxel.PREVIOUS_ACTIVE_OBJECT = obj
 
-class VoxilityProProperties(bpy.types.PropertyGroup):
+class VoxelityProProperties(bpy.types.PropertyGroup):
     IMPORT_FORMATS=VoxelFormatsImportMenu.FORMATS
     SELECTION_NONE: bpy.props.StringProperty(default=VoxelFormatsExportMenu.SELECTION_NONE) # type: ignore
 
@@ -80,11 +80,11 @@ class VoxilityProProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH'
     ) # type: ignore
 
-class OBJECT_PT_voxility_pro(bpy.types.Panel):
-    bl_label = f"Voxility Pro {Utils.get_addon_version()}"
+class OBJECT_PT_voxelity_pro(bpy.types.Panel):
+    bl_label = f"Voxelity Pro {Utils.get_addon_version()}"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'Voxility'
+    bl_category = 'Voxelity'
 
     def draw(self, context) -> None:
         layout: bpy.types.UILayout = self.layout
@@ -94,7 +94,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
 
         valid_selection = active_object and not error
         voxelize_progress = VoxelUtils.is_object_voxelized(active_object)
-        properties: VoxilityProProperties = context.scene.voxility_pro_properties
+        properties: VoxelityProProperties = context.scene.voxelity_pro_properties
 
         if valid_selection:
             # layout.box().prop(properties, "multi_object_export")
@@ -191,7 +191,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
     def add_export_button(self, context, properties, layout, button_text=None, validity_check=True):
         layout.prop(properties, "export_format")
         format_selected = properties.export_format != VoxelFormatsExportMenu.SELECTION_NONE
-        bl_idname = f"export.voxility_{VoxelFormatsExportMenu.get_format_name(properties.export_format, True)}" if format_selected else ""
+        bl_idname = f"export.voxelity_{VoxelFormatsExportMenu.get_format_name(properties.export_format, True)}" if format_selected else ""
         if not button_text:
             button_text = "Export" + (" " + properties.export_format if bl_idname else "")
         btn = layout.column()
@@ -200,7 +200,7 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
             btn.operator(OBJECT_OT_OperatorBake.bl_idname, text="Bake")
         else:
             btn.label(text="")
-        btn.operator(bl_idname if bl_idname else "object.voxility_null_operator", text=button_text)
+        btn.operator(bl_idname if bl_idname else "object.voxelity_null_operator", text=button_text)
 
     def add_layout_gn_prop(self, layout, modifier, prop_id):
         name = ObjectUtils.get_modifier_prop_name(modifier, prop_id)
@@ -224,13 +224,13 @@ class OBJECT_PT_voxility_pro(bpy.types.Panel):
         return True
 
 def register() -> None:
-    bpy.utils.register_class(VoxilityProProperties)
-    bpy.types.Scene.voxility_pro_properties = bpy.props.PointerProperty(type=VoxilityProProperties)
+    bpy.utils.register_class(VoxelityProProperties)
+    bpy.types.Scene.voxelity_pro_properties = bpy.props.PointerProperty(type=VoxelityProProperties)
     bpy.types.Scene.expanded_export = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.expanded_fileconvert = bpy.props.BoolProperty(default=False)
     bpy.types.Scene.on_voxelize_button_click = on_voxelize_button_click
     bpy.types.Object.voxelized = bpy.props.BoolProperty(default=False)
-    bpy.utils.register_class(OBJECT_PT_voxility_pro)
+    bpy.utils.register_class(OBJECT_PT_voxelity_pro)
     bpy.utils.register_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.register_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     register_gn_voxelizer()
@@ -242,12 +242,12 @@ def register() -> None:
     bpy.app.handlers.depsgraph_update_post.append(on_depsgraph_update)
 
 def unregister() -> None:
-    bpy.utils.unregister_class(VoxilityProProperties)
+    bpy.utils.unregister_class(VoxelityProProperties)
     del bpy.types.Scene.expanded_export
     del bpy.types.Scene.expanded_fileconvert
-    del bpy.types.Scene.voxility_pro_properties
+    del bpy.types.Scene.voxelity_pro_properties
     del bpy.types.Scene.on_voxelize_button_click
-    bpy.utils.unregister_class(OBJECT_PT_voxility_pro)
+    bpy.utils.unregister_class(OBJECT_PT_voxelity_pro)
     bpy.utils.unregister_class(OBJECT_OT_OperatorEmpty)
     bpy.utils.unregister_class(OBJECT_OT_OperatorVoxelizeValidityCheck)
     unregister_gn_voxelizer()

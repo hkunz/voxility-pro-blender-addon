@@ -6,16 +6,16 @@ import bpy_types
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
-from voxility_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
-from voxility_pro.translation.translations import get_translation # type: ignore
-from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.time_utils import TimeUtils # type: ignore
-from voxility_pro.enums.version_type import VersionType # type: ignore
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
+from voxelity_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_handler import ObjectImportHandler # type: ignore
+from voxelity_pro.translation.translations import get_translation # type: ignore
+from voxelity_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.utils.time_utils import TimeUtils # type: ignore
+from voxelity_pro.enums.version_type import VersionType # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 

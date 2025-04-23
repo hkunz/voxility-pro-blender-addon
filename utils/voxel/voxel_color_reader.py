@@ -5,8 +5,8 @@ from math import sqrt
 from mathutils import Vector
 from typing import Tuple
 
-from voxility_pro.utils.color_utils import ColorUtils # type: ignore
-from voxility_pro.exceptions.color_read_error import ColorReadError # type: ignore
+from voxelity_pro.utils.color_utils import ColorUtils # type: ignore
+from voxelity_pro.exceptions.color_read_error import ColorReadError # type: ignore
 
 Coordinate = Tuple[int, int, int]
 

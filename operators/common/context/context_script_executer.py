@@ -9,7 +9,7 @@ from bpy.types import (
 )
 
 from abc import ABC, abstractmethod
-from voxility_pro.operators.common.context.context_executer_override import ContextExecuterOverride
+from voxelity_pro.operators.common.context.context_executer_override import ContextExecuterOverride
 
 class ContextScriptExecuter(ABC):
 

@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_magicavoxel(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_magicavoxel"
+    bl_idname = "import.voxelity_magicavoxel"
     bl_label = "Import VOX"
     bl_description = "Import MagicaVoxel format (.vox)"
 

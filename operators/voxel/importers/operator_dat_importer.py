@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_minecraft_level_dat(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_minecraft_level_dat"
+    bl_idname = "import.voxelity_minecraft_level_dat"
     bl_label = "Import DAT"
     bl_description = "Import Minecraft level dat format (.dat)"
 

@@ -3,13 +3,13 @@ import re
 
 from typing import List, Callable, Any, Tuple
 
-from voxility_pro import bl_info # type: ignore
+from voxelity_pro import bl_info # type: ignore
 
 class Utils:
 
     @staticmethod
     def get_addon_module_name() -> str:
-        return "voxility_pro"
+        return "voxelity_pro"
 
     @staticmethod
     def get_blender_version(prependv: bool=True, separator: str='.') -> str:

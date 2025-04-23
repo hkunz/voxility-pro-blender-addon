@@ -1,8 +1,8 @@
 import bpy
 
-from voxility_pro.operators.common.handler_interface import IHandler
-from voxility_pro.operators.common.context.context_script_executer import ContextScriptExecuter
-from voxility_pro.enums.area_type import AreaType
+from voxelity_pro.operators.common.handler_interface import IHandler
+from voxelity_pro.operators.common.context.context_script_executer import ContextScriptExecuter
+from voxelity_pro.enums.area_type import AreaType
 
 class ObjectImportLimitedDissolveHandler(IHandler):
     def __init__(self, object: bpy.types.Object):

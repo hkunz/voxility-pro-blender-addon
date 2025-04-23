@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_cubzh_world(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_cubzh_world"
+    bl_idname = "export.voxelity_cubzh_world"
     bl_label = "Export B64"
     bl_description = "Export selected objects to Cubzh World format (.b64)"
 

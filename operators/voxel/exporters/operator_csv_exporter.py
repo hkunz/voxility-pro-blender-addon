@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_sproxel_csv(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_sproxel_csv"
+    bl_idname = "export.voxelity_sproxel_csv"
     bl_label = "Export CSV"
     bl_description = "Export selected objects to Sproxel csv format (.csv)"
 

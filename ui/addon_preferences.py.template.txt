@@ -4,14 +4,14 @@ import bpy_types
 from bpy.types import UILayout
 from typing import List
 
-from voxility_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
-from voxility_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type # type: ignore
-from voxility_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type # type: ignore
-from voxility_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu # type: ignore
+from voxelity_pro.ui.voxel_formats_export_menu import register as register_vox_export_menu, unregister as unregister_vox_export_menu, get_voxel_exporter_by_type # type: ignore
+from voxelity_pro.ui.voxel_formats_import_menu import register as register_vox_import_menu, unregister as unregister_vox_import_menu, get_voxel_importer_by_type # type: ignore
+from voxelity_pro.utils.utils import Utils # type: ignore
 
 def update_voxel_formats_preferences() -> None:
-    addon: bpy.types.Addon = bpy.context.preferences.addons[VoxilityAddonPreferences.bl_idname]
-    prefs: VoxilityAddonPreferences = addon.preferences
+    addon: bpy.types.Addon = bpy.context.preferences.addons[VoxelityAddonPreferences.bl_idname]
+    prefs: VoxelityAddonPreferences = addon.preferences
     VoxelFormatsExportMenu.PREFERENCES_FORMATS.clear()
     for i, item in enumerate(VoxelFormatsExportMenu.FORMATS):
         if not i or getattr(prefs, f"type_{item[0].lower()}"):
@@ -35,31 +35,31 @@ def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
     update_voxel_formats_preferences()
 
 class PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator(bpy.types.Operator):
-    bl_idname = "preferences.voxility_check_voxel_formats_checkboxes"
+    bl_idname = "preferences.voxelity_check_voxel_formats_checkboxes"
     bl_label = "Check All"
     bl_description = "Tick all checkboxes"
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxilityAddonPreferences.bl_idname]
-        preferences: VoxilityAddonPreferences = addon_preferences.preferences
+        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxelityAddonPreferences.bl_idname]
+        preferences: VoxelityAddonPreferences = addon_preferences.preferences
         preferences.check_all_checkboxes()
         return {'FINISHED'}
 
 class PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator(bpy.types.Operator):
-    bl_idname = "preferences.voxility_clear_voxel_formats_checkboxes"
+    bl_idname = "preferences.voxelity_clear_voxel_formats_checkboxes"
     bl_label = "Uncheck All"
     bl_description = "Untick all checkboxes"
     bl_options = {'INTERNAL'}
 
     def execute(self, context) -> set[str]:
-        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxilityAddonPreferences.bl_idname]
-        preferences: VoxilityAddonPreferences = addon_preferences.preferences
+        addon_preferences: bpy.types.Addon = context.preferences.addons[VoxelityAddonPreferences.bl_idname]
+        preferences: VoxelityAddonPreferences = addon_preferences.preferences
         preferences.clear_all_checkboxes()
-        bpy.context.scene.voxility_pro_properties.export_format = VoxelFormatsExportMenu.SELECTION_NONE
+        bpy.context.scene.voxelity_pro_properties.export_format = VoxelFormatsExportMenu.SELECTION_NONE
         return {'FINISHED'}
 
-class VoxilityAddonPreferences(bpy.types.AddonPreferences):
+class VoxelityAddonPreferences(bpy.types.AddonPreferences):
     bl_idname = Utils.get_addon_module_name() # __name__ if the class is defined inside __init__.py
 
 {{properties}}
@@ -110,7 +110,7 @@ class VoxilityAddonPreferences(bpy.types.AddonPreferences):
         box.label(text=f"This addon is powered by vengi-voxconvert v{Utils.get_voxconvert_version()} by {Utils.get_voxconvert_author()}")
 
 def register() -> None:
-    bpy.utils.register_class(VoxilityAddonPreferences)
+    bpy.utils.register_class(VoxelityAddonPreferences)
     bpy.utils.register_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.register_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     enabled_vox_types: List[str] = Utils.get_preferences_voxel_types()
@@ -119,7 +119,7 @@ def register() -> None:
     update_voxel_formats_preferences()
 
 def unregister() -> None:
-    bpy.utils.unregister_class(VoxilityAddonPreferences)
+    bpy.utils.unregister_class(VoxelityAddonPreferences)
     bpy.utils.unregister_class(PREFERENCES_OT_CheckVoxelFormatsCheckboxesOperator)
     bpy.utils.unregister_class(PREFERENCES_OT_ClearVoxelFormatsCheckboxesOperator)
     unregister_vox_export_menu()

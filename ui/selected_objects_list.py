@@ -1,8 +1,8 @@
 import bpy
 from bpy.app.handlers import persistent
 
-from voxility_pro.utils.icons_manager import IconsManager  # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
+from voxelity_pro.utils.icons_manager import IconsManager  # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
 
 class ListItem(bpy.types.PropertyGroup):
     name: bpy.props.StringProperty(
@@ -95,7 +95,7 @@ def unregister() -> None:
 
 # example usage:
 def selected_objects_list_example():
-    from voxility_pro.ui.selected_objects_list import register as register_selected_objects_list # type: ignore
+    from voxelity_pro.ui.selected_objects_list import register as register_selected_objects_list # type: ignore
     register_selected_objects_list()
     # inside bpy.types.Panel::draw:
     row = layout.row() # type: ignore

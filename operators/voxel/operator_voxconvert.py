@@ -8,9 +8,9 @@ import os
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.translation.translations import get_translation # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.translation.translations import get_translation # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
 
 class OperatorVoxconvert(bpy.types.Operator):
     bl_description = "Operator Voxconvert"

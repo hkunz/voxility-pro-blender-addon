@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_voxel3d(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_voxel3d"
+    bl_idname = "import.voxelity_voxel3d"
     bl_label = "Import V3A"
     bl_description = "Import Voxel3D format (.v3a)"
 

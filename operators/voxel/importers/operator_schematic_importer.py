@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_minecraft_schematic(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_minecraft_schematic"
+    bl_idname = "import.voxelity_minecraft_schematic"
     bl_label = "Import SCHEMATIC"
     bl_description = "Import Minecraft Schematic format (.schematic)"
 

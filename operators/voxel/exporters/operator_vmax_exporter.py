@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_voxel_max(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_voxel_max"
+    bl_idname = "export.voxelity_voxel_max"
     bl_label = "Export VMAX"
     bl_description = "Export selected objects to Voxel Max format (.vmax)"
 

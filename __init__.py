@@ -1,9 +1,9 @@
-# "Voxility Pro: Voxel File Format Exchange"
+# "Voxelity Pro: Voxel File Format Exchange"
 # Author: Harry McKenzie
 #
 # ##### BEGIN LICENSE BLOCK #####
 #
-# Voxility Pro: Voxel File Format Exchange
+# Voxelity Pro: Voxel File Format Exchange
 # Copyright (c) 2024 Harry McKenzie
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 # ##### END LICENSE BLOCK #####
 
 bl_info = {
-    "name": "Voxility Pro: Voxel File Format Exchange",
-    "description": "Voxility enables the manipulation, import, and export of various voxel file formats through voxconvert-0.0.29", # voxconvert-X.X.X is parsed out in utils.py
+    "name": "Voxelity Pro: Voxel File Format Exchange",
+    "description": "Voxelity enables the manipulation, import, and export of various voxel file formats through voxconvert-0.0.29", # voxconvert-X.X.X is parsed out in utils.py
     "author" : "Harry McKenzie",
     "version": (1, 0, 15),
     "blender": (2, 93, 0),
-    "location": "N-Panel > Voxility | File > Import-Export > Voxility Voxel Formats",
+    "location": "N-Panel > Voxelity | File > Import-Export > Voxelity Voxel Formats",
     "warning": "",
-    "doc_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
-    "wiki_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
-    "tracker_url": "https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs",
+    "doc_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
+    "wiki_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
+    "tracker_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
     "support": "COMMUNITY",
     "category": "Import-Export",
 }
@@ -43,21 +43,21 @@ from pathlib import Path
 from typing import Union
 from bpy.app.handlers import persistent
 
-from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
-from voxility_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.icons_manager import IconsManager # type: ignore
-from voxility_pro.utils.system_utils import SystemUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
-from voxility_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
-if VoxilityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
-    from voxility_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+from voxelity_pro.enums.voxelity_feature import VoxelityFeature # type: ignore
+from voxelity_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxelity_pro.utils.icons_manager import IconsManager # type: ignore
+from voxelity_pro.utils.system_utils import SystemUtils # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
+from voxelity_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
+if VoxelityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
+    from voxelity_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
 else:
-    from voxility_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
-from voxility_pro.operators.installation.darwin.operator_macos_install_rosetta2 import WEB_OT_OperatorInstallMacRosetta2 # type: ignore
-from voxility_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
-from voxility_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
+    from voxelity_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+from voxelity_pro.operators.installation.darwin.operator_macos_install_rosetta2 import WEB_OT_OperatorInstallMacRosetta2 # type: ignore
+from voxelity_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
+from voxelity_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(f"{exe}")

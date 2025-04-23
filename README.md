@@ -1,12 +1,12 @@
-# Voxility Pro: Voxel File Format Exchange
+# Voxelity Pro: Voxel File Format Exchange
 
-Voxility Pro: Voxel File Format Exchange is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, it empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.
+Voxelity Pro: Voxel File Format Exchange is a comprehensive Blender addon designed to revolutionize your voxel-based workflows. With its intuitive features and seamless integration, it empowers artists and designers to unleash their creativity and explore new dimensions of voxel modeling within the familiar Blender environment.
 
-Voxility Pro supports seamless import and export of various popular textured voxel file formats, including MagicaVoxel.vox Qubicle.qb Voxlap.vxl and a plethora of many more voxel file formats, ensuring compatibility with a wide range of voxel editors and game engines. Additionally, this addon introduces an integrated voxelization feature for textured meshes, allowing for streamlined voxelization directly within Blender.
+Voxelity Pro supports seamless import and export of various popular textured voxel file formats, including MagicaVoxel.vox Qubicle.qb Voxlap.vxl and a plethora of many more voxel file formats, ensuring compatibility with a wide range of voxel editors and game engines. Additionally, this addon introduces an integrated voxelization feature for textured meshes, allowing for streamlined voxelization directly within Blender.
 
-Documentation: https://blendermarket.com/products/voxility-pro-voxel-file-format-exchange/docs
+Documentation: https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs
 
-Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by Martin Gerhardy as part of Vengi Voxel (https://github.com/vengi-voxel/vengi) — an open-source and multi-platform voxel editor — Voxility Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.
+Powered by vengi-voxconvert, a cutting-edge voxel conversion tool developed by Martin Gerhardy as part of Vengi Voxel (https://github.com/vengi-voxel/vengi) — an open-source and multi-platform voxel editor — Voxelity Pro brings unparalleled voxel conversion capabilities directly to Blender, enhancing your workflow and expanding your creative possibilities.
 
 # Building vengi-voxconvert.exe on Windows 11
 

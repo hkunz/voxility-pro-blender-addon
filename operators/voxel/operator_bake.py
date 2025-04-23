@@ -1,12 +1,12 @@
 import bpy
 import bpy_types
 
-from voxility_pro.utils.voxel.bake_utility import BakeUtility # type: ignore
-from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
+from voxelity_pro.utils.voxel.bake_utility import BakeUtility # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
 
 class OBJECT_OT_OperatorBake(bpy.types.Operator):
-    bl_idname = "object.voxility_bake"
-    bl_label = "Voxility Bake Object"
+    bl_idname = "object.voxelity_bake"
+    bl_label = "Voxelity Bake Object"
     bl_description = "Bake voxel object including unsupported shader node colors"
     bl_options = {'REGISTER','UNDO'}
 
@@ -49,4 +49,4 @@ def unregister():
 # example usage:
 # if __name__ == "__main__":
 #    register()
-#    bpy.ops.object.object.voxility_bake()
+#    bpy.ops.object.object.voxelity_bake()

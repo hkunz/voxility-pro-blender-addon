@@ -7,22 +7,22 @@ from mathutils import Vector
 from typing import List
 from abc import ABC, abstractmethod
 
-from voxility_pro.enums.voxility_feature import VoxilityFeature # type: ignore
-from voxility_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
-from voxility_pro.translation.translations import get_translation # type: ignore
-from voxility_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxility_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
-from voxility_pro.utils.file_utils import FileUtils # type: ignore
-from voxility_pro.utils.number_utils import NumberUtils # type: ignore
-from voxility_pro.utils.time_utils import TimeUtils # type: ignore
-from voxility_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
-from voxility_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
-from voxility_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxility_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
+from voxelity_pro.enums.voxelity_feature import VoxelityFeature # type: ignore
+from voxelity_pro.operators.voxel.operator_voxel_base import OperatorVoxelBase # type: ignore
+from voxelity_pro.translation.translations import get_translation # type: ignore
+from voxelity_pro.utils.temp_file_manager import TempFileManager # type: ignore
+from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.utils.number_utils import NumberUtils # type: ignore
+from voxelity_pro.utils.time_utils import TimeUtils # type: ignore
+from voxelity_pro.utils.voxel.voxel_color_reader import VoxelColorReader # type: ignore
+from voxelity_pro.utils.voxel.qb_writer import Qb, QbMatrix # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
 
 class OperatorVoxelBaseExporter(OperatorVoxelBase):
-    bl_idname = "export.voxility_export"
+    bl_idname = "export.voxelity_export"
     bl_label = "Export"
     bl_description = "Operator Voxel Base Exporter"
 
@@ -81,7 +81,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         col = self.options_panel
         sub = col.row()
         super().draw_elements(context)
-        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+        if VoxelityFeature.GN_VOXELIZER_ACTIVE.value:
             if self.voxel_type == "qb":
                 self.surface_only = True
                 sub.enabled = False
@@ -96,7 +96,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def draw_file_conversion_options(self, context, col):
         if context.selected_objects:
             return
-        props = context.scene.voxility_pro_properties
+        props = context.scene.voxelity_pro_properties
         ext = FileUtils.get_file_extension(props.file_to_convert_path)
         if self.is_object_format(ext):
             col.prop(self, "voxformat_scale")
@@ -159,7 +159,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
     def check_valid_file_path_conversion(self, context, ext):
         if any(ext.upper() in format_tuple[0] for format_tuple in self.SUPPORTED_INPUT_MESH_FORMATS):
             return True
-        for i, tuple in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS):
+        for i, tuple in enumerate(context.scene.voxelity_pro_properties.IMPORT_FORMATS):
             if i <= 0:
                 continue
             if ext == tuple[0].lower():
@@ -180,7 +180,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def execute_file_path_conversion(self, context):
         start: int = time.time()
-        props = context.scene.voxility_pro_properties
+        props = context.scene.voxelity_pro_properties
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         self.setup_command(props.file_to_convert_path, [self.filepath])
         success = self.execute_voxconvert()
@@ -204,14 +204,14 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         obj_file: str = None
         success = True
 
-        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+        if VoxelityFeature.GN_VOXELIZER_ACTIVE.value:
             obj_file = os.path.join(temp_dir, 'temp.qb')
             self.export_qb(context, self.filepath if self.voxel_type == "qb" else obj_file)
         else:
             obj_file = os.path.join(temp_dir, 'temp.obj')
             self.export_obj(obj_file)
 
-        if not VoxilityFeature.GN_VOXELIZER_ACTIVE.value or VoxilityFeature.GN_VOXELIZER_ACTIVE.value and self.voxel_type != "qb":
+        if not VoxelityFeature.GN_VOXELIZER_ACTIVE.value or VoxelityFeature.GN_VOXELIZER_ACTIVE.value and self.voxel_type != "qb":
             self.setup_command(obj_file, [self.filepath])
             success = self.execute_voxconvert()
 
@@ -224,7 +224,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     @classmethod
     def is_file_path_conversion(cls, context):
-        props = context.scene.voxility_pro_properties
+        props = context.scene.voxelity_pro_properties
         return not context.selected_objects and os.path.isfile(props.file_to_convert_path) and props.export_format != props.SELECTION_NONE
 
     @classmethod
@@ -234,7 +234,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
             return True
         if not cls.filename_ext or not active_object:
             return False
-        if VoxilityFeature.GN_VOXELIZER_ACTIVE.value:
+        if VoxelityFeature.GN_VOXELIZER_ACTIVE.value:
             for obj in context.selected_objects:
                 if NumberUtils.is_almost_equal(VoxelUtils.get_voxelizer_voxel_size(obj), 0) and not obj.voxelized:
                     return False
@@ -242,13 +242,13 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
 
     def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
         if self.is_file_path_conversion(context):
-            props = context.scene.voxility_pro_properties
+            props = context.scene.voxelity_pro_properties
             ext = FileUtils.get_file_extension(props.file_to_convert_path)
             if props.export_format.lower() == ext:
                 create_generic_popup(message=f"ERROR: cannot convert same format '{ext}' to '{ext}'")
                 return {'PASS_THROUGH'}
             if self.check_valid_file_path_conversion(context, ext):
                 return super().invoke(context, event)
-            create_generic_popup(message="ERROR: ." + ext + " unsupported. Supported formats include:|" + '|'.join(t[1] for i, t in enumerate(context.scene.voxility_pro_properties.IMPORT_FORMATS) if i > 0) + '|' + '|'.join(t[1] for i, t in enumerate(self.SUPPORTED_INPUT_MESH_FORMATS)))
+            create_generic_popup(message="ERROR: ." + ext + " unsupported. Supported formats include:|" + '|'.join(t[1] for i, t in enumerate(context.scene.voxelity_pro_properties.IMPORT_FORMATS) if i > 0) + '|' + '|'.join(t[1] for i, t in enumerate(self.SUPPORTED_INPUT_MESH_FORMATS)))
             return {'PASS_THROUGH'}
         return super().invoke(context, event)

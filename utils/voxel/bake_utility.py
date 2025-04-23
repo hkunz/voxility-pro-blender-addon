@@ -98,7 +98,7 @@ class BakeUtility:
             bpy.ops.object.modifier_apply(modifier=m.name)
 
         self.prev_uvmap_names = [uv_layer.name for uv_layer in obj.data.uv_layers]
-        uvmapname = "UVMap.VoxilityBaking"
+        uvmapname = "UVMap.VoxelityBaking"
         self.add_image_texture_for_baking(obj, uvmapname)
         self.create_uv_map_and_unwrap(obj, uvmapname)
 
@@ -121,7 +121,7 @@ class BakeUtility:
     def add_image_texture_for_baking(self, obj, uvmapname):
         D = self.data
         pixel_size = int(math.ceil(math.sqrt(len(obj.data.polygons))))
-        self.bake_image = D.images.new(f"Image.VoxilityBaking.{obj.name}", pixel_size, pixel_size)
+        self.bake_image = D.images.new(f"Image.VoxelityBaking.{obj.name}", pixel_size, pixel_size)
         self.bake_images.append(self.bake_image)
         print(f"Created temporary bake image: {self.bake_image}")
 
@@ -164,7 +164,7 @@ class BakeUtility:
     def setup_new_material_with_baked_texture(self, obj):
         D = self.data
         obj.data.materials.clear()
-        mat = D.materials.new(name="VoxilityBakingMaterial")
+        mat = D.materials.new(name="VoxelityBakingMaterial")
         obj.data.materials.append(mat)
         mat.use_nodes = True
         nodes = mat.node_tree.nodes

@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_tiberian_sun(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_tiberian_sun"
+    bl_idname = "export.voxelity_tiberian_sun"
     bl_label = "Export VXL"
     bl_description = "Export selected objects to Tiberian Sun format (.vxl)"
 

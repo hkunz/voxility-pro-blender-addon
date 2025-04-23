@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_animatoon_3d_scene(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_animatoon_3d_scene"
+    bl_idname = "import.voxelity_animatoon_3d_scene"
     bl_label = "Import SCN"
     bl_description = "Import Animatoon 3D Scene format (.scn)"
 

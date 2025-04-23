@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_nicks_voxel_model(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_nicks_voxel_model"
+    bl_idname = "import.voxelity_nicks_voxel_model"
     bl_label = "Import NVM"
     bl_description = "Import Nicks Voxel Model format (.nvm)"
 

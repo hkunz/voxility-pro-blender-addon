@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
+from voxelity_pro.operators.voxel.operator_voxel_base_exporter import OperatorVoxelBaseExporter
 
 class EXPORT_OT_vengi(OperatorVoxelBaseExporter):
-    bl_idname = "export.voxility_vengi"
+    bl_idname = "export.voxelity_vengi"
     bl_label = "Export VENGI"
     bl_description = "Export selected objects to Vengi format (.vengi)"
 

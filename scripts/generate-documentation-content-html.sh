@@ -7,8 +7,8 @@ DOCUMENTATION_DIR="${RESOURCES_DIR}documentation/"
 CSS_CONTENT="${DOCUMENTATION_DIR}css/content.css"
 CONTENT_DIR="${DOCUMENTATION_DIR}content/"
 VERSION="latest/" # old/ or latest/
-DOCUMENT_CONTENT_TEMPLATE="${CONTENT_DIR}${VERSION}test/voxility-{type}-content.html"
-DOCUMENT_CONTENT_FINAL="${CONTENT_DIR}${VERSION}final/voxility-{type}-content.html"
+DOCUMENT_CONTENT_TEMPLATE="${CONTENT_DIR}${VERSION}test/voxelity-{type}-content.html"
+DOCUMENT_CONTENT_FINAL="${CONTENT_DIR}${VERSION}final/voxelity-{type}-content.html"
 
 cleanup() {
     echo "Script interrupted. Cleaning up..."
@@ -18,7 +18,7 @@ cleanup() {
 
 trap cleanup INT
 
-generate_voxility_content_final_file() {
+generate_voxelity_content_final_file() {
     output_file=$(echo "${DOCUMENT_CONTENT_FINAL}" | sed "s/{type}/$1/")
     echo "Creating HTML Document: $output_file"
     cp $(echo "${DOCUMENT_CONTENT_TEMPLATE}" | sed "s/{type}/$1/") "${output_file}"
@@ -66,8 +66,8 @@ modify_alternate_row_colors() {
 }
 
 if [ "$1" = 'about' ] || [ "$1" = 'documentation' ]; then
-    generate_voxility_content_final_file $1
+    generate_voxelity_content_final_file $1
 else
-    generate_voxility_content_final_file "about"
-    generate_voxility_content_final_file "documentation"
+    generate_voxelity_content_final_file "about"
+    generate_voxelity_content_final_file "documentation"
 fi

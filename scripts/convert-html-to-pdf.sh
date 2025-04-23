@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DOC_DIR="resources/documentation/"
-PDF_OUT="${DOC_DIR}voxility-pro-documentation.pdf"
-DEFAULT_DOC="${DOC_DIR}content/latest/final/voxility-documentation-content.html"
+PDF_OUT="${DOC_DIR}voxelity-pro-documentation.pdf"
+DEFAULT_DOC="${DOC_DIR}content/latest/final/voxelity-documentation-content.html"
 
 if [ -z "$1" ]; then
     echo "Error: Please specify a file path."
@@ -16,7 +16,7 @@ if [ ! -f "$1" ]; then
 fi
 
 CONTENT=$(< "$1")
-HEADERS="$(tr -d '\n' <"${DOC_DIR}voxility-documentation-simple.html" | sed -E "s/(<body[^>]*>).*$/\1\n/")"
+HEADERS="$(tr -d '\n' <"${DOC_DIR}voxelity-documentation-simple.html" | sed -E "s/(<body[^>]*>).*$/\1\n/")"
 HTML="${HEADERS}${CONTENT}</body></html>"
 
 TEMP_FILE=$(mktemp /tmp/tempfile.XXXXXX.html)

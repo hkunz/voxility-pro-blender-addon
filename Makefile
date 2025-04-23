@@ -34,13 +34,13 @@ vox-documentation: \
 
 vox-documentation-content-final:
 	@echo "=====================================================================================>"
-	@echo "Generating voxility documentation content file ..."
+	@echo "Generating voxelity documentation content file ..."
 	./scripts/generate-documentation-content-html.sh
 
 vox-documentation-pdf:
 	@echo "=====================================================================================>"
-	@echo "Generating voxility documentation PDF ..."
-	./scripts/convert-html-to-pdf.sh resources/documentation/content/latest/final/voxility-documentation-content.html
+	@echo "Generating voxelity documentation PDF ..."
+	./scripts/convert-html-to-pdf.sh resources/documentation/content/latest/final/voxelity-documentation-content.html
 
 create-next-tag:
 	@echo "=====================================================================================>"

@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_voxel_builder(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_voxel_builder"
+    bl_idname = "import.voxelity_voxel_builder"
     bl_label = "Import VBX"
     bl_description = "Import Voxel Builder format (.vbx)"
 

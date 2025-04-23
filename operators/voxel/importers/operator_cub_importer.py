@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_cubeworld_cubemap(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_cubeworld_cubemap"
+    bl_idname = "import.voxelity_cubeworld_cubemap"
     bl_label = "Import CUB"
     bl_description = "Import CubeWorld CubeMap format (.cub)"
 

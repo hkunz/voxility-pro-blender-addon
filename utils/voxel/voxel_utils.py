@@ -1,7 +1,7 @@
 import bpy
 import mathutils
 
-from voxility_pro.enums.name_constant import NameConstant # type: ignore
+from voxelity_pro.enums.name_constant import NameConstant # type: ignore
 
 class Voxel:
     SIZE_PRECISION = 2
@@ -21,7 +21,7 @@ class VoxelUtils:
         compatible = True
         # Check both node groups for compatibility just to make sure because user could have manually edited the name of one of them
         for g in bpy.data.node_groups[:]:
-            for k in g.keys(): # VoxilityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxilityVoxelizeModifier_4_0_v1_0_12
+            for k in g.keys(): # VoxelityVoxelizeModifier_X_X_vZ_Z_Z e.g. VoxelityVoxelizeModifier_4_0_v1_0_12
                 if (k.startswith(p1) and k != n1) or (k.startswith(p2) and k != n2):
                     print(f"WARNING: Removing incompatible node group '{k}'")
                     bpy.data.node_groups.remove(g)
@@ -30,7 +30,7 @@ class VoxelUtils:
         if compatible:
             return
 
-        # Remove any additional included node groups of the voxility addon feature
+        # Remove any additional included node groups of the voxelity addon feature
         for g in bpy.data.node_groups[:]:
             if not g.name.startswith(NameConstant.VOXILITY_EXTENDED_NODE_GROUP_PREFIX.value):
                 continue
@@ -42,7 +42,7 @@ class VoxelUtils:
                 obj.voxelized = False
 
     @staticmethod
-    def get_voxility_node_group(node_group_name):
+    def get_voxelity_node_group(node_group_name):
         for ng in bpy.data.node_groups:
             if node_group_name in ng: # check if it has key ng[node_group_name]:
                 return ng
@@ -50,9 +50,9 @@ class VoxelUtils:
 
     @staticmethod
     def get_voxelizer_modifier(active_object):
-        voxility_node_group = VoxelUtils.get_voxility_node_group(NameConstant.VOXILITY_MODIFIER_NAME.value)
+        voxelity_node_group = VoxelUtils.get_voxelity_node_group(NameConstant.VOXILITY_MODIFIER_NAME.value)
         for m in reversed(active_object.modifiers):
-            if m.type == 'NODES' and voxility_node_group and m.node_group == voxility_node_group:
+            if m.type == 'NODES' and voxelity_node_group and m.node_group == voxelity_node_group:
                 return m
         return None
 

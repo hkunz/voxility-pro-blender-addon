@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_voxlap_voxel_engine(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_voxlap_voxel_engine"
+    bl_idname = "import.voxelity_voxlap_voxel_engine"
     bl_label = "Import KV6"
     bl_description = "Import Voxlap Voxel Engine format (.kv6)"
 

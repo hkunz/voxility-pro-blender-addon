@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_particubes(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_particubes"
+    bl_idname = "import.voxelity_particubes"
     bl_label = "Import PCUBES"
     bl_description = "Import Particubes format (.pcubes)"
 

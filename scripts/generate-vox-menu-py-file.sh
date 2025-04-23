@@ -24,7 +24,7 @@ generate_voxel_formats_menu_py_file() {
         name=$(get_vox_column_value "$type" "$JSON" "name")
         code_name=$(get_code_name "$name")
 
-        import_path="voxility_pro.$(echo ${VOX_OP_BASE_DIR}${1}ers/ | sed 's/\//./g')operator_${type}_${1}er"
+        import_path="voxelity_pro.$(echo ${VOX_OP_BASE_DIR}${1}ers/ | sed 's/\//./g')operator_${type}_${1}er"
         module="${class_prefix}${code_name}"
         imports_content+="from ${import_path} import ${module}\n"
         load=$(get_vox_column_value "$type" "$JSON" "loading")

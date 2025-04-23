@@ -6,10 +6,10 @@
 
 import bpy
 
-from voxility_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
+from voxelity_pro.operators.voxel.operator_voxel_base_importer import OperatorVoxelBaseImporter
 
 class IMPORT_OT_tiberian_sun(OperatorVoxelBaseImporter):
-    bl_idname = "import.voxility_tiberian_sun"
+    bl_idname = "import.voxelity_tiberian_sun"
     bl_label = "Import VXL"
     bl_description = "Import Tiberian Sun format (.vxl)"
 
