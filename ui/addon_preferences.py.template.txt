@@ -17,7 +17,7 @@ def update_voxel_formats_preferences() -> None:
         if not i or getattr(prefs, f"type_{item[0].lower()}"):
             VoxelFormatsExportMenu.PREFERENCES_FORMATS.append(item)
 
-def update_bool_property(self, _: bpy_types.Context, vox_type: str) -> None:
+def update_bool_property(self, _: bpy.types.Context, vox_type: str) -> None:
     exporter = get_voxel_exporter_by_type(vox_type)
     importer = get_voxel_importer_by_type(vox_type)
 
@@ -77,7 +77,7 @@ class VoxelityAddonPreferences(bpy.types.AddonPreferences):
         for prop_name in self.CHECKBOXES:
             self.set_checkbox(prop_name, False)
 
-    def draw(self, _: bpy_types.Context) -> None:
+    def draw(self, _: bpy.types.Context) -> None:
         layout: UILayout = self.layout
         options_box: UILayout = layout.box()
         box: UILayout = options_box.box()

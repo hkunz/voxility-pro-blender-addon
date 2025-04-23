@@ -37,14 +37,14 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
         c.vc_merge_vertices = int(self.merge_vertices)
         return c
 
-    def draw(self, _context: bpy_types.Context) -> None:
+    def draw(self, _context: bpy.types.Context) -> None:
         self.options_panel = self.layout.box().column()
 
     def draw_elements(self, _context):
         pass
         #self.options_panel.prop(self, "voxformat_voxelizemode")
 
-    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> set[str]:
         super().invoke(context, event)
         self.options_panel = None
         wm: bpy_types.WindowManager = context.window_manager

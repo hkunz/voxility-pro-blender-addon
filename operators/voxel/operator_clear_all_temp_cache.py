@@ -10,12 +10,12 @@ class FILE_OT_ClearAllTempCacheOperator(OperatorGenericPopup):
     bl_description = "Delete all temporary Voxelity Pro cache directories regardless of Blender or Voxelity Pro versions"
     bl_options = {'REGISTER'}
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, context: bpy.types.Context) -> None:
         self.message = "Delete all temporary Voxelity Pro directories?"
         self.exec_message = "Deleted all temporary Voxelity Pro directories"
         super().draw(context)
 
-    def execute(self, context:bpy_types.Context) -> set[str]:
+    def execute(self, context:bpy.types.Context) -> set[str]:
         TempFileManager().clear_temp_directories()
         super().execute(context)
         return {'FINISHED'}

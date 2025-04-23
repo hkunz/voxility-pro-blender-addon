@@ -34,7 +34,7 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
         default=True,
     ) # type: ignore
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, context: bpy.types.Context) -> None:
         col = self.layout.column()
         sub = col.row()
         sub.enabled = False
@@ -49,7 +49,7 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
         return {'FINISHED'}
 
     @classmethod
-    def poll(cls, _: bpy_types.Context) -> bool:
+    def poll(cls, _: bpy.types.Context) -> bool:
         none: str = VoxelFormatsExportMenu.SELECTION_NONE
         if cls.VOX_TARGET_FORMAT_EXT == none or cls.VOX_TARGET_FORMAT_CURRENT_SELECTION == none:
             return False
@@ -59,7 +59,7 @@ class OBJECT_OT_MeshVoxelSaveOperator(bpy.types.Operator):
             return False
         return True
 
-    def invoke(self, context: bpy_types.Context, _: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy.types.Context, _: bpy.types.Event) -> set[str]:
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 

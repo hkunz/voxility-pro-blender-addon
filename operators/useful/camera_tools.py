@@ -12,7 +12,7 @@ class ProCameraPanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'Tools'
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, context: bpy.types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
 
         # Add a new camera
@@ -39,7 +39,7 @@ class OBJECT_OT_assign_camera(bpy.types.Operator):
     bl_idname = "scene.assign_camera"
     bl_label = "Assign a Camera"
 
-    def execute(self, context: bpy_types.Context) -> set[str]:
+    def execute(self, context: bpy.types.Context) -> set[str]:
         # Add a new camera
         camera_data: bpy.types.Camera = bpy.data.cameras.new(name="Camera")
         if camera_data is None:
@@ -58,7 +58,7 @@ class OBJECT_OT_assign_camera(bpy.types.Operator):
 
         return {"FINISHED"}
 
-def update_camera_lens(_self, context: bpy_types.Context) -> None:
+def update_camera_lens(_self, context: bpy.types.Context) -> None:
     selected_lens = context.scene.pro_camera_lens
 
     # Set the active camera's lens based on the selected option

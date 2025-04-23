@@ -113,16 +113,16 @@ class VoxelFormatsExportMenu(bpy.types.Menu):
             return name.replace(" ", "_").lower() if camel_notation else name
         return None
 
-    def draw(self, _context: bpy_types.Context) -> None:
+    def draw(self, _context: bpy.types.Context) -> None:
         layout: bpy.types.UILayout = self.layout
         for cls in CLASSES:
             if Utils.is_class_registered(cls):
                 layout.operator(cls.bl_idname, text=f"{cls.voxel_name} ({cls.filename_ext})")
 
-def menu_vox_export_func_callback(self, _context: bpy_types.Context) -> None:
+def menu_vox_export_func_callback(self, _context: bpy.types.Context) -> None:
     self.layout.operator(EXPORT_OT_magicavoxel.bl_idname)
 
-def menu_VoxelFormatsExportMenu_func_callback(self, _context: bpy_types.Context) -> None:
+def menu_VoxelFormatsExportMenu_func_callback(self, _context: bpy.types.Context) -> None:
     self.layout.menu(VoxelFormatsExportMenu.bl_idname, text="Voxelity Voxel Formats")
 
 def get_voxel_exporter_by_type(voxel_type: str) -> OperatorVoxconvert:

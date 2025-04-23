@@ -34,10 +34,10 @@ IDNAME_TYPE = {
     "NodeSocketImage": "images",
 }
 
-def my_settings_callback(self: bpy.types.Scene, context: bpy_types.Context) -> List[Tuple[str, str, str]]:
+def my_settings_callback(self: bpy.types.Scene, context: bpy.types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
-def on_voxelize_button_click(self: bpy.types.Scene, context: bpy_types.Context):
+def on_voxelize_button_click(self: bpy.types.Scene, context: bpy.types.Context):
     properties: VoxelityProProperties = context.scene.voxelity_pro_properties
     Voxel.PREVIOUS_ACTIVE_OBJECT = None
     check_object_selection_change(context, properties, context.active_object)

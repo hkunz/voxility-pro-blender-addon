@@ -79,7 +79,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         paths.append(p.join(type_dir, f'temp_out.{type}'))
         return paths
 
-    def execute(self, context: bpy_types.Context) -> set[str]:
+    def execute(self, context: bpy.types.Context) -> set[str]:
         voxelize_duration: float = time.time()
         OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.SELECTION_NONE
         active_object: bpy_types.Object = context.view_layer.objects.active

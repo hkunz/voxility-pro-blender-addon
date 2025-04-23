@@ -76,7 +76,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         default=False,
     ) # type: ignore
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, context: bpy.types.Context) -> None:
         super().draw(context)
         col = self.options_panel
         sub = col.row()
@@ -189,7 +189,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         else:
             self.create_error_popup(f"File conversion failed", time.time() - start)
 
-    def execute(self, context: bpy_types.Context) -> set[str]:
+    def execute(self, context: bpy.types.Context) -> set[str]:
         if self.is_file_path_conversion(context):
             self.execute_file_path_conversion(context)
             return {'FINISHED'}
@@ -228,7 +228,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
         return not context.selected_objects and os.path.isfile(props.file_to_convert_path) and props.export_format != props.SELECTION_NONE
 
     @classmethod
-    def poll(cls, context: bpy_types.Context) -> bool:
+    def poll(cls, context: bpy.types.Context) -> bool:
         active_object: bpy_types.Object = context.active_object
         if cls.is_file_path_conversion(context):
             return True
@@ -240,7 +240,7 @@ class OperatorVoxelBaseExporter(OperatorVoxelBase):
                     return False
         return super().poll(context)
 
-    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> set[str]:
         if self.is_file_path_conversion(context):
             props = context.scene.voxelity_pro_properties
             ext = FileUtils.get_file_extension(props.file_to_convert_path)

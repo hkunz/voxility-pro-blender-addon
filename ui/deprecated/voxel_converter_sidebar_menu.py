@@ -34,7 +34,7 @@ VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDE
 def get_blender_support_text() -> str:
     return f"Vertex colors are supported in Blender version {VERTEX_COLORS_SUPPORT_BLENDER_VERSION} and above."
 
-def my_settings_callback(scene: bpy.types.Scene, _: bpy_types.Context) -> List[Tuple[str, str, str]]:
+def my_settings_callback(scene: bpy.types.Scene, _: bpy.types.Context) -> List[Tuple[str, str, str]]:
     return VoxelFormatsExportMenu.PREFERENCES_FORMATS
 
 class VoxelityProProperties(bpy.types.PropertyGroup):

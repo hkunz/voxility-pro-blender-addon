@@ -20,7 +20,7 @@ class ObjectImportAddVertexColorsHandler(IHandler):
         self.object = object
 
     def set_active_node_tree(self, area: Area, material_index: int=0) -> None:
-        C: bpy_types.Context = bpy.context
+        C: bpy.types.Context = bpy.context
         C.object.active_material_index = material_index
         mat: Material = C.active_object.active_material
         area.spaces.active.node_tree = mat.node_tree # https://blender.stackexchange.com/a/268511/14229

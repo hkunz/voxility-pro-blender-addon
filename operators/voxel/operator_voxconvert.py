@@ -71,7 +71,7 @@ class OperatorVoxconvert(bpy.types.Operator):
         if not c.test:
             self.report({'ERROR'}, f"Error processing file: {c.get_input_filepath()}")
 
-    def invoke(self, context: bpy_types.Context, event: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> set[str]:
         self.voxconvert_duration: int = 0
         self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
         return {'FINISHED'}
@@ -80,7 +80,7 @@ class OperatorVoxconvert(bpy.types.Operator):
         raise NotImplementedError("Subclasses must implement the execute() method")
 
     @classmethod
-    def poll(cls, context: bpy_types.Context) -> bool:
+    def poll(cls, context: bpy.types.Context) -> bool:
         active_object: bpy_types.Object = context.active_object
         selected_objects: List[bpy_types.Object] = context.selected_objects
         if context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:

@@ -7,7 +7,7 @@ class ExporterRegistration:
     ATTR_NAME = "_menu_lambda"
 
     @staticmethod
-    def on_file_export_click(self, _context:bpy_types.Context, cls) -> None:
+    def on_file_export_click(self, _context:bpy.types.Context, cls) -> None:
         self.layout.operator_context = 'INVOKE_DEFAULT'
         self.layout.operator(cls.bl_idname, text=cls.bl_label)
 

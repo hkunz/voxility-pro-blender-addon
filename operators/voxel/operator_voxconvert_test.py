@@ -31,5 +31,5 @@ class OperatorVoxconvertTest(OperatorVoxconvert):
         return self.execute(context)
 
     @classmethod
-    def poll(cls, _: bpy_types.Context) -> bool:
+    def poll(cls, _: bpy.types.Context) -> bool:
         return True

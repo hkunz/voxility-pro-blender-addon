@@ -56,7 +56,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         default=True,
     ) # type: ignore
 
-    def draw(self, context: bpy_types.Context) -> None:
+    def draw(self, context: bpy.types.Context) -> None:
         super().draw(context)
         col = self.options_panel
         col.prop(self, "merge_vertices")
@@ -105,7 +105,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
             create_generic_popup(message=f"No file specified,,CANCEL,,1")
         self.report({'ERROR'}, f"{msg} {self.filepath}")
 
-    def execute(self, _context: bpy_types.Context) -> set[str]:
+    def execute(self, _context: bpy.types.Context) -> set[str]:
         if not os.path.exists(self.filepath) or not os.path.isfile(self.filepath):
             self.notify_error()
             return {'CANCELLED'}
@@ -134,7 +134,7 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
 
         return {'FINISHED'}
 
-    def invoke(self, context: bpy_types.Context, _event: bpy.types.Event) -> set[str]:
+    def invoke(self, context: bpy.types.Context, _event: bpy.types.Event) -> set[str]:
         self.voxconvert_duration: int = 0
         self.command_builder: VoxconvertCommandBuilder = VoxconvertCommandBuilder()
         wm: bpy_types.WindowManager = context.window_manager
@@ -147,5 +147,5 @@ class OperatorVoxelBaseImporter(OperatorVoxelBase):
         return {'RUNNING_MODAL'}
 
     @classmethod
-    def poll(cls, context: bpy_types.Context) -> bool:
+    def poll(cls, context: bpy.types.Context) -> bool:
         return context.mode == 'OBJECT'
