@@ -3,7 +3,7 @@ import re
 
 from typing import List, Callable, Any, Tuple
 
-from voxelity_pro import bl_info # type: ignore
+from voxelity_pro import bl_info
 
 class Utils:
 

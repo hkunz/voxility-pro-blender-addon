@@ -2,9 +2,9 @@ import bpy
 
 from typing import Tuple
 
-from voxelity_pro.operators.common.handler_interface import IHandler # type: ignore
-from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
-from voxelity_pro.enums.version_type import VersionType # type: ignore
+from voxelity_pro.operators.common.handler_interface import IHandler
+from voxelity_pro.utils.object_utils import ObjectUtils
+from voxelity_pro.enums.version_type import VersionType
 
 class ObjectImportMergeVerticesHandler(IHandler):
     def __init__(self, object: bpy.types.Object, with_vertex_colors: bool) -> None:

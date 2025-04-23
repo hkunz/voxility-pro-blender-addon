@@ -26,8 +26,8 @@ from voxelity_pro.operators.voxel.operator_clear_temp_cache import (
 )
 
 from voxelity_pro.ui.voxel_formats_export_menu import VoxelFormatsExportMenu
-from voxelity_pro.utils.utils import Utils # type: ignore
-from voxelity_pro.enums.version_type import VersionType # type: ignore
+from voxelity_pro.utils.utils import Utils
+from voxelity_pro.enums.version_type import VersionType
 
 VERTEX_COLORS_SUPPORT_BLENDER_VERSION = VersionType.VERTEX_COLORS_SUPPORT_BLENDER_VERSION.value
 

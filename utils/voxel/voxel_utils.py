@@ -1,7 +1,7 @@
 import bpy
 import mathutils
 
-from voxelity_pro.enums.name_constant import NameConstant # type: ignore
+from voxelity_pro.enums.name_constant import NameConstant
 
 class Voxel:
     SIZE_PRECISION = 2

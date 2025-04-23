@@ -43,21 +43,21 @@ from pathlib import Path
 from typing import Union
 from bpy.app.handlers import persistent
 
-from voxelity_pro.enums.voxelity_feature import VoxelityFeature # type: ignore
-from voxelity_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences # type: ignore
-from voxelity_pro.utils.file_utils import FileUtils # type: ignore
-from voxelity_pro.utils.temp_file_manager import TempFileManager # type: ignore
-from voxelity_pro.utils.icons_manager import IconsManager # type: ignore
-from voxelity_pro.utils.system_utils import SystemUtils # type: ignore
-from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore
-from voxelity_pro.translation.translations import register as register_translations, unregister as unregister_translations # type: ignore
+from voxelity_pro.enums.voxelity_feature import VoxelityFeature
+from voxelity_pro.ui.addon_preferences import register as register_preferences, unregister as unregister_preferences
+from voxelity_pro.utils.file_utils import FileUtils
+from voxelity_pro.utils.temp_file_manager import TempFileManager
+from voxelity_pro.utils.icons_manager import IconsManager
+from voxelity_pro.utils.system_utils import SystemUtils
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils
+from voxelity_pro.translation.translations import register as register_translations, unregister as unregister_translations
 if VoxelityFeature.GN_VOXELIZER_ACTIVE.value and bpy.app.version >= (3,3,0):
-    from voxelity_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
+    from voxelity_pro.ui.voxel_gn_voxelizer_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu
 else:
-    from voxelity_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu # type: ignore
-from voxelity_pro.operators.installation.darwin.operator_macos_install_rosetta2 import WEB_OT_OperatorInstallMacRosetta2 # type: ignore
-from voxelity_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup # type: ignore
-from voxelity_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest # type: ignore
+    from voxelity_pro.ui.deprecated.voxel_converter_sidebar_menu import register as register_sidebar_menu, unregister as unregister_sidebar_menu
+from voxelity_pro.operators.installation.darwin.operator_macos_install_rosetta2 import WEB_OT_OperatorInstallMacRosetta2
+from voxelity_pro.operators.operator_generic_popup import register as register_generic_popup, unregister as unregister_generic_popup
+from voxelity_pro.operators.voxel.operator_voxconvert_test import OperatorVoxconvertTest
 
 def add_executable_permission(exe: Union[str, Path]) -> Path:
     app = Path(f"{exe}")

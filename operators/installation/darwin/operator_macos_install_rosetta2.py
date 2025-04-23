@@ -1,9 +1,9 @@
 import bpy
 import os
 
-from voxelity_pro.operators.operator_generic_popup import create_generic_popup # type: ignore
-from voxelity_pro.operators.installation.operator_script_base import OperatorScriptBase # type: ignore
-from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup
+from voxelity_pro.operators.installation.operator_script_base import OperatorScriptBase
+from voxelity_pro.utils.file_utils import FileUtils
 
 class WEB_OT_OperatorInstallMacRosetta2(OperatorScriptBase):
     bl_idname = "voxelity_pro.install_macos_rosetta2"

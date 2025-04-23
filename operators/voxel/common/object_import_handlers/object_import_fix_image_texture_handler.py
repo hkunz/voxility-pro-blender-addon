@@ -5,7 +5,7 @@ from bpy.types import (
     ShaderNodeTree,
 )
 
-from voxelity_pro.operators.common.handler_interface import IHandler # type: ignore
+from voxelity_pro.operators.common.handler_interface import IHandler
 
 class ObjectImportFixImageTextureHandler(IHandler):
     def __init__(self, object: bpy.types.Object):

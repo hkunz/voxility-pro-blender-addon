@@ -3,7 +3,7 @@ import bpy_types
 
 from typing import List
 
-from voxelity_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils # type: ignore
+from voxelity_pro.utils.voxel.voxel_utils import Voxel, VoxelUtils
 
 class BlenderVersionError(Exception):
     pass
@@ -23,15 +23,15 @@ class OBJECT_OT_OperatorVoxelize(bpy.types.Operator):
     def execute(self, context):
         v = bpy.app.version
         if v >= (4, 1, 0):
-            from voxelity_pro.utils.voxel.generate_gn_voxelize_4_1 import add_voxelizer_4_1 as add_voxelizer # type: ignore
+            from voxelity_pro.utils.voxel.generate_gn_voxelize_4_1 import add_voxelizer_4_1 as add_voxelizer
         elif v >= (4, 0, 0):
-            from voxelity_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 as add_voxelizer # type: ignore
+            from voxelity_pro.utils.voxel.generate_gn_voxelize_4_0 import add_voxelizer_4_0 as add_voxelizer
         elif v >= (3, 4, 0):
-            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 as add_voxelizer # type: ignore
+            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_4 import add_voxelizer_3_4 as add_voxelizer
         elif v >= (3, 3, 0):
-            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3 as add_voxelizer # type: ignore
+            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_3 import add_voxelizer_3_3 as add_voxelizer
         elif v >= (3, 1, 0):
-            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_1 import add_voxelizer_3_1 as add_voxelizer # type: ignore
+            from voxelity_pro.utils.voxel.generate_gn_voxelize_3_1 import add_voxelizer_3_1 as add_voxelizer
         else:
             raise BlenderVersionError("Voxelize feature is not supported in this Blender version. This feature is only supported for Blender versions 3.3 and above.")
 
@@ -92,8 +92,8 @@ def unregister():
 # Modification 4.0 - 1: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
-from voxelity_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
-from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore ### Manual Entry
+from voxelity_pro.enums.name_constant import NameConstant
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils
 ### Manual Entry
 def voxelize_node_group_4_0(node_group_name, min_value, max_value, default_value): ### Manual Entry
     voxelize = VoxelUtils.get_voxelity_node_group(node_group_name) ### Manual Entry
@@ -150,8 +150,8 @@ def voxelizemodifier_node_group_4_0(voxelize, node_group_name, min_value, max_va
 # Modification 3.4 - 1: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
-from voxelity_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
-from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore ### Manual Entry
+from voxelity_pro.enums.name_constant import NameConstant
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils
 ### Manual Entry
 def voxelize_node_group_3_4(node_group_name, min_value, max_value, default_value): ### Manual Entry
     voxelize = VoxelUtils.get_voxelity_node_group(node_group_name) ### Manual Entry
@@ -281,8 +281,8 @@ def voxelizemodifier_node_group_3_4(voxelize, node_group_name, min_value, max_va
 # Modification 3.3 - 1: Function name change and parameters modification ### Manual Entry
 # ========================================================================================================== ### Manual Entry
 import bpy ### Manual Entry
-from voxelity_pro.enums.name_constant import NameConstant # type: ignore ### Manual Entry
-from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils # type: ignore ### Manual Entry
+from voxelity_pro.enums.name_constant import NameConstant
+from voxelity_pro.utils.voxel.voxel_utils import VoxelUtils
 ### Manual Entry
 def voxelize_node_group_3_3(node_group_name, min_value, max_value, default_value): ### Manual Entry
     voxelize = VoxelUtils.get_voxelity_node_group(node_group_name) ### Manual Entry

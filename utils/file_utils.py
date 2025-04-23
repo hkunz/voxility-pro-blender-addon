@@ -5,8 +5,8 @@ import platform
 
 from typing import List
 
-from voxelity_pro.utils.utils import Utils # type: ignore
-from voxelity_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError # type: ignore
+from voxelity_pro.utils.utils import Utils
+from voxelity_pro.exceptions.voxconvert_exe_missing_error import VoxConvertExeMissingError
 
 class FileUtils:
 

@@ -1,11 +1,11 @@
 import bpy
 
-from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_fix_image_texture_handler import ObjectImportFixImageTextureHandler # type: ignore
-from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler # type: ignore
-from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler # type: ignore
-from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_limited_dissolve_handler import ObjectImportLimitedDissolveHandler # type: ignore
-from voxelity_pro.utils.string_utils import StringUtils # type: ignore
-from voxelity_pro.utils.object_utils import ObjectUtils # type: ignore
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_fix_image_texture_handler import ObjectImportFixImageTextureHandler
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_add_vertex_colors_handler import ObjectImportAddVertexColorsHandler
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_merge_vertices_handler import ObjectImportMergeVerticesHandler
+from voxelity_pro.operators.voxel.common.object_import_handlers.object_import_limited_dissolve_handler import ObjectImportLimitedDissolveHandler
+from voxelity_pro.utils.string_utils import StringUtils
+from voxelity_pro.utils.object_utils import ObjectUtils
 
 class ObjectImportHandler:
     IMPORTED_OBJ_BASE_NAME = "Voxelity"

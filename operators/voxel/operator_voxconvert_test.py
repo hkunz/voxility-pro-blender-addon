@@ -2,8 +2,8 @@ import bpy_types
 
 from typing import List
 
-from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder # type: ignore
-from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert # type: ignore
+from voxelity_pro.operators.common.voxconvert_command_builder import VoxconvertCommandBuilder
+from voxelity_pro.operators.voxel.operator_voxconvert import OperatorVoxconvert
 
 class OperatorVoxconvertTest(OperatorVoxconvert):
     bl_idname = "export.voxelity_voxconvert_test"

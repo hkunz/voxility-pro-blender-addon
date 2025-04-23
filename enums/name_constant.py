@@ -1,5 +1,5 @@
-from voxelity_pro.enums.voxelity_enum import VoxelityEnum # type: ignore
-from voxelity_pro.utils.utils import Utils # type: ignore
+from voxelity_pro.enums.voxelity_enum import VoxelityEnum
+from voxelity_pro.utils.utils import Utils
 
 class NameConstant(VoxelityEnum):
     VOXILITY_VERSION_SUFFIX = Utils.get_gn_voxelizer_version() + "_" + Utils.get_addon_version(separator='_')

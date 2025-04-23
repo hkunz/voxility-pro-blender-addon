@@ -3,7 +3,7 @@ import os
 
 from typing import List
 
-from voxelity_pro.utils.file_utils import FileUtils # type: ignore
+from voxelity_pro.utils.file_utils import FileUtils
 
 LANG: str = 'en'
 loaded_translations: List = None

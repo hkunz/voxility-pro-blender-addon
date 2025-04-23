@@ -3,8 +3,8 @@ import re
 import tempfile
 import shutil
 
-from voxelity_pro.utils.utils import Utils # type: ignore
-from voxelity_pro.utils.string_utils import StringUtils # type: ignore
+from voxelity_pro.utils.utils import Utils
+from voxelity_pro.utils.string_utils import StringUtils
 
 class TempFileManager:
 

@@ -2,8 +2,8 @@ import subprocess
 import platform
 import requests
 
-from voxelity_pro.operators.operator_generic_popup import create_generic_popup, OperatorGenericPopup # type: ignore
-from voxelity_pro.utils.ui_utils import UiUtils # type: ignore
+from voxelity_pro.operators.operator_generic_popup import create_generic_popup, OperatorGenericPopup
+from voxelity_pro.utils.ui_utils import UiUtils
 
 class OperatorScriptBase(OperatorGenericPopup):
     bl_options = {'INTERNAL'}
