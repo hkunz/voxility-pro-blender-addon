@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 import os
 
 from typing import List, Tuple

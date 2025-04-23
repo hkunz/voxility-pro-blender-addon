@@ -5,7 +5,6 @@
 # ============================================================================
 
 import bpy
-import bpy_types
 
 from bpy.types import UILayout
 from typing import List

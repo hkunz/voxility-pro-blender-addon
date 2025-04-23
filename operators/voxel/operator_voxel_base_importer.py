@@ -1,7 +1,6 @@
 import bpy
 import time
 import os
-import bpy_types
 
 from typing import List
 from abc import ABC, abstractmethod

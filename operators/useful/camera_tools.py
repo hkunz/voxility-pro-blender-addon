@@ -1,7 +1,6 @@
 # https://blender.stackexchange.com/questions/310837/camera-wont-be-aligned-to-current-view-with-python-scripting
 
 import bpy
-import bpy_types
 
 from typing import List, Tuple
 

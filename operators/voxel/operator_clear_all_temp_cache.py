@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 
 from voxelity_pro.utils.temp_file_manager import TempFileManager
 from voxelity_pro.operators.operator_generic_popup import OperatorGenericPopup

@@ -1,7 +1,6 @@
 import bpy
 import time
 import subprocess
-import bpy_types
 import os
 
 from typing import List

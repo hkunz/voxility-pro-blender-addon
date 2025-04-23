@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 import os
 import shutil
 

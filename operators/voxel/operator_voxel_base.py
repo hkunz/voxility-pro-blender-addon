@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 
 from typing import List
 from bpy_extras.io_utils import ExportHelper

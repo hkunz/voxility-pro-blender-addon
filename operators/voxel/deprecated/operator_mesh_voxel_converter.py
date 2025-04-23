@@ -1,6 +1,5 @@
 import bpy
 import time
-import bpy_types
 
 from os import path as p
 from typing import List

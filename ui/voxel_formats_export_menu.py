@@ -5,7 +5,6 @@
 # ============================================================================
 
 import bpy
-import bpy_types
 import re
 
 from typing import List, Tuple

@@ -1,7 +1,6 @@
 import bpy
 import os
 import time
-import bpy_types
 
 from mathutils import Vector
 from typing import List

@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 
 class ModalTimerOperator(bpy.types.Operator):
     bl_idname = "wm.modal_timer_operator"

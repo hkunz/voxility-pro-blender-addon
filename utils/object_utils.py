@@ -1,7 +1,6 @@
 import bpy
 import sys
 import traceback
-import bpy_types
 import bmesh
 
 from math import radians

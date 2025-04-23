@@ -1,5 +1,4 @@
 import bpy
-import bpy_types
 
 from voxelity_pro.utils.voxel.bake_utility import BakeUtility
 from voxelity_pro.operators.operator_generic_popup import create_generic_popup
