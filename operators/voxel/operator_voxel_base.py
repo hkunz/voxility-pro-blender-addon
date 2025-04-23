@@ -46,7 +46,7 @@ class OperatorVoxelBase(OperatorVoxconvert, ExportHelper):
     def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> set[str]:
         super().invoke(context, event)
         self.options_panel = None
-        wm: bpy_types.WindowManager = context.window_manager
+        wm: bpy.types.WindowManager = context.window_manager
         wm.fileselect_add(self)
         self.filepath = FileUtils.check_filepath(self.filepath, self.filename_ext)
         return {'RUNNING_MODAL'}

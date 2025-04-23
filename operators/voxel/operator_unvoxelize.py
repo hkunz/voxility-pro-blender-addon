@@ -25,7 +25,7 @@ class OBJECT_OT_OperatorUnvoxelize(bpy.types.Operator):
         if not active_object:
             return False
         m = VoxelUtils.get_voxelizer_modifier(active_object)
-        selected_objects: List[bpy_types.Object] = context.selected_objects
+        selected_objects: List[bpy.types.Object] = context.selected_objects
         if not m or context.mode != 'OBJECT' or not selected_objects or active_object not in selected_objects:
             return False
         for o in selected_objects:

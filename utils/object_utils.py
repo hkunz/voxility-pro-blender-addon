@@ -57,7 +57,7 @@ class ObjectUtils:
         if object:
             object.data.validate()
         else:
-            m: bpy_types.Mesh = None
+            m: bpy.types.Mesh = None
             for m in bpy.data.meshes:
                 m.validate()
 

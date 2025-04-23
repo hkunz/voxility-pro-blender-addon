@@ -29,7 +29,7 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
         default=VoxelFormatsExportMenu.SELECTION_NONE
     ) # type: ignore https://blender.stackexchange.com/questions/311578/how-do-you-correctly-add-ui-elements-to-adhere-to-the-typing-spec/311770#311770
 
-    def create_temp_dup(self, objects: List[bpy_types.Object]) -> None:
+    def create_temp_dup(self, objects: List[bpy.types.Object]) -> None:
         ObjectUtils.duplicate_objects(objects)
         bpy.ops.object.join()
 
@@ -81,12 +81,12 @@ class OBJECT_OT_MeshVoxelConvertOperator(OperatorVoxconvert):
     def execute(self, context: bpy.types.Context) -> set[str]:
         voxelize_duration: float = time.time()
         OBJECT_OT_MeshVoxelSaveOperator.VOX_TARGET_FORMAT_EXT = VoxelFormatsExportMenu.SELECTION_NONE
-        active_object: bpy_types.Object = context.view_layer.objects.active
+        active_object: bpy.types.Object = context.view_layer.objects.active
         if OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR is None or not p.exists(OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR):
             OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR = TempFileManager().create_temp_dir()
         temp_dir: str = OBJECT_OT_MeshVoxelConvertOperator.TEMP_DIR
         vc_in_path: str = p.join(temp_dir, 'temp_in.obj')
-        objects: List[bpy_types.Object] = context.selected_objects.copy()
+        objects: List[bpy.types.Object] = context.selected_objects.copy()
         self.create_temp_dup(objects)
         self.export_obj(vc_in_path)
         orig_width: float = context.object.dimensions[0]

@@ -31,7 +31,7 @@ class OBJECT_OT_OperatorBake(bpy.types.Operator):
     def poll(cls, context: bpy.types.Context) -> bool:
         if context.mode != 'OBJECT':
             return False
-        active_object: bpy_types.Object = context.active_object
+        active_object: bpy.types.Object = context.active_object
         for obj in context.selected_objects:
             if not obj.voxelized:
                 return False
