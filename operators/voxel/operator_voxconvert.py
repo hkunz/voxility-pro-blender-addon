@@ -53,6 +53,19 @@ class OperatorVoxconvert(bpy.types.Operator):
         except subprocess.CalledProcessError as e:
             success = False
             self.on_script_exit_error(c, e)
+        except FileNotFoundError as e:
+            success = False
+            self.report({'ERROR'}, f"Missing file or command ({e.filename}): '{command[0]}'")
+            self.report({'ERROR'}, f"Full error: {str(e)}")
+        except PermissionError as e:
+            success = False
+            self.report({'ERROR'}, f"Permission denied while trying to run the command '{command[0]}'")
+            self.report({'ERROR'}, f"Full error: {str(e)}")
+        except Exception as e:
+            success = False
+            self.report({'ERROR'}, "Unexpected error occurred.")
+            self.report({'ERROR'}, f"Full error: {str(e)}")
+        
         self.voxconvert_duration = time.time() - start_time
         
         print("executed successfully:", c.test or success)
