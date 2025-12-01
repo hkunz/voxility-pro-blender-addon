@@ -29,9 +29,9 @@ bl_info = {
     "blender": (2, 93, 0),
     "location": "N-Panel > Voxelity | File > Import-Export > Voxelity Voxel Formats",
     "warning": "",
-    "doc_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
-    "wiki_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
-    "tracker_url": "https://blendermarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
+    "doc_url": "https://superhivemarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
+    "wiki_url": "https://superhivemarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
+    "tracker_url": "https://superhivemarket.com/products/voxelity-pro-voxel-file-format-exchange/docs",
     "support": "COMMUNITY",
     "category": "Import-Export",
 }
