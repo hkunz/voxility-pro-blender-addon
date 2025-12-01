@@ -54,14 +54,25 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Mesh to Volume
     mesh_to_volume = voxelize.nodes.new("GeometryNodeMeshToVolume")
     mesh_to_volume.name = "Mesh to Volume"
-    mesh_to_volume.resolution_mode = 'VOXEL_SIZE'
-    #Density
-    mesh_to_volume.inputs[1].default_value = 1.0
-    #Voxel Amount
-    mesh_to_volume.inputs[3].default_value = 64.0
-    #Interior Band Width
-    mesh_to_volume.inputs[4].default_value = 0.0
-    
+    v = bpy.app.version ### Manual Entry
+    if v < (5,0,0): ### Manual Entry
+        mesh_to_volume.resolution_mode = 'VOXEL_SIZE'
+        #Density
+        mesh_to_volume.inputs[1].default_value = 1.0
+        #Voxel Amount
+        mesh_to_volume.inputs[3].default_value = 64.0
+        #Interior Band Width
+        mesh_to_volume.inputs[4].default_value = 0.0
+    else:
+        #Density
+        mesh_to_volume.inputs[1].default_value = 1.0
+        mesh_to_volume.inputs[2].default_value = 'Size'
+        #Voxel Amount
+        mesh_to_volume.inputs[3].default_value = 64.0
+        #Interior Band Width
+        mesh_to_volume.inputs[4].default_value = 0.0
+        mesh_to_volume.inputs[5].default_value = 0.0
+
     #node Separate XYZ
     separate_xyz = voxelize.nodes.new("ShaderNodeSeparateXYZ")
     separate_xyz.name = "Separate XYZ"
@@ -69,7 +80,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Math
     math = voxelize.nodes.new("ShaderNodeMath")
     math.name = "Math"
-    math.operation = 'ROUND'
+    math.operation = 'ROUND' if v < (5,0,0) else 'FLOOR'
     math.use_clamp = False
     #Value_001
     math.inputs[1].default_value = 0.5
@@ -79,7 +90,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Math.001
     math_001 = voxelize.nodes.new("ShaderNodeMath")
     math_001.name = "Math.001"
-    math_001.operation = 'ROUND'
+    math_001.operation = 'ROUND' if v < (5,0,0) else 'FLOOR'
     math_001.use_clamp = False
     #Value_001
     math_001.inputs[1].default_value = 0.5
@@ -95,7 +106,7 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Math.002
     math_002 = voxelize.nodes.new("ShaderNodeMath")
     math_002.name = "Math.002"
-    math_002.operation = 'ROUND'
+    math_002.operation = 'ROUND' if v < (5,0,0) else 'FLOOR'
     math_002.use_clamp = False
     #Value_001
     math_002.inputs[1].default_value = 0.5
@@ -180,15 +191,23 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Volume to Mesh
     volume_to_mesh = voxelize.nodes.new("GeometryNodeVolumeToMesh")
     volume_to_mesh.name = "Volume to Mesh"
-    volume_to_mesh.resolution_mode = 'GRID'
-    #Voxel Size
-    volume_to_mesh.inputs[1].default_value = 0.30000001192092896
-    #Voxel Amount
-    volume_to_mesh.inputs[2].default_value = 64.0
-    #Threshold
-    volume_to_mesh.inputs[3].default_value = 0.10000000149011612
-    #Adaptivity
-    volume_to_mesh.inputs[4].default_value = 0.0
+    if v < (5,0,0): ### Manual Entry
+        volume_to_mesh.resolution_mode = 'GRID'
+        #Voxel Size
+        volume_to_mesh.inputs[1].default_value = 0.30000001192092896
+        #Voxel Amount
+        volume_to_mesh.inputs[2].default_value = 64.0
+        #Threshold
+        volume_to_mesh.inputs[3].default_value = 0.10000000
+        #Adaptivity
+        volume_to_mesh.inputs[4].default_value = 0.0
+    else:
+        #Voxel Size
+        volume_to_mesh.inputs[1].default_value = 'Grid'
+        #Threshold
+        volume_to_mesh.inputs[4].default_value = 0.10000000
+        #Adaptivity
+        volume_to_mesh.inputs[5].default_value = 0.0
     
     #node Vector Math.001
     vector_math_001 = voxelize.nodes.new("ShaderNodeVectorMath")
@@ -266,7 +285,6 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     capture_attribute.name = "Capture Attribute"
     capture_attribute.domain = 'POINT'
 
-    v = bpy.app.version ### Manual Entry
     if v >= (4,2,0): ### Manual Entry
         capture_attribute.capture_items.new('BOOLEAN', 'Is Orig Mesh') ### Manual Entry
     else: ### Manual Entry
@@ -326,12 +344,15 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #node Merge by Distance
     merge_by_distance = voxelize.nodes.new("GeometryNodeMergeByDistance")
     merge_by_distance.name = "Merge by Distance"
-    merge_by_distance.mode = 'ALL'
-    #Selection
-    merge_by_distance.inputs[1].default_value = True
-    #Distance
-    merge_by_distance.inputs[2].default_value = 0.0010000000474974513
-    
+    if v < (5,0,0): ### Manual Entry
+        merge_by_distance.mode = 'ALL'
+        merge_by_distance.inputs[1].default_value = True
+        merge_by_distance.inputs[2].default_value = 0.0010000000474974513
+    else:
+        merge_by_distance.inputs[1].default_value = True
+        merge_by_distance.inputs[2].default_value = 'All'
+        merge_by_distance.inputs[3].default_value = 0.0010000000474974513
+
     #node Group Output
     group_output = voxelize.nodes.new("NodeGroupOutput")
     group_output.name = "Group Output"
@@ -504,7 +525,11 @@ def voxelize_node_group_4_1(node_group_name, min_value, max_value, default_value
     #merge_by_distance.Geometry -> group_output.Geometry
     voxelize.links.new(merge_by_distance.outputs[0], group_output.inputs[0])
     #group_input.Voxel Size -> mesh_to_volume.Voxel Size
-    voxelize.links.new(group_input.outputs[1], mesh_to_volume.inputs[2])
+    if v < (5,0,0): ### Manual Entry
+        voxelize.links.new(group_input.outputs[1], mesh_to_volume.inputs[2])
+    else:
+        voxelize.links.new(group_input.outputs[1], mesh_to_volume.inputs[3])
+
     #group_input.Voxel Size -> vector_math.Vector
     voxelize.links.new(group_input.outputs[1], vector_math.inputs[1])
     #group_input_002.Mesh -> sample_nearest_surface.Mesh
