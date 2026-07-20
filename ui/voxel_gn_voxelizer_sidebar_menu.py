@@ -203,7 +203,11 @@ class OBJECT_PT_voxelity_pro(bpy.types.Panel):
 
     def add_layout_gn_prop(self, layout, modifier, prop_id):
         name = ObjectUtils.get_modifier_prop_name(modifier, prop_id)
-        layout.prop(data=modifier, property=f'["{prop_id}"]', text=name)
+
+        if bpy.app.version >= (5, 2, 0):
+            layout.prop(getattr(modifier.properties.inputs, prop_id), "value", text=name)
+        else:
+            layout.prop(modifier, f'["{prop_id}"]', text=name)
 
     def add_layout_gn_prop_pointer(self, layout, md, rna):
         if rna.bl_socket_idname == "NodeSocketGeometry":

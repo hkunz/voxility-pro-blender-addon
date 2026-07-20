@@ -190,7 +190,12 @@ def test_read_voxel_colors_and_write_qb_file():
     s = time.time()
     obj = bpy.context.active_object
     geometry_nodes_modifier = obj.modifiers[-1]
-    voxel_size_value = geometry_nodes_modifier["Socket_2" if bpy.app.version >= (4,0,0) else "Input_1"]
+    if bpy.app.version >= (5, 2, 0):
+        voxel_size_value = geometry_nodes_modifier.properties.inputs.Socket_2.value
+    elif bpy.app.version >= (4, 0, 0):
+        voxel_size_value = geometry_nodes_modifier["Socket_2"]
+    else:
+        voxel_size_value = geometry_nodes_modifier["Input_1"]
     voxel_size = round(voxel_size_value, 3)
     reader = VoxelColorReader(obj, voxel_size, VoxelColorReader.LEFT_HANDED_COORDINATE_SYSTEM, VoxelColorReader.COLOR_SPACE_SRGB, "UVMap")
     print("Read time:", time.time() - s)

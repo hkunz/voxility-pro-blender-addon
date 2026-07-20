@@ -86,7 +86,16 @@ class VoxelUtils:
     def get_voxelizer_voxel_size(obj: bpy.types.Object):
         mod = VoxelUtils.get_voxelizer_modifier(obj)
         if mod and obj:
-            return round(mod[VoxelUtils.get_voxelizer_voxel_size_attr_name()], Voxel.SIZE_PRECISION)
+            if bpy.app.version >= (5, 2, 0):
+                value = getattr(
+                    mod.properties.inputs,
+                    VoxelUtils.get_voxelizer_voxel_size_attr_name()
+                ).value
+            else:
+                value = mod[VoxelUtils.get_voxelizer_voxel_size_attr_name()]
+
+            return round(value, Voxel.SIZE_PRECISION)
+
         return VoxelUtils.get_object_edge_size(obj) if obj.voxelized else 0
 
     @staticmethod
@@ -128,16 +137,27 @@ class VoxelUtils:
     @staticmethod
     def get_voxelizer_voxel_modifier_attributes(obj: bpy.types.Object):
         mod = VoxelUtils.get_voxelizer_modifier(obj)
-        voxel_size = 0
-        uvmap = "" #"UVMap"
-        color = "" #"Col"
+        uvmap = ""  #"UVMap"
+        color = ""  #"Col"
         voxel_size = VoxelUtils.get_voxelizer_voxel_size(obj)
+
         if mod:
-            uvmap = mod[VoxelUtils.get_voxelizer_voxel_uv_attr_name()]
-            color = mod[VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name()]
+            if bpy.app.version >= (5, 2, 0):
+                uvmap = getattr(
+                    mod.properties.inputs,
+                    VoxelUtils.get_voxelizer_voxel_uv_attr_name()
+                ).value
+                color = getattr(
+                    mod.properties.inputs,
+                    VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name()
+                ).value
+            else:
+                uvmap = mod[VoxelUtils.get_voxelizer_voxel_uv_attr_name()]
+                color = mod[VoxelUtils.get_voxelizer_voxel_vertex_colors_attr_name()]
         elif obj.voxelized:
-            uvmap = obj.data.uv_layers[0].name if len(obj.data.uv_layers) else None
-            color = obj.data.color_attributes[0].name if len(obj.data.color_attributes) else None
+            uvmap = obj.data.uv_layers[0].name if obj.data.uv_layers else None
+            color = obj.data.color_attributes[0].name if obj.data.color_attributes else None
+
         return voxel_size, uvmap, color
 
     @staticmethod
